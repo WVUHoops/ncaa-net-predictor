@@ -51,10 +51,15 @@ jobs:
       - name: Restore data cache
         uses: actions/cache@v4
         with:
-          path: data
-          key: ncaa-net-data-v2-${{ runner.os }}-${{ github.run_id }}
+          path: |
+            data/raw
+            data/processed/on3_features
+            data/processed/coach_features
+            data/processed/roster_status
+            data/processed/predictions
+          key: ncaa-net-data-v4-${{ runner.os }}-${{ github.run_id }}
           restore-keys: |
-            ncaa-net-data-v2-${{ runner.os }}-
+            ncaa-net-data-v4-${{ runner.os }}-
 
       - name: Ensure output directories exist
         run: |
@@ -82,7 +87,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dashboard/index.html dashboard/dashboard_payload.json
+          git add dashboard/index.html dashboard/dashboard_payload.json data/processed/upset_risk/current_2027_guarantee_risk_board.csv data/processed/upset_risk/model_coefficients.csv data/processed/upset_risk/rolling_metrics.csv
           if git diff --cached --quiet; then
             echo "No dashboard changes to commit."
           else

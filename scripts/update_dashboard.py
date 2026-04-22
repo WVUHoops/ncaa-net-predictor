@@ -137,7 +137,7 @@ def main() -> int:
     elif existing_upset_risk_board():
         if not upset_risk_board_has_coach_history():
             raise RuntimeError(
-                "existing upset-risk board is missing coach guarantee history; "
+                "existing upset-risk board is missing coach road-HM history; "
                 "cannot safely deploy dashboard"
             )
         print(
@@ -147,7 +147,7 @@ def main() -> int:
     else:
         run_step(["python3", "scripts/build_upset_risk.py"])
     if not upset_risk_board_has_coach_history():
-        raise RuntimeError("upset-risk board has no coach guarantee history")
+        raise RuntimeError("upset-risk board has no coach road-HM history")
     run_step(["python3", "scripts/build_dashboard.py"])
     return 0
 
