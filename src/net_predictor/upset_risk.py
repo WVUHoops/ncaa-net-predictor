@@ -284,6 +284,22 @@ MODEL_FEATURES = (
     "away_coach_road_hm_pest_index",
 )
 
+AWAY_COACH_UPSET_SIGNAL_FIELDS = (
+    *(f"away_{feature}" for feature in COACH_NUMERIC_FEATURES),
+    "away_coach_hm_guarantee_games",
+    "away_coach_hm_guarantee_games_log",
+    "away_coach_hm_guarantee_upset_rate",
+    "away_coach_hm_guarantee_close_rate",
+    "away_coach_hm_guarantee_over_expected_rate",
+    "away_coach_hm_guarantee_avg_margin_over_expected",
+    "away_coach_road_hm_games",
+    "away_coach_road_hm_games_log",
+    "away_coach_road_hm_upset_rate",
+    "away_coach_road_hm_close_rate",
+    "away_coach_road_hm_over_expected_rate",
+    "away_coach_road_hm_avg_margin_over_expected",
+)
+
 
 def write_json(rows: list[dict[str, Any]], output_path: Path) -> Path:
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1400,9 +1416,30 @@ def current_risk_board(
         rows.append(row)
 
     probabilities = model.predict_proba(rows) if rows else []
-    for row, probability in zip(rows, probabilities, strict=True):
+    median_away_coach_signal = {
+        feature: median([as_float(row.get(feature)) for row in rows])
+        for feature in AWAY_COACH_UPSET_SIGNAL_FIELDS
+    }
+    coach_neutral_rows = []
+    for row in rows:
+        coach_neutral = dict(row)
+        coach_neutral.update(median_away_coach_signal)
+        enrich_matchup_features(coach_neutral)
+        coach_neutral_rows.append(coach_neutral)
+    coach_neutral_probabilities = model.predict_proba(coach_neutral_rows) if coach_neutral_rows else []
+
+    for row, probability, coach_neutral_probability in zip(
+        rows,
+        probabilities,
+        coach_neutral_probabilities,
+        strict=True,
+    ):
         schedule_value = schedule_value_from_band(str(row.get("opponent_quality_tier") or ""))
+        coach_lift = probability - coach_neutral_probability
         row["upset_probability_vs_median_high_major"] = probability
+        row["coach_neutral_upset_probability"] = coach_neutral_probability
+        row["coach_upset_lift"] = coach_lift
+        row["coach_upset_lift_pp"] = coach_lift * 100
         row["risk_bucket"] = risk_bucket(probability)
         row["schedule_value_score"] = schedule_value
         row["danger_index"] = probability / max(schedule_value, 1)

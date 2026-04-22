@@ -174,6 +174,19 @@ def risk_sort_value(bucket: Any) -> int:
     }.get(str(bucket or ""), 0)
 
 
+def coach_signal_bucket(lift_pp: Any) -> str:
+    parsed = as_float(lift_pp)
+    if parsed is None:
+        return "unknown"
+    if parsed >= 8:
+        return "very_high"
+    if parsed >= 3:
+        return "high"
+    if parsed <= -2:
+        return "low"
+    return "neutral"
+
+
 def slim_risk_row(
     row: dict[str, str],
     projections_by_team: dict[str, dict[str, Any]],
@@ -184,6 +197,8 @@ def slim_risk_row(
     return {
         "team": row.get("team"),
         "projected_coach": row.get("projected_coach"),
+        "coach_lift": compact_float(row.get("coach_upset_lift_pp"), 1),
+        "coach_signal": coach_signal_bucket(row.get("coach_upset_lift_pp")),
         "conference": row.get("conference"),
         "tier": row.get("opponent_quality_tier"),
         "program_band": row.get("program_consistency_band"),
@@ -657,6 +672,51 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     .very_high, .high {{ color: var(--red); }}
     .medium {{ color: var(--gold); }}
     .low, .very_low {{ color: var(--green); }}
+    .coach-chip {{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      max-width: 220px;
+      padding: 3px 8px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      font-weight: 700;
+    }}
+    .coach-chip .coach-name {{
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }}
+    .coach-chip .coach-lift {{
+      font-size: 11px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      opacity: 0.82;
+    }}
+    .coach-signal-very_high {{
+      background: var(--soft-red);
+      border-color: #ffd0d0;
+      color: var(--red);
+    }}
+    .coach-signal-high {{
+      background: var(--soft-gold);
+      border-color: var(--wvu-gold);
+      color: #5f4600;
+    }}
+    .coach-signal-neutral {{
+      background: #f5f7fa;
+      border-color: #dce4ec;
+      color: var(--ink);
+    }}
+    .coach-signal-low {{
+      background: #eff8fb;
+      border-color: var(--wvu-sky);
+      color: var(--wvu-blue);
+    }}
+    .coach-signal-unknown {{
+      background: #f7f7f7;
+      border-color: #d7dcde;
+      color: var(--muted);
+    }}
     .wab-swing {{
       display: inline-flex;
       gap: 6px;
@@ -813,6 +873,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <option value="conference:asc">Conference A-Z</option>
           <option value="tier:asc">Tier A-Z</option>
           <option value="risk_sort:desc">Risk high-low</option>
+          <option value="coach_lift:desc">Coach upset signal high-low</option>
           <option value="recommendation:asc">Recommendation A-Z</option>
           <option value="three_rate:desc">3PA rate high-low</option>
           <option value="experience:desc">Experience high-low</option>
@@ -927,6 +988,29 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         .replaceAll("_", "-");
     }}
 
+    function coachLiftLabel(value) {{
+      if (value === null || value === undefined || value === "") return "";
+      const numeric = Number(value);
+      if (!Number.isFinite(numeric)) return "";
+      return `${{numeric >= 0 ? "+" : ""}}${{numeric.toFixed(1)}}`;
+    }}
+
+    function coachTitle(row) {{
+      const label = coachLiftLabel(row.coach_lift);
+      if (!label) return "No coach upset signal available";
+      return `Coach upset signal: ${{label}} percentage points vs a median candidate coach`;
+    }}
+
+    function coachChip(row) {{
+      const coach = text(row.projected_coach);
+      const lift = coachLiftLabel(row.coach_lift);
+      const liftHtml = lift ? `<span class="coach-lift">${{lift}}</span>` : "";
+      return `<span class="coach-chip coach-signal-${{cls(row.coach_signal)}}"
+        title="${{escapeHtml(coachTitle(row))}}">
+        <span class="coach-name">${{coach}}</span>${{liftHtml}}
+      </span>`;
+    }}
+
     function displayValue(value) {{
       const raw = String(value || "—");
       if (raw.includes("_") || raw.includes("top_") || raw.includes("plus")) return tierLabel(raw).replaceAll("-", " ");
@@ -1003,7 +1087,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       const sortKey = state.sortKey;
       const sortDir = state.sortDir;
       return payload.risk_rows.filter(row => {{
-        const haystack = `${{row.team}} ${{row.conference}}`.toLowerCase();
+        const haystack = `${{row.team}} ${{row.projected_coach}} ${{row.conference}}`.toLowerCase();
         return (!q || haystack.includes(q))
           && (!conferences.size || conferences.has(row.conference))
           && (!recommendations.size || recommendations.has(row.recommendation))
@@ -1023,7 +1107,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       document.getElementById("rows").innerHTML = rows.map(row => `
         <tr>
           <td><strong>${{text(row.team)}}</strong></td>
-          <td>${{text(row.projected_coach)}}</td>
+          <td>${{coachChip(row)}}</td>
           <td>${{text(row.conference)}}</td>
           <td><span class="pill tier-chip tier-${{cls(row.tier)}}">${{tierLabel(row.tier)}}</span></td>
           <td class="num"><strong>${{text(row.upset_pct)}}%</strong></td>
