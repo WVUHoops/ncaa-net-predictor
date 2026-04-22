@@ -65,6 +65,12 @@ def parse_args() -> argparse.Namespace:
         / "coach_latest_summary_2016_2026.csv",
     )
     parser.add_argument(
+        "--modeling-table-csv",
+        type=Path,
+        default=PROJECT_ROOT / "data" / "processed" / "modeling" / "modeling_table.csv",
+        help="Historical modeling table with preseason roster-talent features.",
+    )
+    parser.add_argument(
         "--output-dir",
         type=Path,
         default=PROJECT_ROOT / "data" / "processed" / "upset_risk",
@@ -85,6 +91,7 @@ def main() -> int:
         args.kenpom_dir,
         args.coach_history_csv,
         coach_road_hm_rows,
+        args.modeling_table_csv,
     )
     output_dir = args.output_dir
 

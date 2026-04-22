@@ -10,6 +10,25 @@ from typing import Any
 
 from net_predictor.coach_factor import canonical_team_key, normalize_coach_name
 
+COACH_STYLE_COLUMNS = (
+    "tempo",
+    "rank_tempo",
+    "efg_pct",
+    "to_pct",
+    "or_pct",
+    "ft_rate",
+    "def_efg_pct",
+    "def_to_pct",
+    "def_or_pct",
+    "def_ft_rate",
+    "fg3_pct",
+    "three_point_attempt_rate",
+    "opp_fg3_pct",
+    "opp_three_point_attempt_rate",
+    "off_points_from_three_pct",
+    "def_points_from_three_pct",
+)
+
 
 def as_float(value: Any) -> float | None:
     if value in (None, ""):
@@ -99,6 +118,76 @@ def load_kenpom_preseason_rows(kenpom_dir: Path, min_season: int | None = None, 
     return rows
 
 
+def value(row: dict[str, Any], *keys: str) -> Any:
+    for key in keys:
+        if key in row and row[key] not in (None, ""):
+            return row[key]
+    return None
+
+
+def load_kenpom_style_rows(
+    kenpom_dir: Path,
+    min_season: int | None = None,
+    max_season: int | None = None,
+) -> dict[tuple[int, str], dict[str, Any]]:
+    rows: dict[tuple[int, str], dict[str, Any]] = {}
+    style_files = {
+        "four_factors": "four_factors.json",
+        "misc": "misc_stats.json",
+        "pointdist": "pointdist.json",
+    }
+
+    for season_dir in season_dirs(kenpom_dir):
+        season = int(season_dir.name)
+        if min_season is not None and season < min_season:
+            continue
+        if max_season is not None and season > max_season:
+            continue
+
+        for source_name, filename in style_files.items():
+            path = season_dir / filename
+            if not path.exists():
+                continue
+            for raw in read_json_rows(path):
+                if str(raw.get("ConfOnly")).lower() == "true":
+                    continue
+                team_name = value(raw, "TeamName")
+                if not team_name:
+                    continue
+                row = rows.setdefault((season, canonical_team_key(team_name)), {})
+                if source_name == "four_factors":
+                    row.update(
+                        {
+                            "efg_pct": as_float(value(raw, "eFG_Pct")),
+                            "to_pct": as_float(value(raw, "TO_Pct")),
+                            "or_pct": as_float(value(raw, "OR_Pct")),
+                            "ft_rate": as_float(value(raw, "FT_Rate")),
+                            "def_efg_pct": as_float(value(raw, "DeFG_Pct")),
+                            "def_to_pct": as_float(value(raw, "DTO_Pct")),
+                            "def_or_pct": as_float(value(raw, "DOR_Pct")),
+                            "def_ft_rate": as_float(value(raw, "DFT_Rate")),
+                        }
+                    )
+                elif source_name == "misc":
+                    row.update(
+                        {
+                            "fg3_pct": as_float(value(raw, "FG3Pct")),
+                            "three_point_attempt_rate": as_float(value(raw, "F3GRate")),
+                            "opp_fg3_pct": as_float(value(raw, "OppFG3Pct")),
+                            "opp_three_point_attempt_rate": as_float(value(raw, "OppF3GRate")),
+                        }
+                    )
+                elif source_name == "pointdist":
+                    row.update(
+                        {
+                            "off_points_from_three_pct": as_float(value(raw, "OffFg3")),
+                            "def_points_from_three_pct": as_float(value(raw, "DefFg3")),
+                        }
+                    )
+
+    return rows
+
+
 def team_index(team_rows: list[dict[str, Any]]) -> dict[tuple[int, str], dict[str, Any]]:
     index: dict[tuple[int, str], dict[str, Any]] = {}
     for row in team_rows:
@@ -137,9 +226,11 @@ def coach_season_rows(
     team_rows: list[dict[str, Any]],
     rating_rows: list[dict[str, Any]],
     preseason_rows: list[dict[str, Any]] | None = None,
+    style_rows: dict[tuple[int, str], dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     teams_by_season_name = team_index(team_rows)
     preseason_by_season_name = preseason_index(preseason_rows or [])
+    style_by_season_name = style_rows or {}
     rows: list[dict[str, Any]] = []
 
     for rating in rating_rows:
@@ -149,8 +240,10 @@ def coach_season_rows(
         if season is None or not team_name or not coach:
             continue
 
-        team = teams_by_season_name.get((season, canonical_team_key(team_name)), {})
-        preseason = preseason_by_season_name.get((season, canonical_team_key(team_name)), {})
+        team_key = canonical_team_key(team_name)
+        team = teams_by_season_name.get((season, team_key), {})
+        preseason = preseason_by_season_name.get((season, team_key), {})
+        style = style_by_season_name.get((season, team_key), {})
         wins = as_int(rating.get("Wins"))
         losses = as_int(rating.get("Losses"))
         games = (wins or 0) + (losses or 0)
@@ -168,7 +261,7 @@ def coach_season_rows(
                 "season": season,
                 "team_id": team.get("TeamID"),
                 "team_name": team_name,
-                "team_key": canonical_team_key(team_name),
+                "team_key": team_key,
                 "conference": rating.get("ConfShort") or team.get("ConfShort"),
                 "coach": coach,
                 "coach_key": normalize_coach_name(coach),
@@ -205,6 +298,20 @@ def coach_season_rows(
                 "rank_adj_de": as_int(rating.get("RankAdjDE")),
                 "tempo": as_float(rating.get("AdjTempo")),
                 "rank_tempo": as_int(rating.get("RankAdjTempo")),
+                "efg_pct": style.get("efg_pct"),
+                "to_pct": style.get("to_pct"),
+                "or_pct": style.get("or_pct"),
+                "ft_rate": style.get("ft_rate"),
+                "def_efg_pct": style.get("def_efg_pct"),
+                "def_to_pct": style.get("def_to_pct"),
+                "def_or_pct": style.get("def_or_pct"),
+                "def_ft_rate": style.get("def_ft_rate"),
+                "fg3_pct": style.get("fg3_pct"),
+                "three_point_attempt_rate": style.get("three_point_attempt_rate"),
+                "opp_fg3_pct": style.get("opp_fg3_pct"),
+                "opp_three_point_attempt_rate": style.get("opp_three_point_attempt_rate"),
+                "off_points_from_three_pct": style.get("off_points_from_three_pct"),
+                "def_points_from_three_pct": style.get("def_points_from_three_pct"),
                 "sos": as_float(rating.get("SOS")),
                 "rank_sos": as_int(rating.get("RankSOS")),
                 "ncsos": as_float(rating.get("NCSOS")),
@@ -243,6 +350,16 @@ def distinct_programs(rows: list[dict[str, Any]]) -> int:
         for row in rows
     }
     return len(programs)
+
+
+def style_summary(history: list[dict[str, Any]], last_3: list[dict[str, Any]], last_5: list[dict[str, Any]], last: dict[str, Any] | None) -> dict[str, Any]:
+    output: dict[str, Any] = {}
+    for column in COACH_STYLE_COLUMNS:
+        output[f"coach_prior_avg_{column}"] = mean([row.get(column) for row in history])
+        output[f"coach_prior_last3_avg_{column}"] = mean([row.get(column) for row in last_3])
+        output[f"coach_prior_last5_avg_{column}"] = mean([row.get(column) for row in last_5])
+        output[f"coach_prior_last_{column}"] = last.get(column) if last else None
+    return output
 
 
 def summary_from_history(history: list[dict[str, Any]], *, current: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -293,6 +410,7 @@ def summary_from_history(history: list[dict[str, Any]], *, current: dict[str, An
         "coach_prior_avg_seed": mean(seeds),
         "coach_prior_avg_sos": mean([row["sos"] for row in history]),
         "coach_prior_avg_ncsos": mean([row["ncsos"] for row in history]),
+        **style_summary(history, last_3, last_5, last),
         "coach_prior_same_school_seasons": len(same_school),
         "coach_prior_same_school_avg_adj_em": mean([row["adj_em"] for row in same_school]),
         "coach_prior_same_school_avg_adj_em_over_expected": mean(

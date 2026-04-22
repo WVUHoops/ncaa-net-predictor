@@ -322,6 +322,45 @@ def model_outputs(
                     "composition_weighted_roster_talent": row.get(
                         "roster_talent_continuity_plus_incoming"
                     ),
+                    "roster_talent_returning_production_pct_avg": row.get(
+                        "roster_talent_returning_production_pct_avg"
+                    ),
+                    "roster_talent_returning_quality_index": row.get(
+                        "roster_talent_returning_quality_index"
+                    ),
+                    "roster_talent_returning_core_continuity": row.get(
+                        "roster_talent_returning_core_continuity"
+                    ),
+                    "roster_talent_cbb_transfer_quality_index": row.get(
+                        "roster_talent_cbb_transfer_quality_index"
+                    ),
+                    "roster_talent_incoming_hs_score": row.get(
+                        "roster_talent_incoming_hs_score"
+                    ),
+                    "roster_talent_incoming_transfer_score": row.get(
+                        "roster_talent_incoming_transfer_score"
+                    ),
+                    "roster_talent_incoming_hs_rank_percentile": row.get(
+                        "roster_talent_incoming_hs_rank_percentile"
+                    ),
+                    "roster_talent_incoming_transfer_rank_percentile": row.get(
+                        "roster_talent_incoming_transfer_rank_percentile"
+                    ),
+                    "roster_talent_incoming_transfer_production_percentile": row.get(
+                        "roster_talent_incoming_transfer_production_percentile"
+                    ),
+                    "roster_talent_weighted_returning_core_continuity": row.get(
+                        "roster_talent_weighted_returning_core_continuity"
+                    ),
+                    "roster_talent_weighted_hs_rank_percentile": row.get(
+                        "roster_talent_weighted_hs_rank_percentile"
+                    ),
+                    "roster_talent_weighted_transfer_rank_percentile": row.get(
+                        "roster_talent_weighted_transfer_rank_percentile"
+                    ),
+                    "roster_talent_continuity_plus_incoming": row.get(
+                        "roster_talent_continuity_plus_incoming"
+                    ),
                     "incoming_on3_hs_rank": row.get("incoming_on3_hs_rank"),
                     "incoming_on3_transfer_rank": row.get("incoming_on3_transfer_rank"),
                     "incoming_cbb_transfer_players": row.get("incoming_cbb_transfer_players"),

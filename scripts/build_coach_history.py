@@ -18,6 +18,7 @@ from net_predictor.coach_history import (  # noqa: E402
     coach_season_rows,
     load_kenpom_preseason_rows,
     load_kenpom_rating_rows,
+    load_kenpom_style_rows,
     load_kenpom_team_rows,
     write_csv,
     write_json,
@@ -56,9 +57,10 @@ def main() -> int:
     team_rows = load_kenpom_team_rows(args.kenpom_dir, args.min_season, args.max_season)
     rating_rows = load_kenpom_rating_rows(args.kenpom_dir, args.min_season, args.max_season)
     preseason_rows = load_kenpom_preseason_rows(args.kenpom_dir, args.min_season, args.max_season)
+    style_rows = load_kenpom_style_rows(args.kenpom_dir, args.min_season, args.max_season)
     seasons = sorted({int(row["Season"]) for row in rating_rows if row.get("Season") is not None})
 
-    coach_seasons = coach_season_rows(team_rows, rating_rows, preseason_rows)
+    coach_seasons = coach_season_rows(team_rows, rating_rows, preseason_rows, style_rows)
     history_features = coach_history_feature_rows(coach_seasons)
     latest_summaries = coach_latest_summary_rows(coach_seasons)
     stem = season_stem(args.min_season, args.max_season, seasons)

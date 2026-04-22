@@ -92,6 +92,55 @@ BASE_NUMERIC_FEATURES = (
     "def_points_from_three_pct",
 )
 
+ROSTER_TALENT_FEATURES = (
+    "roster_talent_returning_production_pct_avg",
+    "roster_talent_returning_quality_index",
+    "roster_talent_returning_core_continuity",
+    "roster_talent_known_roster_players",
+    "roster_talent_returner_impact_share",
+    "roster_talent_hs_newcomer_impact_share",
+    "roster_talent_transfer_newcomer_impact_share",
+    "roster_talent_newcomer_impact_share",
+    "roster_talent_cbb_transfer_quality_index",
+    "roster_talent_incoming_hs_score",
+    "roster_talent_incoming_transfer_score",
+    "roster_talent_incoming_hs_rank_percentile",
+    "roster_talent_incoming_transfer_rank_percentile",
+    "roster_talent_incoming_transfer_production_percentile",
+    "roster_talent_weighted_returning_core_continuity",
+    "roster_talent_weighted_hs_rank_percentile",
+    "roster_talent_weighted_transfer_rank_percentile",
+    "roster_talent_continuity_plus_incoming",
+)
+
+COACH_STYLE_BASE_FEATURES = (
+    "tempo",
+    "rank_tempo",
+    "efg_pct",
+    "to_pct",
+    "or_pct",
+    "ft_rate",
+    "def_efg_pct",
+    "def_to_pct",
+    "def_or_pct",
+    "def_ft_rate",
+    "fg3_pct",
+    "three_point_attempt_rate",
+    "opp_fg3_pct",
+    "opp_three_point_attempt_rate",
+    "off_points_from_three_pct",
+    "def_points_from_three_pct",
+)
+
+
+def coach_style_feature_names() -> tuple[str, ...]:
+    names: list[str] = []
+    for window in ("avg", "last3_avg", "last5_avg", "last"):
+        for feature in COACH_STYLE_BASE_FEATURES:
+            names.append(f"coach_prior_{window}_{feature}")
+    return tuple(names)
+
+
 COACH_NUMERIC_FEATURES = (
     "coach_prior_seasons",
     "coach_prior_program_count",
@@ -111,11 +160,26 @@ COACH_NUMERIC_FEATURES = (
     "coach_prior_same_school_seasons",
     "coach_prior_same_school_avg_adj_em_over_expected",
     "coach_first_year_at_school",
+    *coach_style_feature_names(),
 )
 
 MODEL_FEATURES = (
     "days_from_nov_1",
     "venue_capacity_log",
+    "away_roster_talent_continuity_plus_incoming",
+    "away_roster_talent_returning_quality_index",
+    "away_roster_talent_returning_core_continuity",
+    "away_roster_talent_cbb_transfer_quality_index",
+    "away_roster_talent_incoming_transfer_score",
+    "away_roster_talent_incoming_transfer_production_percentile",
+    "away_roster_talent_incoming_hs_score",
+    "away_roster_talent_incoming_hs_rank_percentile",
+    "away_roster_talent_weighted_returning_core_continuity",
+    "away_roster_talent_weighted_transfer_rank_percentile",
+    "away_roster_talent_weighted_hs_rank_percentile",
+    "home_roster_talent_continuity_plus_incoming",
+    "roster_talent_gap",
+    "away_roster_talent_x_coach_three_rate",
     "away_adj_em",
     "away_rank_adj_em",
     "away_adj_oe",
@@ -168,15 +232,34 @@ MODEL_FEATURES = (
     "away_coach_prior_last3_avg_adj_em_over_expected",
     "away_coach_prior_positive_adj_em_over_expected_rate",
     "away_coach_prior_big_overperform_rate",
+    "away_coach_prior_avg_tempo",
+    "away_coach_prior_last3_avg_tempo",
+    "away_coach_prior_avg_three_point_attempt_rate",
+    "away_coach_prior_last3_avg_three_point_attempt_rate",
+    "away_coach_prior_avg_off_points_from_three_pct",
+    "away_coach_prior_avg_to_pct",
+    "away_coach_prior_avg_or_pct",
+    "away_coach_prior_avg_ft_rate",
+    "away_coach_prior_avg_def_to_pct",
+    "away_coach_prior_avg_def_or_pct",
     "home_coach_prior_seasons",
     "home_coach_prior_win_pct",
     "home_coach_prior_avg_adj_em_over_expected",
     "home_coach_prior_last3_avg_adj_em_over_expected",
     "home_coach_prior_big_underperform_rate",
+    "home_coach_prior_avg_tempo",
+    "home_coach_prior_avg_opp_three_point_attempt_rate",
+    "home_coach_prior_avg_def_efg_pct",
+    "home_coach_prior_avg_def_to_pct",
+    "home_coach_prior_avg_def_or_pct",
+    "home_coach_prior_avg_def_ft_rate",
     "home_coach_first_year_at_school",
     "coach_overperformance_gap",
     "coach_positive_over_expected_gap",
     "coach_experience_gap",
+    "coach_style_tempo_gap",
+    "away_coach_style_three_rate_x_quality",
+    "away_coach_style_threes_vs_home_allow",
     "away_coach_overperformance_x_quality",
     "home_coach_underperformance_x_vulnerability",
     "away_coach_hm_guarantee_games_log",
@@ -361,6 +444,35 @@ def load_latest_coach_features(path: Path | None) -> dict[str, dict[str, Any]]:
     return features
 
 
+def normalize_roster_talent_features(row: dict[str, Any]) -> dict[str, Any]:
+    output = {feature: as_float(row.get(feature)) for feature in ROSTER_TALENT_FEATURES}
+    if output["roster_talent_continuity_plus_incoming"] is None:
+        output["roster_talent_continuity_plus_incoming"] = as_float(
+            row.get("composition_weighted_roster_talent")
+        )
+    if output["roster_talent_incoming_transfer_production_percentile"] is None:
+        output["roster_talent_incoming_transfer_production_percentile"] = as_float(
+            row.get("incoming_cbb_transfer_production_percentile")
+        )
+    if output["roster_talent_known_roster_players"] is None:
+        output["roster_talent_known_roster_players"] = as_float(row.get("roster_known_players"))
+    return output
+
+
+def load_roster_talent_features(path: Path | None) -> dict[tuple[int, str], dict[str, Any]]:
+    if path is None or not path.exists():
+        return {}
+
+    features: dict[tuple[int, str], dict[str, Any]] = {}
+    for row in read_csv_rows(path):
+        season = as_int(row.get("season"))
+        team_key = schedule_team_key(row.get("team") or row.get("team_name"))
+        if season is None or not team_key:
+            continue
+        features[(season, team_key)] = normalize_roster_talent_features(row)
+    return features
+
+
 def normalize_coach_features(row: dict[str, Any]) -> dict[str, Any]:
     output = {}
     for feature in COACH_NUMERIC_FEATURES:
@@ -377,10 +489,23 @@ def prefixed_coach_features(source: dict[str, Any] | None, prefix: str) -> dict[
     return {f"{prefix}_{feature}": source.get(feature) for feature in COACH_NUMERIC_FEATURES}
 
 
+def prefixed_roster_talent_features(source: dict[str, Any] | None, prefix: str) -> dict[str, Any]:
+    source = normalize_roster_talent_features(source or {})
+    return {f"{prefix}_{feature}": source.get(feature) for feature in ROSTER_TALENT_FEATURES}
+
+
 def median_coach_features(rows: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         feature: median([as_float(row.get(feature)) for row in rows])
         for feature in COACH_NUMERIC_FEATURES
+    }
+
+
+def median_roster_talent_features(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    normalized = [normalize_roster_talent_features(row) for row in rows]
+    return {
+        feature: median([as_float(row.get(feature)) for row in normalized])
+        for feature in ROSTER_TALENT_FEATURES
     }
 
 
@@ -475,6 +600,26 @@ def enrich_matchup_features(row: dict[str, Any]) -> None:
     row["coach_experience_gap"] = difference(
         row.get("away_coach_prior_seasons"),
         row.get("home_coach_prior_seasons"),
+    )
+    row["roster_talent_gap"] = difference(
+        row.get("away_roster_talent_continuity_plus_incoming"),
+        row.get("home_roster_talent_continuity_plus_incoming"),
+    )
+    row["away_roster_talent_x_coach_three_rate"] = product(
+        row.get("away_roster_talent_continuity_plus_incoming"),
+        row.get("away_coach_prior_avg_three_point_attempt_rate"),
+    )
+    row["coach_style_tempo_gap"] = difference(
+        row.get("away_coach_prior_avg_tempo"),
+        row.get("home_coach_prior_avg_tempo"),
+    )
+    row["away_coach_style_three_rate_x_quality"] = product(
+        row.get("away_adj_em"),
+        row.get("away_coach_prior_avg_three_point_attempt_rate"),
+    )
+    row["away_coach_style_threes_vs_home_allow"] = product(
+        row.get("away_coach_prior_avg_three_point_attempt_rate"),
+        row.get("home_coach_prior_avg_opp_three_point_attempt_rate"),
     )
     row["away_coach_overperformance_x_quality"] = product(
         row.get("away_adj_em"),
@@ -760,9 +905,11 @@ def build_training_rows(
     kenpom_dir: Path,
     coach_history_csv: Path | None = None,
     coach_road_hm_rows: list[dict[str, Any]] | None = None,
+    modeling_table_csv: Path | None = None,
 ) -> list[dict[str, Any]]:
     team_features = load_kenpom_team_features(kenpom_dir)
     coach_features = load_historical_coach_features(coach_history_csv)
+    roster_talent_features = load_roster_talent_features(modeling_table_csv)
     rows: list[dict[str, Any]] = []
     with schedule_csv.open("r", encoding="utf-8", newline="") as file:
         reader = csv.DictReader(file)
@@ -827,6 +974,8 @@ def build_training_rows(
                 "venue_capacity_log": math.log1p(as_float(game.get("venue_capacity")) or 0.0),
                 **prefixed_features(away_prior, "away"),
                 **prefixed_features(home_prior, "home"),
+                **prefixed_roster_talent_features(roster_talent_features.get((season, away_key)), "away"),
+                **prefixed_roster_talent_features(roster_talent_features.get((season, home_key)), "home"),
                 **prefixed_coach_features(coach_features.get((season, away_key)), "away"),
                 **prefixed_coach_features(coach_features.get((season, home_key)), "home"),
             }
@@ -916,6 +1065,16 @@ def sigmoid(value_: float) -> float:
     return z / (1 + z)
 
 
+def feature_signal_group(feature: str) -> str:
+    if "_roster_talent_" in feature or feature.startswith("roster_talent_"):
+        return "roster_talent"
+    if "_coach_" in feature or feature.startswith("coach_"):
+        return "coach_history_style"
+    if feature in {"days_from_nov_1", "venue_capacity_log"}:
+        return "game_context"
+    return "program_history"
+
+
 class LogisticRiskModel:
     def __init__(
         self,
@@ -935,6 +1094,15 @@ class LogisticRiskModel:
         self.imputations: dict[str, float] = {}
         self.means: dict[str, float] = {}
         self.scales: dict[str, float] = {}
+
+    def l2_multiplier(self, feature: str) -> float:
+        if "_roster_talent_" in feature or feature.startswith("roster_talent_"):
+            return 0.55
+        if "_coach_" in feature or feature.startswith("coach_"):
+            return 0.8
+        if feature in {"days_from_nov_1", "venue_capacity_log"}:
+            return 1.0
+        return 1.25
 
     def fit(self, rows: list[dict[str, Any]]) -> "LogisticRiskModel":
         if not rows:
@@ -966,7 +1134,7 @@ class LogisticRiskModel:
             total_weight = total_weight or 1.0
             self.intercept -= self.learning_rate * grad_intercept / total_weight
             for index in range(len(self.weights)):
-                regularization = self.l2 * self.weights[index]
+                regularization = self.l2 * self.l2_multiplier(self.features[index]) * self.weights[index]
                 self.weights[index] -= self.learning_rate * (
                     grad_weights[index] / total_weight + regularization
                 )
@@ -989,6 +1157,7 @@ class LogisticRiskModel:
         return [
             {
                 "feature": feature,
+                "signal_group": feature_signal_group(feature),
                 "coefficient": coefficient,
                 "abs_coefficient": abs(coefficient),
             }
@@ -1165,6 +1334,11 @@ def current_risk_board(
         and row.get("conference") in HIGH_MAJOR_CONFERENCES
         and prediction_coach_key(row) in coach_by_key
     ]
+    high_major_prediction_rows = [
+        row
+        for row in prediction_rows
+        if row.get("model") == prediction_model and row.get("conference") in HIGH_MAJOR_CONFERENCES
+    ]
     away_guarantee_by_coach, home_guarantee_by_coach = coach_guarantee_summary_indexes(
         coach_guarantee_rows or []
     )
@@ -1177,6 +1351,7 @@ def current_risk_board(
         and prediction_coach_key(row) in home_guarantee_by_coach
     ]
     median_home_guarantee = median_numeric_rows(high_major_home_guarantee_rows)
+    median_home_roster_talent = median_roster_talent_features(high_major_prediction_rows)
     host = median_high_major_host(team_features, current_feature_season, high_major_coach_rows)
     rows: list[dict[str, Any]] = []
 
@@ -1204,6 +1379,8 @@ def current_risk_board(
             "venue_capacity_log": math.log1p(13000),
             **prefixed_features(away, "away"),
             **prefixed_features(host, "home"),
+            **prefixed_roster_talent_features(schedule_row, "away"),
+            **prefixed_roster_talent_features(median_home_roster_talent, "home"),
             **prefixed_coach_features(
                 coach_by_key.get(prediction_coach_key(schedule_row)),
                 "away",

@@ -37,6 +37,7 @@ data/processed/program_history/*
 !data/processed/coach_history/
 data/processed/coach_history/*
 !data/processed/coach_history/coach_latest_summary_2016_2026.csv
+!data/processed/coach_history/coach_history_features_2016_2026.csv
 
 !data/processed/coach_features/
 data/processed/coach_features/*
