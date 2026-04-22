@@ -179,7 +179,7 @@ def slim_risk_row(
     projections_by_team: dict[str, dict[str, Any]],
     host_row: dict[str, Any] | None,
 ) -> dict[str, Any]:
-    upset_pct = wvu_home_upset_pct(row, projections_by_team, host_row)
+    upset_pct = pct(row.get("upset_probability_vs_median_high_major"))
     risk_bucket = wvu_risk_bucket(upset_pct)
     return {
         "team": row.get("team"),
@@ -188,23 +188,12 @@ def slim_risk_row(
         "tier": row.get("opponent_quality_tier"),
         "program_band": row.get("program_consistency_band"),
         "upset_pct": upset_pct,
-        "hm_upset_model_pct": pct(row.get("upset_probability_vs_median_high_major")),
         "risk_bucket": risk_bucket,
         "risk_sort": risk_sort_value(risk_bucket),
         "recommendation": row.get("recommendation"),
-        "safe_value_score": compact_float(row.get("safe_value_score"), 2),
         "danger_index": compact_float(row.get("danger_index"), 4),
         "schedule_score": compact_float(row.get("schedule_score_rank"), 1),
         "added_wab": added_wab_proxy(row.get("schedule_score_rank")),
-        "coach_guarantee_games": compact_float(row.get("away_coach_road_hm_games"), 0),
-        "has_coach_guarantee_history": (as_float(row.get("away_coach_road_hm_games")) or 0) > 0,
-        "coach_guarantee_upset_rate": pct(row.get("away_coach_road_hm_upset_rate")),
-        "coach_guarantee_close_rate": pct(row.get("away_coach_road_hm_close_rate")),
-        "coach_guarantee_avg_margin_over_expected": compact_float(
-            row.get("away_coach_road_hm_avg_margin_over_expected"),
-            1,
-        ),
-        "coach_pest_index": compact_float(row.get("away_coach_road_hm_pest_index"), 3),
         "three_rate": compact_float(row.get("away_three_point_attempt_rate"), 1),
         "experience": compact_float(row.get("away_experience"), 2),
         "adj_em": compact_float(row.get("away_adj_em"), 1),
@@ -802,18 +791,13 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         </details>
         <select id="sort">
           <option value="added_wab:desc">Added WAB high-low</option>
-          <option value="safe_value_score:desc">Best safe value</option>
-          <option value="upset_pct:desc">Highest WVU upset risk</option>
-          <option value="upset_pct:asc">Lowest WVU upset risk</option>
+          <option value="upset_pct:desc">Highest upset risk</option>
+          <option value="upset_pct:asc">Lowest upset risk</option>
           <option value="team:asc">Team A-Z</option>
           <option value="conference:asc">Conference A-Z</option>
           <option value="tier:asc">Tier A-Z</option>
           <option value="risk_sort:desc">Risk high-low</option>
           <option value="recommendation:asc">Recommendation A-Z</option>
-          <option value="coach_pest_index:desc">Coach pest high-low</option>
-          <option value="coach_guarantee_avg_margin_over_expected:desc">Coach road HM over expected high-low</option>
-          <option value="coach_guarantee_upset_rate:desc">Coach road HM upset rate high-low</option>
-          <option value="coach_guarantee_close_rate:desc">Coach road HM close rate high-low</option>
           <option value="three_rate:desc">3PA rate high-low</option>
           <option value="experience:desc">Experience high-low</option>
           <option value="adj_em:desc">AdjEM high-low</option>
@@ -827,17 +811,10 @@ def dashboard_html(payload: dict[str, Any]) -> str:
               <th data-key="projected_coach">Coach</th>
               <th data-key="conference">Conf</th>
               <th data-key="tier">Tier</th>
-              <th data-key="upset_pct">WVU Upset %</th>
+              <th data-key="upset_pct">Upset %</th>
               <th data-key="risk_sort">Risk</th>
-              <th data-key="hm_upset_model_pct">HM Model %</th>
               <th data-key="recommendation">Recommendation</th>
-              <th data-key="safe_value_score">Safe Value</th>
               <th data-key="added_wab">Added WAB</th>
-              <th data-key="coach_pest_index">Coach Pest</th>
-              <th data-key="coach_guarantee_games">Coach Road HM Gms</th>
-              <th data-key="coach_guarantee_upset_rate">Coach Road HM Upset %</th>
-              <th data-key="coach_guarantee_close_rate">Coach Road HM Close %</th>
-              <th data-key="coach_guarantee_avg_margin_over_expected">Coach +/- Exp</th>
               <th data-key="three_rate">3PA Rate</th>
               <th data-key="experience">Exp</th>
               <th data-key="adj_em">AdjEM</th>
@@ -901,7 +878,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       </div>
     </section>
     <footer>
-      Added WAB and planner NCSOS are schedule-value proxies, not official WAB or official NCAA/KenPom NCSOS. Risk is bucketed from WVU Upset %. HM Model % is the generic median-high-major upset model. Coach Pest reflects a coach's prior low/mid-major road results against high-major hosts.
+      Added WAB and planner NCSOS are schedule-value proxies, not official WAB or official NCAA/KenPom NCSOS. Upset % is the generic median-high-major upset model, and risk is bucketed from that value.
     </footer>
   </main>
   <script>
@@ -1035,15 +1012,8 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <td><span class="pill tier-chip tier-${{cls(row.tier)}}">${{tierLabel(row.tier)}}</span></td>
           <td class="num"><strong>${{text(row.upset_pct)}}%</strong></td>
           <td><span class="${{cls(row.risk_bucket)}}">${{text(row.risk_bucket).replaceAll("_", " ")}}</span></td>
-          <td class="num">${{text(row.hm_upset_model_pct)}}%</td>
           <td><span class="pill ${{cls(row.recommendation)}}">${{text(row.recommendation).replaceAll("_", " ")}}</span></td>
-          <td class="num">${{text(row.safe_value_score)}}</td>
           <td class="num">${{text(row.added_wab)}}</td>
-          <td class="num">${{text(row.coach_pest_index)}}</td>
-          <td class="num">${{text(row.coach_guarantee_games)}}</td>
-          <td class="num">${{pctText(row.coach_guarantee_upset_rate)}}</td>
-          <td class="num">${{pctText(row.coach_guarantee_close_rate)}}</td>
-          <td class="num">${{text(row.coach_guarantee_avg_margin_over_expected)}}</td>
           <td class="num">${{text(row.three_rate)}}</td>
           <td class="num">${{text(row.experience)}}</td>
           <td class="num">${{text(row.adj_em)}}</td>
