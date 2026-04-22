@@ -19,6 +19,15 @@ EARLY_SEASON_MONTHS = {11, 12}
 TARGET_SEASON = 2027
 HOME_COURT_ADJ_EM = 3.5
 
+TEAM_KEY_ALIASES = {
+    "queens nc": "queens",
+    "queens university": "queens",
+    "queens university of charlotte": "queens",
+    "s carolina upstate": "usc upstate",
+    "sc upstate": "usc upstate",
+    "south carolina upstate": "usc upstate",
+}
+
 KENPOM_FEATURE_FILES = {
     "ratings": "ratings.json",
     "four_factors": "four_factors.json",
@@ -165,6 +174,11 @@ MODEL_FEATURES = (
     "away_coach_hm_guarantee_close_rate",
     "away_coach_hm_guarantee_over_expected_rate",
     "away_coach_hm_guarantee_avg_margin_over_expected",
+    "away_coach_road_hm_games_log",
+    "away_coach_road_hm_upset_rate",
+    "away_coach_road_hm_close_rate",
+    "away_coach_road_hm_over_expected_rate",
+    "away_coach_road_hm_avg_margin_over_expected",
     "home_coach_hm_guarantee_games_log",
     "home_coach_hm_guarantee_upset_allowed_rate",
     "home_coach_hm_guarantee_close_allowed_rate",
@@ -174,6 +188,7 @@ MODEL_FEATURES = (
     "coach_guarantee_over_expected_gap",
     "away_coach_guarantee_pest_index",
     "home_coach_guarantee_vulnerability_index",
+    "away_coach_road_hm_pest_index",
 )
 
 
@@ -209,6 +224,11 @@ def value(row: dict[str, Any], *keys: str) -> Any:
         if key in row and row[key] not in (None, ""):
             return row[key]
     return None
+
+
+def schedule_team_key(team: Any) -> str:
+    key = canonical_team_key(team)
+    return TEAM_KEY_ALIASES.get(key, key)
 
 
 def load_kenpom_team_features(kenpom_dir: Path) -> dict[tuple[int, str], dict[str, Any]]:
@@ -469,6 +489,13 @@ def enrich_matchup_features(row: dict[str, Any]) -> None:
             row.get("away_coach_hm_guarantee_over_expected_rate"),
         ]
     )
+    row["away_coach_road_hm_pest_index"] = average(
+        [
+            row.get("away_coach_road_hm_upset_rate"),
+            row.get("away_coach_road_hm_close_rate"),
+            row.get("away_coach_road_hm_over_expected_rate"),
+        ]
+    )
     row["home_coach_guarantee_vulnerability_index"] = average(
         [
             row.get("home_coach_hm_guarantee_upset_allowed_rate"),
@@ -476,6 +503,71 @@ def enrich_matchup_features(row: dict[str, Any]) -> None:
             row.get("home_coach_hm_guarantee_under_expected_rate"),
         ]
     )
+
+
+def empty_coach_road_hm_summary() -> dict[str, float | None]:
+    return {
+        "away_coach_road_hm_games": 0.0,
+        "away_coach_road_hm_games_log": 0.0,
+        "away_coach_road_hm_upset_rate": None,
+        "away_coach_road_hm_close_rate": None,
+        "away_coach_road_hm_over_expected_rate": None,
+        "away_coach_road_hm_avg_margin_over_expected": None,
+    }
+
+
+def coach_road_hm_summary(rows: list[dict[str, Any]]) -> dict[str, float | None]:
+    if not rows:
+        return empty_coach_road_hm_summary()
+
+    margins = [as_float(row.get("margin_over_expected_for_away")) for row in rows]
+    observed_margins = [margin for margin in margins if margin is not None]
+    games = float(len(rows))
+    upsets = sum(1 for row in rows if int(row.get("upset") or 0) == 1)
+    close_games = sum(1 for row in rows if (as_float(row.get("score_margin_for_away")) or -999) >= -10)
+    over_expected = sum(1 for margin in observed_margins if margin > 0)
+    return {
+        "away_coach_road_hm_games": games,
+        "away_coach_road_hm_games_log": math.log1p(games),
+        "away_coach_road_hm_upset_rate": upsets / games,
+        "away_coach_road_hm_close_rate": close_games / games,
+        "away_coach_road_hm_over_expected_rate": (
+            over_expected / len(observed_margins) if observed_margins else None
+        ),
+        "away_coach_road_hm_avg_margin_over_expected": (
+            sum(observed_margins) / len(observed_margins) if observed_margins else None
+        ),
+    }
+
+
+def attach_prior_coach_road_hm_history(
+    rows: list[dict[str, Any]],
+    road_hm_rows: list[dict[str, Any]],
+) -> None:
+    history_by_coach: dict[str, list[dict[str, Any]]] = {}
+    road_by_season: dict[int, list[dict[str, Any]]] = {}
+    for row in road_hm_rows:
+        road_by_season.setdefault(int(row["season"]), []).append(row)
+
+    for season in sorted({int(row["season"]) for row in rows}):
+        for row in [item for item in rows if int(item["season"]) == season]:
+            coach_key = str(row.get("away_coach_key") or "")
+            row.update(coach_road_hm_summary(history_by_coach.get(coach_key, [])))
+            enrich_matchup_features(row)
+
+        for road_row in road_by_season.get(season, []):
+            coach_key = str(road_row.get("away_coach_key") or "")
+            if coach_key:
+                history_by_coach.setdefault(coach_key, []).append(road_row)
+
+
+def coach_road_hm_summary_index(road_hm_rows: list[dict[str, Any]]) -> dict[str, dict[str, float | None]]:
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for row in road_hm_rows:
+        coach_key = str(row.get("away_coach_key") or "")
+        if coach_key:
+            grouped.setdefault(coach_key, []).append(row)
+    return {coach_key: coach_road_hm_summary(rows) for coach_key, rows in grouped.items()}
 
 
 def coach_guarantee_summary(rows: list[dict[str, Any]], *, role: str) -> dict[str, float | None]:
@@ -552,6 +644,76 @@ def attach_prior_coach_guarantee_history(rows: list[dict[str, Any]]) -> None:
                 home_history.setdefault(home_key, []).append(row)
 
 
+def build_low_major_road_high_major_rows(schedule_csv: Path, kenpom_dir: Path) -> list[dict[str, Any]]:
+    team_features = load_kenpom_team_features(kenpom_dir)
+    rows: list[dict[str, Any]] = []
+    with schedule_csv.open("r", encoding="utf-8", newline="") as file:
+        reader = csv.DictReader(file)
+        for game in reader:
+            season = as_int(game.get("season"))
+            if season is None or season <= min(s for s, _ in team_features):
+                continue
+            game_date = date_from_schedule_row(game)
+            if game_date is None:
+                continue
+            if not is_final(game):
+                continue
+            if is_true(game.get("neutral_site")):
+                continue
+            if is_true(game.get("conference_competition")):
+                continue
+            if str(game.get("season_type") or "") != "2":
+                continue
+            home_score = as_int(game.get("home_score"))
+            away_score = as_int(game.get("away_score"))
+            if home_score is None or away_score is None:
+                continue
+
+            home_key = schedule_team_key(value(game, "home_location", "home_short_display_name"))
+            away_key = schedule_team_key(value(game, "away_location", "away_short_display_name"))
+            home_current = team_features.get((season, home_key))
+            away_current = team_features.get((season, away_key))
+            home_prior = team_features.get((season - 1, home_key))
+            away_prior = team_features.get((season - 1, away_key))
+            if not home_current or not away_current or not home_prior or not away_prior:
+                continue
+            if home_current.get("conference") not in HIGH_MAJOR_CONFERENCES:
+                continue
+            if away_current.get("conference") in HIGH_MAJOR_CONFERENCES:
+                continue
+            if home_current.get("conference") == away_current.get("conference"):
+                continue
+
+            row = {
+                "game_id": value(game, "game_id", "id"),
+                "season": season,
+                "game_date": game_date.date().isoformat(),
+                "home_team": home_current.get("team"),
+                "home_team_key": home_key,
+                "home_conference": home_current.get("conference"),
+                "away_team": away_current.get("team"),
+                "away_team_key": away_key,
+                "away_conference": away_current.get("conference"),
+                "away_coach": away_current.get("coach"),
+                "away_coach_key": normalize_coach_name(away_current.get("coach")),
+                "home_score": home_score,
+                "away_score": away_score,
+                "score_margin_for_away": away_score - home_score,
+                "upset": int(away_score > home_score),
+            }
+            expected_margin_for_away = difference(away_prior.get("adj_em"), home_prior.get("adj_em"))
+            if expected_margin_for_away is not None:
+                expected_margin_for_away -= HOME_COURT_ADJ_EM
+            row["expected_margin_for_away"] = expected_margin_for_away
+            row["margin_over_expected_for_away"] = difference(
+                row.get("score_margin_for_away"),
+                row.get("expected_margin_for_away"),
+            )
+            rows.append(row)
+    rows.sort(key=lambda item: (int(item["season"]), str(item["game_date"]), str(item["game_id"])))
+    return rows
+
+
 def coach_guarantee_summary_indexes(
     rows: list[dict[str, Any]],
 ) -> tuple[dict[str, dict[str, float | None]], dict[str, dict[str, float | None]]]:
@@ -585,6 +747,7 @@ def build_training_rows(
     schedule_csv: Path,
     kenpom_dir: Path,
     coach_history_csv: Path | None = None,
+    coach_road_hm_rows: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     team_features = load_kenpom_team_features(kenpom_dir)
     coach_features = load_historical_coach_features(coach_history_csv)
@@ -612,8 +775,8 @@ def build_training_rows(
                 continue
             home_team = value(game, "home_location", "home_short_display_name")
             away_team = value(game, "away_location", "away_short_display_name")
-            home_key = canonical_team_key(home_team)
-            away_key = canonical_team_key(away_team)
+            home_key = schedule_team_key(home_team)
+            away_key = schedule_team_key(away_team)
             home_current = team_features.get((season, home_key))
             away_current = team_features.get((season, away_key))
             home_prior = team_features.get((season - 1, home_key))
@@ -667,6 +830,9 @@ def build_training_rows(
             rows.append(row)
 
     rows.sort(key=lambda item: (int(item["season"]), str(item["game_date"]), str(item["game_id"])))
+    if coach_road_hm_rows is None:
+        coach_road_hm_rows = build_low_major_road_high_major_rows(schedule_csv, kenpom_dir)
+    attach_prior_coach_road_hm_history(rows, coach_road_hm_rows)
     attach_prior_coach_guarantee_history(rows)
     return rows
 
@@ -972,6 +1138,7 @@ def current_risk_board(
     current_predictions_csv: Path,
     coach_latest_summary_csv: Path | None = None,
     coach_guarantee_rows: list[dict[str, Any]] | None = None,
+    coach_road_hm_rows: list[dict[str, Any]] | None = None,
     current_feature_season: int = 2026,
     prediction_model: str = "direct_ridge_schedule_building",
 ) -> list[dict[str, Any]]:
@@ -989,6 +1156,7 @@ def current_risk_board(
     away_guarantee_by_coach, home_guarantee_by_coach = coach_guarantee_summary_indexes(
         coach_guarantee_rows or []
     )
+    away_road_hm_by_coach = coach_road_hm_summary_index(coach_road_hm_rows or [])
     high_major_home_guarantee_rows = [
         home_guarantee_by_coach[prediction_coach_key(row)]
         for row in prediction_rows
@@ -1032,6 +1200,10 @@ def current_risk_board(
             **away_guarantee_by_coach.get(
                 prediction_coach_key(schedule_row),
                 coach_guarantee_summary([], role="away"),
+            ),
+            **away_road_hm_by_coach.get(
+                prediction_coach_key(schedule_row),
+                empty_coach_road_hm_summary(),
             ),
             **median_home_guarantee,
         }

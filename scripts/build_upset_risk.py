@@ -14,6 +14,7 @@ sys.path.insert(0, str(SRC_DIR))
 
 from net_predictor.upset_risk import (  # noqa: E402
     LogisticRiskModel,
+    build_low_major_road_high_major_rows,
     build_training_rows,
     current_risk_board,
     rolling_backtest,
@@ -78,7 +79,13 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    training_rows = build_training_rows(args.schedule_csv, args.kenpom_dir, args.coach_history_csv)
+    coach_road_hm_rows = build_low_major_road_high_major_rows(args.schedule_csv, args.kenpom_dir)
+    training_rows = build_training_rows(
+        args.schedule_csv,
+        args.kenpom_dir,
+        args.coach_history_csv,
+        coach_road_hm_rows,
+    )
     output_dir = args.output_dir
 
     write_json(training_rows, output_dir / "guarantee_game_training_table.json")
@@ -103,6 +110,7 @@ def main() -> int:
             args.current_predictions_csv,
             args.coach_latest_summary_csv,
             training_rows,
+            coach_road_hm_rows,
         )
         write_json(current_rows, output_dir / "current_2027_guarantee_risk_board.json")
         write_csv(current_rows, output_dir / "current_2027_guarantee_risk_board.csv")

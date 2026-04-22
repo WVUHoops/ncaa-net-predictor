@@ -61,7 +61,7 @@ def upset_risk_board_has_coach_history() -> bool:
     if not rows:
         return False
     return any(
-        row.get("away_coach_hm_guarantee_upset_rate") not in (None, "")
+        row.get("away_coach_road_hm_upset_rate") not in (None, "")
         for row in rows
     )
 
