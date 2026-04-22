@@ -103,6 +103,7 @@ def prefixed(row: dict[str, Any] | None, prefix: str, exclude: set[str]) -> dict
 
 
 def add_roster_talent_features(row: dict[str, Any]) -> None:
+    returning_players = as_float(row.get("prior_roster_expected_returning_players"))
     returning_minutes_pct = as_float(row.get("prior_roster_expected_returning_minutes_pct"))
     returning_possessions_pct = as_float(row.get("prior_roster_expected_returning_possessions_pct"))
     returning_points_pct = as_float(row.get("prior_roster_expected_returning_points_pct"))
@@ -117,7 +118,15 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
     transfer_score = as_float(row.get("incoming_on3_transfer_index_score"))
     transfer_raw_score_in = as_float(row.get("incoming_on3_transfer_raw_score_in"))
     transfer_rank_percentile = as_float(row.get("incoming_on3_transfer_rank_percentile"))
+    hs_players = first_existing(
+        as_float(row.get("incoming_on3_hs_applied_commits")),
+        as_float(row.get("incoming_on3_hs_commits")),
+    )
     cbb_transfer_players = as_float(row.get("incoming_cbb_transfer_players"))
+    transfer_players = first_existing(
+        cbb_transfer_players,
+        as_float(row.get("incoming_on3_transfer_transfers_in")),
+    )
     cbb_transfer_minutes = as_float(row.get("incoming_cbb_transfer_minutes"))
     cbb_transfer_warp = as_float(row.get("incoming_cbb_transfer_warp"))
     cbb_transfer_win_shares = as_float(row.get("incoming_cbb_transfer_win_shares"))
@@ -143,6 +152,16 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
         returning_minutes_pct,
         top_7_minutes_share,
     )
+    composition = roster_composition_weights(
+        returning_players=returning_players,
+        hs_players=hs_players,
+        transfer_players=transfer_players,
+    )
+    row["roster_talent_known_roster_players"] = composition["known_roster_players"]
+    row["roster_talent_returner_roster_share"] = composition["returner_share"]
+    row["roster_talent_hs_newcomer_roster_share"] = composition["hs_share"]
+    row["roster_talent_transfer_newcomer_roster_share"] = composition["transfer_share"]
+    row["roster_talent_newcomer_roster_share"] = composition["newcomer_share"]
     row["roster_talent_cbb_transfer_volume_index"] = average_existing(
         cbb_transfer_players,
         cbb_transfer_minutes,
@@ -166,10 +185,22 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
     row["roster_talent_incoming_transfer_rank_percentile"] = transfer_rank_percentile
     row["roster_talent_hs_need_fit"] = product_if_present(hs_score, lost_minutes_pct)
     row["roster_talent_transfer_need_fit"] = product_if_present(transfer_signal, lost_minutes_pct)
-    row["roster_talent_continuity_plus_incoming"] = sum_existing(
+    row["roster_talent_weighted_returning_core_continuity"] = product_if_present(
         row.get("roster_talent_returning_core_continuity"),
+        composition["returner_share"],
+    )
+    row["roster_talent_weighted_hs_rank_percentile"] = product_if_present(
         hs_rank_percentile,
+        composition["hs_share"],
+    )
+    row["roster_talent_weighted_transfer_rank_percentile"] = product_if_present(
         transfer_rank_percentile,
+        composition["transfer_share"],
+    )
+    row["roster_talent_continuity_plus_incoming"] = sum_existing(
+        row.get("roster_talent_weighted_returning_core_continuity"),
+        row.get("roster_talent_weighted_hs_rank_percentile"),
+        row.get("roster_talent_weighted_transfer_rank_percentile"),
     )
 
 
@@ -198,6 +229,39 @@ def product_if_present(left: float | None, right: float | None) -> float | None:
     if left is None or right is None:
         return None
     return left * right
+
+
+def roster_composition_weights(
+    *,
+    returning_players: float | None,
+    hs_players: float | None,
+    transfer_players: float | None,
+) -> dict[str, float | None]:
+    buckets = {
+        "returner": max(returning_players or 0.0, 0.0),
+        "hs": max(hs_players or 0.0, 0.0),
+        "transfer": max(transfer_players or 0.0, 0.0),
+    }
+    known_roster_players = sum(buckets.values())
+    if known_roster_players <= 0:
+        return {
+            "known_roster_players": None,
+            "returner_share": None,
+            "hs_share": None,
+            "transfer_share": None,
+            "newcomer_share": None,
+        }
+
+    returner_share = buckets["returner"] / known_roster_players
+    hs_share = buckets["hs"] / known_roster_players
+    transfer_share = buckets["transfer"] / known_roster_players
+    return {
+        "known_roster_players": known_roster_players,
+        "returner_share": returner_share,
+        "hs_share": hs_share,
+        "transfer_share": transfer_share,
+        "newcomer_share": hs_share + transfer_share,
+    }
 
 
 def build_model_rows(

@@ -285,6 +285,16 @@ def model_outputs(
                     "prior_roster_returning_minutes_pct": row.get(
                         "prior_roster_probable_returner_minutes_pct"
                     ),
+                    "roster_known_players": row.get("roster_talent_known_roster_players"),
+                    "returner_roster_share": row.get("roster_talent_returner_roster_share"),
+                    "newcomer_roster_share": row.get("roster_talent_newcomer_roster_share"),
+                    "hs_newcomer_roster_share": row.get("roster_talent_hs_newcomer_roster_share"),
+                    "transfer_newcomer_roster_share": row.get(
+                        "roster_talent_transfer_newcomer_roster_share"
+                    ),
+                    "composition_weighted_roster_talent": row.get(
+                        "roster_talent_continuity_plus_incoming"
+                    ),
                     "incoming_on3_hs_rank": row.get("incoming_on3_hs_rank"),
                     "incoming_on3_transfer_rank": row.get("incoming_on3_transfer_rank"),
                 }
