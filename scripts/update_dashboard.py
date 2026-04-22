@@ -31,10 +31,25 @@ def latest_current_player_agg() -> Path | None:
     return paths[0] if paths else None
 
 
+def can_rebuild_upset_risk() -> bool:
+    return (PROJECT_ROOT / "data" / "raw" / "hoopr" / "mbb_schedule_master.csv").exists()
+
+
+def existing_upset_risk_board() -> bool:
+    return (
+        PROJECT_ROOT
+        / "data"
+        / "processed"
+        / "upset_risk"
+        / "current_2027_guarantee_risk_board.csv"
+    ).exists()
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--skip-network", action="store_true")
     parser.add_argument("--skip-roster-status", action="store_true")
+    parser.add_argument("--skip-upset-risk", action="store_true")
     parser.add_argument("--on3-year", type=int, default=2026)
     return parser.parse_args()
 
@@ -84,7 +99,17 @@ def main() -> int:
             print("warning: no current CBB player aggregate snapshot found; skipping roster status")
 
     run_step(["python3", "scripts/predict_current_season.py"])
-    run_step(["python3", "scripts/build_upset_risk.py"])
+    if args.skip_upset_risk:
+        print("skipping upset-risk rebuild")
+    elif can_rebuild_upset_risk():
+        run_step(["python3", "scripts/build_upset_risk.py"])
+    elif existing_upset_risk_board():
+        print(
+            "warning: hoopR schedule master is missing; reusing existing upset-risk board",
+            file=sys.stderr,
+        )
+    else:
+        run_step(["python3", "scripts/build_upset_risk.py"])
     run_step(["python3", "scripts/build_dashboard.py"])
     return 0
 

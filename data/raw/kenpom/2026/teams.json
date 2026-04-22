@@ -1,0 +1,3652 @@
+[
+  {
+    "Arena": "Moody Coliseum",
+    "ArenaCity": "Abilene",
+    "ArenaState": "TX",
+    "Coach": "Brette Tanner",
+    "ConfShort": "WAC",
+    "Season": 2026,
+    "TeamID": 1,
+    "TeamName": "Abilene Christian"
+  },
+  {
+    "Arena": "Clune Arena",
+    "ArenaCity": "Colorado Springs",
+    "ArenaState": "CO",
+    "Coach": "Joe Scott",
+    "ConfShort": "MWC",
+    "Season": 2026,
+    "TeamID": 2,
+    "TeamName": "Air Force"
+  },
+  {
+    "Arena": "Rhodes Arena",
+    "ArenaCity": "Akron",
+    "ArenaState": "OH",
+    "Coach": "John Groce",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 3,
+    "TeamName": "Akron"
+  },
+  {
+    "Arena": "Coleman Coliseum",
+    "ArenaCity": "Tuscaloosa",
+    "ArenaState": "AL",
+    "Coach": "Nate Oats",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 4,
+    "TeamName": "Alabama"
+  },
+  {
+    "Arena": "Alabama A&M Event Center ",
+    "ArenaCity": "Normal",
+    "ArenaState": "AL",
+    "Coach": "Donte Jackson",
+    "ConfShort": "SWAC",
+    "Season": 2026,
+    "TeamID": 5,
+    "TeamName": "Alabama A&M"
+  },
+  {
+    "Arena": "Dunn-Oliver Acadome",
+    "ArenaCity": "Montgomery",
+    "ArenaState": "AL",
+    "Coach": "Tony Madlock",
+    "ConfShort": "SWAC",
+    "Season": 2026,
+    "TeamID": 6,
+    "TeamName": "Alabama St."
+  },
+  {
+    "Arena": "Broadview Center",
+    "ArenaCity": "Albany",
+    "ArenaState": "NY",
+    "Coach": "Dwayne Killings",
+    "ConfShort": "AE",
+    "Season": 2026,
+    "TeamID": 7,
+    "TeamName": "Albany"
+  },
+  {
+    "Arena": "Whitney Complex",
+    "ArenaCity": "Lorman",
+    "ArenaState": "MS",
+    "Coach": "Jake Morton",
+    "ConfShort": "SWAC",
+    "Season": 2026,
+    "TeamID": 8,
+    "TeamName": "Alcorn St."
+  },
+  {
+    "Arena": "Bender Arena",
+    "ArenaCity": "Washington",
+    "ArenaState": "DC",
+    "Coach": "Duane Simpkins",
+    "ConfShort": "PL",
+    "Season": 2026,
+    "TeamID": 9,
+    "TeamName": "American"
+  },
+  {
+    "Arena": "Holmes Center",
+    "ArenaCity": "Boone",
+    "ArenaState": "NC",
+    "Coach": "Dustin Kerns",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 10,
+    "TeamName": "Appalachian St."
+  },
+  {
+    "Arena": "McKale Memorial Center",
+    "ArenaCity": "Tucson",
+    "ArenaState": "AZ",
+    "Coach": "Tommy Lloyd",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 11,
+    "TeamName": "Arizona"
+  },
+  {
+    "Arena": "Desert Financial Arena",
+    "ArenaCity": "Tempe",
+    "ArenaState": "AZ",
+    "Coach": "Bobby Hurley",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 12,
+    "TeamName": "Arizona St."
+  },
+  {
+    "Arena": "Bud Walton Arena",
+    "ArenaCity": "Fayetteville",
+    "ArenaState": "AR",
+    "Coach": "John Calipari",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 13,
+    "TeamName": "Arkansas"
+  },
+  {
+    "Arena": "Clemmons Arena",
+    "ArenaCity": "Pine Bluff",
+    "ArenaState": "AR",
+    "Coach": "Solomon Bozeman",
+    "ConfShort": "SWAC",
+    "Season": 2026,
+    "TeamID": 15,
+    "TeamName": "Arkansas Pine Bluff"
+  },
+  {
+    "Arena": "First National Bank Arena",
+    "ArenaCity": "Jonesboro",
+    "ArenaState": "AR",
+    "Coach": "Ryan Pannone",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 16,
+    "TeamName": "Arkansas St."
+  },
+  {
+    "Arena": "Christl Arena",
+    "ArenaCity": "West Point",
+    "ArenaState": "NY",
+    "Coach": "Kevin Kuwik",
+    "ConfShort": "PL",
+    "Season": 2026,
+    "TeamID": 17,
+    "TeamName": "Army"
+  },
+  {
+    "Arena": "Neville Arena",
+    "ArenaCity": "Auburn",
+    "ArenaState": "AL",
+    "Coach": "Steven Pearl",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 18,
+    "TeamName": "Auburn"
+  },
+  {
+    "Arena": "F&M Bank Arena",
+    "ArenaCity": "Clarksville",
+    "ArenaState": "TN",
+    "Coach": "Corey Gipson",
+    "ConfShort": "ASun",
+    "Season": 2026,
+    "TeamID": 19,
+    "TeamName": "Austin Peay"
+  },
+  {
+    "Arena": "Worthen Arena",
+    "ArenaCity": "Muncie",
+    "ArenaState": "IN",
+    "Coach": "Mike Lewis",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 20,
+    "TeamName": "Ball St."
+  },
+  {
+    "Arena": "Foster Pavilion",
+    "ArenaCity": "Waco",
+    "ArenaState": "TX",
+    "Coach": "Scott Drew",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 21,
+    "TeamName": "Baylor"
+  },
+  {
+    "Arena": "Knights Hall",
+    "ArenaCity": "Louisville",
+    "ArenaState": "KY",
+    "Coach": "Doug Davenport",
+    "ConfShort": "ASun",
+    "Season": 2026,
+    "TeamID": 360,
+    "TeamName": "Bellarmine"
+  },
+  {
+    "Arena": "Curb Event Center",
+    "ArenaCity": "Nashville",
+    "ArenaState": "TN",
+    "Coach": "Casey Alexander",
+    "ConfShort": "MVC",
+    "Season": 2026,
+    "TeamID": 22,
+    "TeamName": "Belmont"
+  },
+  {
+    "Arena": "Moore Gym",
+    "ArenaCity": "Daytona Beach",
+    "ArenaState": "FL",
+    "Coach": "Reggie Theus",
+    "ConfShort": "SWAC",
+    "Season": 2026,
+    "TeamID": 23,
+    "TeamName": "Bethune Cookman"
+  },
+  {
+    "Arena": "Events Center",
+    "ArenaCity": "Vestal",
+    "ArenaState": "NY",
+    "Coach": "Levell Sanders",
+    "ConfShort": "AE",
+    "Season": 2026,
+    "TeamID": 24,
+    "TeamName": "Binghamton"
+  },
+  {
+    "Arena": "ExtraMile Arena",
+    "ArenaCity": "Boise",
+    "ArenaState": "ID",
+    "Coach": "Leon Rice",
+    "ConfShort": "MWC",
+    "Season": 2026,
+    "TeamID": 25,
+    "TeamName": "Boise St."
+  },
+  {
+    "Arena": "Conte Forum",
+    "ArenaCity": "Chestnut Hill",
+    "ArenaState": "MA",
+    "Coach": "Earl Grant",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 26,
+    "TeamName": "Boston College"
+  },
+  {
+    "Arena": "Case Gym",
+    "ArenaCity": "Boston",
+    "ArenaState": "MA",
+    "Coach": "Joe Jones",
+    "ConfShort": "PL",
+    "Season": 2026,
+    "TeamID": 27,
+    "TeamName": "Boston University"
+  },
+  {
+    "Arena": "Stroh Center",
+    "ArenaCity": "Bowling Green",
+    "ArenaState": "OH",
+    "Coach": "Todd Simon",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 28,
+    "TeamName": "Bowling Green"
+  },
+  {
+    "Arena": "Carver Arena",
+    "ArenaCity": "Peoria",
+    "ArenaState": "IL",
+    "Coach": "Brian Wardle",
+    "ConfShort": "MVC",
+    "Season": 2026,
+    "TeamID": 29,
+    "TeamName": "Bradley"
+  },
+  {
+    "Arena": "Pizzitola Sports Center",
+    "ArenaCity": "Providence",
+    "ArenaState": "RI",
+    "Coach": "Mike Martin",
+    "ConfShort": "Ivy",
+    "Season": 2026,
+    "TeamID": 30,
+    "TeamName": "Brown"
+  },
+  {
+    "Arena": "Chace Athletic Center",
+    "ArenaCity": "Smithfield",
+    "ArenaState": "RI",
+    "Coach": "Jamion Christian",
+    "ConfShort": "AE",
+    "Season": 2026,
+    "TeamID": 31,
+    "TeamName": "Bryant"
+  },
+  {
+    "Arena": "Sojka Pavilion",
+    "ArenaCity": "Lewisburg",
+    "ArenaState": "PA",
+    "Coach": "John Griffin",
+    "ConfShort": "PL",
+    "Season": 2026,
+    "TeamID": 32,
+    "TeamName": "Bucknell"
+  },
+  {
+    "Arena": "Alumni Arena",
+    "ArenaCity": "Buffalo",
+    "ArenaState": "NY",
+    "Coach": "George Halcovage",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 33,
+    "TeamName": "Buffalo"
+  },
+  {
+    "Arena": "Hinkle Fieldhouse",
+    "ArenaCity": "Indianapolis",
+    "ArenaState": "IN",
+    "Coach": "Thad Matta",
+    "ConfShort": "BE",
+    "Season": 2026,
+    "TeamID": 34,
+    "TeamName": "Butler"
+  },
+  {
+    "Arena": "Marriott Center",
+    "ArenaCity": "Provo",
+    "ArenaState": "UT",
+    "Coach": "Kevin Young",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 35,
+    "TeamName": "BYU"
+  },
+  {
+    "Arena": "Fowler Events Center",
+    "ArenaCity": "Riverside",
+    "ArenaState": "CA",
+    "Coach": "Rick Croy",
+    "ConfShort": "WAC",
+    "Season": 2026,
+    "TeamID": 357,
+    "TeamName": "Cal Baptist"
+  },
+  {
+    "Arena": "Mott Athletics Center",
+    "ArenaCity": "San Luis Obispo",
+    "ArenaState": "CA",
+    "Coach": "Mike DeGeorge",
+    "ConfShort": "BW",
+    "Season": 2026,
+    "TeamID": 36,
+    "TeamName": "Cal Poly"
+  },
+  {
+    "Arena": "Icardo Center",
+    "ArenaCity": "Bakersfield",
+    "ArenaState": "CA",
+    "Coach": "Mike Scott",
+    "ConfShort": "BW",
+    "Season": 2026,
+    "TeamID": 37,
+    "TeamName": "Cal St. Bakersfield"
+  },
+  {
+    "Arena": "Titan Gym",
+    "ArenaCity": "Fullerton",
+    "ArenaState": "CA",
+    "Coach": "Dedrique Taylor",
+    "ConfShort": "BW",
+    "Season": 2026,
+    "TeamID": 38,
+    "TeamName": "Cal St. Fullerton"
+  },
+  {
+    "Arena": "Haas Pavilion",
+    "ArenaCity": "Berkeley",
+    "ArenaState": "CA",
+    "Coach": "Mark Madsen",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 40,
+    "TeamName": "California"
+  },
+  {
+    "Arena": "Pope Convocation Center",
+    "ArenaCity": "Buies Creek",
+    "ArenaState": "NC",
+    "Coach": "John Andrzejek",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 41,
+    "TeamName": "Campbell"
+  },
+  {
+    "Arena": "Koessler Athletic Center",
+    "ArenaCity": "Buffalo",
+    "ArenaState": "NY",
+    "Coach": "Jim Christian",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 42,
+    "TeamName": "Canisius"
+  },
+  {
+    "Arena": "Farris Center",
+    "ArenaCity": "Conway",
+    "ArenaState": "AR",
+    "Coach": "John Shulman",
+    "ConfShort": "ASun",
+    "Season": 2026,
+    "TeamID": 43,
+    "TeamName": "Central Arkansas"
+  },
+  {
+    "Arena": "Detrick Gymnasium",
+    "ArenaCity": "New Britain",
+    "ArenaState": "CT",
+    "Coach": "Patrick Sellers",
+    "ConfShort": "NEC",
+    "Season": 2026,
+    "TeamID": 44,
+    "TeamName": "Central Connecticut"
+  },
+  {
+    "Arena": "McGuirk Arena",
+    "ArenaCity": "Mt. Pleasant",
+    "ArenaState": "MI",
+    "Coach": "Andy Bronkema",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 45,
+    "TeamName": "Central Michigan"
+  },
+  {
+    "Arena": "TD Arena",
+    "ArenaCity": "Charleston",
+    "ArenaState": "SC",
+    "Coach": "Chris Mack",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 55,
+    "TeamName": "Charleston"
+  },
+  {
+    "Arena": "Buccaneer Fieldhouse",
+    "ArenaCity": "Charleston",
+    "ArenaState": "SC",
+    "Coach": "Saah Nimley",
+    "ConfShort": "BSth",
+    "Season": 2026,
+    "TeamID": 46,
+    "TeamName": "Charleston Southern"
+  },
+  {
+    "Arena": "Halton Arena",
+    "ArenaCity": "Charlotte",
+    "ArenaState": "NC",
+    "Coach": "Aaron Fearne",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 47,
+    "TeamName": "Charlotte"
+  },
+  {
+    "Arena": "McKenzie Arena",
+    "ArenaCity": "Chattanooga",
+    "ArenaState": "TN",
+    "Coach": "Dan Earl",
+    "ConfShort": "SC",
+    "Season": 2026,
+    "TeamID": 48,
+    "TeamName": "Chattanooga"
+  },
+  {
+    "Arena": "Jones Convocation Center",
+    "ArenaCity": "Chicago",
+    "ArenaState": "IL",
+    "Coach": "Landon Bussie",
+    "ConfShort": "NEC",
+    "Season": 2026,
+    "TeamID": 49,
+    "TeamName": "Chicago St."
+  },
+  {
+    "Arena": "Fifth Third Arena",
+    "ArenaCity": "Cincinnati",
+    "ArenaState": "OH",
+    "Coach": "Wes Miller",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 50,
+    "TeamName": "Cincinnati"
+  },
+  {
+    "Arena": "Littlejohn Coliseum",
+    "ArenaCity": "Clemson",
+    "ArenaState": "SC",
+    "Coach": "Brad Brownell",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 51,
+    "TeamName": "Clemson"
+  },
+  {
+    "Arena": "Wolstein Center",
+    "ArenaCity": "Cleveland",
+    "ArenaState": "OH",
+    "Coach": "Rob Summers",
+    "ConfShort": "Horz",
+    "Season": 2026,
+    "TeamID": 52,
+    "TeamName": "Cleveland St."
+  },
+  {
+    "Arena": "HTC Center",
+    "ArenaCity": "Conway",
+    "ArenaState": "SC",
+    "Coach": "Justin Gray",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 53,
+    "TeamName": "Coastal Carolina"
+  },
+  {
+    "Arena": "Cotterell Court",
+    "ArenaCity": "Hamilton",
+    "ArenaState": "NY",
+    "Coach": "Matt Langel",
+    "ConfShort": "PL",
+    "Season": 2026,
+    "TeamID": 54,
+    "TeamName": "Colgate"
+  },
+  {
+    "Arena": "CU Events Center",
+    "ArenaCity": "Boulder",
+    "ArenaState": "CO",
+    "Coach": "Tad Boyle",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 56,
+    "TeamName": "Colorado"
+  },
+  {
+    "Arena": "Moby Arena",
+    "ArenaCity": "Fort Collins",
+    "ArenaState": "CO",
+    "Coach": "Ali Farokhmanesh",
+    "ConfShort": "MWC",
+    "Season": 2026,
+    "TeamID": 57,
+    "TeamName": "Colorado St."
+  },
+  {
+    "Arena": "Levien Gymnasium",
+    "ArenaCity": "New York",
+    "ArenaState": "NY",
+    "Coach": "Kevin Hovde",
+    "ConfShort": "Ivy",
+    "Season": 2026,
+    "TeamID": 58,
+    "TeamName": "Columbia"
+  },
+  {
+    "Arena": "Gampel Pavilion",
+    "ArenaCity": "Storrs",
+    "ArenaState": "CT",
+    "Coach": "Dan Hurley",
+    "ConfShort": "BE",
+    "Season": 2026,
+    "TeamID": 59,
+    "TeamName": "Connecticut"
+  },
+  {
+    "Arena": "Physical Education Complex Arena",
+    "ArenaCity": "Baltimore",
+    "ArenaState": "MD",
+    "Coach": "Larry Stewart",
+    "ConfShort": "MEAC",
+    "Season": 2026,
+    "TeamID": 60,
+    "TeamName": "Coppin St."
+  },
+  {
+    "Arena": "Newman Arena",
+    "ArenaCity": "Ithaca",
+    "ArenaState": "NY",
+    "Coach": "Jon Jaques",
+    "ConfShort": "Ivy",
+    "Season": 2026,
+    "TeamID": 61,
+    "TeamName": "Cornell"
+  },
+  {
+    "Arena": "CHI Health Center Omaha",
+    "ArenaCity": "Omaha",
+    "ArenaState": "NE",
+    "Coach": "Greg McDermott",
+    "ConfShort": "BE",
+    "Season": 2026,
+    "TeamID": 62,
+    "TeamName": "Creighton"
+  },
+  {
+    "Arena": "Premier America Credit Union Arena",
+    "ArenaCity": "Northridge",
+    "ArenaState": "CA",
+    "Coach": "Andy Newman",
+    "ConfShort": "BW",
+    "Season": 2026,
+    "TeamID": 39,
+    "TeamName": "CSUN"
+  },
+  {
+    "Arena": "Leede Arena",
+    "ArenaCity": "Hanover",
+    "ArenaState": "NH",
+    "Coach": "Dave McLaughlin",
+    "ConfShort": "Ivy",
+    "Season": 2026,
+    "TeamID": 63,
+    "TeamName": "Dartmouth"
+  },
+  {
+    "Arena": "Belk Arena",
+    "ArenaCity": "Davidson",
+    "ArenaState": "NC",
+    "Coach": "Matt McKillop",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 64,
+    "TeamName": "Davidson"
+  },
+  {
+    "Arena": "University of Dayton Arena",
+    "ArenaCity": "Dayton",
+    "ArenaState": "OH",
+    "Coach": "Anthony Grant",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 65,
+    "TeamName": "Dayton"
+  },
+  {
+    "Arena": "Bob Carpenter Center",
+    "ArenaCity": "Newark",
+    "ArenaState": "DE",
+    "Coach": "Martin Ingelsby",
+    "ConfShort": "CUSA",
+    "Season": 2026,
+    "TeamID": 66,
+    "TeamName": "Delaware"
+  },
+  {
+    "Arena": "Memorial Hall",
+    "ArenaCity": "Dover",
+    "ArenaState": "DE",
+    "Coach": "Stan Waterman",
+    "ConfShort": "MEAC",
+    "Season": 2026,
+    "TeamID": 67,
+    "TeamName": "Delaware St."
+  },
+  {
+    "Arena": "Hamilton Gymnasium",
+    "ArenaCity": "Denver",
+    "ArenaState": "CO",
+    "Coach": "Tim Bergstraser",
+    "ConfShort": "Sum",
+    "Season": 2026,
+    "TeamID": 68,
+    "TeamName": "Denver"
+  },
+  {
+    "Arena": "Wintrust Arena",
+    "ArenaCity": "Chicago",
+    "ArenaState": "IL",
+    "Coach": "Chris Holtmann",
+    "ConfShort": "BE",
+    "Season": 2026,
+    "TeamID": 69,
+    "TeamName": "DePaul"
+  },
+  {
+    "Arena": "Calihan Hall",
+    "ArenaCity": "Detroit",
+    "ArenaState": "MI",
+    "Coach": "Mark Montgomery",
+    "ConfShort": "Horz",
+    "Season": 2026,
+    "TeamID": 70,
+    "TeamName": "Detroit Mercy"
+  },
+  {
+    "Arena": "Knapp Center",
+    "ArenaCity": "Des Moines",
+    "ArenaState": "IA",
+    "Coach": "Eric Henderson",
+    "ConfShort": "MVC",
+    "Season": 2026,
+    "TeamID": 71,
+    "TeamName": "Drake"
+  },
+  {
+    "Arena": "Daskalakis Athletic Center",
+    "ArenaCity": "Philadelphia",
+    "ArenaState": "PA",
+    "Coach": "Zach Spiker",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 72,
+    "TeamName": "Drexel"
+  },
+  {
+    "Arena": "Cameron Indoor Stadium",
+    "ArenaCity": "Durham",
+    "ArenaState": "NC",
+    "Coach": "Jon Scheyer",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 73,
+    "TeamName": "Duke"
+  },
+  {
+    "Arena": "UPMC Cooper Fieldhouse",
+    "ArenaCity": "Pittsburgh",
+    "ArenaState": "PA",
+    "Coach": "Dru Joyce",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 74,
+    "TeamName": "Duquesne"
+  },
+  {
+    "Arena": "Williams Arena at Minges Coliseum",
+    "ArenaCity": "Greenville",
+    "ArenaState": "NC",
+    "Coach": "Mike Schwartz",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 75,
+    "TeamName": "East Carolina"
+  },
+  {
+    "Arena": "Freedom Hall Civic Center",
+    "ArenaCity": "Johnson City",
+    "ArenaState": "TN",
+    "Coach": "Brooks Savage",
+    "ConfShort": "SC",
+    "Season": 2026,
+    "TeamID": 76,
+    "TeamName": "East Tennessee St."
+  },
+  {
+    "Arena": "The Field House",
+    "ArenaCity": "Commerce",
+    "ArenaState": "TX",
+    "Coach": "Jaret Von Rosenberg",
+    "ConfShort": "Slnd",
+    "Season": 2026,
+    "TeamID": 369,
+    "TeamName": "East Texas A&M"
+  },
+  {
+    "Arena": "Groniger Arena",
+    "ArenaCity": "Charleston",
+    "ArenaState": "IL",
+    "Coach": "Marty Simmons",
+    "ConfShort": "OVC",
+    "Season": 2026,
+    "TeamID": 77,
+    "TeamName": "Eastern Illinois"
+  },
+  {
+    "Arena": "Baptist Health Arena",
+    "ArenaCity": "Richmond",
+    "ArenaState": "KY",
+    "Coach": "A.W. Hamilton",
+    "ConfShort": "ASun",
+    "Season": 2026,
+    "TeamID": 78,
+    "TeamName": "Eastern Kentucky"
+  },
+  {
+    "Arena": "George Gervin GameAbove Center",
+    "ArenaCity": "Ypsilanti",
+    "ArenaState": "MI",
+    "Coach": "Stan Heath",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 79,
+    "TeamName": "Eastern Michigan"
+  },
+  {
+    "Arena": "Reese Court",
+    "ArenaCity": "Cheney",
+    "ArenaState": "WA",
+    "Coach": "Dan Monson",
+    "ConfShort": "BSky",
+    "Season": 2026,
+    "TeamID": 80,
+    "TeamName": "Eastern Washington"
+  },
+  {
+    "Arena": "Schar Center",
+    "ArenaCity": "Elon",
+    "ArenaState": "NC",
+    "Coach": "Billy Taylor",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 81,
+    "TeamName": "Elon"
+  },
+  {
+    "Arena": "Ford Center",
+    "ArenaCity": "Evansville",
+    "ArenaState": "IN",
+    "Coach": "David Ragland",
+    "ConfShort": "MVC",
+    "Season": 2026,
+    "TeamID": 82,
+    "TeamName": "Evansville"
+  },
+  {
+    "Arena": "Mahoney Arena",
+    "ArenaCity": "Fairfield",
+    "ArenaState": "CT",
+    "Coach": "Chris Casey",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 83,
+    "TeamName": "Fairfield"
+  },
+  {
+    "Arena": "Bogota Savings Bank Center",
+    "ArenaCity": "Teaneck",
+    "ArenaState": "NJ",
+    "Coach": "Jack Castleberry",
+    "ConfShort": "NEC",
+    "Season": 2026,
+    "TeamID": 84,
+    "TeamName": "Fairleigh Dickinson"
+  },
+  {
+    "Arena": "Ocean Bank Convocation Center",
+    "ArenaCity": "Miami",
+    "ArenaState": "FL",
+    "Coach": "Jeremy Ballard",
+    "ConfShort": "CUSA",
+    "Season": 2026,
+    "TeamID": 85,
+    "TeamName": "FIU"
+  },
+  {
+    "Arena": "Exactech Arena",
+    "ArenaCity": "Gainesville",
+    "ArenaState": "FL",
+    "Coach": "Todd Golden",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 86,
+    "TeamName": "Florida"
+  },
+  {
+    "Arena": "Lawson Center",
+    "ArenaCity": "Tallahassee",
+    "ArenaState": "FL",
+    "Coach": "Charlie Ward",
+    "ConfShort": "SWAC",
+    "Season": 2026,
+    "TeamID": 87,
+    "TeamName": "Florida A&M"
+  },
+  {
+    "Arena": "Baldwin Arena",
+    "ArenaCity": "Boca Raton",
+    "ArenaState": "FL",
+    "Coach": "John Jakus",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 88,
+    "TeamName": "Florida Atlantic"
+  },
+  {
+    "Arena": "Alico Arena",
+    "ArenaCity": "Fort Myers",
+    "ArenaState": "FL",
+    "Coach": "Pat Chambers",
+    "ConfShort": "ASun",
+    "Season": 2026,
+    "TeamID": 89,
+    "TeamName": "Florida Gulf Coast"
+  },
+  {
+    "Arena": "Donald L. Tucker Center",
+    "ArenaCity": "Tallahassee",
+    "ArenaState": "FL",
+    "Coach": "Luke Loucks",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 90,
+    "TeamName": "Florida St."
+  },
+  {
+    "Arena": "Rose Hill Gym",
+    "ArenaCity": "New York",
+    "ArenaState": "NY",
+    "Coach": "Mike Magpayo",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 91,
+    "TeamName": "Fordham"
+  },
+  {
+    "Arena": "Save Mart Center",
+    "ArenaCity": "Fresno",
+    "ArenaState": "CA",
+    "Coach": "Vance Walberg",
+    "ConfShort": "MWC",
+    "Season": 2026,
+    "TeamID": 92,
+    "TeamName": "Fresno St."
+  },
+  {
+    "Arena": "Timmons Arena",
+    "ArenaCity": "Greenville",
+    "ArenaState": "SC",
+    "Coach": "Bob Richey",
+    "ConfShort": "SC",
+    "Season": 2026,
+    "TeamID": 93,
+    "TeamName": "Furman"
+  },
+  {
+    "Arena": "Paul Porter Arena",
+    "ArenaCity": "Boiling Springs",
+    "ArenaState": "NC",
+    "Coach": "Jeremy Luther",
+    "ConfShort": "BSth",
+    "Season": 2026,
+    "TeamID": 94,
+    "TeamName": "Gardner Webb"
+  },
+  {
+    "Arena": "EagleBank Arena",
+    "ArenaCity": "Fairfax",
+    "ArenaState": "VA",
+    "Coach": "Tony Skinn",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 95,
+    "TeamName": "George Mason"
+  },
+  {
+    "Arena": "Charles E. Smith Center",
+    "ArenaCity": "Washington",
+    "ArenaState": "DC",
+    "Coach": "Chris Caputo",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 96,
+    "TeamName": "George Washington"
+  },
+  {
+    "Arena": "Capital One Arena",
+    "ArenaCity": "Washington",
+    "ArenaState": "DC",
+    "Coach": "Ed Cooley",
+    "ConfShort": "BE",
+    "Season": 2026,
+    "TeamID": 97,
+    "TeamName": "Georgetown"
+  },
+  {
+    "Arena": "Stegeman Coliseum",
+    "ArenaCity": "Athens",
+    "ArenaState": "GA",
+    "Coach": "Mike White",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 98,
+    "TeamName": "Georgia"
+  },
+  {
+    "Arena": "Hill Convocation Center",
+    "ArenaCity": "Statesboro",
+    "ArenaState": "GA",
+    "Coach": "Charlie Henry",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 99,
+    "TeamName": "Georgia Southern"
+  },
+  {
+    "Arena": "GSU Convocation Center",
+    "ArenaCity": "Atlanta",
+    "ArenaState": "GA",
+    "Coach": "Jonas Hayes",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 100,
+    "TeamName": "Georgia St."
+  },
+  {
+    "Arena": "McCamish Pavilion",
+    "ArenaCity": "Atlanta",
+    "ArenaState": "GA",
+    "Coach": "Damon Stoudamire",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 101,
+    "TeamName": "Georgia Tech"
+  },
+  {
+    "Arena": "McCarthey Athletic Center",
+    "ArenaCity": "Spokane",
+    "ArenaState": "WA",
+    "Coach": "Mark Few",
+    "ConfShort": "WCC",
+    "Season": 2026,
+    "TeamID": 102,
+    "TeamName": "Gonzaga"
+  },
+  {
+    "Arena": "Hobdy Assembly Center",
+    "ArenaCity": "Grambling",
+    "ArenaState": "LA",
+    "Coach": "Patrick Crarey",
+    "ConfShort": "SWAC",
+    "Season": 2026,
+    "TeamID": 103,
+    "TeamName": "Grambling St."
+  },
+  {
+    "Arena": "Global Credit Union Arena",
+    "ArenaCity": "Phoenix",
+    "ArenaState": "AZ",
+    "Coach": "Bryce Drew",
+    "ConfShort": "MWC",
+    "Season": 2026,
+    "TeamID": 104,
+    "TeamName": "Grand Canyon"
+  },
+  {
+    "Arena": "Resch Center",
+    "ArenaCity": "Green Bay",
+    "ArenaState": "WI",
+    "Coach": "Doug Gottlieb",
+    "ConfShort": "Horz",
+    "Season": 2026,
+    "TeamID": 105,
+    "TeamName": "Green Bay"
+  },
+  {
+    "Arena": "Hampton Convocation Center",
+    "ArenaCity": "Hampton",
+    "ArenaState": "VA",
+    "Coach": "Ivan Thomas",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 106,
+    "TeamName": "Hampton"
+  },
+  {
+    "Arena": "Lavietes Pavilion",
+    "ArenaCity": "Cambridge",
+    "ArenaState": "MA",
+    "Coach": "Tommy Amaker",
+    "ConfShort": "Ivy",
+    "Season": 2026,
+    "TeamID": 108,
+    "TeamName": "Harvard"
+  },
+  {
+    "Arena": "Stan Sheriff Center",
+    "ArenaCity": "Honolulu",
+    "ArenaState": "HI",
+    "Coach": "Eran Ganot",
+    "ConfShort": "BW",
+    "Season": 2026,
+    "TeamID": 109,
+    "TeamName": "Hawaii"
+  },
+  {
+    "Arena": "Qubein Center",
+    "ArenaCity": "High Point",
+    "ArenaState": "NC",
+    "Coach": "Flynn Clayman",
+    "ConfShort": "BSth",
+    "Season": 2026,
+    "TeamID": 110,
+    "TeamName": "High Point"
+  },
+  {
+    "Arena": "Mack Sports Complex",
+    "ArenaCity": "Hempstead",
+    "ArenaState": "NY",
+    "Coach": "Speedy Claxton",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 111,
+    "TeamName": "Hofstra"
+  },
+  {
+    "Arena": "Hart Center Arena",
+    "ArenaCity": "Worcester",
+    "ArenaState": "MA",
+    "Coach": "Dave Paulsen",
+    "ConfShort": "PL",
+    "Season": 2026,
+    "TeamID": 112,
+    "TeamName": "Holy Cross"
+  },
+  {
+    "Arena": "Fertitta Center",
+    "ArenaCity": "Houston",
+    "ArenaState": "TX",
+    "Coach": "Kelvin Sampson",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 113,
+    "TeamName": "Houston"
+  },
+  {
+    "Arena": "Sharp Gym",
+    "ArenaCity": "Houston",
+    "ArenaState": "TX",
+    "Coach": "Craig Doty",
+    "ConfShort": "Slnd",
+    "Season": 2026,
+    "TeamID": 114,
+    "TeamName": "Houston Christian"
+  },
+  {
+    "Arena": "Burr Arena",
+    "ArenaCity": "Washington",
+    "ArenaState": "DC",
+    "Coach": "Kenny Blakeney",
+    "ConfShort": "MEAC",
+    "Season": 2026,
+    "TeamID": 115,
+    "TeamName": "Howard"
+  },
+  {
+    "Arena": "ICCU Arena",
+    "ArenaCity": "Moscow",
+    "ArenaState": "ID",
+    "Coach": "Alex Pribble",
+    "ConfShort": "BSky",
+    "Season": 2026,
+    "TeamID": 116,
+    "TeamName": "Idaho"
+  },
+  {
+    "Arena": "Reed Gym",
+    "ArenaCity": "Pocatello",
+    "ArenaState": "ID",
+    "Coach": "Ryan Looney",
+    "ConfShort": "BSky",
+    "Season": 2026,
+    "TeamID": 117,
+    "TeamName": "Idaho St."
+  },
+  {
+    "Arena": "State Farm Center",
+    "ArenaCity": "Champaign",
+    "ArenaState": "IL",
+    "Coach": "Brad Underwood",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 118,
+    "TeamName": "Illinois"
+  },
+  {
+    "Arena": "Credit Union 1 Arena",
+    "ArenaCity": "Chicago",
+    "ArenaState": "IL",
+    "Coach": "Rob Ehsan",
+    "ConfShort": "MVC",
+    "Season": 2026,
+    "TeamID": 119,
+    "TeamName": "Illinois Chicago"
+  },
+  {
+    "Arena": "CEFCU Arena",
+    "ArenaCity": "Normal",
+    "ArenaState": "IL",
+    "Coach": "Ryan Pedon",
+    "ConfShort": "MVC",
+    "Season": 2026,
+    "TeamID": 120,
+    "TeamName": "Illinois St."
+  },
+  {
+    "Arena": "McDermott Convocation Center",
+    "ArenaCity": "San Antonio",
+    "ArenaState": "TX",
+    "Coach": "Shane Heirman",
+    "ConfShort": "Slnd",
+    "Season": 2026,
+    "TeamID": 121,
+    "TeamName": "Incarnate Word"
+  },
+  {
+    "Arena": "Assembly Hall",
+    "ArenaCity": "Bloomington",
+    "ArenaState": "IN",
+    "Coach": "Darian DeVries",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 122,
+    "TeamName": "Indiana"
+  },
+  {
+    "Arena": "Hulman Center",
+    "ArenaCity": "Terre Haute",
+    "ArenaState": "IN",
+    "Coach": "Matthew Graves",
+    "ConfShort": "MVC",
+    "Season": 2026,
+    "TeamID": 123,
+    "TeamName": "Indiana St."
+  },
+  {
+    "Arena": "Hynes Athletics Center",
+    "ArenaCity": "New Rochelle",
+    "ArenaState": "NY",
+    "Coach": "Dan Geriot",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 124,
+    "TeamName": "Iona"
+  },
+  {
+    "Arena": "Carver Hawkeye Arena",
+    "ArenaCity": "Iowa City",
+    "ArenaState": "IA",
+    "Coach": "Ben McCollum",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 125,
+    "TeamName": "Iowa"
+  },
+  {
+    "Arena": "Hilton Coliseum",
+    "ArenaCity": "Ames",
+    "ArenaState": "IA",
+    "Coach": "T.J. Otzelberger",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 126,
+    "TeamName": "Iowa St."
+  },
+  {
+    "Arena": "The Jungle",
+    "ArenaCity": "Indianapolis",
+    "ArenaState": "IN",
+    "Coach": "Ben Howlett",
+    "ConfShort": "Horz",
+    "Season": 2026,
+    "TeamID": 128,
+    "TeamName": "IU Indy"
+  },
+  {
+    "Arena": "Williams Center",
+    "ArenaCity": "Jackson",
+    "ArenaState": "MS",
+    "Coach": "Mo Williams",
+    "ConfShort": "SWAC",
+    "Season": 2026,
+    "TeamID": 129,
+    "TeamName": "Jackson St."
+  },
+  {
+    "Arena": "Swisher Gymnasium",
+    "ArenaCity": "Jacksonville",
+    "ArenaState": "FL",
+    "Coach": "Jordan Mincy",
+    "ConfShort": "ASun",
+    "Season": 2026,
+    "TeamID": 130,
+    "TeamName": "Jacksonville"
+  },
+  {
+    "Arena": "Mathews Coliseum",
+    "ArenaCity": "Jacksonville",
+    "ArenaState": "AL",
+    "Coach": "Ray Harper",
+    "ConfShort": "CUSA",
+    "Season": 2026,
+    "TeamID": 131,
+    "TeamName": "Jacksonville St."
+  },
+  {
+    "Arena": "Atlantic Union Bank Center",
+    "ArenaCity": "Harrisonburg",
+    "ArenaState": "VA",
+    "Coach": "Preston Spradlin",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 132,
+    "TeamName": "James Madison"
+  },
+  {
+    "Arena": "Allen Fieldhouse",
+    "ArenaCity": "Lawrence",
+    "ArenaState": "KS",
+    "Coach": "Bill Self",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 133,
+    "TeamName": "Kansas"
+  },
+  {
+    "Arena": "Swinney Recreation Center",
+    "ArenaCity": "Kansas City",
+    "ArenaState": "MO",
+    "Coach": "Marvin Menzies",
+    "ConfShort": "Sum",
+    "Season": 2026,
+    "TeamID": 310,
+    "TeamName": "Kansas City"
+  },
+  {
+    "Arena": "Bramlage Coliseum",
+    "ArenaCity": "Manhattan",
+    "ArenaState": "KS",
+    "Coach": "Jerome Tang",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 134,
+    "TeamName": "Kansas St."
+  },
+  {
+    "Arena": "KSU Convocation Center",
+    "ArenaCity": "Kennesaw",
+    "ArenaState": "GA",
+    "Coach": "Antoine Pettway",
+    "ConfShort": "CUSA",
+    "Season": 2026,
+    "TeamID": 135,
+    "TeamName": "Kennesaw St."
+  },
+  {
+    "Arena": "Memorial Athletic & Convocation Center",
+    "ArenaCity": "Kent",
+    "ArenaState": "OH",
+    "Coach": "Rob Senderoff",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 136,
+    "TeamName": "Kent St."
+  },
+  {
+    "Arena": "Rupp Arena",
+    "ArenaCity": "Lexington",
+    "ArenaState": "KY",
+    "Coach": "Mark Pope",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 137,
+    "TeamName": "Kentucky"
+  },
+  {
+    "Arena": "Glaser Arena",
+    "ArenaCity": "Philadelphia",
+    "ArenaState": "PA",
+    "Coach": "Darris Nichols",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 138,
+    "TeamName": "La Salle"
+  },
+  {
+    "Arena": "Kirby Sports Center",
+    "ArenaCity": "Easton",
+    "ArenaState": "PA",
+    "Coach": "Mike McGarvey",
+    "ConfShort": "PL",
+    "Season": 2026,
+    "TeamID": 139,
+    "TeamName": "Lafayette"
+  },
+  {
+    "Arena": "Montagne Center",
+    "ArenaCity": "Beaumont",
+    "ArenaState": "TX",
+    "Coach": "Alvin Brooks",
+    "ConfShort": "Slnd",
+    "Season": 2026,
+    "TeamID": 140,
+    "TeamName": "Lamar"
+  },
+  {
+    "Arena": "Ted Grant Court",
+    "ArenaCity": "Syracuse",
+    "ArenaState": "NY",
+    "Coach": "Nate Champion",
+    "ConfShort": "NEC",
+    "Season": 2026,
+    "TeamID": 370,
+    "TeamName": "Le Moyne"
+  },
+  {
+    "Arena": "Stabler Arena",
+    "ArenaCity": "Bethlehem",
+    "ArenaState": "PA",
+    "Coach": "Brett Reed",
+    "ConfShort": "PL",
+    "Season": 2026,
+    "TeamID": 141,
+    "TeamName": "Lehigh"
+  },
+  {
+    "Arena": "Liberty Arena",
+    "ArenaCity": "Lynchburg",
+    "ArenaState": "VA",
+    "Coach": "Ritchie McKay",
+    "ConfShort": "CUSA",
+    "Season": 2026,
+    "TeamID": 142,
+    "TeamName": "Liberty"
+  },
+  {
+    "Arena": "Hyland Arena",
+    "ArenaCity": "St. Charles",
+    "ArenaState": "MO",
+    "Coach": "Kyle Gerdeman",
+    "ConfShort": "OVC",
+    "Season": 2026,
+    "TeamID": 368,
+    "TeamName": "Lindenwood"
+  },
+  {
+    "Arena": "Allen Arena",
+    "ArenaCity": "Nashville",
+    "ArenaState": "TN",
+    "Coach": "Kevin Carroll",
+    "ConfShort": "ASun",
+    "Season": 2026,
+    "TeamID": 143,
+    "TeamName": "Lipscomb"
+  },
+  {
+    "Arena": "Stephens Center",
+    "ArenaCity": "Little Rock",
+    "ArenaState": "AR",
+    "Coach": "Darrell Walker",
+    "ConfShort": "OVC",
+    "Season": 2026,
+    "TeamID": 14,
+    "TeamName": "Little Rock"
+  },
+  {
+    "Arena": "Steinberg Wellness Center",
+    "ArenaCity": "Brooklyn",
+    "ArenaState": "NY",
+    "Coach": "Rod Strickland",
+    "ConfShort": "NEC",
+    "Season": 2026,
+    "TeamID": 144,
+    "TeamName": "LIU"
+  },
+  {
+    "Arena": "The Walter Pyramid",
+    "ArenaCity": "Long Beach",
+    "ArenaState": "CA",
+    "Coach": "Chris Acker",
+    "ConfShort": "BW",
+    "Season": 2026,
+    "TeamID": 145,
+    "TeamName": "Long Beach St."
+  },
+  {
+    "Arena": "Brock Center",
+    "ArenaCity": "Farmville",
+    "ArenaState": "VA",
+    "Coach": "Ronnie Thomas",
+    "ConfShort": "BSth",
+    "Season": 2026,
+    "TeamID": 146,
+    "TeamName": "Longwood"
+  },
+  {
+    "Arena": "Cajundome",
+    "ArenaCity": "Lafayette",
+    "ArenaState": "LA",
+    "Coach": "Quannas White",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 147,
+    "TeamName": "Louisiana"
+  },
+  {
+    "Arena": "Fant-Ewing Coliseum",
+    "ArenaCity": "Monroe",
+    "ArenaState": "LA",
+    "Coach": "Phil Cunningham",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 148,
+    "TeamName": "Louisiana Monroe"
+  },
+  {
+    "Arena": "Thomas Assembly Center",
+    "ArenaCity": "Ruston",
+    "ArenaState": "LA",
+    "Coach": "Talvin Hester",
+    "ConfShort": "CUSA",
+    "Season": 2026,
+    "TeamID": 149,
+    "TeamName": "Louisiana Tech"
+  },
+  {
+    "Arena": "KFC Yum! Center",
+    "ArenaCity": "Louisville",
+    "ArenaState": "KY",
+    "Coach": "Pat Kelsey",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 150,
+    "TeamName": "Louisville"
+  },
+  {
+    "Arena": "Gentile Arena",
+    "ArenaCity": "Chicago",
+    "ArenaState": "IL",
+    "Coach": "Drew Valentine",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 151,
+    "TeamName": "Loyola Chicago"
+  },
+  {
+    "Arena": "Gersten Pavilion",
+    "ArenaCity": "Los Angeles",
+    "ArenaState": "CA",
+    "Coach": "Stan Johnson",
+    "ConfShort": "WCC",
+    "Season": 2026,
+    "TeamID": 152,
+    "TeamName": "Loyola Marymount"
+  },
+  {
+    "Arena": "Reitz Arena",
+    "ArenaCity": "Baltimore",
+    "ArenaState": "MD",
+    "Coach": "Josh Loeffler",
+    "ConfShort": "PL",
+    "Season": 2026,
+    "TeamID": 153,
+    "TeamName": "Loyola MD"
+  },
+  {
+    "Arena": "Maravich Assembly Center",
+    "ArenaCity": "Baton Rouge",
+    "ArenaState": "LA",
+    "Coach": "Matt McMahon",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 154,
+    "TeamName": "LSU"
+  },
+  {
+    "Arena": "Memorial Gym",
+    "ArenaCity": "Orono",
+    "ArenaState": "ME",
+    "Coach": "Chris Markwood",
+    "ConfShort": "AE",
+    "Season": 2026,
+    "TeamID": 155,
+    "TeamName": "Maine"
+  },
+  {
+    "Arena": "Draddy Gymnasium",
+    "ArenaCity": "Riverdale",
+    "ArenaState": "NY",
+    "Coach": "John Gallagher",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 156,
+    "TeamName": "Manhattan"
+  },
+  {
+    "Arena": "McCann Center",
+    "ArenaCity": "Poughkeepsie",
+    "ArenaState": "NY",
+    "Coach": "John Dunne",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 157,
+    "TeamName": "Marist"
+  },
+  {
+    "Arena": "Fiserv Forum",
+    "ArenaCity": "Milwaukee",
+    "ArenaState": "WI",
+    "Coach": "Shaka Smart",
+    "ConfShort": "BE",
+    "Season": 2026,
+    "TeamID": 158,
+    "TeamName": "Marquette"
+  },
+  {
+    "Arena": "Henderson Center",
+    "ArenaCity": "Huntington",
+    "ArenaState": "WV",
+    "Coach": "Cornelius Jackson",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 159,
+    "TeamName": "Marshall"
+  },
+  {
+    "Arena": "Xfinity Center",
+    "ArenaCity": "College Park",
+    "ArenaState": "MD",
+    "Coach": "Buzz Williams",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 160,
+    "TeamName": "Maryland"
+  },
+  {
+    "Arena": "Hytche Athletic Center",
+    "ArenaCity": "Princess Anne",
+    "ArenaState": "MD",
+    "Coach": "Cleo Hill",
+    "ConfShort": "MEAC",
+    "Season": 2026,
+    "TeamID": 161,
+    "TeamName": "Maryland Eastern Shore"
+  },
+  {
+    "Arena": "Mullins Center",
+    "ArenaCity": "Amherst",
+    "ArenaState": "MA",
+    "Coach": "Frank Martin",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 162,
+    "TeamName": "Massachusetts"
+  },
+  {
+    "Arena": "Townsley Law Arena",
+    "ArenaCity": "Lake Charles",
+    "ArenaState": "LA",
+    "Coach": "Bill Armstrong",
+    "ConfShort": "Slnd",
+    "Season": 2026,
+    "TeamID": 163,
+    "TeamName": "McNeese"
+  },
+  {
+    "Arena": "FedExForum",
+    "ArenaCity": "Memphis",
+    "ArenaState": "TN",
+    "Coach": "Penny Hardaway",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 164,
+    "TeamName": "Memphis"
+  },
+  {
+    "Arena": "Hawkins Arena",
+    "ArenaCity": "Macon",
+    "ArenaState": "GA",
+    "Coach": "Ryan Ridder",
+    "ConfShort": "SC",
+    "Season": 2026,
+    "TeamID": 165,
+    "TeamName": "Mercer"
+  },
+  {
+    "Arena": "Mercyhurst Athletic Center",
+    "ArenaCity": "Erie",
+    "ArenaState": "PA",
+    "Coach": "Gary Manchel",
+    "ConfShort": "NEC",
+    "Season": 2026,
+    "TeamID": 371,
+    "TeamName": "Mercyhurst"
+  },
+  {
+    "Arena": "Hammel Court",
+    "ArenaCity": "North Andover",
+    "ArenaState": "MA",
+    "Coach": "Joe Gallo",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 359,
+    "TeamName": "Merrimack"
+  },
+  {
+    "Arena": "Watsco Center",
+    "ArenaCity": "Coral Gables",
+    "ArenaState": "FL",
+    "Coach": "Jai Lucas",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 166,
+    "TeamName": "Miami FL"
+  },
+  {
+    "Arena": "Millett Hall",
+    "ArenaCity": "Oxford",
+    "ArenaState": "OH",
+    "Coach": "Travis Steele",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 167,
+    "TeamName": "Miami OH"
+  },
+  {
+    "Arena": "Crisler Center",
+    "ArenaCity": "Ann Arbor",
+    "ArenaState": "MI",
+    "Coach": "Dusty May",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 168,
+    "TeamName": "Michigan"
+  },
+  {
+    "Arena": "Breslin Center",
+    "ArenaCity": "East Lansing",
+    "ArenaState": "MI",
+    "Coach": "Tom Izzo",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 169,
+    "TeamName": "Michigan St."
+  },
+  {
+    "Arena": "Murphy Center",
+    "ArenaCity": "Murfreesboro",
+    "ArenaState": "TN",
+    "Coach": "Nicholas McDevitt",
+    "ConfShort": "CUSA",
+    "Season": 2026,
+    "TeamID": 170,
+    "TeamName": "Middle Tennessee"
+  },
+  {
+    "Arena": "UWM Panther Arena",
+    "ArenaCity": "Milwaukee",
+    "ArenaState": "WI",
+    "Coach": "Bart Lundy",
+    "ConfShort": "Horz",
+    "Season": 2026,
+    "TeamID": 171,
+    "TeamName": "Milwaukee"
+  },
+  {
+    "Arena": "Williams Arena",
+    "ArenaCity": "Minneapolis",
+    "ArenaState": "MN",
+    "Coach": "Niko Medved",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 172,
+    "TeamName": "Minnesota"
+  },
+  {
+    "Arena": "The Pavilion at Ole Miss",
+    "ArenaCity": "Oxford",
+    "ArenaState": "MS",
+    "Coach": "Chris Beard",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 173,
+    "TeamName": "Mississippi"
+  },
+  {
+    "Arena": "Humphrey Coliseum",
+    "ArenaCity": "Starkville",
+    "ArenaState": "MS",
+    "Coach": "Chris Jans",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 174,
+    "TeamName": "Mississippi St."
+  },
+  {
+    "Arena": "Harrison Complex",
+    "ArenaCity": "Itta Bena",
+    "ArenaState": "MS",
+    "Coach": "George Ivory",
+    "ConfShort": "SWAC",
+    "Season": 2026,
+    "TeamID": 175,
+    "TeamName": "Mississippi Valley St."
+  },
+  {
+    "Arena": "Mizzou Arena",
+    "ArenaCity": "Columbia",
+    "ArenaState": "MO",
+    "Coach": "Dennis Gates",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 176,
+    "TeamName": "Missouri"
+  },
+  {
+    "Arena": "Great Southern Bank Arena",
+    "ArenaCity": "Springfield",
+    "ArenaState": "MO",
+    "Coach": "Cuonzo Martin",
+    "ConfShort": "CUSA",
+    "Season": 2026,
+    "TeamID": 177,
+    "TeamName": "Missouri St."
+  },
+  {
+    "Arena": "OceanFirst Bank Center",
+    "ArenaCity": "West Long Branch",
+    "ArenaState": "NJ",
+    "Coach": "King Rice",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 178,
+    "TeamName": "Monmouth"
+  },
+  {
+    "Arena": "Dahlberg Arena",
+    "ArenaCity": "Missoula",
+    "ArenaState": "MT",
+    "Coach": "Travis DeCuire",
+    "ConfShort": "BSky",
+    "Season": 2026,
+    "TeamID": 179,
+    "TeamName": "Montana"
+  },
+  {
+    "Arena": "Worthington Arena",
+    "ArenaCity": "Bozeman",
+    "ArenaState": "MT",
+    "Coach": "Matt Logie",
+    "ConfShort": "BSky",
+    "Season": 2026,
+    "TeamID": 180,
+    "TeamName": "Montana St."
+  },
+  {
+    "Arena": "Johnson Arena",
+    "ArenaCity": "Morehead",
+    "ArenaState": "KY",
+    "Coach": "Jonathan Mattox",
+    "ConfShort": "OVC",
+    "Season": 2026,
+    "TeamID": 181,
+    "TeamName": "Morehead St."
+  },
+  {
+    "Arena": "Hill Field House",
+    "ArenaCity": "Baltimore",
+    "ArenaState": "MD",
+    "Coach": "Kevin Broadus",
+    "ConfShort": "MEAC",
+    "Season": 2026,
+    "TeamID": 182,
+    "TeamName": "Morgan St."
+  },
+  {
+    "Arena": "Knott Arena",
+    "ArenaCity": "Emmitsburg",
+    "ArenaState": "MD",
+    "Coach": "Donny Lind",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 183,
+    "TeamName": "Mount St. Mary's"
+  },
+  {
+    "Arena": "CFSB Center",
+    "ArenaCity": "Murray",
+    "ArenaState": "KY",
+    "Coach": "Ryan Miller",
+    "ConfShort": "MVC",
+    "Season": 2026,
+    "TeamID": 184,
+    "TeamName": "Murray St."
+  },
+  {
+    "Arena": "Lenovo Center",
+    "ArenaCity": "Raleigh",
+    "ArenaState": "NC",
+    "Coach": "Will Wade",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 200,
+    "TeamName": "N.C. State"
+  },
+  {
+    "Arena": "Alumni Hall",
+    "ArenaCity": "Annapolis",
+    "ArenaState": "MD",
+    "Coach": "Jon Perry",
+    "ConfShort": "PL",
+    "Season": 2026,
+    "TeamID": 185,
+    "TeamName": "Navy"
+  },
+  {
+    "Arena": "Pinnacle Bank Arena",
+    "ArenaCity": "Lincoln",
+    "ArenaState": "NE",
+    "Coach": "Fred Hoiberg",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 186,
+    "TeamName": "Nebraska"
+  },
+  {
+    "Arena": "Baxter Arena",
+    "ArenaCity": "Omaha",
+    "ArenaState": "NE",
+    "Coach": "Chris Crutchfield",
+    "ConfShort": "Sum",
+    "Season": 2026,
+    "TeamID": 187,
+    "TeamName": "Nebraska Omaha"
+  },
+  {
+    "Arena": "Lawlor Events Center",
+    "ArenaCity": "Reno",
+    "ArenaState": "NV",
+    "Coach": "Steve Alford",
+    "ConfShort": "MWC",
+    "Season": 2026,
+    "TeamID": 188,
+    "TeamName": "Nevada"
+  },
+  {
+    "Arena": "Lundholm Gymnasium",
+    "ArenaCity": "Durham",
+    "ArenaState": "NH",
+    "Coach": "Nathan Davis",
+    "ConfShort": "AE",
+    "Season": 2026,
+    "TeamID": 189,
+    "TeamName": "New Hampshire"
+  },
+  {
+    "Arena": "The Hazell Center",
+    "ArenaCity": "West Haven",
+    "ArenaState": "CT",
+    "Coach": "Ted Hotaling",
+    "ConfShort": "NEC",
+    "Season": 2026,
+    "TeamID": 373,
+    "TeamName": "New Haven"
+  },
+  {
+    "Arena": "The Pit",
+    "ArenaCity": "Albuquerque",
+    "ArenaState": "NM",
+    "Coach": "Eric Olen",
+    "ConfShort": "MWC",
+    "Season": 2026,
+    "TeamID": 190,
+    "TeamName": "New Mexico"
+  },
+  {
+    "Arena": "Pan American Center",
+    "ArenaCity": "Las Cruces",
+    "ArenaState": "NM",
+    "Coach": "Jason Hooten",
+    "ConfShort": "CUSA",
+    "Season": 2026,
+    "TeamID": 191,
+    "TeamName": "New Mexico St."
+  },
+  {
+    "Arena": "Lakefront Arena",
+    "ArenaCity": "New Orleans",
+    "ArenaState": "LA",
+    "Coach": "Stacy Hollowell",
+    "ConfShort": "Slnd",
+    "Season": 2026,
+    "TeamID": 192,
+    "TeamName": "New Orleans"
+  },
+  {
+    "Arena": "Gallagher Center",
+    "ArenaCity": "Niagara",
+    "ArenaState": "NY",
+    "Coach": "Greg Paulus",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 193,
+    "TeamName": "Niagara"
+  },
+  {
+    "Arena": "Stopher Gym",
+    "ArenaCity": "Thibodaux",
+    "ArenaState": "LA",
+    "Coach": "Tevon Saddler",
+    "ConfShort": "Slnd",
+    "Season": 2026,
+    "TeamID": 194,
+    "TeamName": "Nicholls"
+  },
+  {
+    "Arena": "Wellness and Events Center",
+    "ArenaCity": "Newark",
+    "ArenaState": "NJ",
+    "Coach": "Grant Billmeier",
+    "ConfShort": "AE",
+    "Season": 2026,
+    "TeamID": 195,
+    "TeamName": "NJIT"
+  },
+  {
+    "Arena": "Echols Hall",
+    "ArenaCity": "Norfolk",
+    "ArenaState": "VA",
+    "Coach": "Robert Jones",
+    "ConfShort": "MEAC",
+    "Season": 2026,
+    "TeamID": 196,
+    "TeamName": "Norfolk St."
+  },
+  {
+    "Arena": "CB&S Bank Arena",
+    "ArenaCity": "Florence",
+    "ArenaState": "AL",
+    "Coach": "Tony Pujol",
+    "ConfShort": "ASun",
+    "Season": 2026,
+    "TeamID": 356,
+    "TeamName": "North Alabama"
+  },
+  {
+    "Arena": "Dean E. Smith Center",
+    "ArenaCity": "Chapel Hill",
+    "ArenaState": "NC",
+    "Coach": "Hubert Davis",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 197,
+    "TeamName": "North Carolina"
+  },
+  {
+    "Arena": "Corbett Sports Center",
+    "ArenaCity": "Greensboro",
+    "ArenaState": "NC",
+    "Coach": "Monte Ross",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 198,
+    "TeamName": "North Carolina A&T"
+  },
+  {
+    "Arena": "McLendon-McDougald Gymnasium",
+    "ArenaCity": "Durham",
+    "ArenaState": "NC",
+    "Coach": "LeVelle Moton",
+    "ConfShort": "MEAC",
+    "Season": 2026,
+    "TeamID": 199,
+    "TeamName": "North Carolina Central"
+  },
+  {
+    "Arena": "Betty Engelstad Sioux Center",
+    "ArenaCity": "Grand Forks",
+    "ArenaState": "ND",
+    "Coach": "Paul Sather",
+    "ConfShort": "Sum",
+    "Season": 2026,
+    "TeamID": 201,
+    "TeamName": "North Dakota"
+  },
+  {
+    "Arena": "Scheels Center",
+    "ArenaCity": "Fargo",
+    "ArenaState": "ND",
+    "Coach": "Dave Richman",
+    "ConfShort": "Sum",
+    "Season": 2026,
+    "TeamID": 202,
+    "TeamName": "North Dakota St."
+  },
+  {
+    "Arena": "UNF Arena",
+    "ArenaCity": "Jacksonville",
+    "ArenaState": "FL",
+    "Coach": "Bobby Kennen",
+    "ConfShort": "ASun",
+    "Season": 2026,
+    "TeamID": 203,
+    "TeamName": "North Florida"
+  },
+  {
+    "Arena": "The Super Pit",
+    "ArenaCity": "Denton",
+    "ArenaState": "TX",
+    "Coach": "Daniyal Robinson",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 204,
+    "TeamName": "North Texas"
+  },
+  {
+    "Arena": "Cabot Center",
+    "ArenaCity": "Boston",
+    "ArenaState": "MA",
+    "Coach": "Bill Coen",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 205,
+    "TeamName": "Northeastern"
+  },
+  {
+    "Arena": "Walkup Skydome",
+    "ArenaCity": "Flagstaff",
+    "ArenaState": "AZ",
+    "Coach": "Shane Burcar",
+    "ConfShort": "BSky",
+    "Season": 2026,
+    "TeamID": 206,
+    "TeamName": "Northern Arizona"
+  },
+  {
+    "Arena": "Bank of Colorado Arena",
+    "ArenaCity": "Greeley",
+    "ArenaState": "CO",
+    "Coach": "Steve Smiley",
+    "ConfShort": "BSky",
+    "Season": 2026,
+    "TeamID": 207,
+    "TeamName": "Northern Colorado"
+  },
+  {
+    "Arena": "Convocation Center",
+    "ArenaCity": "DeKalb",
+    "ArenaState": "IL",
+    "Coach": "Rashon Burno",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 208,
+    "TeamName": "Northern Illinois"
+  },
+  {
+    "Arena": "McLeod Center",
+    "ArenaCity": "Cedar Falls",
+    "ArenaState": "IA",
+    "Coach": "Ben Jacobson",
+    "ConfShort": "MVC",
+    "Season": 2026,
+    "TeamID": 209,
+    "TeamName": "Northern Iowa"
+  },
+  {
+    "Arena": "Truist Arena",
+    "ArenaCity": "Highland Heights",
+    "ArenaState": "KY",
+    "Coach": "Darrin Horn",
+    "ConfShort": "Horz",
+    "Season": 2026,
+    "TeamID": 210,
+    "TeamName": "Northern Kentucky"
+  },
+  {
+    "Arena": "Welsh-Ryan Arena",
+    "ArenaCity": "Evanston",
+    "ArenaState": "IL",
+    "Coach": "Chris Collins",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 211,
+    "TeamName": "Northwestern"
+  },
+  {
+    "Arena": "Prather Coliseum",
+    "ArenaCity": "Natchitoches",
+    "ArenaState": "LA",
+    "Coach": "Rick Cabrera",
+    "ConfShort": "Slnd",
+    "Season": 2026,
+    "TeamID": 212,
+    "TeamName": "Northwestern St."
+  },
+  {
+    "Arena": "Joyce Center",
+    "ArenaCity": "South Bend",
+    "ArenaState": "IN",
+    "Coach": "Micah Shrewsberry",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 213,
+    "TeamName": "Notre Dame"
+  },
+  {
+    "Arena": "OU Credit Union O'rena",
+    "ArenaCity": "Oakland",
+    "ArenaState": "MI",
+    "Coach": "Greg Kampe",
+    "ConfShort": "Horz",
+    "Season": 2026,
+    "TeamID": 214,
+    "TeamName": "Oakland"
+  },
+  {
+    "Arena": "Convocation Center",
+    "ArenaCity": "Athens",
+    "ArenaState": "OH",
+    "Coach": "Jeff Boals",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 215,
+    "TeamName": "Ohio"
+  },
+  {
+    "Arena": "Value City Arena",
+    "ArenaCity": "Columbus",
+    "ArenaState": "OH",
+    "Coach": "Jake Diebler",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 216,
+    "TeamName": "Ohio St."
+  },
+  {
+    "Arena": "Lloyd Noble Center",
+    "ArenaCity": "Norman",
+    "ArenaState": "OK",
+    "Coach": "Porter Moser",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 217,
+    "TeamName": "Oklahoma"
+  },
+  {
+    "Arena": "Gallagher Iba Arena",
+    "ArenaCity": "Stillwater",
+    "ArenaState": "OK",
+    "Coach": "Steve Lutz",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 218,
+    "TeamName": "Oklahoma St."
+  },
+  {
+    "Arena": "Chartway Arena",
+    "ArenaCity": "Norfolk",
+    "ArenaState": "VA",
+    "Coach": "Mike K. Jones",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 219,
+    "TeamName": "Old Dominion"
+  },
+  {
+    "Arena": "Mabee Center",
+    "ArenaCity": "Tulsa",
+    "ArenaState": "OK",
+    "Coach": "Kory Barnett",
+    "ConfShort": "Sum",
+    "Season": 2026,
+    "TeamID": 220,
+    "TeamName": "Oral Roberts"
+  },
+  {
+    "Arena": "Knight Arena",
+    "ArenaCity": "Eugene",
+    "ArenaState": "OR",
+    "Coach": "Dana Altman",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 221,
+    "TeamName": "Oregon"
+  },
+  {
+    "Arena": "Gill Coliseum",
+    "ArenaCity": "Corvallis",
+    "ArenaState": "OR",
+    "Coach": "Wayne Tinkle",
+    "ConfShort": "WCC",
+    "Season": 2026,
+    "TeamID": 222,
+    "TeamName": "Oregon St."
+  },
+  {
+    "Arena": "Spanos Center",
+    "ArenaCity": "Stockton",
+    "ArenaState": "CA",
+    "Coach": "Dave Smart",
+    "ConfShort": "WCC",
+    "Season": 2026,
+    "TeamID": 223,
+    "TeamName": "Pacific"
+  },
+  {
+    "Arena": "The Palestra",
+    "ArenaCity": "Philadelphia",
+    "ArenaState": "PA",
+    "Coach": "Fran McCaffery",
+    "ConfShort": "Ivy",
+    "Season": 2026,
+    "TeamID": 224,
+    "TeamName": "Penn"
+  },
+  {
+    "Arena": "Bryce Jordan Center",
+    "ArenaCity": "University Park",
+    "ArenaState": "PA",
+    "Coach": "Mike Rhoades",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 225,
+    "TeamName": "Penn St."
+  },
+  {
+    "Arena": "Firestone Fieldhouse",
+    "ArenaCity": "Malibu",
+    "ArenaState": "CA",
+    "Coach": "Ed Schilling",
+    "ConfShort": "WCC",
+    "Season": 2026,
+    "TeamID": 226,
+    "TeamName": "Pepperdine"
+  },
+  {
+    "Arena": "Petersen Events Center",
+    "ArenaCity": "Pittsburgh",
+    "ArenaState": "PA",
+    "Coach": "Jeff Capel III",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 227,
+    "TeamName": "Pittsburgh"
+  },
+  {
+    "Arena": "Chiles Center",
+    "ArenaCity": "Portland",
+    "ArenaState": "OR",
+    "Coach": "Shantay Legans",
+    "ConfShort": "WCC",
+    "Season": 2026,
+    "TeamID": 228,
+    "TeamName": "Portland"
+  },
+  {
+    "Arena": "Viking Pavilion",
+    "ArenaCity": "Portland",
+    "ArenaState": "OR",
+    "Coach": "Jase Coburn",
+    "ConfShort": "BSky",
+    "Season": 2026,
+    "TeamID": 229,
+    "TeamName": "Portland St."
+  },
+  {
+    "Arena": "William Nicks Building",
+    "ArenaCity": "Prairie View",
+    "ArenaState": "TX",
+    "Coach": "Byron Smith",
+    "ConfShort": "SWAC",
+    "Season": 2026,
+    "TeamID": 230,
+    "TeamName": "Prairie View A&M"
+  },
+  {
+    "Arena": "Templeton P.E. Center",
+    "ArenaCity": "Clinton",
+    "ArenaState": "SC",
+    "Coach": "Quinton Ferrell",
+    "ConfShort": "BSth",
+    "Season": 2026,
+    "TeamID": 231,
+    "TeamName": "Presbyterian"
+  },
+  {
+    "Arena": "Jadwin Gymnasium",
+    "ArenaCity": "Princeton",
+    "ArenaState": "NJ",
+    "Coach": "Mitch Henderson",
+    "ConfShort": "Ivy",
+    "Season": 2026,
+    "TeamID": 232,
+    "TeamName": "Princeton"
+  },
+  {
+    "Arena": "Amica Mutual Pavilion",
+    "ArenaCity": "Providence",
+    "ArenaState": "RI",
+    "Coach": "Kim English",
+    "ConfShort": "BE",
+    "Season": 2026,
+    "TeamID": 233,
+    "TeamName": "Providence"
+  },
+  {
+    "Arena": "Mackey Arena",
+    "ArenaCity": "West Lafayette",
+    "ArenaState": "IN",
+    "Coach": "Matt Painter",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 234,
+    "TeamName": "Purdue"
+  },
+  {
+    "Arena": "Allen County War Memorial Coliseum",
+    "ArenaCity": "Fort Wayne",
+    "ArenaState": "IN",
+    "Coach": "Jon Coffman",
+    "ConfShort": "Horz",
+    "Season": 2026,
+    "TeamID": 127,
+    "TeamName": "Purdue Fort Wayne"
+  },
+  {
+    "Arena": "Curry Arena",
+    "ArenaCity": "Charlotte",
+    "ArenaState": "NC",
+    "Coach": "Grant Leonard",
+    "ConfShort": "ASun",
+    "Season": 2026,
+    "TeamID": 367,
+    "TeamName": "Queens"
+  },
+  {
+    "Arena": "M&T Bank Arena",
+    "ArenaCity": "Hamden",
+    "ArenaState": "CT",
+    "Coach": "Tom Pecora",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 235,
+    "TeamName": "Quinnipiac"
+  },
+  {
+    "Arena": "Dedmon Center",
+    "ArenaCity": "Radford",
+    "ArenaState": "VA",
+    "Coach": "Zach Chu",
+    "ConfShort": "BSth",
+    "Season": 2026,
+    "TeamID": 236,
+    "TeamName": "Radford"
+  },
+  {
+    "Arena": "Ryan Center",
+    "ArenaCity": "Kingston",
+    "ArenaState": "RI",
+    "Coach": "Archie Miller",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 237,
+    "TeamName": "Rhode Island"
+  },
+  {
+    "Arena": "Tudor Fieldhouse",
+    "ArenaCity": "Houston",
+    "ArenaState": "TX",
+    "Coach": "Rob Lanier",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 238,
+    "TeamName": "Rice"
+  },
+  {
+    "Arena": "Robins Center",
+    "ArenaCity": "Richmond",
+    "ArenaState": "VA",
+    "Coach": "Chris Mooney",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 239,
+    "TeamName": "Richmond"
+  },
+  {
+    "Arena": "Alumni Gymnasium",
+    "ArenaCity": "Lawrenceville",
+    "ArenaState": "NJ",
+    "Coach": "Kevin Baggett",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 240,
+    "TeamName": "Rider"
+  },
+  {
+    "Arena": "UPMC Events Center",
+    "ArenaCity": "Moon Township",
+    "ArenaState": "PA",
+    "Coach": "Andrew Toole",
+    "ConfShort": "Horz",
+    "Season": 2026,
+    "TeamID": 241,
+    "TeamName": "Robert Morris"
+  },
+  {
+    "Arena": "Jersey Mike's Arena",
+    "ArenaCity": "Piscataway",
+    "ArenaState": "NJ",
+    "Coach": "Steve Pikiell",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 242,
+    "TeamName": "Rutgers"
+  },
+  {
+    "Arena": "Hornet Pavilion",
+    "ArenaCity": "Sacramento",
+    "ArenaState": "CA",
+    "Coach": "Mike Bibby",
+    "ConfShort": "BSky",
+    "Season": 2026,
+    "TeamID": 243,
+    "TeamName": "Sacramento St."
+  },
+  {
+    "Arena": "Pitt Center",
+    "ArenaCity": "Fairfield",
+    "ArenaState": "CT",
+    "Coach": "Anthony Latina",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 244,
+    "TeamName": "Sacred Heart"
+  },
+  {
+    "Arena": "DeGol Arena",
+    "ArenaCity": "Loretto",
+    "ArenaState": "PA",
+    "Coach": "Luke McConnell",
+    "ConfShort": "NEC",
+    "Season": 2026,
+    "TeamID": 276,
+    "TeamName": "Saint Francis"
+  },
+  {
+    "Arena": "Hagan Arena",
+    "ArenaCity": "Philadelphia",
+    "ArenaState": "PA",
+    "Coach": "Steve Donahue",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 245,
+    "TeamName": "Saint Joseph's"
+  },
+  {
+    "Arena": "Chaifetz Arena",
+    "ArenaCity": "St. Louis",
+    "ArenaState": "MO",
+    "Coach": "Josh Schertz",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 246,
+    "TeamName": "Saint Louis"
+  },
+  {
+    "Arena": "University Credit Union Pavilion",
+    "ArenaCity": "Moraga",
+    "ArenaState": "CA",
+    "Coach": "Randy Bennett",
+    "ConfShort": "WCC",
+    "Season": 2026,
+    "TeamID": 247,
+    "TeamName": "Saint Mary's"
+  },
+  {
+    "Arena": "Yanitelli Center",
+    "ArenaCity": "Jersey City",
+    "ArenaState": "NJ",
+    "Coach": "Bashir Mason",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 248,
+    "TeamName": "Saint Peter's"
+  },
+  {
+    "Arena": "Johnson Coliseum",
+    "ArenaCity": "Huntsville",
+    "ArenaState": "TX",
+    "Coach": "Chris Mudge",
+    "ConfShort": "CUSA",
+    "Season": 2026,
+    "TeamID": 249,
+    "TeamName": "Sam Houston St."
+  },
+  {
+    "Arena": "Hanna Center",
+    "ArenaCity": "Birmingham",
+    "ArenaState": "AL",
+    "Coach": "Lennie Acuff",
+    "ConfShort": "SC",
+    "Season": 2026,
+    "TeamID": 250,
+    "TeamName": "Samford"
+  },
+  {
+    "Arena": "Jenny Craig Pavilion",
+    "ArenaCity": "San Diego",
+    "ArenaState": "CA",
+    "Coach": "Steve Lavin",
+    "ConfShort": "WCC",
+    "Season": 2026,
+    "TeamID": 251,
+    "TeamName": "San Diego"
+  },
+  {
+    "Arena": "Viejas Arena",
+    "ArenaCity": "San Diego",
+    "ArenaState": "CA",
+    "Coach": "Brian Dutcher",
+    "ConfShort": "MWC",
+    "Season": 2026,
+    "TeamID": 252,
+    "TeamName": "San Diego St."
+  },
+  {
+    "Arena": "War Memorial at the Sobrato Center",
+    "ArenaCity": "San Francisco",
+    "ArenaState": "CA",
+    "Coach": "Chris Gerlufsen",
+    "ConfShort": "WCC",
+    "Season": 2026,
+    "TeamID": 253,
+    "TeamName": "San Francisco"
+  },
+  {
+    "Arena": "Provident Credit Union Event Center",
+    "ArenaCity": "San Jose",
+    "ArenaState": "CA",
+    "Coach": "Tim Miles",
+    "ConfShort": "MWC",
+    "Season": 2026,
+    "TeamID": 254,
+    "TeamName": "San Jose St."
+  },
+  {
+    "Arena": "Leavey Center",
+    "ArenaCity": "Santa Clara",
+    "ArenaState": "CA",
+    "Coach": "Herb Sendek",
+    "ConfShort": "WCC",
+    "Season": 2026,
+    "TeamID": 255,
+    "TeamName": "Santa Clara"
+  },
+  {
+    "Arena": "Redhawk Center",
+    "ArenaCity": "Seattle",
+    "ArenaState": "WA",
+    "Coach": "Chris Victor",
+    "ConfShort": "WCC",
+    "Season": 2026,
+    "TeamID": 257,
+    "TeamName": "Seattle"
+  },
+  {
+    "Arena": "Prudential Center",
+    "ArenaCity": "Newark",
+    "ArenaState": "NJ",
+    "Coach": "Shaheen Holloway",
+    "ConfShort": "BE",
+    "Season": 2026,
+    "TeamID": 258,
+    "TeamName": "Seton Hall"
+  },
+  {
+    "Arena": "MVP Arena",
+    "ArenaCity": "Albany",
+    "ArenaState": "NY",
+    "Coach": "Gerry McNamara",
+    "ConfShort": "MAAC",
+    "Season": 2026,
+    "TeamID": 259,
+    "TeamName": "Siena"
+  },
+  {
+    "Arena": "First Community Arena",
+    "ArenaCity": "Edwardsville",
+    "ArenaState": "IL",
+    "Coach": "Brian Barone",
+    "ConfShort": "OVC",
+    "Season": 2026,
+    "TeamID": 260,
+    "TeamName": "SIUE"
+  },
+  {
+    "Arena": "Moody Coliseum",
+    "ArenaCity": "Dallas",
+    "ArenaState": "TX",
+    "Coach": "Andy Enfield",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 261,
+    "TeamName": "SMU"
+  },
+  {
+    "Arena": "Mitchell Center",
+    "ArenaCity": "Mobile",
+    "ArenaState": "AL",
+    "Coach": "Richie Riley",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 262,
+    "TeamName": "South Alabama"
+  },
+  {
+    "Arena": "Colonial Life Arena",
+    "ArenaCity": "Columbia",
+    "ArenaState": "SC",
+    "Coach": "Lamont Paris",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 263,
+    "TeamName": "South Carolina"
+  },
+  {
+    "Arena": "Smith Hammond Middleton Center",
+    "ArenaCity": "Orangeburg",
+    "ArenaState": "SC",
+    "Coach": "Erik Martin",
+    "ConfShort": "MEAC",
+    "Season": 2026,
+    "TeamID": 264,
+    "TeamName": "South Carolina St."
+  },
+  {
+    "Arena": "Sanford Coyote Sports Center",
+    "ArenaCity": "Vermillion",
+    "ArenaState": "SD",
+    "Coach": "Eric Peterson",
+    "ConfShort": "Sum",
+    "Season": 2026,
+    "TeamID": 265,
+    "TeamName": "South Dakota"
+  },
+  {
+    "Arena": "First Bank & Trust Arena\n",
+    "ArenaCity": "Brookings",
+    "ArenaState": "SD",
+    "Coach": "Bryan Petersen",
+    "ConfShort": "Sum",
+    "Season": 2026,
+    "TeamID": 266,
+    "TeamName": "South Dakota St."
+  },
+  {
+    "Arena": "Yuengling Center",
+    "ArenaCity": "Tampa",
+    "ArenaState": "FL",
+    "Coach": "Bryan Hodgson",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 267,
+    "TeamName": "South Florida"
+  },
+  {
+    "Arena": "Show Me Center",
+    "ArenaCity": "Cape Girardeau",
+    "ArenaState": "MO",
+    "Coach": "Brad Korn",
+    "ConfShort": "OVC",
+    "Season": 2026,
+    "TeamID": 268,
+    "TeamName": "Southeast Missouri"
+  },
+  {
+    "Arena": "University Center",
+    "ArenaCity": "Hammond",
+    "ArenaState": "LA",
+    "Coach": "David Kiefer",
+    "ConfShort": "Slnd",
+    "Season": 2026,
+    "TeamID": 269,
+    "TeamName": "Southeastern Louisiana"
+  },
+  {
+    "Arena": "Clark Activity Center",
+    "ArenaCity": "Baton Rouge",
+    "ArenaState": "LA",
+    "Coach": "Kevin Johnson",
+    "ConfShort": "SWAC",
+    "Season": 2026,
+    "TeamID": 270,
+    "TeamName": "Southern"
+  },
+  {
+    "Arena": "Banterra Center",
+    "ArenaCity": "Carbondale",
+    "ArenaState": "IL",
+    "Coach": "Scott Nagy",
+    "ConfShort": "MVC",
+    "Season": 2026,
+    "TeamID": 271,
+    "TeamName": "Southern Illinois"
+  },
+  {
+    "Arena": "Liberty Arena",
+    "ArenaCity": "Evansville",
+    "ArenaState": "IN",
+    "Coach": "Stan Gouard",
+    "ConfShort": "OVC",
+    "Season": 2026,
+    "TeamID": 365,
+    "TeamName": "Southern Indiana"
+  },
+  {
+    "Arena": "Reed Green Coliseum",
+    "ArenaCity": "Hattiesburg",
+    "ArenaState": "MS",
+    "Coach": "Jay Ladner",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 272,
+    "TeamName": "Southern Miss"
+  },
+  {
+    "Arena": "America First Event Center",
+    "ArenaCity": "Cedar City",
+    "ArenaState": "UT",
+    "Coach": "Rob Jeter",
+    "ConfShort": "WAC",
+    "Season": 2026,
+    "TeamID": 273,
+    "TeamName": "Southern Utah"
+  },
+  {
+    "Arena": "Reilly Center",
+    "ArenaCity": "St. Bonaventure",
+    "ArenaState": "NY",
+    "Coach": "Mark Schmidt",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 274,
+    "TeamName": "St. Bonaventure"
+  },
+  {
+    "Arena": "Carnesecca Arena",
+    "ArenaCity": "Jamaica",
+    "ArenaState": "NY",
+    "Coach": "Rick Pitino",
+    "ConfShort": "BE",
+    "Season": 2026,
+    "TeamID": 277,
+    "TeamName": "St. John's"
+  },
+  {
+    "Arena": "Anderson Arena",
+    "ArenaCity": "St. Paul",
+    "ArenaState": "MN",
+    "Coach": "Johnny Tauer",
+    "ConfShort": "Sum",
+    "Season": 2026,
+    "TeamID": 364,
+    "TeamName": "St. Thomas"
+  },
+  {
+    "Arena": "Maples Pavilion",
+    "ArenaCity": "Stanford",
+    "ArenaState": "CA",
+    "Coach": "Kyle Smith",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 278,
+    "TeamName": "Stanford"
+  },
+  {
+    "Arena": "Johnson Coliseum",
+    "ArenaCity": "Nacogdoches",
+    "ArenaState": "TX",
+    "Coach": "Matt Braeuer",
+    "ConfShort": "Slnd",
+    "Season": 2026,
+    "TeamID": 279,
+    "TeamName": "Stephen F. Austin"
+  },
+  {
+    "Arena": "Edmunds Center",
+    "ArenaCity": "DeLand",
+    "ArenaState": "FL",
+    "Coach": "Donnie Jones",
+    "ConfShort": "ASun",
+    "Season": 2026,
+    "TeamID": 280,
+    "TeamName": "Stetson"
+  },
+  {
+    "Arena": "Merkert Gymnasium",
+    "ArenaCity": "Easton",
+    "ArenaState": "MA",
+    "Coach": "Chris Kraus",
+    "ConfShort": "NEC",
+    "Season": 2026,
+    "TeamID": 366,
+    "TeamName": "Stonehill"
+  },
+  {
+    "Arena": "Stony Brook Arena",
+    "ArenaCity": "Stony Brook",
+    "ArenaState": "NY",
+    "Coach": "Geno Ford",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 281,
+    "TeamName": "Stony Brook"
+  },
+  {
+    "Arena": "JMA Wireless Dome",
+    "ArenaCity": "Syracuse",
+    "ArenaState": "NY",
+    "Coach": "Adrian Autry",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 282,
+    "TeamName": "Syracuse"
+  },
+  {
+    "Arena": "EECU Center",
+    "ArenaCity": "Stephenville",
+    "ArenaState": "TX",
+    "Coach": "Billy Gillispie",
+    "ConfShort": "WAC",
+    "Season": 2026,
+    "TeamID": 362,
+    "TeamName": "Tarleton St."
+  },
+  {
+    "Arena": "Schollmaier Arena",
+    "ArenaCity": "Fort Worth",
+    "ArenaState": "TX",
+    "Coach": "Jamie Dixon",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 283,
+    "TeamName": "TCU"
+  },
+  {
+    "Arena": "The Liacouras Center",
+    "ArenaCity": "Philadelphia",
+    "ArenaState": "PA",
+    "Coach": "Adam Fisher",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 284,
+    "TeamName": "Temple"
+  },
+  {
+    "Arena": "Thompson Boling Arena",
+    "ArenaCity": "Knoxville",
+    "ArenaState": "TN",
+    "Coach": "Rick Barnes",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 285,
+    "TeamName": "Tennessee"
+  },
+  {
+    "Arena": "Elam Center",
+    "ArenaCity": "Martin",
+    "ArenaState": "TN",
+    "Coach": "Jeremy Shulman",
+    "ConfShort": "OVC",
+    "Season": 2026,
+    "TeamID": 286,
+    "TeamName": "Tennessee Martin"
+  },
+  {
+    "Arena": "Gentry Center",
+    "ArenaCity": "Nashville",
+    "ArenaState": "TN",
+    "Coach": "Nolan Smith",
+    "ConfShort": "OVC",
+    "Season": 2026,
+    "TeamID": 287,
+    "TeamName": "Tennessee St."
+  },
+  {
+    "Arena": "Eblen Center",
+    "ArenaCity": "Cookeville",
+    "ArenaState": "TN",
+    "Coach": "John Pelphrey",
+    "ConfShort": "OVC",
+    "Season": 2026,
+    "TeamID": 288,
+    "TeamName": "Tennessee Tech"
+  },
+  {
+    "Arena": "Moody Center",
+    "ArenaCity": "Austin",
+    "ArenaState": "TX",
+    "Coach": "Sean Miller",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 289,
+    "TeamName": "Texas"
+  },
+  {
+    "Arena": "Reed Arena",
+    "ArenaCity": "College Station",
+    "ArenaState": "TX",
+    "Coach": "Bucky McMillan",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 290,
+    "TeamName": "Texas A&M"
+  },
+  {
+    "Arena": "American Bank Center",
+    "ArenaCity": "Corpus Christi",
+    "ArenaState": "TX",
+    "Coach": "Jim Shaw",
+    "ConfShort": "Slnd",
+    "Season": 2026,
+    "TeamID": 291,
+    "TeamName": "Texas A&M Corpus Chris"
+  },
+  {
+    "Arena": "Health & PE Arena",
+    "ArenaCity": "Houston",
+    "ArenaState": "TX",
+    "Coach": "Johnny Jones",
+    "ConfShort": "SWAC",
+    "Season": 2026,
+    "TeamID": 292,
+    "TeamName": "Texas Southern"
+  },
+  {
+    "Arena": "Strahan Arena",
+    "ArenaCity": "San Marcos",
+    "ArenaState": "TX",
+    "Coach": "Terrence Johnson",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 293,
+    "TeamName": "Texas St."
+  },
+  {
+    "Arena": "United Supermarkets Arena",
+    "ArenaCity": "Lubbock",
+    "ArenaState": "TX",
+    "Coach": "Grant McCasland",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 294,
+    "TeamName": "Texas Tech"
+  },
+  {
+    "Arena": "McAlister Field House",
+    "ArenaCity": "Charleston",
+    "ArenaState": "SC",
+    "Coach": "Ed Conroy",
+    "ConfShort": "SC",
+    "Season": 2026,
+    "TeamID": 295,
+    "TeamName": "The Citadel"
+  },
+  {
+    "Arena": "Savage Arena",
+    "ArenaCity": "Toledo",
+    "ArenaState": "OH",
+    "Coach": "Tod Kowalczyk",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 296,
+    "TeamName": "Toledo"
+  },
+  {
+    "Arena": "SECU Arena",
+    "ArenaCity": "Towson",
+    "ArenaState": "MD",
+    "Coach": "Pat Skerry",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 297,
+    "TeamName": "Towson"
+  },
+  {
+    "Arena": "Trojan Arena",
+    "ArenaCity": "Troy",
+    "ArenaState": "AL",
+    "Coach": "Scott Cross",
+    "ConfShort": "SB",
+    "Season": 2026,
+    "TeamID": 298,
+    "TeamName": "Troy"
+  },
+  {
+    "Arena": "Fogelman Arena",
+    "ArenaCity": "New Orleans",
+    "ArenaState": "LA",
+    "Coach": "Ron Hunter",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 299,
+    "TeamName": "Tulane"
+  },
+  {
+    "Arena": "Reynolds Center",
+    "ArenaCity": "Tulsa",
+    "ArenaState": "OK",
+    "Coach": "Eric Konkol",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 300,
+    "TeamName": "Tulsa"
+  },
+  {
+    "Arena": "Bartow Arena",
+    "ArenaCity": "Birmingham",
+    "ArenaState": "AL",
+    "Coach": "Andy Kennedy",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 301,
+    "TeamName": "UAB"
+  },
+  {
+    "Arena": "University Credit Union Center",
+    "ArenaCity": "Davis",
+    "ArenaState": "CA",
+    "Coach": "Jim Les",
+    "ConfShort": "BW",
+    "Season": 2026,
+    "TeamID": 302,
+    "TeamName": "UC Davis"
+  },
+  {
+    "Arena": "Bren Events Center",
+    "ArenaCity": "Irvine",
+    "ArenaState": "CA",
+    "Coach": "Russell Turner",
+    "ConfShort": "BW",
+    "Season": 2026,
+    "TeamID": 303,
+    "TeamName": "UC Irvine"
+  },
+  {
+    "Arena": "SRC Arena",
+    "ArenaCity": "Riverside",
+    "ArenaState": "CA",
+    "Coach": "Gus Argenal",
+    "ConfShort": "BW",
+    "Season": 2026,
+    "TeamID": 304,
+    "TeamName": "UC Riverside"
+  },
+  {
+    "Arena": "LionTree Arena",
+    "ArenaCity": "La Jolla",
+    "ArenaState": "CA",
+    "Coach": "Clint Allard",
+    "ConfShort": "BW",
+    "Season": 2026,
+    "TeamID": 363,
+    "TeamName": "UC San Diego"
+  },
+  {
+    "Arena": "Thunderdome",
+    "ArenaCity": "Santa Barbara",
+    "ArenaState": "CA",
+    "Coach": "Joe Pasternack",
+    "ConfShort": "BW",
+    "Season": 2026,
+    "TeamID": 305,
+    "TeamName": "UC Santa Barbara"
+  },
+  {
+    "Arena": "Addition Financial Arena",
+    "ArenaCity": "Orlando",
+    "ArenaState": "FL",
+    "Coach": "Johnny Dawkins",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 306,
+    "TeamName": "UCF"
+  },
+  {
+    "Arena": "Pauley Pavilion",
+    "ArenaCity": "Los Angeles",
+    "ArenaState": "CA",
+    "Coach": "Mick Cronin",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 307,
+    "TeamName": "UCLA"
+  },
+  {
+    "Arena": "Kennedy Family Athletic Complex",
+    "ArenaCity": "Lowell",
+    "ArenaState": "MA",
+    "Coach": "Pat Duquette",
+    "ConfShort": "AE",
+    "Season": 2026,
+    "TeamID": 308,
+    "TeamName": "UMass Lowell"
+  },
+  {
+    "Arena": "Chesapeake Employers Insurance Arena",
+    "ArenaCity": "Baltimore",
+    "ArenaState": "MD",
+    "Coach": "Jim Ferry",
+    "ConfShort": "AE",
+    "Season": 2026,
+    "TeamID": 309,
+    "TeamName": "UMBC"
+  },
+  {
+    "Arena": "Kimmel Arena",
+    "ArenaCity": "Asheville",
+    "ArenaState": "NC",
+    "Coach": "Mike Morrell",
+    "ConfShort": "BSth",
+    "Season": 2026,
+    "TeamID": 311,
+    "TeamName": "UNC Asheville"
+  },
+  {
+    "Arena": "Greensboro Coliseum",
+    "ArenaCity": "Greensboro",
+    "ArenaState": "NC",
+    "Coach": "Mike R. Jones",
+    "ConfShort": "SC",
+    "Season": 2026,
+    "TeamID": 312,
+    "TeamName": "UNC Greensboro"
+  },
+  {
+    "Arena": "Trask Coliseum",
+    "ArenaCity": "Wilmington",
+    "ArenaState": "NC",
+    "Coach": "Takayo Siddle",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 313,
+    "TeamName": "UNC Wilmington"
+  },
+  {
+    "Arena": "Thomas & Mack Center",
+    "ArenaCity": "Las Vegas",
+    "ArenaState": "NV",
+    "Coach": "Josh Pastner",
+    "ConfShort": "MWC",
+    "Season": 2026,
+    "TeamID": 314,
+    "TeamName": "UNLV"
+  },
+  {
+    "Arena": "Galen Center",
+    "ArenaCity": "Los Angeles",
+    "ArenaState": "CA",
+    "Coach": "Eric Musselman",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 315,
+    "TeamName": "USC"
+  },
+  {
+    "Arena": "Hodge Center",
+    "ArenaCity": "Spartanburg",
+    "ArenaState": "SC",
+    "Coach": "Marty Richter",
+    "ConfShort": "BSth",
+    "Season": 2026,
+    "TeamID": 316,
+    "TeamName": "USC Upstate"
+  },
+  {
+    "Arena": "College Park Center",
+    "ArenaCity": "Arlington",
+    "ArenaState": "TX",
+    "Coach": "K.T. Turner",
+    "ConfShort": "WAC",
+    "Season": 2026,
+    "TeamID": 317,
+    "TeamName": "UT Arlington"
+  },
+  {
+    "Arena": "UTRGV Fieldhouse",
+    "ArenaCity": "Edinburg",
+    "ArenaState": "TX",
+    "Coach": "Kahil Fennell",
+    "ConfShort": "Slnd",
+    "Season": 2026,
+    "TeamID": 318,
+    "TeamName": "UT Rio Grande Valley"
+  },
+  {
+    "Arena": "Huntsman Center",
+    "ArenaCity": "Salt Lake City",
+    "ArenaState": "UT",
+    "Coach": "Alex Jensen",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 319,
+    "TeamName": "Utah"
+  },
+  {
+    "Arena": "Dee Glen Smith Spectrum",
+    "ArenaCity": "Logan",
+    "ArenaState": "UT",
+    "Coach": "Jerrod Calhoun",
+    "ConfShort": "MWC",
+    "Season": 2026,
+    "TeamID": 320,
+    "TeamName": "Utah St."
+  },
+  {
+    "Arena": "Burns Arena",
+    "ArenaCity": "St. George",
+    "ArenaState": "UT",
+    "Coach": "Jon Judkins",
+    "ConfShort": "WAC",
+    "Season": 2026,
+    "TeamID": 361,
+    "TeamName": "Utah Tech"
+  },
+  {
+    "Arena": "UCCU Center",
+    "ArenaCity": "Orem",
+    "ArenaState": "UT",
+    "Coach": "Todd Phillips",
+    "ConfShort": "WAC",
+    "Season": 2026,
+    "TeamID": 321,
+    "TeamName": "Utah Valley"
+  },
+  {
+    "Arena": "Don Haskins Center",
+    "ArenaCity": "El Paso",
+    "ArenaState": "TX",
+    "Coach": "Joe Golding",
+    "ConfShort": "CUSA",
+    "Season": 2026,
+    "TeamID": 322,
+    "TeamName": "UTEP"
+  },
+  {
+    "Arena": "UTSA Convocation Center",
+    "ArenaCity": "San Antonio",
+    "ArenaState": "TX",
+    "Coach": "Austin Claunch",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 323,
+    "TeamName": "UTSA"
+  },
+  {
+    "Arena": "Athletics Recreation Center",
+    "ArenaCity": "Valparaiso",
+    "ArenaState": "IN",
+    "Coach": "Roger Powell",
+    "ConfShort": "MVC",
+    "Season": 2026,
+    "TeamID": 324,
+    "TeamName": "Valparaiso"
+  },
+  {
+    "Arena": "Memorial Gym",
+    "ArenaCity": "Nashville",
+    "ArenaState": "TN",
+    "Coach": "Mark Byington",
+    "ConfShort": "SEC",
+    "Season": 2026,
+    "TeamID": 325,
+    "TeamName": "Vanderbilt"
+  },
+  {
+    "Arena": "Siegel Center",
+    "ArenaCity": "Richmond",
+    "ArenaState": "VA",
+    "Coach": "Phil Martelli Jr.",
+    "ConfShort": "A10",
+    "Season": 2026,
+    "TeamID": 326,
+    "TeamName": "VCU"
+  },
+  {
+    "Arena": "Patrick Gymnasium",
+    "ArenaCity": "Burlington",
+    "ArenaState": "VT",
+    "Coach": "John Becker",
+    "ConfShort": "AE",
+    "Season": 2026,
+    "TeamID": 327,
+    "TeamName": "Vermont"
+  },
+  {
+    "Arena": "Finneran Pavilion",
+    "ArenaCity": "Villanova",
+    "ArenaState": "PA",
+    "Coach": "Kevin Willard",
+    "ConfShort": "BE",
+    "Season": 2026,
+    "TeamID": 328,
+    "TeamName": "Villanova"
+  },
+  {
+    "Arena": "John Paul Jones Arena",
+    "ArenaCity": "Charlottesville",
+    "ArenaState": "VA",
+    "Coach": "Ryan Odom",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 329,
+    "TeamName": "Virginia"
+  },
+  {
+    "Arena": "Cassell Coliseum",
+    "ArenaCity": "Blacksburg",
+    "ArenaState": "VA",
+    "Coach": "Mike Young",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 330,
+    "TeamName": "Virginia Tech"
+  },
+  {
+    "Arena": "Cameron Hall",
+    "ArenaCity": "Lexington",
+    "ArenaState": "VA",
+    "Coach": "Andrew Wilson",
+    "ConfShort": "SC",
+    "Season": 2026,
+    "TeamID": 331,
+    "TeamName": "VMI"
+  },
+  {
+    "Arena": "Spiro Sports Center",
+    "ArenaCity": "Staten Island",
+    "ArenaState": "NY",
+    "Coach": "Dwan McMillan",
+    "ConfShort": "NEC",
+    "Season": 2026,
+    "TeamID": 332,
+    "TeamName": "Wagner"
+  },
+  {
+    "Arena": "Joel Coliseum",
+    "ArenaCity": "Winston-Salem",
+    "ArenaState": "NC",
+    "Coach": "Steve Forbes",
+    "ConfShort": "ACC",
+    "Season": 2026,
+    "TeamID": 333,
+    "TeamName": "Wake Forest"
+  },
+  {
+    "Arena": "Alaska Airlines Arena",
+    "ArenaCity": "Seattle",
+    "ArenaState": "WA",
+    "Coach": "Danny Sprinkle",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 334,
+    "TeamName": "Washington"
+  },
+  {
+    "Arena": "Beasley Coliseum",
+    "ArenaCity": "Pullman",
+    "ArenaState": "WA",
+    "Coach": "David Riley",
+    "ConfShort": "WCC",
+    "Season": 2026,
+    "TeamID": 335,
+    "TeamName": "Washington St."
+  },
+  {
+    "Arena": "Dee Events Center",
+    "ArenaCity": "Ogden",
+    "ArenaState": "UT",
+    "Coach": "Eric Duft",
+    "ConfShort": "BSky",
+    "Season": 2026,
+    "TeamID": 336,
+    "TeamName": "Weber St."
+  },
+  {
+    "Arena": "The Coliseum",
+    "ArenaCity": "Carollton",
+    "ArenaState": "GA",
+    "Coach": "Dave Moore",
+    "ConfShort": "ASun",
+    "Season": 2026,
+    "TeamID": 372,
+    "TeamName": "West Georgia"
+  },
+  {
+    "Arena": "Hope Coliseum",
+    "ArenaCity": "Morgantown",
+    "ArenaState": "WV",
+    "Coach": "Ross Hodge",
+    "ConfShort": "B12",
+    "Season": 2026,
+    "TeamID": 337,
+    "TeamName": "West Virginia"
+  },
+  {
+    "Arena": "Ramsey Center",
+    "ArenaCity": "Cullowhee",
+    "ArenaState": "NC",
+    "Coach": "Tim Craft",
+    "ConfShort": "SC",
+    "Season": 2026,
+    "TeamID": 338,
+    "TeamName": "Western Carolina"
+  },
+  {
+    "Arena": "Western Hall",
+    "ArenaCity": "Macomb",
+    "ArenaState": "IL",
+    "Coach": "Chad Boudreau",
+    "ConfShort": "OVC",
+    "Season": 2026,
+    "TeamID": 339,
+    "TeamName": "Western Illinois"
+  },
+  {
+    "Arena": "E.A. Diddle Arena",
+    "ArenaCity": "Bowling Green",
+    "ArenaState": "KY",
+    "Coach": "Hank Plona",
+    "ConfShort": "CUSA",
+    "Season": 2026,
+    "TeamID": 340,
+    "TeamName": "Western Kentucky"
+  },
+  {
+    "Arena": "University Arena",
+    "ArenaCity": "Kalamazoo",
+    "ArenaState": "MI",
+    "Coach": "Dwayne Stephens",
+    "ConfShort": "MAC",
+    "Season": 2026,
+    "TeamID": 341,
+    "TeamName": "Western Michigan"
+  },
+  {
+    "Arena": "Charles Koch Arena",
+    "ArenaCity": "Wichita",
+    "ArenaState": "KS",
+    "Coach": "Paul Mills",
+    "ConfShort": "Amer",
+    "Season": 2026,
+    "TeamID": 342,
+    "TeamName": "Wichita St."
+  },
+  {
+    "Arena": "Kaplan Arena",
+    "ArenaCity": "Williamsburg",
+    "ArenaState": "VA",
+    "Coach": "Brian Earl",
+    "ConfShort": "CAA",
+    "Season": 2026,
+    "TeamID": 343,
+    "TeamName": "William & Mary"
+  },
+  {
+    "Arena": "Winthrop Coliseum",
+    "ArenaCity": "Rock Hill",
+    "ArenaState": "SC",
+    "Coach": "Mark Prosser",
+    "ConfShort": "BSth",
+    "Season": 2026,
+    "TeamID": 344,
+    "TeamName": "Winthrop"
+  },
+  {
+    "Arena": "Kohl Center",
+    "ArenaCity": "Madison",
+    "ArenaState": "WI",
+    "Coach": "Greg Gard",
+    "ConfShort": "B10",
+    "Season": 2026,
+    "TeamID": 345,
+    "TeamName": "Wisconsin"
+  },
+  {
+    "Arena": "Richardson Indoor Stadium",
+    "ArenaCity": "Spartanburg",
+    "ArenaState": "SC",
+    "Coach": "Kevin Giltner",
+    "ConfShort": "SC",
+    "Season": 2026,
+    "TeamID": 346,
+    "TeamName": "Wofford"
+  },
+  {
+    "Arena": "Nutter Center",
+    "ArenaCity": "Dayton",
+    "ArenaState": "OH",
+    "Coach": "Clint Sargent",
+    "ConfShort": "Horz",
+    "Season": 2026,
+    "TeamID": 347,
+    "TeamName": "Wright St."
+  },
+  {
+    "Arena": "Arena Auditorium",
+    "ArenaCity": "Laramie",
+    "ArenaState": "WY",
+    "Coach": "Sundance Wicks",
+    "ConfShort": "MWC",
+    "Season": 2026,
+    "TeamID": 348,
+    "TeamName": "Wyoming"
+  },
+  {
+    "Arena": "Cintas Center",
+    "ArenaCity": "Cincinnati",
+    "ArenaState": "OH",
+    "Coach": "Richard Pitino",
+    "ConfShort": "BE",
+    "Season": 2026,
+    "TeamID": 349,
+    "TeamName": "Xavier"
+  },
+  {
+    "Arena": "Lee Amphitheater",
+    "ArenaCity": "New Haven",
+    "ArenaState": "CT",
+    "Coach": "James Jones",
+    "ConfShort": "Ivy",
+    "Season": 2026,
+    "TeamID": 350,
+    "TeamName": "Yale"
+  },
+  {
+    "Arena": "Beeghly Center",
+    "ArenaCity": "Youngstown",
+    "ArenaState": "OH",
+    "Coach": "Ethan Faulkner",
+    "ConfShort": "Horz",
+    "Season": 2026,
+    "TeamID": 351,
+    "TeamName": "Youngstown St."
+  }
+]
