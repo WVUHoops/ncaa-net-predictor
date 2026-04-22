@@ -1,0 +1,12 @@
+[project]
+name = "ncaa-net-predictor"
+version = "0.1.0"
+description = "Preseason NCAA D-I basketball NET ranking projection tools for schedule building."
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
