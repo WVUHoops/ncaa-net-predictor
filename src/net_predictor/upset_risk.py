@@ -20,12 +20,22 @@ TARGET_SEASON = 2027
 HOME_COURT_ADJ_EM = 3.5
 
 TEAM_KEY_ALIASES = {
+    "american university": "american",
+    "iu indianapolis": "iupui",
+    "iu indy": "iupui",
+    "long island": "liu",
+    "long island university": "liu",
     "queens nc": "queens",
     "queens university": "queens",
     "queens university of charlotte": "queens",
+    "se louisiana": "southeastern louisiana",
     "s carolina upstate": "usc upstate",
     "sc upstate": "usc upstate",
     "south carolina upstate": "usc upstate",
+    "saint thomas minnesota": "saint thomas",
+    "st thomas minnesota": "saint thomas",
+    "texas a and m corpus christi": "texas a and m corpus chris",
+    "texas a and m cc": "texas a and m corpus chris",
 }
 
 KENPOM_FEATURE_FILES = {
@@ -651,7 +661,7 @@ def build_low_major_road_high_major_rows(schedule_csv: Path, kenpom_dir: Path) -
         reader = csv.DictReader(file)
         for game in reader:
             season = as_int(game.get("season"))
-            if season is None or season <= min(s for s, _ in team_features):
+            if season is None:
                 continue
             game_date = date_from_schedule_row(game)
             if game_date is None:
@@ -675,7 +685,7 @@ def build_low_major_road_high_major_rows(schedule_csv: Path, kenpom_dir: Path) -
             away_current = team_features.get((season, away_key))
             home_prior = team_features.get((season - 1, home_key))
             away_prior = team_features.get((season - 1, away_key))
-            if not home_current or not away_current or not home_prior or not away_prior:
+            if not home_current or not away_current:
                 continue
             if home_current.get("conference") not in HIGH_MAJOR_CONFERENCES:
                 continue
@@ -701,9 +711,11 @@ def build_low_major_road_high_major_rows(schedule_csv: Path, kenpom_dir: Path) -
                 "score_margin_for_away": away_score - home_score,
                 "upset": int(away_score > home_score),
             }
-            expected_margin_for_away = difference(away_prior.get("adj_em"), home_prior.get("adj_em"))
-            if expected_margin_for_away is not None:
-                expected_margin_for_away -= HOME_COURT_ADJ_EM
+            expected_margin_for_away = None
+            if home_prior and away_prior:
+                expected_margin_for_away = difference(away_prior.get("adj_em"), home_prior.get("adj_em"))
+                if expected_margin_for_away is not None:
+                    expected_margin_for_away -= HOME_COURT_ADJ_EM
             row["expected_margin_for_away"] = expected_margin_for_away
             row["margin_over_expected_for_away"] = difference(
                 row.get("score_margin_for_away"),
