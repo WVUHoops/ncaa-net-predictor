@@ -9,6 +9,10 @@ from typing import Any
 
 from net_predictor.coach_factor import canonical_team_key
 
+RETURNER_IMMEDIATE_IMPACT_WEIGHT = 1.0
+HS_IMMEDIATE_IMPACT_WEIGHT = 0.65
+TRANSFER_IMMEDIATE_IMPACT_WEIGHT = 1.15
+
 
 def read_json_rows(path: Path) -> list[dict[str, Any]]:
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -162,6 +166,10 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
     row["roster_talent_hs_newcomer_roster_share"] = composition["hs_share"]
     row["roster_talent_transfer_newcomer_roster_share"] = composition["transfer_share"]
     row["roster_talent_newcomer_roster_share"] = composition["newcomer_share"]
+    row["roster_talent_returner_impact_share"] = composition["returner_impact_share"]
+    row["roster_talent_hs_newcomer_impact_share"] = composition["hs_impact_share"]
+    row["roster_talent_transfer_newcomer_impact_share"] = composition["transfer_impact_share"]
+    row["roster_talent_newcomer_impact_share"] = composition["newcomer_impact_share"]
     row["roster_talent_cbb_transfer_volume_index"] = average_existing(
         cbb_transfer_players,
         cbb_transfer_minutes,
@@ -187,15 +195,15 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
     row["roster_talent_transfer_need_fit"] = product_if_present(transfer_signal, lost_minutes_pct)
     row["roster_talent_weighted_returning_core_continuity"] = product_if_present(
         row.get("roster_talent_returning_core_continuity"),
-        composition["returner_share"],
+        composition["returner_impact_share"],
     )
     row["roster_talent_weighted_hs_rank_percentile"] = product_if_present(
         hs_rank_percentile,
-        composition["hs_share"],
+        composition["hs_impact_share"],
     )
     row["roster_talent_weighted_transfer_rank_percentile"] = product_if_present(
         transfer_rank_percentile,
-        composition["transfer_share"],
+        composition["transfer_impact_share"],
     )
     row["roster_talent_continuity_plus_incoming"] = sum_existing(
         row.get("roster_talent_weighted_returning_core_continuity"),
@@ -250,17 +258,39 @@ def roster_composition_weights(
             "hs_share": None,
             "transfer_share": None,
             "newcomer_share": None,
+            "returner_impact_share": None,
+            "hs_impact_share": None,
+            "transfer_impact_share": None,
+            "newcomer_impact_share": None,
         }
 
     returner_share = buckets["returner"] / known_roster_players
     hs_share = buckets["hs"] / known_roster_players
     transfer_share = buckets["transfer"] / known_roster_players
+    impact_units = {
+        "returner": returner_share * RETURNER_IMMEDIATE_IMPACT_WEIGHT,
+        "hs": hs_share * HS_IMMEDIATE_IMPACT_WEIGHT,
+        "transfer": transfer_share * TRANSFER_IMMEDIATE_IMPACT_WEIGHT,
+    }
+    total_impact_units = sum(impact_units.values())
+    if total_impact_units > 0:
+        returner_impact_share = impact_units["returner"] / total_impact_units
+        hs_impact_share = impact_units["hs"] / total_impact_units
+        transfer_impact_share = impact_units["transfer"] / total_impact_units
+    else:
+        returner_impact_share = returner_share
+        hs_impact_share = hs_share
+        transfer_impact_share = transfer_share
     return {
         "known_roster_players": known_roster_players,
         "returner_share": returner_share,
         "hs_share": hs_share,
         "transfer_share": transfer_share,
         "newcomer_share": hs_share + transfer_share,
+        "returner_impact_share": returner_impact_share,
+        "hs_impact_share": hs_impact_share,
+        "transfer_impact_share": transfer_impact_share,
+        "newcomer_impact_share": hs_impact_share + transfer_impact_share,
     }
 
 

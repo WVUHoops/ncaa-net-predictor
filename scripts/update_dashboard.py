@@ -79,8 +79,18 @@ def main() -> int:
             ],
             required=False,
         )
+        run_step(
+            [
+                "python3",
+                "scripts/fetch_hoopdirt_coaching_changes.py",
+                "--season",
+                "2026",
+            ],
+            required=False,
+        )
 
     run_step(["python3", "scripts/build_on3_features.py"])
+    run_step(["python3", "scripts/build_coach_features.py", "--season", "2026"])
 
     if not args.skip_roster_status:
         player_agg = latest_current_player_agg()

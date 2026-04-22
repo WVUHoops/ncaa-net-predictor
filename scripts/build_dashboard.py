@@ -167,6 +167,14 @@ def slim_risk_row(
         "danger_index": compact_float(row.get("danger_index"), 4),
         "schedule_score": compact_float(row.get("schedule_score_rank"), 1),
         "added_wab": added_wab_proxy(row.get("schedule_score_rank")),
+        "coach_guarantee_games": compact_float(row.get("away_coach_hm_guarantee_games"), 0),
+        "coach_guarantee_upset_rate": pct(row.get("away_coach_hm_guarantee_upset_rate")),
+        "coach_guarantee_close_rate": pct(row.get("away_coach_hm_guarantee_close_rate")),
+        "coach_guarantee_avg_margin_over_expected": compact_float(
+            row.get("away_coach_hm_guarantee_avg_margin_over_expected"),
+            1,
+        ),
+        "coach_pest_index": compact_float(row.get("away_coach_guarantee_pest_index"), 3),
         "three_rate": compact_float(row.get("away_three_point_attempt_rate"), 1),
         "experience": compact_float(row.get("away_experience"), 2),
         "adj_em": compact_float(row.get("away_adj_em"), 1),
@@ -771,6 +779,8 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <option value="tier:asc">Tier A-Z</option>
           <option value="risk_bucket:desc">Risk high-low</option>
           <option value="recommendation:asc">Recommendation A-Z</option>
+          <option value="coach_pest_index:desc">Coach pest high-low</option>
+          <option value="coach_guarantee_avg_margin_over_expected:desc">Coach vs HM over expected high-low</option>
           <option value="three_rate:desc">3PA rate high-low</option>
           <option value="experience:desc">Experience high-low</option>
           <option value="adj_em:desc">AdjEM high-low</option>
@@ -788,6 +798,9 @@ def dashboard_html(payload: dict[str, Any]) -> str:
               <th data-key="recommendation">Recommendation</th>
               <th data-key="safe_value_score">Safe Value</th>
               <th data-key="added_wab">Added WAB</th>
+              <th data-key="coach_pest_index">Coach Pest</th>
+              <th data-key="coach_guarantee_games">Coach HM Gms</th>
+              <th data-key="coach_guarantee_avg_margin_over_expected">Coach +/- Exp</th>
               <th data-key="three_rate">3PA Rate</th>
               <th data-key="experience">Exp</th>
               <th data-key="adj_em">AdjEM</th>
@@ -851,7 +864,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       </div>
     </section>
     <footer>
-      Added WAB and planner NCSOS are schedule-value proxies, not official WAB or official NCAA/KenPom NCSOS. WVU Upset % estimates the opponent's win probability in a road game at West Virginia.
+      Added WAB and planner NCSOS are schedule-value proxies, not official WAB or official NCAA/KenPom NCSOS. WVU Upset % estimates the opponent's win probability in a road game at West Virginia. Coach Pest reflects a coach's prior low/mid-major road guarantee-game results against high-major hosts.
     </footer>
   </main>
   <script>
@@ -986,6 +999,9 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <td><span class="pill ${{cls(row.recommendation)}}">${{text(row.recommendation).replaceAll("_", " ")}}</span></td>
           <td class="num">${{text(row.safe_value_score)}}</td>
           <td class="num">${{text(row.added_wab)}}</td>
+          <td class="num">${{text(row.coach_pest_index)}}</td>
+          <td class="num">${{text(row.coach_guarantee_games)}}</td>
+          <td class="num">${{text(row.coach_guarantee_avg_margin_over_expected)}}</td>
           <td class="num">${{text(row.three_rate)}}</td>
           <td class="num">${{text(row.experience)}}</td>
           <td class="num">${{text(row.adj_em)}}</td>

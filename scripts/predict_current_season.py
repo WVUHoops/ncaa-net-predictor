@@ -292,6 +292,12 @@ def model_outputs(
                     "transfer_newcomer_roster_share": row.get(
                         "roster_talent_transfer_newcomer_roster_share"
                     ),
+                    "returner_impact_share": row.get("roster_talent_returner_impact_share"),
+                    "newcomer_impact_share": row.get("roster_talent_newcomer_impact_share"),
+                    "hs_newcomer_impact_share": row.get("roster_talent_hs_newcomer_impact_share"),
+                    "transfer_newcomer_impact_share": row.get(
+                        "roster_talent_transfer_newcomer_impact_share"
+                    ),
                     "composition_weighted_roster_talent": row.get(
                         "roster_talent_continuity_plus_incoming"
                     ),

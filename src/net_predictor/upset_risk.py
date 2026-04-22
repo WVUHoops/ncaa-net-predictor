@@ -10,13 +10,14 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from net_predictor.coach_factor import canonical_team_key
+from net_predictor.coach_factor import canonical_team_key, normalize_coach_name
 from net_predictor.model_table import as_float, as_int, read_csv_rows, read_json_rows
 
 
 HIGH_MAJOR_CONFERENCES = {"ACC", "B10", "B12", "BE", "P12", "SEC"}
 EARLY_SEASON_MONTHS = {11, 12}
 TARGET_SEASON = 2027
+HOME_COURT_ADJ_EM = 3.5
 
 KENPOM_FEATURE_FILES = {
     "ratings": "ratings.json",
@@ -72,6 +73,27 @@ BASE_NUMERIC_FEATURES = (
     "def_points_from_three_pct",
 )
 
+COACH_NUMERIC_FEATURES = (
+    "coach_prior_seasons",
+    "coach_prior_program_count",
+    "coach_prior_win_pct",
+    "coach_prior_avg_adj_em",
+    "coach_prior_last3_avg_adj_em",
+    "coach_prior_last5_avg_adj_em",
+    "coach_prior_avg_adj_em_over_expected",
+    "coach_prior_last3_avg_adj_em_over_expected",
+    "coach_prior_last5_avg_adj_em_over_expected",
+    "coach_prior_positive_adj_em_over_expected_rate",
+    "coach_prior_big_overperform_rate",
+    "coach_prior_big_underperform_rate",
+    "coach_prior_avg_rank_over_expected",
+    "coach_prior_top100_rate",
+    "coach_prior_ncaa_bid_rate",
+    "coach_prior_same_school_seasons",
+    "coach_prior_same_school_avg_adj_em_over_expected",
+    "coach_first_year_at_school",
+)
+
 MODEL_FEATURES = (
     "days_from_nov_1",
     "venue_capacity_log",
@@ -121,6 +143,37 @@ MODEL_FEATURES = (
     "away_quality_x_three_rate",
     "away_quality_x_experience",
     "home_vulnerability_index",
+    "away_coach_prior_seasons",
+    "away_coach_prior_win_pct",
+    "away_coach_prior_avg_adj_em_over_expected",
+    "away_coach_prior_last3_avg_adj_em_over_expected",
+    "away_coach_prior_positive_adj_em_over_expected_rate",
+    "away_coach_prior_big_overperform_rate",
+    "home_coach_prior_seasons",
+    "home_coach_prior_win_pct",
+    "home_coach_prior_avg_adj_em_over_expected",
+    "home_coach_prior_last3_avg_adj_em_over_expected",
+    "home_coach_prior_big_underperform_rate",
+    "home_coach_first_year_at_school",
+    "coach_overperformance_gap",
+    "coach_positive_over_expected_gap",
+    "coach_experience_gap",
+    "away_coach_overperformance_x_quality",
+    "home_coach_underperformance_x_vulnerability",
+    "away_coach_hm_guarantee_games_log",
+    "away_coach_hm_guarantee_upset_rate",
+    "away_coach_hm_guarantee_close_rate",
+    "away_coach_hm_guarantee_over_expected_rate",
+    "away_coach_hm_guarantee_avg_margin_over_expected",
+    "home_coach_hm_guarantee_games_log",
+    "home_coach_hm_guarantee_upset_allowed_rate",
+    "home_coach_hm_guarantee_close_allowed_rate",
+    "home_coach_hm_guarantee_under_expected_rate",
+    "home_coach_hm_guarantee_avg_margin_allowed_over_expected",
+    "coach_guarantee_upset_rate_gap",
+    "coach_guarantee_over_expected_gap",
+    "away_coach_guarantee_pest_index",
+    "home_coach_guarantee_vulnerability_index",
 )
 
 
@@ -252,6 +305,55 @@ def load_kenpom_team_features(kenpom_dir: Path) -> dict[tuple[int, str], dict[st
     return features
 
 
+def load_historical_coach_features(path: Path | None) -> dict[tuple[int, str], dict[str, Any]]:
+    if path is None or not path.exists():
+        return {}
+
+    features: dict[tuple[int, str], dict[str, Any]] = {}
+    for row in read_csv_rows(path):
+        season = as_int(row.get("season"))
+        team_key = canonical_team_key(row.get("team_name"))
+        if season is None or not team_key:
+            continue
+        features[(season, team_key)] = normalize_coach_features(row)
+    return features
+
+
+def load_latest_coach_features(path: Path | None) -> dict[str, dict[str, Any]]:
+    if path is None or not path.exists():
+        return {}
+
+    features: dict[str, dict[str, Any]] = {}
+    for row in read_csv_rows(path):
+        coach_key = row.get("coach_key") or normalize_coach_name(row.get("coach"))
+        if coach_key:
+            features[str(coach_key)] = normalize_coach_features(row)
+    return features
+
+
+def normalize_coach_features(row: dict[str, Any]) -> dict[str, Any]:
+    output = {}
+    for feature in COACH_NUMERIC_FEATURES:
+        value_ = row.get(feature)
+        if feature == "coach_first_year_at_school":
+            output[feature] = 1.0 if is_true(value_) else 0.0
+        else:
+            output[feature] = as_float(value_)
+    return output
+
+
+def prefixed_coach_features(source: dict[str, Any] | None, prefix: str) -> dict[str, Any]:
+    source = source or {}
+    return {f"{prefix}_{feature}": source.get(feature) for feature in COACH_NUMERIC_FEATURES}
+
+
+def median_coach_features(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        feature: median([as_float(row.get(feature)) for row in rows])
+        for feature in COACH_NUMERIC_FEATURES
+    }
+
+
 def date_from_schedule_row(row: dict[str, Any]) -> datetime | None:
     raw = value(row, "date", "start_date", "game_date")
     if not raw:
@@ -332,10 +434,160 @@ def enrich_matchup_features(row: dict[str, Any]) -> None:
             -as_float(row.get("home_adj_em")) if row.get("home_adj_em") not in (None, "") else None,
         ]
     )
+    row["coach_overperformance_gap"] = difference(
+        row.get("away_coach_prior_avg_adj_em_over_expected"),
+        row.get("home_coach_prior_avg_adj_em_over_expected"),
+    )
+    row["coach_positive_over_expected_gap"] = difference(
+        row.get("away_coach_prior_positive_adj_em_over_expected_rate"),
+        row.get("home_coach_prior_positive_adj_em_over_expected_rate"),
+    )
+    row["coach_experience_gap"] = difference(
+        row.get("away_coach_prior_seasons"),
+        row.get("home_coach_prior_seasons"),
+    )
+    row["away_coach_overperformance_x_quality"] = product(
+        row.get("away_adj_em"),
+        row.get("away_coach_prior_avg_adj_em_over_expected"),
+    )
+    row["home_coach_underperformance_x_vulnerability"] = product(
+        row.get("home_vulnerability_index"),
+        row.get("home_coach_prior_big_underperform_rate"),
+    )
+    row["coach_guarantee_upset_rate_gap"] = difference(
+        row.get("away_coach_hm_guarantee_upset_rate"),
+        row.get("home_coach_hm_guarantee_upset_allowed_rate"),
+    )
+    row["coach_guarantee_over_expected_gap"] = difference(
+        row.get("away_coach_hm_guarantee_avg_margin_over_expected"),
+        row.get("home_coach_hm_guarantee_avg_margin_allowed_over_expected"),
+    )
+    row["away_coach_guarantee_pest_index"] = average(
+        [
+            row.get("away_coach_hm_guarantee_upset_rate"),
+            row.get("away_coach_hm_guarantee_close_rate"),
+            row.get("away_coach_hm_guarantee_over_expected_rate"),
+        ]
+    )
+    row["home_coach_guarantee_vulnerability_index"] = average(
+        [
+            row.get("home_coach_hm_guarantee_upset_allowed_rate"),
+            row.get("home_coach_hm_guarantee_close_allowed_rate"),
+            row.get("home_coach_hm_guarantee_under_expected_rate"),
+        ]
+    )
 
 
-def build_training_rows(schedule_csv: Path, kenpom_dir: Path) -> list[dict[str, Any]]:
+def coach_guarantee_summary(rows: list[dict[str, Any]], *, role: str) -> dict[str, float | None]:
+    if not rows:
+        if role == "away":
+            return {
+                "away_coach_hm_guarantee_games": 0.0,
+                "away_coach_hm_guarantee_games_log": 0.0,
+                "away_coach_hm_guarantee_upset_rate": None,
+                "away_coach_hm_guarantee_close_rate": None,
+                "away_coach_hm_guarantee_over_expected_rate": None,
+                "away_coach_hm_guarantee_avg_margin_over_expected": None,
+            }
+        return {
+            "home_coach_hm_guarantee_games": 0.0,
+            "home_coach_hm_guarantee_games_log": 0.0,
+            "home_coach_hm_guarantee_upset_allowed_rate": None,
+            "home_coach_hm_guarantee_close_allowed_rate": None,
+            "home_coach_hm_guarantee_under_expected_rate": None,
+            "home_coach_hm_guarantee_avg_margin_allowed_over_expected": None,
+        }
+
+    margins = [as_float(row.get("margin_over_expected_for_away")) for row in rows]
+    observed_margins = [margin for margin in margins if margin is not None]
+    games = float(len(rows))
+    upsets = sum(1 for row in rows if int(row.get("upset") or 0) == 1)
+    close_games = sum(1 for row in rows if (as_float(row.get("score_margin_for_away")) or -999) >= -10)
+    over_expected = sum(1 for margin in observed_margins if margin > 0)
+    avg_margin_over_expected = (
+        sum(observed_margins) / len(observed_margins) if observed_margins else None
+    )
+    if role == "away":
+        return {
+            "away_coach_hm_guarantee_games": games,
+            "away_coach_hm_guarantee_games_log": math.log1p(games),
+            "away_coach_hm_guarantee_upset_rate": upsets / games,
+            "away_coach_hm_guarantee_close_rate": close_games / games,
+            "away_coach_hm_guarantee_over_expected_rate": (
+                over_expected / len(observed_margins) if observed_margins else None
+            ),
+            "away_coach_hm_guarantee_avg_margin_over_expected": avg_margin_over_expected,
+        }
+    return {
+        "home_coach_hm_guarantee_games": games,
+        "home_coach_hm_guarantee_games_log": math.log1p(games),
+        "home_coach_hm_guarantee_upset_allowed_rate": upsets / games,
+        "home_coach_hm_guarantee_close_allowed_rate": close_games / games,
+        "home_coach_hm_guarantee_under_expected_rate": (
+            over_expected / len(observed_margins) if observed_margins else None
+        ),
+        "home_coach_hm_guarantee_avg_margin_allowed_over_expected": avg_margin_over_expected,
+    }
+
+
+def attach_prior_coach_guarantee_history(rows: list[dict[str, Any]]) -> None:
+    away_history: dict[str, list[dict[str, Any]]] = {}
+    home_history: dict[str, list[dict[str, Any]]] = {}
+    seasons = sorted({int(row["season"]) for row in rows})
+    for season in seasons:
+        season_rows = [row for row in rows if int(row["season"]) == season]
+        for row in season_rows:
+            away_key = str(row.get("away_coach_key") or "")
+            home_key = str(row.get("home_coach_key") or "")
+            row.update(coach_guarantee_summary(away_history.get(away_key, []), role="away"))
+            row.update(coach_guarantee_summary(home_history.get(home_key, []), role="home"))
+            enrich_matchup_features(row)
+
+        for row in season_rows:
+            away_key = str(row.get("away_coach_key") or "")
+            home_key = str(row.get("home_coach_key") or "")
+            if away_key:
+                away_history.setdefault(away_key, []).append(row)
+            if home_key:
+                home_history.setdefault(home_key, []).append(row)
+
+
+def coach_guarantee_summary_indexes(
+    rows: list[dict[str, Any]],
+) -> tuple[dict[str, dict[str, float | None]], dict[str, dict[str, float | None]]]:
+    away_history: dict[str, list[dict[str, Any]]] = {}
+    home_history: dict[str, list[dict[str, Any]]] = {}
+    for row in rows:
+        away_key = str(row.get("away_coach_key") or "")
+        home_key = str(row.get("home_coach_key") or "")
+        if away_key:
+            away_history.setdefault(away_key, []).append(row)
+        if home_key:
+            home_history.setdefault(home_key, []).append(row)
+    return (
+        {
+            coach_key: coach_guarantee_summary(history, role="away")
+            for coach_key, history in away_history.items()
+        },
+        {
+            coach_key: coach_guarantee_summary(history, role="home")
+            for coach_key, history in home_history.items()
+        },
+    )
+
+
+def median_numeric_rows(rows: list[dict[str, Any]]) -> dict[str, float | None]:
+    keys = sorted({key for row in rows for key in row})
+    return {key: median([as_float(row.get(key)) for row in rows]) for key in keys}
+
+
+def build_training_rows(
+    schedule_csv: Path,
+    kenpom_dir: Path,
+    coach_history_csv: Path | None = None,
+) -> list[dict[str, Any]]:
     team_features = load_kenpom_team_features(kenpom_dir)
+    coach_features = load_historical_coach_features(coach_history_csv)
     rows: list[dict[str, Any]] = []
     with schedule_csv.open("r", encoding="utf-8", newline="") as file:
         reader = csv.DictReader(file)
@@ -384,9 +636,13 @@ def build_training_rows(schedule_csv: Path, kenpom_dir: Path) -> list[dict[str, 
                 "days_from_nov_1": days_from_nov_1(game_date),
                 "home_team": home_current.get("team") or home_team,
                 "home_team_key": home_key,
+                "home_coach": home_current.get("coach"),
+                "home_coach_key": normalize_coach_name(home_current.get("coach")),
                 "home_conference": home_conf,
                 "away_team": away_current.get("team") or away_team,
                 "away_team_key": away_key,
+                "away_coach": away_current.get("coach"),
+                "away_coach_key": normalize_coach_name(away_current.get("coach")),
                 "away_conference": away_conf,
                 "home_score": home_score,
                 "away_score": away_score,
@@ -396,11 +652,22 @@ def build_training_rows(schedule_csv: Path, kenpom_dir: Path) -> list[dict[str, 
                 "venue_capacity_log": math.log1p(as_float(game.get("venue_capacity")) or 0.0),
                 **prefixed_features(away_prior, "away"),
                 **prefixed_features(home_prior, "home"),
+                **prefixed_coach_features(coach_features.get((season, away_key)), "away"),
+                **prefixed_coach_features(coach_features.get((season, home_key)), "home"),
             }
+            expected_margin_for_away = difference(away_prior.get("adj_em"), home_prior.get("adj_em"))
+            if expected_margin_for_away is not None:
+                expected_margin_for_away -= HOME_COURT_ADJ_EM
+            row["expected_margin_for_away"] = expected_margin_for_away
+            row["margin_over_expected_for_away"] = difference(
+                row.get("score_margin_for_away"),
+                row.get("expected_margin_for_away"),
+            )
             enrich_matchup_features(row)
             rows.append(row)
 
     rows.sort(key=lambda item: (int(item["season"]), str(item["game_date"]), str(item["game_id"])))
+    attach_prior_coach_guarantee_history(rows)
     return rows
 
 
@@ -669,7 +936,11 @@ def rolling_backtest(rows: list[dict[str, Any]], min_train_seasons: int = 3) -> 
     return predictions, metrics
 
 
-def median_high_major_host(team_features: dict[tuple[int, str], dict[str, Any]], season: int) -> dict[str, Any]:
+def median_high_major_host(
+    team_features: dict[tuple[int, str], dict[str, Any]],
+    season: int,
+    coach_feature_rows: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
     high_major = [
         row
         for (feature_season, _), row in team_features.items()
@@ -678,6 +949,8 @@ def median_high_major_host(team_features: dict[tuple[int, str], dict[str, Any]],
     host: dict[str, Any] = {"team": "Median High-Major Host", "team_key": "median_high_major_host"}
     for feature in BASE_NUMERIC_FEATURES:
         host[feature] = median([as_float(row.get(feature)) for row in high_major])
+    if coach_feature_rows:
+        host.update(median_coach_features(coach_feature_rows))
     return host
 
 
@@ -689,17 +962,42 @@ def prediction_index(prediction_rows: list[dict[str, Any]], model: str) -> dict[
     return index
 
 
+def prediction_coach_key(row: dict[str, Any]) -> str:
+    return str(row.get("projected_coach_key") or normalize_coach_name(row.get("projected_coach")))
+
+
 def current_risk_board(
     model: LogisticRiskModel,
     kenpom_dir: Path,
     current_predictions_csv: Path,
+    coach_latest_summary_csv: Path | None = None,
+    coach_guarantee_rows: list[dict[str, Any]] | None = None,
     current_feature_season: int = 2026,
     prediction_model: str = "direct_ridge_schedule_building",
 ) -> list[dict[str, Any]]:
     team_features = load_kenpom_team_features(kenpom_dir)
-    host = median_high_major_host(team_features, current_feature_season)
     prediction_rows = read_csv_rows(current_predictions_csv)
     schedule_index = prediction_index(prediction_rows, prediction_model)
+    coach_by_key = load_latest_coach_features(coach_latest_summary_csv)
+    high_major_coach_rows = [
+        coach_by_key[prediction_coach_key(row)]
+        for row in prediction_rows
+        if row.get("model") == prediction_model
+        and row.get("conference") in HIGH_MAJOR_CONFERENCES
+        and prediction_coach_key(row) in coach_by_key
+    ]
+    away_guarantee_by_coach, home_guarantee_by_coach = coach_guarantee_summary_indexes(
+        coach_guarantee_rows or []
+    )
+    high_major_home_guarantee_rows = [
+        home_guarantee_by_coach[prediction_coach_key(row)]
+        for row in prediction_rows
+        if row.get("model") == prediction_model
+        and row.get("conference") in HIGH_MAJOR_CONFERENCES
+        and prediction_coach_key(row) in home_guarantee_by_coach
+    ]
+    median_home_guarantee = median_numeric_rows(high_major_home_guarantee_rows)
+    host = median_high_major_host(team_features, current_feature_season, high_major_coach_rows)
     rows: list[dict[str, Any]] = []
 
     for (season, team_key), away in team_features.items():
@@ -715,6 +1013,7 @@ def current_risk_board(
             "team": schedule_row.get("team") or away.get("team"),
             "team_key": team_key,
             "conference": schedule_row.get("conference") or away.get("conference"),
+            "projected_coach": schedule_row.get("projected_coach"),
             "schedule_score_rank": as_float(schedule_row.get("schedule_score_rank")),
             "schedule_score_percentile": as_float(schedule_row.get("schedule_score_percentile")),
             "opponent_quality_tier": schedule_row.get("opponent_quality_tier"),
@@ -725,6 +1024,16 @@ def current_risk_board(
             "venue_capacity_log": math.log1p(13000),
             **prefixed_features(away, "away"),
             **prefixed_features(host, "home"),
+            **prefixed_coach_features(
+                coach_by_key.get(prediction_coach_key(schedule_row)),
+                "away",
+            ),
+            **prefixed_coach_features(host, "home"),
+            **away_guarantee_by_coach.get(
+                prediction_coach_key(schedule_row),
+                coach_guarantee_summary([], role="away"),
+            ),
+            **median_home_guarantee,
         }
         enrich_matchup_features(row)
         rows.append(row)
