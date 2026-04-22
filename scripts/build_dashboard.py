@@ -156,6 +156,7 @@ def slim_risk_row(
 ) -> dict[str, Any]:
     return {
         "team": row.get("team"),
+        "projected_coach": row.get("projected_coach"),
         "conference": row.get("conference"),
         "tier": row.get("opponent_quality_tier"),
         "program_band": row.get("program_consistency_band"),
@@ -781,6 +782,8 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <option value="recommendation:asc">Recommendation A-Z</option>
           <option value="coach_pest_index:desc">Coach pest high-low</option>
           <option value="coach_guarantee_avg_margin_over_expected:desc">Coach vs HM over expected high-low</option>
+          <option value="coach_guarantee_upset_rate:desc">Coach HM upset rate high-low</option>
+          <option value="coach_guarantee_close_rate:desc">Coach HM close rate high-low</option>
           <option value="three_rate:desc">3PA rate high-low</option>
           <option value="experience:desc">Experience high-low</option>
           <option value="adj_em:desc">AdjEM high-low</option>
@@ -791,6 +794,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <thead>
             <tr>
               <th data-key="team">Team</th>
+              <th data-key="projected_coach">Coach</th>
               <th data-key="conference">Conf</th>
               <th data-key="tier">Tier</th>
               <th data-key="upset_pct">WVU Upset %</th>
@@ -800,6 +804,8 @@ def dashboard_html(payload: dict[str, Any]) -> str:
               <th data-key="added_wab">Added WAB</th>
               <th data-key="coach_pest_index">Coach Pest</th>
               <th data-key="coach_guarantee_games">Coach HM Gms</th>
+              <th data-key="coach_guarantee_upset_rate">Coach HM Upset %</th>
+              <th data-key="coach_guarantee_close_rate">Coach HM Close %</th>
               <th data-key="coach_guarantee_avg_margin_over_expected">Coach +/- Exp</th>
               <th data-key="three_rate">3PA Rate</th>
               <th data-key="experience">Exp</th>
@@ -992,6 +998,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       document.getElementById("rows").innerHTML = rows.map(row => `
         <tr>
           <td><strong>${{text(row.team)}}</strong></td>
+          <td>${{text(row.projected_coach)}}</td>
           <td>${{text(row.conference)}}</td>
           <td><span class="pill tier-chip tier-${{cls(row.tier)}}">${{tierLabel(row.tier)}}</span></td>
           <td class="num"><strong>${{text(row.upset_pct)}}%</strong></td>
@@ -1001,6 +1008,8 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <td class="num">${{text(row.added_wab)}}</td>
           <td class="num">${{text(row.coach_pest_index)}}</td>
           <td class="num">${{text(row.coach_guarantee_games)}}</td>
+          <td class="num">${{row.coach_guarantee_upset_rate == null ? "No prior" : `${{text(row.coach_guarantee_upset_rate)}}%`}}</td>
+          <td class="num">${{row.coach_guarantee_close_rate == null ? "No prior" : `${{text(row.coach_guarantee_close_rate)}}%`}}</td>
           <td class="num">${{text(row.coach_guarantee_avg_margin_over_expected)}}</td>
           <td class="num">${{text(row.three_rate)}}</td>
           <td class="num">${{text(row.experience)}}</td>

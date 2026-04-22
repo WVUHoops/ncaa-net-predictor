@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-22T00:18:53-04:00",
+  "generated_at": "2026-04-22T00:24:49-04:00",
   "source_files": {
     "risk_board_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -46,6 +46,7 @@
   "risk_rows": [
     {
       "team": "Washington St.",
+      "projected_coach": "David Riley",
       "conference": "WCC",
       "tier": "76_100",
       "program_band": "136_160",
@@ -73,6 +74,7 @@
     },
     {
       "team": "Murray St.",
+      "projected_coach": "Ryan Miller",
       "conference": "MVC",
       "tier": "101_135",
       "program_band": "136_160",
@@ -100,6 +102,7 @@
     },
     {
       "team": "Fresno St.",
+      "projected_coach": "Vance Walberg",
       "conference": "MWC",
       "tier": "101_135",
       "program_band": "101_135",
@@ -127,6 +130,7 @@
     },
     {
       "team": "Toledo",
+      "projected_coach": "Tod Kowalczyk",
       "conference": "MAC",
       "tier": "101_135",
       "program_band": "101_135",
@@ -154,6 +158,7 @@
     },
     {
       "team": "Drake",
+      "projected_coach": "Eric Henderson",
       "conference": "MVC",
       "tier": "101_135",
       "program_band": "201_250",
@@ -181,6 +186,7 @@
     },
     {
       "team": "Western Kentucky",
+      "projected_coach": "Hank Plona",
       "conference": "CUSA",
       "tier": "101_135",
       "program_band": "161_200",
@@ -208,6 +214,7 @@
     },
     {
       "team": "North Texas",
+      "projected_coach": "Daniyal Robinson",
       "conference": "Amer",
       "tier": "101_135",
       "program_band": "136_160",
@@ -235,6 +242,7 @@
     },
     {
       "team": "Navy",
+      "projected_coach": "Jon Perry",
       "conference": "PL",
       "tier": "136_160",
       "program_band": "136_160",
@@ -262,6 +270,7 @@
     },
     {
       "team": "Valparaiso",
+      "projected_coach": "Roger Powell",
       "conference": "MVC",
       "tier": "136_160",
       "program_band": "161_200",
@@ -289,6 +298,7 @@
     },
     {
       "team": "UNC Wilmington",
+      "projected_coach": "Takayo Siddle",
       "conference": "CAA",
       "tier": "101_135",
       "program_band": "101_135",
@@ -316,6 +326,7 @@
     },
     {
       "team": "Illinois Chicago",
+      "projected_coach": "Rob Ehsan",
       "conference": "MVC",
       "tier": "101_135",
       "program_band": "136_160",
@@ -343,6 +354,7 @@
     },
     {
       "team": "UC Santa Barbara",
+      "projected_coach": "Joe Pasternack",
       "conference": "BW",
       "tier": "101_135",
       "program_band": "101_135",
@@ -370,6 +382,7 @@
     },
     {
       "team": "Temple",
+      "projected_coach": "Adam Fisher",
       "conference": "Amer",
       "tier": "136_160",
       "program_band": "136_160",
@@ -397,6 +410,7 @@
     },
     {
       "team": "Austin Peay",
+      "projected_coach": "Corey Gipson",
       "conference": "ASun",
       "tier": "136_160",
       "program_band": "161_200",
@@ -424,6 +438,7 @@
     },
     {
       "team": "Harvard",
+      "projected_coach": "Tommy Amaker",
       "conference": "Ivy",
       "tier": "101_135",
       "program_band": "136_160",
@@ -451,6 +466,7 @@
     },
     {
       "team": "New Orleans",
+      "projected_coach": "Stacy Hollowell",
       "conference": "Slnd",
       "tier": "161_200",
       "program_band": "161_200",
@@ -478,6 +494,7 @@
     },
     {
       "team": "George Mason",
+      "projected_coach": "Tony Skinn",
       "conference": "A10",
       "tier": "101_135",
       "program_band": "101_135",
@@ -505,6 +522,7 @@
     },
     {
       "team": "Princeton",
+      "projected_coach": "Mitch Henderson",
       "conference": "Ivy",
       "tier": "136_160",
       "program_band": "251_300",
@@ -532,6 +550,7 @@
     },
     {
       "team": "UT Arlington",
+      "projected_coach": "K.T. Turner",
       "conference": "WAC",
       "tier": "136_160",
       "program_band": "136_160",
@@ -559,6 +578,7 @@
     },
     {
       "team": "Central Arkansas",
+      "projected_coach": "John Shulman",
       "conference": "ASun",
       "tier": "136_160",
       "program_band": "136_160",
@@ -586,6 +606,7 @@
     },
     {
       "team": "Tennessee St.",
+      "projected_coach": "Nolan Smith",
       "conference": "OVC",
       "tier": "161_200",
       "program_band": "161_200",
@@ -613,6 +634,7 @@
     },
     {
       "team": "East Tennessee St.",
+      "projected_coach": "Brooks Savage",
       "conference": "SC",
       "tier": "136_160",
       "program_band": "161_200",
@@ -640,6 +662,7 @@
     },
     {
       "team": "Vermont",
+      "projected_coach": "John Becker",
       "conference": "AE",
       "tier": "136_160",
       "program_band": "201_250",
@@ -667,6 +690,7 @@
     },
     {
       "team": "Idaho",
+      "projected_coach": "Alex Pribble",
       "conference": "BSky",
       "tier": "136_160",
       "program_band": "136_160",
@@ -694,6 +718,7 @@
     },
     {
       "team": "Indiana St.",
+      "projected_coach": "Matthew Graves",
       "conference": "MVC",
       "tier": "136_160",
       "program_band": "201_250",
@@ -721,6 +746,7 @@
     },
     {
       "team": "Kennesaw St.",
+      "projected_coach": "Antoine Pettway",
       "conference": "CUSA",
       "tier": "136_160",
       "program_band": "136_160",
@@ -748,6 +774,7 @@
     },
     {
       "team": "William & Mary",
+      "projected_coach": "Brian Earl",
       "conference": "CAA",
       "tier": "136_160",
       "program_band": "136_160",
@@ -775,6 +802,7 @@
     },
     {
       "team": "Winthrop",
+      "projected_coach": "Mark Prosser",
       "conference": "BSth",
       "tier": "136_160",
       "program_band": "136_160",
@@ -802,6 +830,7 @@
     },
     {
       "team": "Texas St.",
+      "projected_coach": "Terrence Johnson",
       "conference": "SB",
       "tier": "161_200",
       "program_band": "201_250",
@@ -829,6 +858,7 @@
     },
     {
       "team": "Utah Tech",
+      "projected_coach": "Jon Judkins",
       "conference": "WAC",
       "tier": "161_200",
       "program_band": "161_200",
@@ -856,6 +886,7 @@
     },
     {
       "team": "Kent St.",
+      "projected_coach": "Rob Senderoff",
       "conference": "MAC",
       "tier": "136_160",
       "program_band": "161_200",
@@ -883,6 +914,7 @@
     },
     {
       "team": "Howard",
+      "projected_coach": "Kenny Blakeney",
       "conference": "MEAC",
       "tier": "161_200",
       "program_band": "161_200",
@@ -910,6 +942,7 @@
     },
     {
       "team": "Wright St.",
+      "projected_coach": "Clint Sargent",
       "conference": "Horz",
       "tier": "136_160",
       "program_band": "136_160",
@@ -937,6 +970,7 @@
     },
     {
       "team": "Robert Morris",
+      "projected_coach": "Andrew Toole",
       "conference": "Horz",
       "tier": "136_160",
       "program_band": "136_160",
@@ -964,6 +998,7 @@
     },
     {
       "team": "Portland St.",
+      "projected_coach": "Jase Coburn",
       "conference": "BSky",
       "tier": "136_160",
       "program_band": "136_160",
@@ -991,6 +1026,7 @@
     },
     {
       "team": "Northern Colorado",
+      "projected_coach": "Steve Smiley",
       "conference": "BSky",
       "tier": "136_160",
       "program_band": "136_160",
@@ -1018,6 +1054,7 @@
     },
     {
       "team": "St. Bonaventure",
+      "projected_coach": "Mike MacDonald",
       "conference": "A10",
       "tier": "136_160",
       "program_band": "136_160",
@@ -1045,6 +1082,7 @@
     },
     {
       "team": "Colgate",
+      "projected_coach": "Matt Langel",
       "conference": "PL",
       "tier": "161_200",
       "program_band": "201_250",
@@ -1072,6 +1110,7 @@
     },
     {
       "team": "Mercer",
+      "projected_coach": "Ryan Ridder",
       "conference": "SC",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1099,6 +1138,7 @@
     },
     {
       "team": "Columbia",
+      "projected_coach": "Kevin Hovde",
       "conference": "Ivy",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1126,6 +1166,7 @@
     },
     {
       "team": "Ohio",
+      "projected_coach": "Jeff Boals",
       "conference": "MAC",
       "tier": "161_200",
       "program_band": "201_250",
@@ -1153,6 +1194,7 @@
     },
     {
       "team": "Pacific",
+      "projected_coach": "Dave Smart",
       "conference": "WCC",
       "tier": "136_160",
       "program_band": "136_160",
@@ -1180,6 +1222,7 @@
     },
     {
       "team": "Oregon St.",
+      "projected_coach": "Justin Joyner",
       "conference": "WCC",
       "tier": "136_160",
       "program_band": "161_200",
@@ -1207,6 +1250,7 @@
     },
     {
       "team": "Middle Tennessee",
+      "projected_coach": "Nicholas McDevitt",
       "conference": "CUSA",
       "tier": "136_160",
       "program_band": "161_200",
@@ -1234,6 +1278,7 @@
     },
     {
       "team": "Oakland",
+      "projected_coach": "Greg Kampe",
       "conference": "Horz",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1261,6 +1306,7 @@
     },
     {
       "team": "South Dakota St.",
+      "projected_coach": "Bryan Petersen",
       "conference": "Sum",
       "tier": "161_200",
       "program_band": "201_250",
@@ -1288,6 +1334,7 @@
     },
     {
       "team": "Troy",
+      "projected_coach": "Adam Howard",
       "conference": "SB",
       "tier": "136_160",
       "program_band": "136_160",
@@ -1315,6 +1362,7 @@
     },
     {
       "team": "Queens",
+      "projected_coach": "Grant Leonard",
       "conference": "ASun",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1342,6 +1390,7 @@
     },
     {
       "team": "James Madison",
+      "projected_coach": "Preston Spradlin",
       "conference": "SB",
       "tier": "161_200",
       "program_band": "201_250",
@@ -1369,6 +1418,7 @@
     },
     {
       "team": "Towson",
+      "projected_coach": "Pat Skerry",
       "conference": "CAA",
       "tier": "136_160",
       "program_band": "136_160",
@@ -1396,6 +1446,7 @@
     },
     {
       "team": "Merrimack",
+      "projected_coach": "Joe Gallo",
       "conference": "MAAC",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1423,6 +1474,7 @@
     },
     {
       "team": "Bowling Green",
+      "projected_coach": "Todd Simon",
       "conference": "MAC",
       "tier": "136_160",
       "program_band": "136_160",
@@ -1450,6 +1502,7 @@
     },
     {
       "team": "Appalachian St.",
+      "projected_coach": "Dustin Kerns",
       "conference": "SB",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1477,6 +1530,7 @@
     },
     {
       "team": "Campbell",
+      "projected_coach": "Jimmie WIlliams",
       "conference": "CAA",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1504,6 +1558,7 @@
     },
     {
       "team": "Penn",
+      "projected_coach": "Fran McCaffery",
       "conference": "Ivy",
       "tier": "136_160",
       "program_band": "136_160",
@@ -1531,6 +1586,7 @@
     },
     {
       "team": "Missouri St.",
+      "projected_coach": "Cuonzo Martin",
       "conference": "CUSA",
       "tier": "161_200",
       "program_band": "201_250",
@@ -1558,6 +1614,7 @@
     },
     {
       "team": "Fordham",
+      "projected_coach": "Mike Magpayo",
       "conference": "A10",
       "tier": "136_160",
       "program_band": "136_160",
@@ -1585,6 +1642,7 @@
     },
     {
       "team": "Eastern Washington",
+      "projected_coach": "Dan Monson",
       "conference": "BSky",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1612,6 +1670,7 @@
     },
     {
       "team": "Arkansas St.",
+      "projected_coach": "Ryan Pannone",
       "conference": "SB",
       "tier": "136_160",
       "program_band": "136_160",
@@ -1639,6 +1698,7 @@
     },
     {
       "team": "CSUN",
+      "projected_coach": "Andy Newman",
       "conference": "BW",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1666,6 +1726,7 @@
     },
     {
       "team": "South Alabama",
+      "projected_coach": "Richie Riley",
       "conference": "SB",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1693,6 +1754,7 @@
     },
     {
       "team": "Monmouth",
+      "projected_coach": "King Rice",
       "conference": "CAA",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1720,6 +1782,7 @@
     },
     {
       "team": "Tulane",
+      "projected_coach": "Ron Hunter",
       "conference": "Amer",
       "tier": "161_200",
       "program_band": "201_250",
@@ -1747,6 +1810,7 @@
     },
     {
       "team": "Jacksonville St.",
+      "projected_coach": "Ray Harper",
       "conference": "CUSA",
       "tier": "161_200",
       "program_band": "201_250",
@@ -1774,6 +1838,7 @@
     },
     {
       "team": "Montana St.",
+      "projected_coach": "Matt Logie",
       "conference": "BSky",
       "tier": "136_160",
       "program_band": "136_160",
@@ -1801,6 +1866,7 @@
     },
     {
       "team": "Cornell",
+      "projected_coach": "Jon Jaques",
       "conference": "Ivy",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1828,6 +1894,7 @@
     },
     {
       "team": "FIU",
+      "projected_coach": "Joey Cantens",
       "conference": "CUSA",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1855,6 +1922,7 @@
     },
     {
       "team": "Siena",
+      "projected_coach": "Nevada Smith",
       "conference": "MAAC",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1882,6 +1950,7 @@
     },
     {
       "team": "Sam Houston St.",
+      "projected_coach": "Chris Mudge",
       "conference": "CUSA",
       "tier": "136_160",
       "program_band": "136_160",
@@ -1909,6 +1978,7 @@
     },
     {
       "team": "New Mexico St.",
+      "projected_coach": "Jason Hooten",
       "conference": "CUSA",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1936,6 +2006,7 @@
     },
     {
       "team": "Lipscomb",
+      "projected_coach": "Kevin Carroll",
       "conference": "ASun",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1963,6 +2034,7 @@
     },
     {
       "team": "UMBC",
+      "projected_coach": "Jim Ferry",
       "conference": "AE",
       "tier": "161_200",
       "program_band": "161_200",
@@ -1990,6 +2062,7 @@
     },
     {
       "team": "Texas A&M Corpus Chris",
+      "projected_coach": "Jim Shaw",
       "conference": "Slnd",
       "tier": "161_200",
       "program_band": "161_200",
@@ -2017,6 +2090,7 @@
     },
     {
       "team": "Louisiana Tech",
+      "projected_coach": "Talvin Hester",
       "conference": "CUSA",
       "tier": "161_200",
       "program_band": "161_200",
@@ -2044,6 +2118,7 @@
     },
     {
       "team": "Northern Kentucky",
+      "projected_coach": "Darrin Horn",
       "conference": "Horz",
       "tier": "161_200",
       "program_band": "161_200",
@@ -2071,6 +2146,7 @@
     },
     {
       "team": "Charlotte",
+      "projected_coach": "Wes Miller",
       "conference": "Amer",
       "tier": "161_200",
       "program_band": "161_200",
@@ -2098,6 +2174,7 @@
     },
     {
       "team": "Loyola Marymount",
+      "projected_coach": "Stan Johnson",
       "conference": "WCC",
       "tier": "161_200",
       "program_band": "161_200",
@@ -2125,6 +2202,7 @@
     },
     {
       "team": "Montana",
+      "projected_coach": "Travis DeCuire",
       "conference": "BSky",
       "tier": "161_200",
       "program_band": "161_200",
@@ -2152,6 +2230,7 @@
     },
     {
       "team": "Charleston",
+      "projected_coach": "John Groce",
       "conference": "CAA",
       "tier": "161_200",
       "program_band": "161_200",
@@ -2179,6 +2258,7 @@
     },
     {
       "team": "Furman",
+      "projected_coach": "Bob Richey",
       "conference": "SC",
       "tier": "161_200",
       "program_band": "161_200",
@@ -2206,6 +2286,7 @@
     },
     {
       "team": "UC Davis",
+      "projected_coach": "Jim Les",
       "conference": "BW",
       "tier": "161_200",
       "program_band": "161_200",
@@ -2233,6 +2314,7 @@
     },
     {
       "team": "Cal St. Fullerton",
+      "projected_coach": "Dedrique Taylor",
       "conference": "BW",
       "tier": "161_200",
       "program_band": "161_200",
@@ -2260,6 +2342,7 @@
     },
     {
       "team": "Loyola Chicago",
+      "projected_coach": "Drew Valentine",
       "conference": "A10",
       "tier": "161_200",
       "program_band": "251_300",
@@ -2287,6 +2370,7 @@
     },
     {
       "team": "Colorado St.",
+      "projected_coach": "Ali Farokhmanesh",
       "conference": "MWC",
       "tier": "51_75",
       "program_band": "76_100",
@@ -2314,6 +2398,7 @@
     },
     {
       "team": "Memphis",
+      "projected_coach": "Penny Hardaway",
       "conference": "Amer",
       "tier": "76_100",
       "program_band": "101_135",
@@ -2341,6 +2426,7 @@
     },
     {
       "team": "Yale",
+      "projected_coach": "James Jones",
       "conference": "Ivy",
       "tier": "76_100",
       "program_band": "76_100",
@@ -2368,6 +2454,7 @@
     },
     {
       "team": "Wichita St.",
+      "projected_coach": "Paul Mills",
       "conference": "Amer",
       "tier": "51_75",
       "program_band": "51_75",
@@ -2395,6 +2482,7 @@
     },
     {
       "team": "Bradley",
+      "projected_coach": "Brian Wardle",
       "conference": "MVC",
       "tier": "101_135",
       "program_band": "101_135",
@@ -2422,6 +2510,7 @@
     },
     {
       "team": "San Francisco",
+      "projected_coach": "Chris Gerlufsen",
       "conference": "WCC",
       "tier": "101_135",
       "program_band": "101_135",
@@ -2449,6 +2538,7 @@
     },
     {
       "team": "Duquesne",
+      "projected_coach": "Dru Joyce",
       "conference": "A10",
       "tier": "101_135",
       "program_band": "101_135",
@@ -2476,6 +2566,7 @@
     },
     {
       "team": "Wyoming",
+      "projected_coach": "Sundance Wicks",
       "conference": "MWC",
       "tier": "101_135",
       "program_band": "136_160",
@@ -2503,6 +2594,7 @@
     },
     {
       "team": "Richmond",
+      "projected_coach": "Chris Mooney",
       "conference": "A10",
       "tier": "101_135",
       "program_band": "136_160",
@@ -2530,6 +2622,7 @@
     },
     {
       "team": "Liberty",
+      "projected_coach": "Ritchie McKay",
       "conference": "CUSA",
       "tier": "101_135",
       "program_band": "101_135",
@@ -2557,6 +2650,7 @@
     },
     {
       "team": "Florida Atlantic",
+      "projected_coach": "John Jakus",
       "conference": "Amer",
       "tier": "101_135",
       "program_band": "101_135",
@@ -2584,6 +2678,7 @@
     },
     {
       "team": "Illinois St.",
+      "projected_coach": "Ryan Pedon",
       "conference": "MVC",
       "tier": "101_135",
       "program_band": "136_160",
@@ -2611,6 +2706,7 @@
     },
     {
       "team": "Rhode Island",
+      "projected_coach": "Archie Miller",
       "conference": "A10",
       "tier": "101_135",
       "program_band": "101_135",
@@ -2638,6 +2734,7 @@
     },
     {
       "team": "UNLV",
+      "projected_coach": "Josh Pastner",
       "conference": "MWC",
       "tier": "101_135",
       "program_band": "101_135",
@@ -2665,6 +2762,7 @@
     },
     {
       "team": "Denver",
+      "projected_coach": "Tim Bergstraser",
       "conference": "Sum",
       "tier": "201_250",
       "program_band": "201_250",
@@ -2692,6 +2790,7 @@
     },
     {
       "team": "St. Thomas",
+      "projected_coach": "Johnny Tauer",
       "conference": "Sum",
       "tier": "101_135",
       "program_band": "101_135",
@@ -2719,6 +2818,7 @@
     },
     {
       "team": "VCU",
+      "projected_coach": "Phil Martelli Jr.",
       "conference": "A10",
       "tier": "26_50",
       "program_band": "26_50",
@@ -2746,6 +2846,7 @@
     },
     {
       "team": "UC Irvine",
+      "projected_coach": "Russell Turner",
       "conference": "BW",
       "tier": "101_135",
       "program_band": "101_135",
@@ -2773,6 +2874,7 @@
     },
     {
       "team": "UC San Diego",
+      "projected_coach": "Clint Allard",
       "conference": "BW",
       "tier": "101_135",
       "program_band": "101_135",
@@ -2800,6 +2902,7 @@
     },
     {
       "team": "Utah Valley",
+      "projected_coach": "Todd Phillips",
       "conference": "WAC",
       "tier": "101_135",
       "program_band": "101_135",
@@ -2827,6 +2930,7 @@
     },
     {
       "team": "Bethune Cookman",
+      "projected_coach": "Reggie Theus",
       "conference": "SWAC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -2854,6 +2958,7 @@
     },
     {
       "team": "Akron",
+      "projected_coach": "Dustin Ford",
       "conference": "MAC",
       "tier": "76_100",
       "program_band": "76_100",
@@ -2881,6 +2986,7 @@
     },
     {
       "team": "Green Bay",
+      "projected_coach": "Doug Gottlieb",
       "conference": "Horz",
       "tier": "201_250",
       "program_band": "201_250",
@@ -2908,6 +3014,7 @@
     },
     {
       "team": "High Point",
+      "projected_coach": "Flynn Clayman",
       "conference": "BSth",
       "tier": "101_135",
       "program_band": "136_160",
@@ -2935,6 +3042,7 @@
     },
     {
       "team": "Saint Joseph's",
+      "projected_coach": "Steve Donahue",
       "conference": "A10",
       "tier": "101_135",
       "program_band": "101_135",
@@ -2962,6 +3070,7 @@
     },
     {
       "team": "Belmont",
+      "projected_coach": "Evan Bradds",
       "conference": "MVC",
       "tier": "76_100",
       "program_band": "76_100",
@@ -2989,6 +3098,7 @@
     },
     {
       "team": "Elon",
+      "projected_coach": "Billy Taylor",
       "conference": "CAA",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3016,6 +3126,7 @@
     },
     {
       "team": "UAB",
+      "projected_coach": "Andy Kennedy",
       "conference": "Amer",
       "tier": "101_135",
       "program_band": "101_135",
@@ -3043,6 +3154,7 @@
     },
     {
       "team": "Utah St.",
+      "projected_coach": "Ben Jacobson",
       "conference": "MWC",
       "tier": "26_50",
       "program_band": "51_75",
@@ -3070,6 +3182,7 @@
     },
     {
       "team": "LIU",
+      "projected_coach": "Rod Strickland",
       "conference": "NEC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3097,6 +3210,7 @@
     },
     {
       "team": "Hofstra",
+      "projected_coach": "Speedy Claxton",
       "conference": "CAA",
       "tier": "101_135",
       "program_band": "101_135",
@@ -3124,6 +3238,7 @@
     },
     {
       "team": "San Jose St.",
+      "projected_coach": "Tim Miles",
       "conference": "MWC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3151,6 +3266,7 @@
     },
     {
       "team": "Nevada",
+      "projected_coach": "Steve Alford",
       "conference": "MWC",
       "tier": "51_75",
       "program_band": "51_75",
@@ -3178,6 +3294,7 @@
     },
     {
       "team": "Old Dominion",
+      "projected_coach": "Mike K. Jones",
       "conference": "SB",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3205,6 +3322,7 @@
     },
     {
       "team": "Nicholls",
+      "projected_coach": "Tevon Saddler",
       "conference": "Slnd",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3232,6 +3350,7 @@
     },
     {
       "team": "Pepperdine",
+      "projected_coach": "Griff Aldrich",
       "conference": "WCC",
       "tier": "201_250",
       "program_band": "251_300",
@@ -3259,6 +3378,7 @@
     },
     {
       "team": "Wofford",
+      "projected_coach": "Kevin Giltner",
       "conference": "SC",
       "tier": "201_250",
       "program_band": "251_300",
@@ -3286,6 +3406,7 @@
     },
     {
       "team": "Detroit Mercy",
+      "projected_coach": "Mark Montgomery",
       "conference": "Horz",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3313,6 +3434,7 @@
     },
     {
       "team": "Long Beach St.",
+      "projected_coach": "Chris Acker",
       "conference": "BW",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3340,6 +3462,7 @@
     },
     {
       "team": "La Salle",
+      "projected_coach": "Darris Nichols",
       "conference": "A10",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3367,6 +3490,7 @@
     },
     {
       "team": "UNC Asheville",
+      "projected_coach": "Mike Morrell",
       "conference": "BSth",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3394,6 +3518,7 @@
     },
     {
       "team": "Buffalo",
+      "projected_coach": "George Halcovage",
       "conference": "MAC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3421,6 +3546,7 @@
     },
     {
       "team": "Georgia Southern",
+      "projected_coach": "Charlie Henry",
       "conference": "SB",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3448,6 +3574,7 @@
     },
     {
       "team": "UNC Greensboro",
+      "projected_coach": "Jerod Haase",
       "conference": "SC",
       "tier": "201_250",
       "program_band": "251_300",
@@ -3475,6 +3602,7 @@
     },
     {
       "team": "Southeast Missouri",
+      "projected_coach": "Brad Korn",
       "conference": "OVC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3502,6 +3630,7 @@
     },
     {
       "team": "North Dakota St.",
+      "projected_coach": "Dave Richman",
       "conference": "Sum",
       "tier": "136_160",
       "program_band": "136_160",
@@ -3529,6 +3658,7 @@
     },
     {
       "team": "Davidson",
+      "projected_coach": "Matt McKillop",
       "conference": "A10",
       "tier": "101_135",
       "program_band": "101_135",
@@ -3556,6 +3686,7 @@
     },
     {
       "team": "Western Carolina",
+      "projected_coach": "Tim Craft",
       "conference": "SC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3583,6 +3714,7 @@
     },
     {
       "team": "Quinnipiac",
+      "projected_coach": "Tom Pecora",
       "conference": "MAAC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3610,6 +3742,7 @@
     },
     {
       "team": "Tennessee Martin",
+      "projected_coach": "Jeremy Shulman",
       "conference": "OVC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3637,6 +3770,7 @@
     },
     {
       "team": "East Carolina",
+      "projected_coach": "Mike Schwartz",
       "conference": "Amer",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3664,6 +3798,7 @@
     },
     {
       "team": "Abilene Christian",
+      "projected_coach": "Brette Tanner",
       "conference": "WAC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3691,6 +3826,7 @@
     },
     {
       "team": "Florida Gulf Coast",
+      "projected_coach": "Pat Chambers",
       "conference": "ASun",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3718,6 +3854,7 @@
     },
     {
       "team": "Coastal Carolina",
+      "projected_coach": "Justin Gray",
       "conference": "SB",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3745,6 +3882,7 @@
     },
     {
       "team": "Eastern Michigan",
+      "projected_coach": "Billy Donlon",
       "conference": "MAC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3772,6 +3910,7 @@
     },
     {
       "team": "Charleston Southern",
+      "projected_coach": "Saah Nimley",
       "conference": "BSth",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3799,6 +3938,7 @@
     },
     {
       "team": "Cal Baptist",
+      "projected_coach": "Kyle Getter",
       "conference": "WAC",
       "tier": "136_160",
       "program_band": "136_160",
@@ -3826,6 +3966,7 @@
     },
     {
       "team": "Rice",
+      "projected_coach": "Rob Lanier",
       "conference": "Amer",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3853,6 +3994,7 @@
     },
     {
       "team": "Cal Poly",
+      "projected_coach": "Mike DeGeorge",
       "conference": "BW",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3880,6 +4022,7 @@
     },
     {
       "team": "Hawaii",
+      "projected_coach": "Eran Ganot",
       "conference": "BW",
       "tier": "136_160",
       "program_band": "136_160",
@@ -3907,6 +4050,7 @@
     },
     {
       "team": "Stony Brook",
+      "projected_coach": "Geno Ford",
       "conference": "CAA",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3934,6 +4078,7 @@
     },
     {
       "team": "Marshall",
+      "projected_coach": "Cornelius Jackson",
       "conference": "SB",
       "tier": "201_250",
       "program_band": "201_250",
@@ -3961,6 +4106,7 @@
     },
     {
       "team": "Southern Illinois",
+      "projected_coach": "Scott Nagy",
       "conference": "MVC",
       "tier": "101_135",
       "program_band": "136_160",
@@ -3988,6 +4134,7 @@
     },
     {
       "team": "Southern Miss",
+      "projected_coach": "Jay Ladner",
       "conference": "SB",
       "tier": "201_250",
       "program_band": "201_250",
@@ -4015,6 +4162,7 @@
     },
     {
       "team": "Bellarmine",
+      "projected_coach": "Doug Davenport",
       "conference": "ASun",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4042,6 +4190,7 @@
     },
     {
       "team": "Tarleton St.",
+      "projected_coach": "Eric Haut",
       "conference": "WAC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -4069,6 +4218,7 @@
     },
     {
       "team": "Houston Christian",
+      "projected_coach": "Craig Doty",
       "conference": "Slnd",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4096,6 +4246,7 @@
     },
     {
       "team": "Kansas City",
+      "projected_coach": "Mark Turgeon",
       "conference": "Sum",
       "tier": "251_300",
       "program_band": "301_plus",
@@ -4123,6 +4274,7 @@
     },
     {
       "team": "Central Michigan",
+      "projected_coach": "Andy Bronkema",
       "conference": "MAC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4150,6 +4302,7 @@
     },
     {
       "team": "North Carolina A&T",
+      "projected_coach": "Monte Ross",
       "conference": "CAA",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4177,6 +4330,7 @@
     },
     {
       "team": "Norfolk St.",
+      "projected_coach": "Robert Jones",
       "conference": "MEAC",
       "tier": "251_300",
       "program_band": "301_plus",
@@ -4204,6 +4358,7 @@
     },
     {
       "team": "Mercyhurst",
+      "projected_coach": "Gary Manchel",
       "conference": "NEC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4231,6 +4386,7 @@
     },
     {
       "team": "Western Michigan",
+      "projected_coach": "Kahil Fennell",
       "conference": "MAC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4258,6 +4414,7 @@
     },
     {
       "team": "Weber St.",
+      "projected_coach": "Kaleb Canales",
       "conference": "BSky",
       "tier": "201_250",
       "program_band": "201_250",
@@ -4285,6 +4442,7 @@
     },
     {
       "team": "Miami OH",
+      "projected_coach": "Travis Steele",
       "conference": "MAC",
       "tier": "136_160",
       "program_band": "136_160",
@@ -4312,6 +4470,7 @@
     },
     {
       "team": "Portland",
+      "projected_coach": "Shantay Legans",
       "conference": "WCC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -4339,6 +4498,7 @@
     },
     {
       "team": "Dayton",
+      "projected_coach": "Anthony Grant",
       "conference": "A10",
       "tier": "51_75",
       "program_band": "51_75",
@@ -4366,6 +4526,7 @@
     },
     {
       "team": "Incarnate Word",
+      "projected_coach": "Shane Heirman",
       "conference": "Slnd",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4393,6 +4554,7 @@
     },
     {
       "team": "Cal St. Bakersfield",
+      "projected_coach": "Todd Lee",
       "conference": "BW",
       "tier": "251_300",
       "program_band": "301_plus",
@@ -4420,6 +4582,7 @@
     },
     {
       "team": "Lamar",
+      "projected_coach": "Jordan Fee",
       "conference": "Slnd",
       "tier": "201_250",
       "program_band": "201_250",
@@ -4447,6 +4610,7 @@
     },
     {
       "team": "Lindenwood",
+      "projected_coach": "Kyle Gerdeman",
       "conference": "OVC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4474,6 +4638,7 @@
     },
     {
       "team": "Presbyterian",
+      "projected_coach": "Quinton Ferrell",
       "conference": "BSth",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4501,6 +4666,7 @@
     },
     {
       "team": "Grambling St.",
+      "projected_coach": "Patrick Crarey",
       "conference": "SWAC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4528,6 +4694,7 @@
     },
     {
       "team": "Northwestern St.",
+      "projected_coach": "Rick Cabrera",
       "conference": "Slnd",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4555,6 +4722,7 @@
     },
     {
       "team": "American",
+      "projected_coach": "Duane Simpkins",
       "conference": "PL",
       "tier": "201_250",
       "program_band": "201_250",
@@ -4582,6 +4750,7 @@
     },
     {
       "team": "Southern",
+      "projected_coach": "Kevin Johnson",
       "conference": "SWAC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4609,6 +4778,7 @@
     },
     {
       "team": "Prairie View A&M",
+      "projected_coach": "Byron Smith",
       "conference": "SWAC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4636,6 +4806,7 @@
     },
     {
       "team": "Albany",
+      "projected_coach": "Dwayne Killings",
       "conference": "AE",
       "tier": "251_300",
       "program_band": "301_plus",
@@ -4663,6 +4834,7 @@
     },
     {
       "team": "North Dakota",
+      "projected_coach": "Paul Sather",
       "conference": "Sum",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4690,6 +4862,7 @@
     },
     {
       "team": "East Texas A&M",
+      "projected_coach": "Jaret Von Rosenberg",
       "conference": "Slnd",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4717,6 +4890,7 @@
     },
     {
       "team": "Nebraska Omaha",
+      "projected_coach": "Chris Crutchfield",
       "conference": "Sum",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4744,6 +4918,7 @@
     },
     {
       "team": "Morehead St.",
+      "projected_coach": "Jonathan Mattox",
       "conference": "OVC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4771,6 +4946,7 @@
     },
     {
       "team": "Oral Roberts",
+      "projected_coach": "Kory Barnett",
       "conference": "Sum",
       "tier": "251_300",
       "program_band": "301_plus",
@@ -4798,6 +4974,7 @@
     },
     {
       "team": "Le Moyne",
+      "projected_coach": "Nate Champion",
       "conference": "NEC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4825,6 +5002,7 @@
     },
     {
       "team": "South Dakota",
+      "projected_coach": "Eric Peterson",
       "conference": "Sum",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4852,6 +5030,7 @@
     },
     {
       "team": "Little Rock",
+      "projected_coach": "Travis Ford",
       "conference": "OVC",
       "tier": "251_300",
       "program_band": "301_plus",
@@ -4879,6 +5058,7 @@
     },
     {
       "team": "Sacramento St.",
+      "projected_coach": "Mike Bibby",
       "conference": "BSky",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4906,6 +5086,7 @@
     },
     {
       "team": "Drexel",
+      "projected_coach": "Zach Spiker",
       "conference": "CAA",
       "tier": "201_250",
       "program_band": "201_250",
@@ -4933,6 +5114,7 @@
     },
     {
       "team": "Idaho St.",
+      "projected_coach": "Ryan Looney",
       "conference": "BSky",
       "tier": "251_300",
       "program_band": "251_300",
@@ -4960,6 +5142,7 @@
     },
     {
       "team": "Seattle",
+      "projected_coach": "Chris Victor",
       "conference": "WCC",
       "tier": "136_160",
       "program_band": "136_160",
@@ -4987,6 +5170,7 @@
     },
     {
       "team": "Eastern Kentucky",
+      "projected_coach": "A.W. Hamilton",
       "conference": "ASun",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5014,6 +5198,7 @@
     },
     {
       "team": "UT Rio Grande Valley",
+      "projected_coach": "Brandon Chambers",
       "conference": "Slnd",
       "tier": "136_160",
       "program_band": "136_160",
@@ -5041,6 +5226,7 @@
     },
     {
       "team": "Lehigh",
+      "projected_coach": "Brett Reed",
       "conference": "PL",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5068,6 +5254,7 @@
     },
     {
       "team": "Samford",
+      "projected_coach": "Lennie Acuff",
       "conference": "SC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -5095,6 +5282,7 @@
     },
     {
       "team": "Milwaukee",
+      "projected_coach": "Bart Lundy",
       "conference": "Horz",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5122,6 +5310,7 @@
     },
     {
       "team": "Jacksonville",
+      "projected_coach": "Jordan Mincy",
       "conference": "ASun",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5149,6 +5338,7 @@
     },
     {
       "team": "Sacred Heart",
+      "projected_coach": "Anthony Latina",
       "conference": "MAAC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5176,6 +5366,7 @@
     },
     {
       "team": "San Diego",
+      "projected_coach": "JR Blount",
       "conference": "WCC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -5203,6 +5394,7 @@
     },
     {
       "team": "Evansville",
+      "projected_coach": "David Ragland",
       "conference": "MVC",
       "tier": "251_300",
       "program_band": "301_plus",
@@ -5230,6 +5422,7 @@
     },
     {
       "team": "Longwood",
+      "projected_coach": "Ronnie Thomas",
       "conference": "BSth",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5257,6 +5450,7 @@
     },
     {
       "team": "Tennessee Tech",
+      "projected_coach": "Tobin Anderson",
       "conference": "OVC",
       "tier": "251_300",
       "program_band": "301_plus",
@@ -5284,6 +5478,7 @@
     },
     {
       "team": "Hampton",
+      "projected_coach": "Ivan Thomas",
       "conference": "CAA",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5311,6 +5506,7 @@
     },
     {
       "team": "Southern Utah",
+      "projected_coach": "Rob Jeter",
       "conference": "WAC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5338,6 +5534,7 @@
     },
     {
       "team": "Northern Illinois",
+      "projected_coach": "Matt Majkrzak",
       "conference": "MAC",
       "tier": "251_300",
       "program_band": "301_plus",
@@ -5365,6 +5562,7 @@
     },
     {
       "team": "Northeastern",
+      "projected_coach": "Bill Coen",
       "conference": "CAA",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5392,6 +5590,7 @@
     },
     {
       "team": "SIUE",
+      "projected_coach": "Brian Barone",
       "conference": "OVC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5419,6 +5618,7 @@
     },
     {
       "team": "Delaware",
+      "projected_coach": "Martin Ingelsby",
       "conference": "CUSA",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5446,6 +5646,7 @@
     },
     {
       "team": "UC Riverside",
+      "projected_coach": "Gus Argenal",
       "conference": "BW",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5473,6 +5674,7 @@
     },
     {
       "team": "Chattanooga",
+      "projected_coach": "Dan Earl",
       "conference": "SC",
       "tier": "251_300",
       "program_band": "301_plus",
@@ -5500,6 +5702,7 @@
     },
     {
       "team": "Boston University",
+      "projected_coach": "Joe Jones",
       "conference": "PL",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5527,6 +5730,7 @@
     },
     {
       "team": "Radford",
+      "projected_coach": "Zach Chu",
       "conference": "BSth",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5554,6 +5758,7 @@
     },
     {
       "team": "Mount St. Mary's",
+      "projected_coach": "Donny Lind",
       "conference": "MAAC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5581,6 +5786,7 @@
     },
     {
       "team": "Fairfield",
+      "projected_coach": "Chris Casey",
       "conference": "MAAC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5608,6 +5814,7 @@
     },
     {
       "team": "Saint Peter's",
+      "projected_coach": "Bashir Mason",
       "conference": "MAAC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5635,6 +5842,7 @@
     },
     {
       "team": "Brown",
+      "projected_coach": "Mike Martin",
       "conference": "Ivy",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5662,6 +5870,7 @@
     },
     {
       "team": "Marist",
+      "projected_coach": "John Dunne",
       "conference": "MAAC",
       "tier": "201_250",
       "program_band": "201_250",
@@ -5689,6 +5898,7 @@
     },
     {
       "team": "UTEP",
+      "projected_coach": "Joe Golding",
       "conference": "CUSA",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5716,6 +5926,7 @@
     },
     {
       "team": "Southeastern Louisiana",
+      "projected_coach": "David Kiefer",
       "conference": "Slnd",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5743,6 +5954,7 @@
     },
     {
       "team": "Youngstown St.",
+      "projected_coach": "Ethan Faulkner",
       "conference": "Horz",
       "tier": "201_250",
       "program_band": "201_250",
@@ -5770,6 +5982,7 @@
     },
     {
       "team": "Louisiana",
+      "projected_coach": "Quannas White",
       "conference": "SB",
       "tier": "251_300",
       "program_band": "301_plus",
@@ -5797,6 +6010,7 @@
     },
     {
       "team": "Boise St.",
+      "projected_coach": "Leon Rice",
       "conference": "MWC",
       "tier": "51_75",
       "program_band": "51_75",
@@ -5824,6 +6038,7 @@
     },
     {
       "team": "Georgia St.",
+      "projected_coach": "Jon Cremins",
       "conference": "SB",
       "tier": "251_300",
       "program_band": "301_plus",
@@ -5851,6 +6066,7 @@
     },
     {
       "team": "Mississippi Valley St.",
+      "projected_coach": "George Ivory",
       "conference": "SWAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -5878,6 +6094,7 @@
     },
     {
       "team": "Iona",
+      "projected_coach": "Dan Geriot",
       "conference": "MAAC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5905,6 +6122,7 @@
     },
     {
       "team": "Delaware St.",
+      "projected_coach": "Stan Waterman",
       "conference": "MEAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -5932,6 +6150,7 @@
     },
     {
       "team": "Ball St.",
+      "projected_coach": "Chris Capko",
       "conference": "MAC",
       "tier": "251_300",
       "program_band": "251_300",
@@ -5959,6 +6178,7 @@
     },
     {
       "team": "South Carolina St.",
+      "projected_coach": "Erik Martin",
       "conference": "MEAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -5986,6 +6206,7 @@
     },
     {
       "team": "Massachusetts",
+      "projected_coach": "Frank Martin",
       "conference": "MAC",
       "tier": "161_200",
       "program_band": "161_200",
@@ -6013,6 +6234,7 @@
     },
     {
       "team": "Binghamton",
+      "projected_coach": "Levell Sanders",
       "conference": "AE",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6040,6 +6262,7 @@
     },
     {
       "team": "Chicago St.",
+      "projected_coach": "Landon Bussie",
       "conference": "NEC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6067,6 +6290,7 @@
     },
     {
       "team": "North Carolina Central",
+      "projected_coach": "LeVelle Moton",
       "conference": "MEAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6094,6 +6318,7 @@
     },
     {
       "team": "North Alabama",
+      "projected_coach": "Tony Pujol",
       "conference": "ASun",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6121,6 +6346,7 @@
     },
     {
       "team": "Coppin St.",
+      "projected_coach": "Larry Stewart",
       "conference": "MEAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6148,6 +6374,7 @@
     },
     {
       "team": "Saint Mary's",
+      "projected_coach": "Mickey McConnell",
       "conference": "WCC",
       "tier": "26_50",
       "program_band": "26_50",
@@ -6175,6 +6402,7 @@
     },
     {
       "team": "Arkansas Pine Bluff",
+      "projected_coach": "Solomon Bozeman",
       "conference": "SWAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6202,6 +6430,7 @@
     },
     {
       "team": "Maine",
+      "projected_coach": "Chris Markwood",
       "conference": "AE",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6229,6 +6458,7 @@
     },
     {
       "team": "Morgan St.",
+      "projected_coach": "Kevin Broadus",
       "conference": "MEAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6256,6 +6486,7 @@
     },
     {
       "team": "Western Illinois",
+      "projected_coach": "Chad Boudreau",
       "conference": "OVC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6283,6 +6514,7 @@
     },
     {
       "team": "Maryland Eastern Shore",
+      "projected_coach": "Cleo Hill",
       "conference": "MEAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6310,6 +6542,7 @@
     },
     {
       "team": "Purdue Fort Wayne",
+      "projected_coach": "Jon Coffman",
       "conference": "Horz",
       "tier": "251_300",
       "program_band": "251_300",
@@ -6337,6 +6570,7 @@
     },
     {
       "team": "VMI",
+      "projected_coach": "Andrew Wilson",
       "conference": "SC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6364,6 +6598,7 @@
     },
     {
       "team": "Manhattan",
+      "projected_coach": "John Gallagher",
       "conference": "MAAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6391,6 +6626,7 @@
     },
     {
       "team": "Dartmouth",
+      "projected_coach": "Brett MacConnell",
       "conference": "Ivy",
       "tier": "251_300",
       "program_band": "251_300",
@@ -6418,6 +6654,7 @@
     },
     {
       "team": "Wagner",
+      "projected_coach": "Dwan McMillan",
       "conference": "NEC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6445,6 +6682,7 @@
     },
     {
       "team": "Saint Francis",
+      "projected_coach": "Luke McConnell",
       "conference": "NEC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6472,6 +6710,7 @@
     },
     {
       "team": "Gardner Webb",
+      "projected_coach": "Jeremy Luther",
       "conference": "BSth",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6499,6 +6738,7 @@
     },
     {
       "team": "The Citadel",
+      "projected_coach": "Ed Conroy",
       "conference": "SC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6526,6 +6766,7 @@
     },
     {
       "team": "Rider",
+      "projected_coach": "Kevin Baggett",
       "conference": "MAAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6553,6 +6794,7 @@
     },
     {
       "team": "Fairleigh Dickinson",
+      "projected_coach": "Jack Castleberry",
       "conference": "NEC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6580,6 +6822,7 @@
     },
     {
       "team": "Eastern Illinois",
+      "projected_coach": "Marty Simmons",
       "conference": "OVC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6607,6 +6850,7 @@
     },
     {
       "team": "Florida A&M",
+      "projected_coach": "Charlie Ward",
       "conference": "SWAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6634,6 +6878,7 @@
     },
     {
       "team": "Alabama A&M",
+      "projected_coach": "Donte Jackson",
       "conference": "SWAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6661,6 +6906,7 @@
     },
     {
       "team": "Alcorn St.",
+      "projected_coach": "Jake Morton",
       "conference": "SWAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6688,6 +6934,7 @@
     },
     {
       "team": "Bucknell",
+      "projected_coach": "John Griffin",
       "conference": "PL",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6715,6 +6962,7 @@
     },
     {
       "team": "North Florida",
+      "projected_coach": "Bobby Kennen",
       "conference": "ASun",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6742,6 +6990,7 @@
     },
     {
       "team": "UTSA",
+      "projected_coach": "Austin Claunch",
       "conference": "Amer",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6769,6 +7018,7 @@
     },
     {
       "team": "IU Indy",
+      "projected_coach": "Ben Howlett",
       "conference": "Horz",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6796,6 +7046,7 @@
     },
     {
       "team": "NJIT",
+      "projected_coach": "Grant Billmeier",
       "conference": "AE",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6823,6 +7074,7 @@
     },
     {
       "team": "Lafayette",
+      "projected_coach": "Mike McGarvey",
       "conference": "PL",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6850,6 +7102,7 @@
     },
     {
       "team": "Central Connecticut",
+      "projected_coach": "Patrick Sellers",
       "conference": "NEC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6877,6 +7130,7 @@
     },
     {
       "team": "West Georgia",
+      "projected_coach": "Dave Moore",
       "conference": "ASun",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6904,6 +7158,7 @@
     },
     {
       "team": "Northern Arizona",
+      "projected_coach": "Shane Burcar",
       "conference": "BSky",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6931,6 +7186,7 @@
     },
     {
       "team": "Bryant",
+      "projected_coach": "Jamion Christian",
       "conference": "AE",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6958,6 +7214,7 @@
     },
     {
       "team": "Stonehill",
+      "projected_coach": "Chris Kraus",
       "conference": "NEC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -6985,6 +7242,7 @@
     },
     {
       "team": "Jackson St.",
+      "projected_coach": "Trey Johnson (INTERIM)",
       "conference": "SWAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7012,6 +7270,7 @@
     },
     {
       "team": "Southern Indiana",
+      "projected_coach": "Stan Gouard",
       "conference": "OVC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7039,6 +7298,7 @@
     },
     {
       "team": "Loyola MD",
+      "projected_coach": "Josh Loeffler",
       "conference": "PL",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7066,6 +7326,7 @@
     },
     {
       "team": "South Florida",
+      "projected_coach": "Chris Mack",
       "conference": "Amer",
       "tier": "51_75",
       "program_band": "136_160",
@@ -7093,6 +7354,7 @@
     },
     {
       "team": "Texas Southern",
+      "projected_coach": "Johnny Jones",
       "conference": "SWAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7120,6 +7382,7 @@
     },
     {
       "team": "Louisiana Monroe",
+      "projected_coach": "Ryan Cross",
       "conference": "SB",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7147,6 +7410,7 @@
     },
     {
       "team": "Niagara",
+      "projected_coach": "Greg Paulus",
       "conference": "MAAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7174,6 +7438,7 @@
     },
     {
       "team": "New Haven",
+      "projected_coach": "Ted Hotaling",
       "conference": "NEC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7201,6 +7466,7 @@
     },
     {
       "team": "Holy Cross",
+      "projected_coach": "Dave Paulsen",
       "conference": "PL",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7228,6 +7494,7 @@
     },
     {
       "team": "UMass Lowell",
+      "projected_coach": "Pat Duquette",
       "conference": "AE",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7255,6 +7522,7 @@
     },
     {
       "team": "New Hampshire",
+      "projected_coach": "Nathan Davis",
       "conference": "AE",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7282,6 +7550,7 @@
     },
     {
       "team": "USC Upstate",
+      "projected_coach": "Marty Richter",
       "conference": "BSth",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7309,6 +7578,7 @@
     },
     {
       "team": "Army",
+      "projected_coach": "Kevin Kuwik",
       "conference": "PL",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7336,6 +7606,7 @@
     },
     {
       "team": "George Washington",
+      "projected_coach": "Chris Caputo",
       "conference": "A10",
       "tier": "136_160",
       "program_band": "136_160",
@@ -7363,6 +7634,7 @@
     },
     {
       "team": "Cleveland St.",
+      "projected_coach": "Rob Summers",
       "conference": "Horz",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7390,6 +7662,7 @@
     },
     {
       "team": "Canisius",
+      "projected_coach": "Jim Christian",
       "conference": "MAAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7417,6 +7690,7 @@
     },
     {
       "team": "Air Force",
+      "projected_coach": "Joe Crispin",
       "conference": "MWC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7444,6 +7718,7 @@
     },
     {
       "team": "Stetson",
+      "projected_coach": "Donnie Jones",
       "conference": "ASun",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7471,6 +7746,7 @@
     },
     {
       "team": "Tulsa",
+      "projected_coach": "Eric Konkol",
       "conference": "Amer",
       "tier": "101_135",
       "program_band": "101_135",
@@ -7498,6 +7774,7 @@
     },
     {
       "team": "Alabama St.",
+      "projected_coach": "Chris Wright",
       "conference": "SWAC",
       "tier": "301_plus",
       "program_band": "301_plus",
@@ -7525,6 +7802,7 @@
     },
     {
       "team": "Stephen F. Austin",
+      "projected_coach": "Matt Braeuer",
       "conference": "Slnd",
       "tier": "101_135",
       "program_band": "101_135",
@@ -7552,6 +7830,7 @@
     },
     {
       "team": "Northern Iowa",
+      "projected_coach": "Kyle Green",
       "conference": "MVC",
       "tier": "101_135",
       "program_band": "101_135",
@@ -7579,6 +7858,7 @@
     },
     {
       "team": "McNeese",
+      "projected_coach": "Bill Armstrong",
       "conference": "Slnd",
       "tier": "136_160",
       "program_band": "136_160",
@@ -7606,6 +7886,7 @@
     },
     {
       "team": "San Diego St.",
+      "projected_coach": "Brian Dutcher",
       "conference": "MWC",
       "tier": "26_50",
       "program_band": "26_50",
@@ -7633,6 +7914,7 @@
     },
     {
       "team": "Santa Clara",
+      "projected_coach": "Herb Sendek",
       "conference": "WCC",
       "tier": "76_100",
       "program_band": "101_135",
@@ -7660,6 +7942,7 @@
     },
     {
       "team": "Saint Louis",
+      "projected_coach": "Josh Schertz",
       "conference": "A10",
       "tier": "51_75",
       "program_band": "76_100",
@@ -7687,6 +7970,7 @@
     },
     {
       "team": "Grand Canyon",
+      "projected_coach": "Bryce Drew",
       "conference": "MWC",
       "tier": "101_135",
       "program_band": "101_135",
@@ -7714,6 +7998,7 @@
     },
     {
       "team": "New Mexico",
+      "projected_coach": "Eric Olen",
       "conference": "MWC",
       "tier": "76_100",
       "program_band": "101_135",
@@ -7741,6 +8026,7 @@
     },
     {
       "team": "Gonzaga",
+      "projected_coach": "Mark Few",
       "conference": "WCC",
       "tier": "top_25",
       "program_band": "top_25",
