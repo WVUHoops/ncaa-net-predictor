@@ -43,14 +43,31 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=PROJECT_ROOT / "data" / "processed" / "transfer_features",
     )
+    parser.add_argument(
+        "--source-season",
+        type=int,
+        help="Use this source season when the roster-status CSV does not include a season column.",
+    )
+    parser.add_argument(
+        "--current-roster-transfers",
+        action="store_true",
+        help="Treat is_transfer rows on current rosters as incoming transfers from prior_team_market.",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     player_rows = read_csv_rows(args.player_roster_status_csv)
+    if args.source_season is not None:
+        for row in player_rows:
+            row.setdefault("season", str(args.source_season))
     context = kenpom_context_by_team(args.kenpom_dir)
-    transfers = player_transfer_rows(player_rows, context)
+    transfers = player_transfer_rows(
+        player_rows,
+        context,
+        current_roster_transfers=args.current_roster_transfers,
+    )
     summaries = transfer_summary_rows(transfers)
 
     player_json = write_json(transfers, args.output_dir / "cbb_incoming_transfer_players.json")

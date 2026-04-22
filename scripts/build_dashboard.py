@@ -377,18 +377,23 @@ def dashboard_html(payload: dict[str, Any]) -> str:
   <title>NCAA Schedule Builder</title>
   <style>
     :root {{
-      --ink: #17211f;
-      --muted: #5c6a65;
-      --line: #d6dfda;
-      --paper: #f7faf8;
+      --wvu-blue: #002855;
+      --wvu-gold: #eaaa00;
+      --wvu-gold-web: #eeaa00;
+      --wvu-blue-light: #0062a3;
+      --wvu-sky: #9ddae6;
+      --ink: #1c2b39;
+      --muted: #5b6672;
+      --line: #d7dde4;
+      --paper: #f7f7f7;
       --panel: #ffffff;
-      --green: #087f5b;
-      --teal: #0b7285;
-      --gold: #b7791f;
-      --red: #c92a2a;
-      --soft-red: #fff0f0;
-      --soft-green: #e9f8f1;
-      --soft-gold: #fff7df;
+      --green: #0b6b4f;
+      --teal: #0062a3;
+      --gold: #7f6310;
+      --red: #b91c1c;
+      --soft-red: #fff1f1;
+      --soft-green: #eef8f3;
+      --soft-gold: #fff8df;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }}
     * {{ box-sizing: border-box; }}
@@ -401,8 +406,9 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     }}
     header {{
       padding: 24px;
-      border-bottom: 1px solid var(--line);
-      background: #ffffff;
+      border-bottom: 4px solid var(--wvu-gold);
+      background: var(--wvu-blue);
+      color: #fff;
     }}
     main {{
       padding: 20px 24px 36px;
@@ -420,6 +426,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       letter-spacing: 0;
     }}
     p {{ margin: 6px 0 0; color: var(--muted); }}
+    header p {{ color: #d9e6f2; }}
     .topline {{
       display: flex;
       align-items: center;
@@ -434,10 +441,10 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       align-items: center;
       min-height: 28px;
       padding: 4px 9px;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(234, 170, 0, 0.75);
       border-radius: 8px;
-      background: #f9fbfa;
-      color: var(--muted);
+      background: rgba(234, 170, 0, 0.15);
+      color: #fff;
       font-size: 13px;
       white-space: nowrap;
     }}
@@ -453,14 +460,14 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fff;
-      color: var(--muted);
+      color: var(--wvu-blue);
       font: inherit;
       cursor: pointer;
     }}
     .tab-button.active {{
-      border-color: #8ccbb6;
-      background: var(--soft-green);
-      color: var(--green);
+      border-color: var(--wvu-blue);
+      background: var(--wvu-blue);
+      color: #fff;
       font-weight: 700;
     }}
     .tab-panel {{ display: none; }}
@@ -470,8 +477,8 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       height: 54px;
       object-fit: cover;
       border-radius: 8px;
-      border: 1px solid var(--line);
-      background: #e8f2ee;
+      border: 1px solid rgba(234, 170, 0, 0.75);
+      background: #001f42;
     }}
     .summary {{
       display: grid;
@@ -482,6 +489,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     .metric {{
       background: var(--panel);
       border: 1px solid var(--line);
+      border-top: 4px solid var(--wvu-gold);
       border-radius: 8px;
       padding: 14px;
       min-height: 84px;
@@ -508,6 +516,11 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       padding: 8px 10px;
       font: inherit;
     }}
+    input:focus, select:focus, details.filter:focus-within {{
+      outline: 2px solid rgba(234, 170, 0, 0.55);
+      outline-offset: 2px;
+      border-color: var(--wvu-blue);
+    }}
     button {{
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -517,9 +530,9 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       cursor: pointer;
     }}
     button.primary {{
-      border-color: #087f5b;
-      background: #087f5b;
-      color: #fff;
+      border-color: var(--wvu-gold);
+      background: var(--wvu-gold);
+      color: var(--wvu-blue);
       font-weight: 700;
     }}
     button.danger {{
@@ -562,7 +575,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fff;
-      box-shadow: 0 10px 24px rgba(23, 33, 31, 0.12);
+      box-shadow: 0 14px 28px rgba(0, 40, 85, 0.14);
     }}
     .filter-option {{
       display: flex;
@@ -572,13 +585,14 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       border-radius: 8px;
       color: var(--ink);
     }}
-    .filter-option:hover {{ background: #f4f7f5; }}
+    .filter-option:hover {{ background: #f4f7fb; }}
     .filter-option input {{ width: auto; min-height: auto; }}
     .table-wrap {{
       overflow-x: auto;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fff;
+      box-shadow: 0 10px 24px rgba(0, 40, 85, 0.07);
     }}
     table {{
       width: 100%;
@@ -594,8 +608,8 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     th {{
       position: sticky;
       top: 0;
-      background: #eef5f2;
-      color: #263632;
+      background: var(--wvu-blue);
+      color: #fff;
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0;
@@ -606,8 +620,9 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       content: attr(data-sort-mark);
       display: inline-block;
       margin-left: 6px;
-      color: var(--teal);
+      color: var(--wvu-gold);
     }}
+    tbody tr:hover td {{ background: #f7fbff; }}
     tr:last-child td {{ border-bottom: 0; }}
     .num {{ text-align: right; font-variant-numeric: tabular-nums; }}
     .pill {{
@@ -616,28 +631,28 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       padding: 3px 8px;
       border-radius: 8px;
       border: 1px solid var(--line);
-      background: #f6f8f7;
+      background: #f7f7f7;
       font-size: 12px;
     }}
     .tier-chip {{
       min-width: 74px;
       justify-content: center;
       font-weight: 700;
-      color: #19342f;
+      color: var(--ink);
     }}
-    .tier-top_25 {{ background: #dbf4e7; border-color: #93d3b0; color: #075b3f; }}
-    .tier-26_50 {{ background: #e4f6f5; border-color: #94d4d1; color: #075860; }}
-    .tier-51_75 {{ background: #eef4dc; border-color: #c8d990; color: #506312; }}
-    .tier-76_100 {{ background: #fff5cc; border-color: #e6c96d; color: #73530d; }}
-    .tier-101_135 {{ background: #ffe8c2; border-color: #e2b36a; color: #744111; }}
-    .tier-136_160 {{ background: #f7dfd7; border-color: #d8a395; color: #783322; }}
-    .tier-161_200 {{ background: #eee5fb; border-color: #c8b4e8; color: #4d3375; }}
-    .tier-201_250 {{ background: #e7eaf0; border-color: #bac2cf; color: #354052; }}
-    .tier-251_300 {{ background: #edf0f2; border-color: #cbd1d6; color: #4d5962; }}
-    .tier-301_plus {{ background: #f6f7f7; border-color: #d7dcde; color: #68727a; }}
-    .good_target, .strong_target {{ background: var(--soft-green); color: var(--green); border-color: #b7e4cc; }}
+    .tier-top_25 {{ background: var(--wvu-blue); border-color: var(--wvu-blue); color: #fff; }}
+    .tier-26_50 {{ background: #083d75; border-color: #083d75; color: #fff; }}
+    .tier-51_75 {{ background: #e9f6fa; border-color: #9ddae6; color: var(--wvu-blue); }}
+    .tier-76_100 {{ background: #fff4cc; border-color: var(--wvu-gold); color: var(--wvu-blue); }}
+    .tier-101_135 {{ background: #f8e6a6; border-color: #d8a311; color: #473700; }}
+    .tier-136_160 {{ background: #ece2c7; border-color: #b9ac77; color: #554741; }}
+    .tier-161_200 {{ background: #e8edf2; border-color: #b8c4d2; color: #1c2b39; }}
+    .tier-201_250 {{ background: #edf0f2; border-color: #c7cdd4; color: #354052; }}
+    .tier-251_300 {{ background: #f2f2f2; border-color: #d4d4d4; color: #4d5962; }}
+    .tier-301_plus {{ background: #fafafa; border-color: #d7dcde; color: #68727a; }}
+    .good_target, .strong_target {{ background: #eff8fb; color: var(--wvu-blue); border-color: var(--wvu-sky); }}
     .avoid_bad_risk_reward, .avoid_unless_needed {{ background: var(--soft-red); color: var(--red); border-color: #ffd0d0; }}
-    .monitor {{ background: var(--soft-gold); color: var(--gold); border-color: #f5dfa7; }}
+    .monitor {{ background: var(--soft-gold); color: var(--gold); border-color: var(--wvu-gold); }}
     .low_value {{ color: var(--muted); }}
     .very_high, .high {{ color: var(--red); }}
     .medium {{ color: var(--gold); }}
@@ -675,6 +690,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     }}
     .planner-metric {{
       border: 1px solid var(--line);
+      border-left: 4px solid var(--wvu-gold);
       border-radius: 8px;
       background: #fff;
       padding: 13px;
@@ -692,12 +708,12 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     .planner-table input, .planner-table select {{
       min-width: 145px;
     }}
-    .planner-row-home td {{ background: #f1fbf6; }}
-    .planner-row-away td {{ background: #fff6ed; }}
-    .planner-row-neutral td {{ background: #f2f7fb; }}
+    .planner-row-home td {{ background: #eff8fb; }}
+    .planner-row-away td {{ background: #fff8df; }}
+    .planner-row-neutral td {{ background: #f7f7f7; }}
     .planner-row-home:hover td,
     .planner-row-away:hover td,
-    .planner-row-neutral:hover td {{ background: #eef5f2; }}
+    .planner-row-neutral:hover td {{ background: #eef4fb; }}
     .planner-table input[data-field="date"] {{ min-width: 96px; }}
     .remove-game {{
       min-height: 34px;
@@ -729,13 +745,13 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     .bar-track {{
       height: 11px;
       border-radius: 8px;
-      background: #e9efec;
+      background: #e8edf2;
       overflow: hidden;
     }}
     .bar-fill {{
       height: 100%;
       border-radius: 8px;
-      background: var(--teal);
+      background: var(--wvu-blue-light);
     }}
     footer {{
       color: var(--muted);
@@ -760,7 +776,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         <h1>Schedule Builder</h1>
         <p>Opponent value, guarantee-game upset risk, and current portal-sensitive tiers.</p>
       </div>
-      <img class="hero-mark" alt="Basketball court" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='108' viewBox='0 0 180 108'%3E%3Crect width='180' height='108' fill='%23e8f2ee'/%3E%3Cpath d='M0 54h180M90 0v108M28 18h124v72H28zM90 18a36 36 0 0 1 0 72M90 18a36 36 0 0 0 0 72' fill='none' stroke='%23087f5b' stroke-width='3'/%3E%3Ccircle cx='90' cy='54' r='12' fill='none' stroke='%23b7791f' stroke-width='3'/%3E%3C/svg%3E">
+      <img class="hero-mark" alt="Basketball court" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='108' viewBox='0 0 180 108'%3E%3Crect width='180' height='108' fill='%23002855'/%3E%3Crect x='0' y='0' width='180' height='8' fill='%23EAAA00'/%3E%3Crect x='0' y='100' width='180' height='8' fill='%23EAAA00'/%3E%3Cpath d='M0 54h180M90 0v108M28 18h124v72H28zM90 18a36 36 0 0 1 0 72M90 18a36 36 0 0 0 0 72' fill='none' stroke='%23EAAA00' stroke-width='3'/%3E%3Ccircle cx='90' cy='54' r='12' fill='none' stroke='%239DDAE6' stroke-width='3'/%3E%3C/svg%3E">
       <span class="badge" id="updated"></span>
     </div>
   </header>

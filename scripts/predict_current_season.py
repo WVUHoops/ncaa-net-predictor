@@ -106,6 +106,16 @@ def parse_args() -> argparse.Namespace:
         default=PROJECT_ROOT / "data" / "processed" / "on3_features" / "on3_incoming_talent_features.csv",
     )
     parser.add_argument(
+        "--transfer-features-csv",
+        type=Path,
+        default=PROJECT_ROOT
+        / "data"
+        / "processed"
+        / "transfer_features"
+        / "current"
+        / "cbb_incoming_transfer_features.csv",
+    )
+    parser.add_argument(
         "--program-history-csv",
         type=Path,
         default=PROJECT_ROOT
@@ -190,6 +200,9 @@ def current_model_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
     summaries = read_csv_rows(args.coach_latest_summary_csv) if args.coach_latest_summary_csv.exists() else []
     roster_rows = read_csv_rows(args.roster_summary_csv) if args.roster_summary_csv.exists() else []
     on3_rows = read_csv_rows(args.on3_features_csv) if args.on3_features_csv.exists() else []
+    transfer_rows = (
+        read_csv_rows(args.transfer_features_csv) if args.transfer_features_csv.exists() else []
+    )
     program_rows = read_csv_rows(args.program_history_csv) if args.program_history_csv.exists() else []
 
     change_by_team = indexed_by_team(changes)
@@ -222,7 +235,15 @@ def current_model_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
         prior["team_key"] = canonical_team_key(team)
         prior_roster_rows.append(prior)
 
-    rows = build_model_rows(preseason_rows, coach_rows, [], prior_roster_rows, on3_rows, [], program_rows)
+    rows = build_model_rows(
+        preseason_rows,
+        coach_rows,
+        [],
+        prior_roster_rows,
+        on3_rows,
+        transfer_rows,
+        program_rows,
+    )
     for row in rows:
         row["target_teams_ranked"] = len(rows)
     return rows
@@ -303,6 +324,14 @@ def model_outputs(
                     ),
                     "incoming_on3_hs_rank": row.get("incoming_on3_hs_rank"),
                     "incoming_on3_transfer_rank": row.get("incoming_on3_transfer_rank"),
+                    "incoming_cbb_transfer_players": row.get("incoming_cbb_transfer_players"),
+                    "incoming_cbb_transfer_production_percentile": row.get(
+                        "incoming_cbb_transfer_production_percentile"
+                    ),
+                    "incoming_cbb_transfer_source_adjusted_warp": row.get(
+                        "incoming_cbb_transfer_source_adjusted_warp"
+                    ),
+                    "incoming_cbb_transfer_minutes": row.get("incoming_cbb_transfer_minutes"),
                 }
             )
         outputs[config.name] = model_rows
@@ -376,6 +405,10 @@ def main() -> int:
     print(f"rows with prior roster features: {sum(1 for row in current_rows if row.get('prior_roster_source_season'))}")
     print(f"rows with On3 HS features: {sum(1 for row in current_rows if row.get('incoming_on3_hs_rank'))}")
     print(f"rows with On3 transfer features: {sum(1 for row in current_rows if row.get('incoming_on3_transfer_rank'))}")
+    print(
+        "rows with CBB transfer features: "
+        f"{sum(1 for row in current_rows if row.get('incoming_cbb_transfer_players'))}"
+    )
     print(f"rows with program history features: {sum(1 for row in current_rows if row.get('program_prior_seasons'))}")
     return 0
 

@@ -32,6 +32,16 @@ def latest_current_player_agg() -> Path | None:
     return paths[0] if paths else None
 
 
+def current_player_roster_status_csv() -> Path:
+    return (
+        PROJECT_ROOT
+        / "data"
+        / "processed"
+        / "roster_status"
+        / "player_roster_status_2026.csv"
+    )
+
+
 def can_rebuild_upset_risk() -> bool:
     return (PROJECT_ROOT / "data" / "raw" / "hoopr" / "mbb_schedule_master.csv").exists()
 
@@ -124,6 +134,19 @@ def main() -> int:
                     str(player_agg),
                     "--season",
                     "2026",
+                ]
+            )
+            run_step(
+                [
+                    "python3",
+                    "scripts/build_transfer_features.py",
+                    "--player-roster-status-csv",
+                    str(current_player_roster_status_csv()),
+                    "--source-season",
+                    "2026",
+                    "--current-roster-transfers",
+                    "--output-dir",
+                    str(PROJECT_ROOT / "data" / "processed" / "transfer_features" / "current"),
                 ]
             )
         else:

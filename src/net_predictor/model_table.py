@@ -140,6 +140,9 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
     )
     cbb_transfer_net_rating = as_float(row.get("incoming_cbb_transfer_minutes_weighted_net_rating"))
     cbb_transfer_source_adj_em = as_float(row.get("incoming_cbb_transfer_minutes_weighted_source_adj_em"))
+    cbb_transfer_production_percentile = as_float(
+        row.get("incoming_cbb_transfer_production_percentile")
+    )
 
     row["roster_talent_returning_production_pct_avg"] = average_existing(
         returning_minutes_pct,
@@ -175,6 +178,7 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
         cbb_transfer_minutes,
     )
     row["roster_talent_cbb_transfer_quality_index"] = average_existing(
+        cbb_transfer_production_percentile,
         cbb_transfer_warp,
         cbb_transfer_win_shares,
         cbb_transfer_adjusted_warp,
@@ -183,6 +187,7 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
         cbb_transfer_source_adj_em,
     )
     transfer_signal = first_existing(
+        cbb_transfer_production_percentile,
         row.get("roster_talent_cbb_transfer_quality_index"),
         transfer_score,
         transfer_raw_score_in,
@@ -191,6 +196,9 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
     row["roster_talent_incoming_transfer_score"] = transfer_signal
     row["roster_talent_incoming_hs_rank_percentile"] = hs_rank_percentile
     row["roster_talent_incoming_transfer_rank_percentile"] = transfer_rank_percentile
+    row["roster_talent_incoming_transfer_production_percentile"] = (
+        cbb_transfer_production_percentile
+    )
     row["roster_talent_hs_need_fit"] = product_if_present(hs_score, lost_minutes_pct)
     row["roster_talent_transfer_need_fit"] = product_if_present(transfer_signal, lost_minutes_pct)
     row["roster_talent_weighted_returning_core_continuity"] = product_if_present(
@@ -201,8 +209,12 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
         hs_rank_percentile,
         composition["hs_impact_share"],
     )
-    row["roster_talent_weighted_transfer_rank_percentile"] = product_if_present(
+    transfer_percentile_signal = first_existing(
+        cbb_transfer_production_percentile,
         transfer_rank_percentile,
+    )
+    row["roster_talent_weighted_transfer_rank_percentile"] = product_if_present(
+        transfer_percentile_signal,
         composition["transfer_impact_share"],
     )
     row["roster_talent_continuity_plus_incoming"] = sum_existing(

@@ -46,6 +46,23 @@ RATE_STATS = (
     "defensive_rapm",
 )
 CONTEXT_ADJUSTED_STATS = ("points", "assists", "rebounds", "warp", "win_shares")
+HIGH_MAJOR_CONFERENCES = {"ACC", "B10", "B12", "BE", "P12", "SEC"}
+PERCENTILE_STATS = (
+    "cbb_transfer_players",
+    "cbb_transfer_500_minute_players",
+    "cbb_transfer_200_minute_players",
+    "cbb_transfer_high_usage_players",
+    "cbb_transfer_positive_warp_players",
+    "cbb_transfer_plus_one_warp_players",
+    "cbb_transfer_minutes",
+    "cbb_transfer_warp",
+    "cbb_transfer_win_shares",
+    "cbb_transfer_source_adjusted_warp",
+    "cbb_transfer_source_adjusted_win_shares",
+    "cbb_transfer_minutes_weighted_per",
+    "cbb_transfer_minutes_weighted_net_rating",
+    "cbb_transfer_minutes_weighted_source_adj_em",
+)
 
 
 def as_float(value: Any) -> float | None:
@@ -126,12 +143,33 @@ def source_context_multiplier(context: dict[str, Any] | None) -> float:
     adj_em = as_float(context.get("source_kenpom_adj_em"))
     if adj_em is None:
         return 1.0
-    return min(1.35, max(0.75, 1 + (adj_em / 100)))
+    rank = as_float(context.get("source_kenpom_rank_adj_em"))
+    conference = context.get("source_kenpom_conference")
+
+    multiplier = 1 + (adj_em / 60)
+    if conference in HIGH_MAJOR_CONFERENCES:
+        multiplier += 0.05
+    if rank is not None:
+        if rank <= 25:
+            multiplier += 0.10
+        elif rank <= 50:
+            multiplier += 0.06
+        elif rank <= 100:
+            multiplier += 0.03
+        elif rank >= 300:
+            multiplier -= 0.12
+        elif rank >= 250:
+            multiplier -= 0.08
+        elif rank >= 200:
+            multiplier -= 0.04
+    return min(1.45, max(0.55, multiplier))
 
 
 def player_transfer_rows(
     player_rows: list[dict[str, Any]],
     kenpom_context: dict[tuple[int, str], dict[str, Any]],
+    *,
+    current_roster_transfers: bool = False,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for row in player_rows:
@@ -139,22 +177,39 @@ def player_transfer_rows(
         team_id = row.get("team_id")
         next_team_market = row.get("next_team_market")
         source_season = int(row.get("season") or 0)
-        if not source_season or next_team_id in (None, "") or str(next_team_id) == str(team_id):
-            continue
-        if next_team_market in (None, ""):
+        if not source_season:
             continue
 
-        source_team_key = str(row.get("team_key") or canonical_team_key(row.get("team_market")))
-        destination_team_key = canonical_team_key(next_team_market)
+        if next_team_id not in (None, "") and str(next_team_id) != str(team_id):
+            destination_team = next_team_market
+            source_team = row.get("team_market")
+            source_team_key = str(row.get("team_key") or canonical_team_key(source_team))
+        elif current_roster_transfers and is_true(row.get("is_transfer")):
+            prior_team = row.get("prior_team_market")
+            current_team = row.get("team_market")
+            if prior_team in (None, "") or current_team in (None, ""):
+                continue
+            if canonical_team_key(prior_team) == canonical_team_key(current_team):
+                continue
+            destination_team = current_team
+            source_team = prior_team
+            source_team_key = canonical_team_key(prior_team)
+        else:
+            continue
+
+        if destination_team in (None, ""):
+            continue
+
+        destination_team_key = canonical_team_key(destination_team)
         context = kenpom_context.get((source_season, source_team_key), {})
         multiplier = source_context_multiplier(context)
 
         item: dict[str, Any] = {
             "source_season": source_season,
             "season": source_season + 1,
-            "team": next_team_market,
+            "team": destination_team,
             "team_key": destination_team_key,
-            "source_team": row.get("team_market"),
+            "source_team": source_team,
             "source_team_key": source_team_key,
             "player_id": row.get("player_id"),
             "player_name": row.get("player_name"),
@@ -169,6 +224,12 @@ def player_transfer_rows(
 
     rows.sort(key=lambda item: (item["season"], item["team_key"], str(item["player_name"])))
     return rows
+
+
+def is_true(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    return str(value).strip().lower() == "true"
 
 
 def weighted_average(rows: list[dict[str, Any]], column: str, weight_column: str = "minutes") -> float | None:
@@ -240,4 +301,46 @@ def transfer_summary_rows(player_rows: list[dict[str, Any]]) -> list[dict[str, A
         summaries.append(summary)
 
     summaries.sort(key=lambda item: (item["season"], item["team_key"]))
+    add_transfer_percentiles(summaries)
     return summaries
+
+
+def add_transfer_percentiles(rows: list[dict[str, Any]]) -> None:
+    by_season: dict[int, list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        by_season[int(row["season"])].append(row)
+
+    for season_rows in by_season.values():
+        for column in PERCENTILE_STATS:
+            observed = sorted(
+                (
+                    numeric(row.get(column)),
+                    str(row.get("team_key") or ""),
+                    row,
+                )
+                for row in season_rows
+                if row.get(column) not in (None, "")
+            )
+            if not observed:
+                continue
+            denominator = max(len(observed) - 1, 1)
+            for index, (_, __, row) in enumerate(observed):
+                row[f"{column}_percentile"] = index / denominator
+
+        for row in season_rows:
+            row["cbb_transfer_production_percentile"] = average_existing(
+                as_float(row.get("cbb_transfer_source_adjusted_warp_percentile")),
+                as_float(row.get("cbb_transfer_source_adjusted_win_shares_percentile")),
+                as_float(row.get("cbb_transfer_minutes_percentile")),
+                as_float(row.get("cbb_transfer_500_minute_players_percentile")),
+                as_float(row.get("cbb_transfer_minutes_weighted_per_percentile")),
+                as_float(row.get("cbb_transfer_minutes_weighted_net_rating_percentile")),
+                as_float(row.get("cbb_transfer_minutes_weighted_source_adj_em_percentile")),
+            )
+
+
+def average_existing(*values: float | None) -> float | None:
+    observed = [value for value in values if value is not None]
+    if not observed:
+        return None
+    return sum(observed) / len(observed)
