@@ -149,26 +149,55 @@ def wvu_home_upset_pct(
     return round((1 - wvu_win_probability) * 100, 1)
 
 
+def wvu_risk_bucket(upset_pct: Any) -> str:
+    parsed = as_float(upset_pct)
+    if parsed is None:
+        return "unknown"
+    if parsed >= 12:
+        return "very_high"
+    if parsed >= 8:
+        return "high"
+    if parsed >= 5:
+        return "medium"
+    if parsed >= 3:
+        return "low"
+    return "very_low"
+
+
+def risk_sort_value(bucket: Any) -> int:
+    return {
+        "very_low": 1,
+        "low": 2,
+        "medium": 3,
+        "high": 4,
+        "very_high": 5,
+    }.get(str(bucket or ""), 0)
+
+
 def slim_risk_row(
     row: dict[str, str],
     projections_by_team: dict[str, dict[str, Any]],
     host_row: dict[str, Any] | None,
 ) -> dict[str, Any]:
+    upset_pct = wvu_home_upset_pct(row, projections_by_team, host_row)
+    risk_bucket = wvu_risk_bucket(upset_pct)
     return {
         "team": row.get("team"),
         "projected_coach": row.get("projected_coach"),
         "conference": row.get("conference"),
         "tier": row.get("opponent_quality_tier"),
         "program_band": row.get("program_consistency_band"),
-        "upset_pct": wvu_home_upset_pct(row, projections_by_team, host_row),
-        "median_hm_upset_pct": pct(row.get("upset_probability_vs_median_high_major")),
-        "risk_bucket": row.get("risk_bucket"),
+        "upset_pct": upset_pct,
+        "hm_upset_model_pct": pct(row.get("upset_probability_vs_median_high_major")),
+        "risk_bucket": risk_bucket,
+        "risk_sort": risk_sort_value(risk_bucket),
         "recommendation": row.get("recommendation"),
         "safe_value_score": compact_float(row.get("safe_value_score"), 2),
         "danger_index": compact_float(row.get("danger_index"), 4),
         "schedule_score": compact_float(row.get("schedule_score_rank"), 1),
         "added_wab": added_wab_proxy(row.get("schedule_score_rank")),
         "coach_guarantee_games": compact_float(row.get("away_coach_hm_guarantee_games"), 0),
+        "has_coach_guarantee_history": (as_float(row.get("away_coach_hm_guarantee_games")) or 0) > 0,
         "coach_guarantee_upset_rate": pct(row.get("away_coach_hm_guarantee_upset_rate")),
         "coach_guarantee_close_rate": pct(row.get("away_coach_hm_guarantee_close_rate")),
         "coach_guarantee_avg_margin_over_expected": compact_float(
@@ -287,9 +316,10 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         None,
     )
     projections_by_team = {canonical_team_name(row.get("team")): row for row in planner_rows}
+    slimmed_risk_rows = [slim_risk_row(row, projections_by_team, host_row) for row in risk_rows]
 
-    recommendations = Counter(row.get("recommendation") for row in risk_rows)
-    risk_buckets = Counter(row.get("risk_bucket") for row in risk_rows)
+    recommendations = Counter(row.get("recommendation") for row in slimmed_risk_rows)
+    risk_buckets = Counter(row.get("risk_bucket") for row in slimmed_risk_rows)
     tiers = Counter(row.get("opponent_quality_tier") for row in risk_rows)
     avg_auc_values = [as_float(row.get("auc")) for row in metric_rows if as_float(row.get("auc")) is not None]
     avg_auc = sum(avg_auc_values) / len(avg_auc_values) if avg_auc_values else None
@@ -319,7 +349,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         "recommendation_counts": dict(sorted(recommendations.items())),
         "risk_bucket_counts": dict(sorted(risk_buckets.items())),
         "tier_counts": dict(sorted(tiers.items())),
-        "risk_rows": [slim_risk_row(row, projections_by_team, host_row) for row in risk_rows],
+        "risk_rows": slimmed_risk_rows,
         "planner": {
             "host": args.planner_host,
             "model": args.planner_model,
@@ -778,7 +808,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <option value="team:asc">Team A-Z</option>
           <option value="conference:asc">Conference A-Z</option>
           <option value="tier:asc">Tier A-Z</option>
-          <option value="risk_bucket:desc">Risk high-low</option>
+          <option value="risk_sort:desc">Risk high-low</option>
           <option value="recommendation:asc">Recommendation A-Z</option>
           <option value="coach_pest_index:desc">Coach pest high-low</option>
           <option value="coach_guarantee_avg_margin_over_expected:desc">Coach vs HM over expected high-low</option>
@@ -798,7 +828,8 @@ def dashboard_html(payload: dict[str, Any]) -> str:
               <th data-key="conference">Conf</th>
               <th data-key="tier">Tier</th>
               <th data-key="upset_pct">WVU Upset %</th>
-              <th data-key="risk_bucket">Risk</th>
+              <th data-key="risk_sort">Risk</th>
+              <th data-key="hm_upset_model_pct">HM Model %</th>
               <th data-key="recommendation">Recommendation</th>
               <th data-key="safe_value_score">Safe Value</th>
               <th data-key="added_wab">Added WAB</th>
@@ -870,7 +901,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       </div>
     </section>
     <footer>
-      Added WAB and planner NCSOS are schedule-value proxies, not official WAB or official NCAA/KenPom NCSOS. WVU Upset % estimates the opponent's win probability in a road game at West Virginia. Coach Pest reflects a coach's prior low/mid-major road guarantee-game results against high-major hosts.
+      Added WAB and planner NCSOS are schedule-value proxies, not official WAB or official NCAA/KenPom NCSOS. Risk is bucketed from WVU Upset %. HM Model % is the generic median-high-major upset model. Coach Pest reflects a coach's prior low/mid-major road guarantee-game results against high-major hosts.
     </footer>
   </main>
   <script>
@@ -884,6 +915,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     const pctFmt = new Intl.NumberFormat(undefined, {{ maximumFractionDigits: 1 }});
 
     function text(value) {{ return value === null || value === undefined || value === "" ? "—" : value; }}
+    function pctText(value) {{ return value === null || value === undefined || value === "" ? "—" : `${{text(value)}}%`; }}
     function escapeHtml(value) {{
       return String(value ?? "").replace(/[&<>"']/g, char => ({{
         "&": "&amp;",
@@ -1003,13 +1035,14 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <td><span class="pill tier-chip tier-${{cls(row.tier)}}">${{tierLabel(row.tier)}}</span></td>
           <td class="num"><strong>${{text(row.upset_pct)}}%</strong></td>
           <td><span class="${{cls(row.risk_bucket)}}">${{text(row.risk_bucket).replaceAll("_", " ")}}</span></td>
+          <td class="num">${{text(row.hm_upset_model_pct)}}%</td>
           <td><span class="pill ${{cls(row.recommendation)}}">${{text(row.recommendation).replaceAll("_", " ")}}</span></td>
           <td class="num">${{text(row.safe_value_score)}}</td>
           <td class="num">${{text(row.added_wab)}}</td>
           <td class="num">${{text(row.coach_pest_index)}}</td>
           <td class="num">${{text(row.coach_guarantee_games)}}</td>
-          <td class="num">${{row.coach_guarantee_upset_rate == null ? "No prior" : `${{text(row.coach_guarantee_upset_rate)}}%`}}</td>
-          <td class="num">${{row.coach_guarantee_close_rate == null ? "No prior" : `${{text(row.coach_guarantee_close_rate)}}%`}}</td>
+          <td class="num">${{pctText(row.coach_guarantee_upset_rate)}}</td>
+          <td class="num">${{pctText(row.coach_guarantee_close_rate)}}</td>
           <td class="num">${{text(row.coach_guarantee_avg_margin_over_expected)}}</td>
           <td class="num">${{text(row.three_rate)}}</td>
           <td class="num">${{text(row.experience)}}</td>
