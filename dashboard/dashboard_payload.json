@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-04-22T00:48:49-04:00",
+  "generated_at": "2026-04-22T04:53:25+00:00",
   "source_files": {
-    "risk_board_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
-    "metrics_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
-    "coefficients_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/upset_risk/model_coefficients.csv",
-    "schedule_predictions_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/predictions/current_2027_schedule_predictions.csv",
-    "kenpom_ratings_json": "/Users/sm00249/Documents/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
+    "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
+    "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
+    "coefficients_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/model_coefficients.csv",
+    "schedule_predictions_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/predictions/current_2027_schedule_predictions.csv",
+    "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "summary": {
     "candidate_count": 286,
@@ -8740,7 +8740,7 @@
         "schedule_score": 249.6,
         "schedule_percentile": null,
         "added_wab": 0.065,
-        "projected_adj_em": -7.15,
+        "projected_adj_em": -7.16,
         "wab_adj_em": -5.04,
         "is_placeholder": true
       },
@@ -13252,7 +13252,7 @@
         "schedule_score": 249.6,
         "schedule_percentile": null,
         "added_wab": 0.065,
-        "projected_adj_em": -7.15,
+        "projected_adj_em": -7.16,
         "wab_adj_em": -5.04,
         "is_placeholder": true
       },
