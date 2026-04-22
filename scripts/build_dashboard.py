@@ -849,14 +849,6 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       <h2>Opponent Board</h2>
       <div class="controls">
         <input id="search" type="search" placeholder="Search team or conference">
-        <details class="filter" id="conferenceFilter">
-          <summary data-label="Conferences">Conferences</summary>
-          <div class="filter-menu" id="conferenceOptions"></div>
-        </details>
-        <details class="filter" id="recommendationFilter">
-          <summary data-label="Recommendations">Recommendations</summary>
-          <div class="filter-menu" id="recommendationOptions"></div>
-        </details>
         <details class="filter" id="tierFilter">
           <summary data-label="Tiers">Tiers</summary>
           <div class="filter-menu" id="tierOptions"></div>
@@ -864,6 +856,14 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         <details class="filter" id="riskFilter">
           <summary data-label="Risk Buckets">Risk Buckets</summary>
           <div class="filter-menu" id="riskOptions"></div>
+        </details>
+        <details class="filter" id="recommendationFilter">
+          <summary data-label="Recommendations">Recommendations</summary>
+          <div class="filter-menu" id="recommendationOptions"></div>
+        </details>
+        <details class="filter" id="conferenceFilter">
+          <summary data-label="Conferences">Conferences</summary>
+          <div class="filter-menu" id="conferenceOptions"></div>
         </details>
         <select id="sort">
           <option value="added_wab:desc">Added WAB high-low</option>
@@ -885,7 +885,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <thead>
             <tr>
               <th data-key="team">Team</th>
-              <th data-key="projected_coach">Coach</th>
+              <th data-key="coach_lift">Coach</th>
               <th data-key="conference">Conf</th>
               <th data-key="tier">Tier</th>
               <th data-key="upset_pct">Upset %</th>
@@ -967,6 +967,9 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     const fmt = new Intl.NumberFormat(undefined, {{ maximumFractionDigits: 1 }});
     const fmt2 = new Intl.NumberFormat(undefined, {{ maximumFractionDigits: 2 }});
     const pctFmt = new Intl.NumberFormat(undefined, {{ maximumFractionDigits: 1 }});
+    const tierOrder = ["top_25", "26_50", "51_75", "76_100", "101_135", "136_160", "161_200", "201_250", "251_300", "301_plus"];
+    const riskOrder = ["very_high", "high", "medium", "low", "very_low"];
+    const recommendationOrder = ["strong_target", "good_target", "monitor", "avoid_unless_needed", "avoid_bad_risk_reward", "low_value"];
 
     function text(value) {{ return value === null || value === undefined || value === "" ? "—" : value; }}
     function pctText(value) {{ return value === null || value === undefined || value === "" ? "—" : `${{text(value)}}%`; }}
@@ -1027,6 +1030,18 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       return [...new Set(values.filter(Boolean))].sort((a, b) => String(a).localeCompare(String(b)));
     }}
 
+    function orderedUnique(values, order = null) {{
+      const unique = uniqueSorted(values);
+      if (!order) return unique;
+      const rank = new Map(order.map((value, index) => [value, index]));
+      return unique.sort((a, b) => {{
+        const left = rank.has(a) ? rank.get(a) : 999;
+        const right = rank.has(b) ? rank.get(b) : 999;
+        if (left !== right) return left - right;
+        return String(a).localeCompare(String(b));
+      }});
+    }}
+
     function selectedValues(name) {{
       return new Set([...document.querySelectorAll(`input[name="${{name}}"]:checked`)].map(input => input.value));
     }}
@@ -1039,9 +1054,9 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       summary.firstChild.nodeValue = count ? `${{label}} (${{count}})` : label;
     }}
 
-    function populateFilter(name, optionsId, detailsId, values, formatter = displayValue) {{
+    function populateFilter(name, optionsId, detailsId, values, formatter = displayValue, order = null) {{
       const container = document.getElementById(optionsId);
-      container.innerHTML = uniqueSorted(values).map(value => `
+      container.innerHTML = orderedUnique(values, order).map(value => `
         <label class="filter-option">
           <input type="checkbox" name="${{name}}" value="${{value}}">
           <span>${{formatter(value)}}</span>
@@ -1351,10 +1366,10 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       document.querySelectorAll(".tab-button").forEach(button => {{
         button.addEventListener("click", () => setActiveTab(button.dataset.tab));
       }});
+      populateFilter("tier", "tierOptions", "tierFilter", payload.risk_rows.map(row => row.tier), tierLabel, tierOrder);
+      populateFilter("risk", "riskOptions", "riskFilter", payload.risk_rows.map(row => row.risk_bucket), displayValue, riskOrder);
+      populateFilter("recommendation", "recommendationOptions", "recommendationFilter", payload.risk_rows.map(row => row.recommendation), displayValue, recommendationOrder);
       populateFilter("conference", "conferenceOptions", "conferenceFilter", payload.risk_rows.map(row => row.conference), value => value);
-      populateFilter("recommendation", "recommendationOptions", "recommendationFilter", payload.risk_rows.map(row => row.recommendation));
-      populateFilter("tier", "tierOptions", "tierFilter", payload.risk_rows.map(row => row.tier), tierLabel);
-      populateFilter("risk", "riskOptions", "riskFilter", payload.risk_rows.map(row => row.risk_bucket));
       ["search", "sort"].forEach(id => {{
         document.getElementById(id).addEventListener("input", () => {{
           if (id === "sort") {{
