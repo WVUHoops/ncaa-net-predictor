@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import subprocess
 import sys
 from pathlib import Path
@@ -43,6 +44,26 @@ def existing_upset_risk_board() -> bool:
         / "upset_risk"
         / "current_2027_guarantee_risk_board.csv"
     ).exists()
+
+
+def upset_risk_board_has_coach_history() -> bool:
+    path = (
+        PROJECT_ROOT
+        / "data"
+        / "processed"
+        / "upset_risk"
+        / "current_2027_guarantee_risk_board.csv"
+    )
+    if not path.exists():
+        return False
+    with path.open("r", encoding="utf-8", newline="") as file:
+        rows = list(csv.DictReader(file))
+    if not rows:
+        return False
+    return any(
+        row.get("away_coach_hm_guarantee_upset_rate") not in (None, "")
+        for row in rows
+    )
 
 
 def parse_args() -> argparse.Namespace:
@@ -114,12 +135,19 @@ def main() -> int:
     elif can_rebuild_upset_risk():
         run_step(["python3", "scripts/build_upset_risk.py"])
     elif existing_upset_risk_board():
+        if not upset_risk_board_has_coach_history():
+            raise RuntimeError(
+                "existing upset-risk board is missing coach guarantee history; "
+                "cannot safely deploy dashboard"
+            )
         print(
             "warning: hoopR schedule master is missing; reusing existing upset-risk board",
             file=sys.stderr,
         )
     else:
         run_step(["python3", "scripts/build_upset_risk.py"])
+    if not upset_risk_board_has_coach_history():
+        raise RuntimeError("upset-risk board has no coach guarantee history")
     run_step(["python3", "scripts/build_dashboard.py"])
     return 0
 

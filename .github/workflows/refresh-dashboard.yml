@@ -52,9 +52,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: data
-          key: ncaa-net-data-${{ runner.os }}-${{ github.run_id }}
+          key: ncaa-net-data-v2-${{ runner.os }}-${{ github.run_id }}
           restore-keys: |
-            ncaa-net-data-${{ runner.os }}-
+            ncaa-net-data-v2-${{ runner.os }}-
 
       - name: Ensure output directories exist
         run: |
