@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-22T21:34:20+00:00",
+  "generated_at": "2026-04-23T16:20:37+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -6934,7 +6934,7 @@
         "schedule_score": 80.5,
         "schedule_percentile": null,
         "added_wab": 0.562,
-        "projected_adj_em": 10.27,
+        "projected_adj_em": 10.28,
         "wab_adj_em": 28.64,
         "is_placeholder": true
       },
@@ -6947,7 +6947,7 @@
         "schedule_score": 94.6,
         "schedule_percentile": null,
         "added_wab": 0.502,
-        "projected_adj_em": 8.03,
+        "projected_adj_em": 8.02,
         "wab_adj_em": 18.88,
         "is_placeholder": true
       },
@@ -7212,18 +7212,6 @@
         "wab_adj_em": 18.88
       },
       {
-        "team": "TCU",
-        "team_key": "tcu",
-        "conference": "B12",
-        "tier": "26_50",
-        "program_band": "26_50",
-        "schedule_score": 80.4,
-        "schedule_percentile": 0.782,
-        "added_wab": 0.563,
-        "projected_adj_em": 10.39,
-        "wab_adj_em": 18.88
-      },
-      {
         "team": "Duke",
         "team_key": "duke",
         "conference": "ACC",
@@ -7234,6 +7222,18 @@
         "added_wab": 0.562,
         "projected_adj_em": 10.36,
         "wab_adj_em": 28.64
+      },
+      {
+        "team": "TCU",
+        "team_key": "tcu",
+        "conference": "B12",
+        "tier": "26_50",
+        "program_band": "26_50",
+        "schedule_score": 80.7,
+        "schedule_percentile": 0.781,
+        "added_wab": 0.561,
+        "projected_adj_em": 10.24,
+        "wab_adj_em": 18.88
       },
       {
         "team": "Utah St.",
@@ -7361,9 +7361,9 @@
         "conference": "B12",
         "tier": "top_25",
         "program_band": "top_25",
-        "schedule_score": 91.8,
-        "schedule_percentile": 0.751,
-        "added_wab": 0.514,
+        "schedule_score": 92.0,
+        "schedule_percentile": 0.75,
+        "added_wab": 0.513,
         "projected_adj_em": 8.56,
         "wab_adj_em": 28.64
       },
@@ -7416,6 +7416,18 @@
         "wab_adj_em": 18.88
       },
       {
+        "team": "Wisconsin",
+        "team_key": "wisconsin",
+        "conference": "B10",
+        "tier": "top_25",
+        "program_band": "top_25",
+        "schedule_score": 94.5,
+        "schedule_percentile": 0.743,
+        "added_wab": 0.502,
+        "projected_adj_em": 7.8,
+        "wab_adj_em": 28.64
+      },
+      {
         "team": "Georgia",
         "team_key": "georgia",
         "conference": "SEC",
@@ -7426,18 +7438,6 @@
         "added_wab": 0.501,
         "projected_adj_em": 7.74,
         "wab_adj_em": 13.04
-      },
-      {
-        "team": "Wisconsin",
-        "team_key": "wisconsin",
-        "conference": "B10",
-        "tier": "top_25",
-        "program_band": "top_25",
-        "schedule_score": 95.5,
-        "schedule_percentile": 0.74,
-        "added_wab": 0.498,
-        "projected_adj_em": 7.61,
-        "wab_adj_em": 28.64
       },
       {
         "team": "Virginia Tech",
@@ -7469,10 +7469,10 @@
         "conference": "SEC",
         "tier": "26_50",
         "program_band": "26_50",
-        "schedule_score": 96.8,
+        "schedule_score": 96.9,
         "schedule_percentile": 0.737,
         "added_wab": 0.492,
-        "projected_adj_em": 7.41,
+        "projected_adj_em": 7.4,
         "wab_adj_em": 18.88
       },
       {
@@ -7577,9 +7577,9 @@
         "conference": "B10",
         "tier": "76_100",
         "program_band": "76_100",
-        "schedule_score": 106.5,
+        "schedule_score": 106.7,
         "schedule_percentile": 0.71,
-        "added_wab": 0.451,
+        "added_wab": 0.45,
         "projected_adj_em": 5.71,
         "wab_adj_em": 9.08
       },
@@ -7841,10 +7841,10 @@
         "conference": "B12",
         "tier": "76_100",
         "program_band": "76_100",
-        "schedule_score": 125.0,
+        "schedule_score": 125.2,
         "schedule_percentile": 0.659,
-        "added_wab": 0.374,
-        "projected_adj_em": 3.66,
+        "added_wab": 0.373,
+        "projected_adj_em": 3.65,
         "wab_adj_em": 9.08
       },
       {
@@ -11446,7 +11446,7 @@
         "schedule_score": 80.5,
         "schedule_percentile": null,
         "added_wab": 0.562,
-        "projected_adj_em": 10.27,
+        "projected_adj_em": 10.28,
         "wab_adj_em": 28.64,
         "is_placeholder": true
       },
@@ -11459,7 +11459,7 @@
         "schedule_score": 94.6,
         "schedule_percentile": null,
         "added_wab": 0.502,
-        "projected_adj_em": 8.03,
+        "projected_adj_em": 8.02,
         "wab_adj_em": 18.88,
         "is_placeholder": true
       },
