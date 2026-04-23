@@ -94,6 +94,7 @@ jobs:
             echo "No dashboard changes to commit."
           else
             git commit -m "Refresh NCAA NET dashboard"
+            git reset --hard HEAD
             git fetch origin main
             git rebase origin/main
             git push origin HEAD:main || (
