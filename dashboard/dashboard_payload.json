@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-24T14:56:00+00:00",
+  "generated_at": "2026-04-25T11:58:28+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -6931,7 +6931,7 @@
         "conference": "Tier",
         "tier": "top_25",
         "program_band": "top_25",
-        "schedule_score": 80.5,
+        "schedule_score": 80.6,
         "schedule_percentile": null,
         "added_wab": 0.562,
         "projected_adj_em": 10.27,
@@ -6957,7 +6957,7 @@
         "conference": "Tier",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 117.0,
+        "schedule_score": 117.1,
         "schedule_percentile": null,
         "added_wab": 0.406,
         "projected_adj_em": 4.76,
@@ -7085,10 +7085,10 @@
         "conference": "B10",
         "tier": "top_25",
         "program_band": "top_25",
-        "schedule_score": 67.1,
+        "schedule_score": 67.4,
         "schedule_percentile": 0.818,
-        "added_wab": 0.618,
-        "projected_adj_em": 12.16,
+        "added_wab": 0.617,
+        "projected_adj_em": 12.15,
         "wab_adj_em": 28.64
       },
       {
@@ -7313,10 +7313,10 @@
         "conference": "SEC",
         "tier": "top_25",
         "program_band": "top_25",
-        "schedule_score": 88.5,
-        "schedule_percentile": 0.76,
-        "added_wab": 0.528,
-        "projected_adj_em": 9.14,
+        "schedule_score": 88.7,
+        "schedule_percentile": 0.759,
+        "added_wab": 0.527,
+        "projected_adj_em": 9.12,
         "wab_adj_em": 28.64
       },
       {
@@ -7344,6 +7344,18 @@
         "wab_adj_em": 18.88
       },
       {
+        "team": "Kentucky",
+        "team_key": "kentucky",
+        "conference": "SEC",
+        "tier": "26_50",
+        "program_band": "26_50",
+        "schedule_score": 90.9,
+        "schedule_percentile": 0.753,
+        "added_wab": 0.518,
+        "projected_adj_em": 8.58,
+        "wab_adj_em": 18.88
+      },
+      {
         "team": "Ohio St.",
         "team_key": "ohio state",
         "conference": "B10",
@@ -7366,18 +7378,6 @@
         "added_wab": 0.513,
         "projected_adj_em": 8.56,
         "wab_adj_em": 28.64
-      },
-      {
-        "team": "Kentucky",
-        "team_key": "kentucky",
-        "conference": "SEC",
-        "tier": "26_50",
-        "program_band": "26_50",
-        "schedule_score": 92.2,
-        "schedule_percentile": 0.749,
-        "added_wab": 0.512,
-        "projected_adj_em": 8.54,
-        "wab_adj_em": 18.88
       },
       {
         "team": "Nevada",
@@ -7476,18 +7476,6 @@
         "wab_adj_em": 18.88
       },
       {
-        "team": "Kansas",
-        "team_key": "kansas",
-        "conference": "B12",
-        "tier": "top_25",
-        "program_band": "top_25",
-        "schedule_score": 97.6,
-        "schedule_percentile": 0.735,
-        "added_wab": 0.489,
-        "projected_adj_em": 7.3,
-        "wab_adj_em": 28.64
-      },
-      {
         "team": "Dayton",
         "team_key": "dayton",
         "conference": "A10",
@@ -7510,6 +7498,18 @@
         "added_wab": 0.488,
         "projected_adj_em": 7.26,
         "wab_adj_em": 18.88
+      },
+      {
+        "team": "Kansas",
+        "team_key": "kansas",
+        "conference": "B12",
+        "tier": "top_25",
+        "program_band": "top_25",
+        "schedule_score": 98.0,
+        "schedule_percentile": 0.733,
+        "added_wab": 0.487,
+        "projected_adj_em": 7.23,
+        "wab_adj_em": 28.64
       },
       {
         "team": "Creighton",
@@ -7613,9 +7613,9 @@
         "conference": "B10",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 109.1,
+        "schedule_score": 109.2,
         "schedule_percentile": 0.703,
-        "added_wab": 0.44,
+        "added_wab": 0.439,
         "projected_adj_em": 5.45,
         "wab_adj_em": 13.04
       },
@@ -7793,9 +7793,9 @@
         "conference": "ACC",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 120.4,
-        "schedule_percentile": 0.672,
-        "added_wab": 0.392,
+        "schedule_score": 120.6,
+        "schedule_percentile": 0.671,
+        "added_wab": 0.391,
         "projected_adj_em": 4.31,
         "wab_adj_em": 13.04
       },
@@ -8009,10 +8009,10 @@
         "conference": "ACC",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 133.5,
-        "schedule_percentile": 0.636,
-        "added_wab": 0.34,
-        "projected_adj_em": 2.76,
+        "schedule_score": 133.8,
+        "schedule_percentile": 0.635,
+        "added_wab": 0.339,
+        "projected_adj_em": 2.74,
         "wab_adj_em": 13.04
       },
       {
@@ -8057,10 +8057,10 @@
         "conference": "BE",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 137.8,
+        "schedule_score": 137.9,
         "schedule_percentile": 0.624,
-        "added_wab": 0.324,
-        "projected_adj_em": 2.38,
+        "added_wab": 0.323,
+        "projected_adj_em": 2.37,
         "wab_adj_em": 13.04
       },
       {
@@ -11443,7 +11443,7 @@
         "conference": "Tier",
         "tier": "top_25",
         "program_band": "top_25",
-        "schedule_score": 80.5,
+        "schedule_score": 80.6,
         "schedule_percentile": null,
         "added_wab": 0.562,
         "projected_adj_em": 10.27,
@@ -11469,7 +11469,7 @@
         "conference": "Tier",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 117.0,
+        "schedule_score": 117.1,
         "schedule_percentile": null,
         "added_wab": 0.406,
         "projected_adj_em": 4.76,
