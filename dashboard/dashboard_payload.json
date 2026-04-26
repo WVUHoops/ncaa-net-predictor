@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-25T11:58:28+00:00",
+  "generated_at": "2026-04-26T12:00:35+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -6970,7 +6970,7 @@
         "conference": "Tier",
         "tier": "76_100",
         "program_band": "76_100",
-        "schedule_score": 131.6,
+        "schedule_score": 131.7,
         "schedule_percentile": null,
         "added_wab": 0.347,
         "projected_adj_em": 3.07,
@@ -7392,18 +7392,6 @@
         "wab_adj_em": 13.04
       },
       {
-        "team": "Miami FL",
-        "team_key": "miami fl",
-        "conference": "ACC",
-        "tier": "26_50",
-        "program_band": "26_50",
-        "schedule_score": 94.2,
-        "schedule_percentile": 0.744,
-        "added_wab": 0.503,
-        "projected_adj_em": 7.86,
-        "wab_adj_em": 18.88
-      },
-      {
         "team": "Auburn",
         "team_key": "auburn",
         "conference": "SEC",
@@ -7413,6 +7401,18 @@
         "schedule_percentile": 0.744,
         "added_wab": 0.503,
         "projected_adj_em": 7.85,
+        "wab_adj_em": 18.88
+      },
+      {
+        "team": "Miami FL",
+        "team_key": "miami fl",
+        "conference": "ACC",
+        "tier": "26_50",
+        "program_band": "26_50",
+        "schedule_score": 94.4,
+        "schedule_percentile": 0.743,
+        "added_wab": 0.503,
+        "projected_adj_em": 7.83,
         "wab_adj_em": 18.88
       },
       {
@@ -7553,10 +7553,10 @@
         "conference": "SEC",
         "tier": "26_50",
         "program_band": "26_50",
-        "schedule_score": 104.5,
-        "schedule_percentile": 0.716,
-        "added_wab": 0.459,
-        "projected_adj_em": 6.23,
+        "schedule_score": 104.7,
+        "schedule_percentile": 0.715,
+        "added_wab": 0.458,
+        "projected_adj_em": 6.17,
         "wab_adj_em": 18.88
       },
       {
@@ -7793,10 +7793,10 @@
         "conference": "ACC",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 120.6,
+        "schedule_score": 120.7,
         "schedule_percentile": 0.671,
         "added_wab": 0.391,
-        "projected_adj_em": 4.31,
+        "projected_adj_em": 4.3,
         "wab_adj_em": 13.04
       },
       {
@@ -7896,18 +7896,6 @@
         "wab_adj_em": 9.08
       },
       {
-        "team": "Oregon",
-        "team_key": "oregon",
-        "conference": "B10",
-        "tier": "76_100",
-        "program_band": "101_135",
-        "schedule_score": 128.5,
-        "schedule_percentile": 0.65,
-        "added_wab": 0.36,
-        "projected_adj_em": 3.42,
-        "wab_adj_em": 9.08
-      },
-      {
         "team": "Notre Dame",
         "team_key": "notre dame",
         "conference": "ACC",
@@ -7917,6 +7905,18 @@
         "schedule_percentile": 0.65,
         "added_wab": 0.359,
         "projected_adj_em": 3.41,
+        "wab_adj_em": 9.08
+      },
+      {
+        "team": "Oregon",
+        "team_key": "oregon",
+        "conference": "B10",
+        "tier": "76_100",
+        "program_band": "101_135",
+        "schedule_score": 128.7,
+        "schedule_percentile": 0.649,
+        "added_wab": 0.359,
+        "projected_adj_em": 3.36,
         "wab_adj_em": 9.08
       },
       {
@@ -11482,7 +11482,7 @@
         "conference": "Tier",
         "tier": "76_100",
         "program_band": "76_100",
-        "schedule_score": 131.6,
+        "schedule_score": 131.7,
         "schedule_percentile": null,
         "added_wab": 0.347,
         "projected_adj_em": 3.07,
