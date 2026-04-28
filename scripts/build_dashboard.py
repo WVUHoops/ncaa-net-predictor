@@ -329,6 +329,10 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         PROJECT_ROOT / "data" / "raw" / "on3" / "transfer" / "2026",
         "on3_transfer_2026_*.json",
     )
+    cbb_player_snapshot = latest_dated_snapshot(
+        PROJECT_ROOT / "data" / "raw" / "cbb_analytics" / "v1" / "player-agg-box",
+        "stats_player_agg_box_competition_41097_v1_*.json",
+    )
     schedule_rows = [
         row
         for row in read_csv(args.schedule_predictions_csv)
@@ -391,6 +395,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         "input_status": {
             "on3_hs_snapshot": on3_hs_snapshot,
             "on3_transfer_snapshot": on3_transfer_snapshot,
+            "cbb_player_snapshot": cbb_player_snapshot,
         },
         "summary": {
             "candidate_count": len(risk_rows),
@@ -1145,11 +1150,14 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       document.getElementById("updated").textContent = `Updated ${{new Date(payload.generated_at).toLocaleString()}}`;
       const hs = payload.input_status?.on3_hs_snapshot;
       const portal = payload.input_status?.on3_transfer_snapshot;
+      const cbb = payload.input_status?.cbb_player_snapshot;
       const recruiting = document.getElementById("recruitingFreshness");
-      const parts = [];
-      if (hs) parts.push(`HS ${{hs}}`);
-      if (portal) parts.push(`Portal ${{portal}}`);
-      recruiting.textContent = parts.length ? `Recruiting data: ${{parts.join(" | ")}}` : "Recruiting data: cached";
+      const dates = [hs, portal, cbb].filter(Boolean).sort();
+      if (!dates.length) {{
+        recruiting.textContent = "Recruiting data: cached";
+      }} else {{
+        recruiting.textContent = `Recruiting data: ${{dates[0]}}`;
+      }}
     }}
 
     function setSort(key, dir) {{

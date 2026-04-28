@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-28T14:07:04-04:00",
+  "generated_at": "2026-04-28T14:18:58-04:00",
   "source_files": {
     "risk_board_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -9,7 +9,8 @@
   },
   "input_status": {
     "on3_hs_snapshot": "2026-04-22",
-    "on3_transfer_snapshot": "2026-04-22"
+    "on3_transfer_snapshot": "2026-04-22",
+    "cbb_player_snapshot": "2026-04-13"
   },
   "summary": {
     "candidate_count": 286,

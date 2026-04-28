@@ -82,6 +82,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--skip-roster-status", action="store_true")
     parser.add_argument("--skip-upset-risk", action="store_true")
     parser.add_argument("--on3-year", type=int, default=2026)
+    parser.add_argument(
+        "--current-cbb-competition-id",
+        type=int,
+        default=41097,
+        help="CBB Analytics competition ID for the current men's D-I season player aggregate snapshot.",
+    )
     return parser.parse_args()
 
 
@@ -107,6 +113,19 @@ def main() -> int:
                 "transfer",
                 "--year",
                 str(args.on3_year),
+            ],
+            required=False,
+        )
+        run_step(
+            [
+                "python3",
+                "scripts/fetch_cbb_analytics.py",
+                "--endpoint",
+                "player-agg-box",
+                "--competition-ids",
+                str(args.current_cbb_competition_id),
+                "--splits",
+                "season",
             ],
             required=False,
         )
