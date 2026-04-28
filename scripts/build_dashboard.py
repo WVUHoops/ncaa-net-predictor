@@ -10,6 +10,7 @@ from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+import re
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +32,15 @@ def read_json(path: Path) -> list[dict[str, Any]]:
     if not isinstance(data, list):
         return []
     return [row for row in data if isinstance(row, dict)]
+
+
+def latest_dated_snapshot(directory: Path, pattern: str) -> str | None:
+    candidates = sorted(directory.glob(pattern))
+    if not candidates:
+        return None
+    latest = candidates[-1]
+    match = re.search(r"(\d{4}-\d{2}-\d{2})", latest.name)
+    return match.group(1) if match else None
 
 
 def as_float(value: Any) -> float | None:
@@ -311,6 +321,14 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         [value for value in (as_float(row.get("NCSOS")) for row in rating_rows) if value is not None],
         reverse=True,
     )
+    on3_hs_snapshot = latest_dated_snapshot(
+        PROJECT_ROOT / "data" / "raw" / "on3" / "hs" / "2026",
+        "on3_hs_2026_*.json",
+    )
+    on3_transfer_snapshot = latest_dated_snapshot(
+        PROJECT_ROOT / "data" / "raw" / "on3" / "transfer" / "2026",
+        "on3_transfer_2026_*.json",
+    )
     schedule_rows = [
         row
         for row in read_csv(args.schedule_predictions_csv)
@@ -369,6 +387,10 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
             "coefficients_csv": str(args.coefficients_csv),
             "schedule_predictions_csv": str(args.schedule_predictions_csv),
             "kenpom_ratings_json": str(args.kenpom_ratings_json),
+        },
+        "input_status": {
+            "on3_hs_snapshot": on3_hs_snapshot,
+            "on3_transfer_snapshot": on3_transfer_snapshot,
         },
         "summary": {
             "candidate_count": len(risk_rows),
@@ -494,6 +516,22 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       font-size: 13px;
       white-space: nowrap;
     }}
+    .header-side {{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: auto;
+    }}
+    .badge-stack {{
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }}
+    .badge.subtle {{
+      border-color: rgba(157, 218, 230, 0.7);
+      background: rgba(157, 218, 230, 0.14);
+    }}
     .tabs {{
       display: flex;
       gap: 8px;
@@ -518,13 +556,20 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     }}
     .tab-panel {{ display: none; }}
     .tab-panel.active {{ display: block; }}
-    .hero-mark {{
-      width: 90px;
-      height: 54px;
-      object-fit: cover;
+    .hero-mark-frame {{
+      width: 64px;
+      height: 64px;
+      overflow: hidden;
       border-radius: 8px;
       border: 1px solid rgba(234, 170, 0, 0.75);
       background: #001f42;
+    }}
+    .hero-mark {{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }}
     .summary {{
       display: grid;
@@ -851,7 +896,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       .controls {{ grid-template-columns: 1fr; }}
       .planner-shell {{ grid-template-columns: 1fr; }}
       .grid-two {{ grid-template-columns: 1fr; }}
-      .hero-mark {{ display: none; }}
+      .hero-mark-frame {{ display: none; }}
     }}
   </style>
 </head>
@@ -859,11 +904,17 @@ def dashboard_html(payload: dict[str, Any]) -> str:
   <header>
     <div class="topline">
       <div>
-        <h1>Schedule Builder</h1>
-        <p>Opponent value, guarantee-game upset risk, and current portal-sensitive tiers.</p>
+        <h1>WVU Basketball Scheduling App</h1>
       </div>
-      <img class="hero-mark" alt="WVU Flying WV" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='108' viewBox='0 0 180 108'%3E%3Crect width='180' height='108' fill='%23002855'/%3E%3Crect x='34' y='18' width='112' height='54' rx='10' fill='none' stroke='%23EAAA00' stroke-width='2'/%3E%3Cg fill='%23EAAA00'%3E%3Cpath d='M44 30h14l8 27 10-27h13l-15 39H58L44 30Z'/%3E%3Cpath d='M84 69l11-39h14l-6 20 7 19-11 10-7-10-8-19Z'/%3E%3Cpath d='M106 30h13l10 27 8-27h14l-14 39h-16L106 30Z'/%3E%3C/g%3E%3Cg fill='%23002855'%3E%3Cpath d='M91 32h8l-5 18 7 19-6 6-8-6 7-19-3-18Z'/%3E%3C/g%3E%3C/svg%3E">
-      <span class="badge" id="updated"></span>
+      <div class="header-side">
+        <span class="hero-mark-frame">
+          <img class="hero-mark" alt="WVU Mountaineer" src="assets/mountaineer_face.png">
+        </span>
+        <div class="badge-stack">
+          <span class="badge" id="updated"></span>
+          <span class="badge subtle" id="recruitingFreshness"></span>
+        </div>
+      </div>
     </div>
   </header>
   <main>
@@ -872,7 +923,6 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       <button class="tab-button" type="button" data-tab="schedulePlanner">WVU Schedule Planner</button>
     </nav>
     <section id="opponentBoard" class="tab-panel active">
-      <h2>Guarantee Game Target Board</h2>
       <div class="controls">
         <input id="search" type="search" placeholder="Search team or conference">
         <details class="filter" id="tierFilter">
@@ -928,8 +978,6 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       </div>
     </section>
     <section id="schedulePlanner" class="tab-panel">
-      <h2>West Virginia Non-Conference Planner</h2>
-      <p>Build a possible non-conference slate and estimate opponent-strength rank plus West Virginia win percentage.</p>
       <div class="planner-shell">
         <div>
           <div class="planner-actions">
@@ -954,7 +1002,6 @@ def dashboard_html(payload: dict[str, Any]) -> str:
             </table>
           </div>
           <datalist id="opponentList"></datalist>
-          <p class="planner-note">Dates are 2026 month/day entries. WAB Win/Loss estimates the schedule value of a WVU win and the damage of a WVU loss against a bubble-team expectation.</p>
         </div>
         <aside class="planner-summary" aria-label="Schedule projection summary">
           <div class="planner-metric">
@@ -1096,6 +1143,13 @@ def dashboard_html(payload: dict[str, Any]) -> str:
 
     function initTimestamp() {{
       document.getElementById("updated").textContent = `Updated ${{new Date(payload.generated_at).toLocaleString()}}`;
+      const hs = payload.input_status?.on3_hs_snapshot;
+      const portal = payload.input_status?.on3_transfer_snapshot;
+      const recruiting = document.getElementById("recruitingFreshness");
+      const parts = [];
+      if (hs) parts.push(`HS ${{hs}}`);
+      if (portal) parts.push(`Portal ${{portal}}`);
+      recruiting.textContent = parts.length ? `Recruiting data: ${{parts.join(" | ")}}` : "Recruiting data: cached";
     }}
 
     function setSort(key, dir) {{
