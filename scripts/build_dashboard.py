@@ -836,17 +836,17 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         <h1>Schedule Builder</h1>
         <p>Opponent value, guarantee-game upset risk, and current portal-sensitive tiers.</p>
       </div>
-      <img class="hero-mark" alt="Basketball court" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='108' viewBox='0 0 180 108'%3E%3Crect width='180' height='108' fill='%23002855'/%3E%3Crect x='0' y='0' width='180' height='8' fill='%23EAAA00'/%3E%3Crect x='0' y='100' width='180' height='8' fill='%23EAAA00'/%3E%3Cpath d='M0 54h180M90 0v108M28 18h124v72H28zM90 18a36 36 0 0 1 0 72M90 18a36 36 0 0 0 0 72' fill='none' stroke='%23EAAA00' stroke-width='3'/%3E%3Ccircle cx='90' cy='54' r='12' fill='none' stroke='%239DDAE6' stroke-width='3'/%3E%3C/svg%3E">
+      <img class="hero-mark" alt="WVU Flying WV" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='108' viewBox='0 0 180 108'%3E%3Cg fill='%23EAAA00' stroke='%23002855' stroke-width='4' stroke-linejoin='round'%3E%3Cpath d='M8 16h22l16 44 15-22 15 38 16-60h21l-25 76H86L61 46 40 92H24L8 16Z'/%3E%3Cpath d='M98 16h22l12 38 22-38h18l-34 76h-18L98 16Z'/%3E%3C/g%3E%3C/svg%3E">
       <span class="badge" id="updated"></span>
     </div>
   </header>
   <main>
     <nav class="tabs" aria-label="Dashboard sections">
-      <button class="tab-button active" type="button" data-tab="opponentBoard">Opponent Board</button>
+      <button class="tab-button active" type="button" data-tab="opponentBoard">Guarantee Game Target Board</button>
       <button class="tab-button" type="button" data-tab="schedulePlanner">WVU Schedule Planner</button>
     </nav>
     <section id="opponentBoard" class="tab-panel active">
-      <h2>Opponent Board</h2>
+      <h2>Guarantee Game Target Board</h2>
       <div class="controls">
         <input id="search" type="search" placeholder="Search team or conference">
         <details class="filter" id="tierFilter">
@@ -954,9 +954,6 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         </aside>
       </div>
     </section>
-    <footer>
-      Added WAB and planner NCSOS are schedule-value proxies, not official WAB or official NCAA/KenPom NCSOS. Upset % is the generic median-high-major upset model, and risk is bucketed from that value.
-    </footer>
   </main>
   <script>
     const payload = {payload_json};
@@ -1454,7 +1451,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--planner-model",
-        default="blend_schedule_ridge_gbt",
+        default="direct_ridge_schedule_building",
         help="Current-season projection model used by the schedule planner.",
     )
     parser.add_argument(
