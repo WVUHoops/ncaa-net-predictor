@@ -224,20 +224,28 @@ def slim_schedule_row(
     row: dict[str, str],
     adj_em_by_rank: list[float],
     tier_benchmarks: dict[str, float],
+    override: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    rank = compact_float(row.get("schedule_score_rank"), 1)
-    projected_adj_em = projected_adj_em_from_rank(row.get("schedule_score_rank"), adj_em_by_rank)
-    tier_benchmark = tier_benchmarks.get(str(row.get("opponent_quality_tier") or ""))
+    schedule_score_source = (
+        override.get("schedule_score") if override and override.get("schedule_score") is not None else row.get("schedule_score_rank")
+    )
+    tier_source = override.get("tier") if override and override.get("tier") else row.get("opponent_quality_tier")
+    program_band_source = (
+        override.get("program_band") if override and override.get("program_band") else row.get("program_consistency_band")
+    )
+    rank = compact_float(schedule_score_source, 1)
+    projected_adj_em = projected_adj_em_from_rank(schedule_score_source, adj_em_by_rank)
+    tier_benchmark = tier_benchmarks.get(str(tier_source or ""))
     wab_adj_candidates = [value for value in (projected_adj_em, tier_benchmark) if value is not None]
     return {
         "team": row.get("team"),
         "team_key": row.get("team_key"),
         "conference": row.get("conference"),
-        "tier": row.get("opponent_quality_tier"),
-        "program_band": row.get("program_consistency_band"),
+        "tier": tier_source,
+        "program_band": program_band_source,
         "schedule_score": rank,
         "schedule_percentile": compact_float(row.get("schedule_score_percentile"), 3),
-        "added_wab": added_wab_proxy(row.get("schedule_score_rank")),
+        "added_wab": added_wab_proxy(schedule_score_source),
         "projected_adj_em": projected_adj_em,
         "wab_adj_em": round(max(wab_adj_candidates), 2) if wab_adj_candidates else None,
     }
@@ -309,6 +317,29 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         if row.get("model") == args.planner_model
     ]
     planner_rows = [slim_schedule_row(row, adj_em_by_rank, tier_benchmarks) for row in schedule_rows]
+    planner_rows = sorted(planner_rows, key=lambda row: as_float(row.get("schedule_score")) or 9999)
+    host_row = next(
+        (
+            row
+            for row in planner_rows
+            if canonical_team_name(row.get("team")) == canonical_team_name(args.planner_host)
+        ),
+        None,
+    )
+    projections_by_team = {canonical_team_name(row.get("team")): row for row in planner_rows}
+    slimmed_risk_rows = [slim_risk_row(row, projections_by_team, host_row) for row in risk_rows]
+    planner_overrides_by_team = {
+        canonical_team_name(row.get("team")): row for row in slimmed_risk_rows
+    }
+    planner_rows = [
+        slim_schedule_row(
+            row,
+            adj_em_by_rank,
+            tier_benchmarks,
+            override=planner_overrides_by_team.get(canonical_team_name(row.get("team"))),
+        )
+        for row in schedule_rows
+    ]
     planner_rows = sorted(planner_rows, key=lambda row: as_float(row.get("schedule_score")) or 9999)
     planner_placeholder_rows = tier_placeholder_rows(planner_rows, tier_benchmarks)
     host_row = next(
@@ -813,11 +844,6 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       border-radius: 8px;
       background: var(--wvu-blue-light);
     }}
-    footer {{
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 22px;
-    }}
     @media (max-width: 920px) {{
       header {{ padding: 18px; }}
       main {{ padding: 16px; }}
@@ -836,7 +862,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         <h1>Schedule Builder</h1>
         <p>Opponent value, guarantee-game upset risk, and current portal-sensitive tiers.</p>
       </div>
-      <img class="hero-mark" alt="WVU Flying WV" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='108' viewBox='0 0 180 108'%3E%3Cg fill='%23EAAA00' stroke='%23002855' stroke-width='4' stroke-linejoin='round'%3E%3Cpath d='M8 16h22l16 44 15-22 15 38 16-60h21l-25 76H86L61 46 40 92H24L8 16Z'/%3E%3Cpath d='M98 16h22l12 38 22-38h18l-34 76h-18L98 16Z'/%3E%3C/g%3E%3C/svg%3E">
+      <img class="hero-mark" alt="WVU Flying WV" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='108' viewBox='0 0 180 108'%3E%3Crect width='180' height='108' fill='%23002855'/%3E%3Crect x='34' y='18' width='112' height='54' rx='10' fill='none' stroke='%23EAAA00' stroke-width='2'/%3E%3Cg fill='%23EAAA00'%3E%3Cpath d='M44 30h14l8 27 10-27h13l-15 39H58L44 30Z'/%3E%3Cpath d='M84 69l11-39h14l-6 20 7 19-11 10-7-10-8-19Z'/%3E%3Cpath d='M106 30h13l10 27 8-27h14l-14 39h-16L106 30Z'/%3E%3C/g%3E%3Cg fill='%23002855'%3E%3Cpath d='M91 32h8l-5 18 7 19-6 6-8-6 7-19-3-18Z'/%3E%3C/g%3E%3C/svg%3E">
       <span class="badge" id="updated"></span>
     </div>
   </header>
