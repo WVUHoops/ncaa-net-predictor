@@ -12,6 +12,10 @@ from net_predictor.coach_factor import canonical_team_key
 RETURNER_IMMEDIATE_IMPACT_WEIGHT = 1.0
 HS_IMMEDIATE_IMPACT_WEIGHT = 0.65
 TRANSFER_IMMEDIATE_IMPACT_WEIGHT = 1.15
+EXPECTED_ROTATION_SIZE = 13.0
+DIVISION_I_TEAM_COUNT = 364.0
+ROSTER_PROXY_COACH_WEIGHT = 0.6
+ROSTER_PROXY_PROGRAM_WEIGHT = 0.4
 
 
 def read_json_rows(path: Path) -> list[dict[str, Any]]:
@@ -217,10 +221,42 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
         transfer_percentile_signal,
         composition["transfer_impact_share"],
     )
-    row["roster_talent_continuity_plus_incoming"] = sum_existing(
+    known_only_signal = sum_existing(
         row.get("roster_talent_weighted_returning_core_continuity"),
         row.get("roster_talent_weighted_hs_rank_percentile"),
         row.get("roster_talent_weighted_transfer_rank_percentile"),
+    )
+    row["roster_talent_continuity_plus_incoming_known_only"] = known_only_signal
+
+    known_roster_players = composition["known_roster_players"]
+    roster_completeness = roster_completeness_ratio(known_roster_players)
+    missing_roster_players = missing_roster_slots(known_roster_players)
+    coach_proxy = coach_talent_proxy_percentile(row)
+    program_proxy = program_talent_proxy_percentile(row)
+    blended_proxy = weighted_average_existing(
+        (coach_proxy, ROSTER_PROXY_COACH_WEIGHT),
+        (program_proxy, ROSTER_PROXY_PROGRAM_WEIGHT),
+    )
+
+    row["roster_talent_expected_rotation_size"] = EXPECTED_ROTATION_SIZE
+    row["roster_talent_roster_completeness"] = roster_completeness
+    row["roster_talent_missing_roster_players"] = missing_roster_players
+    row["roster_talent_known_roster_share_of_expected"] = roster_completeness
+    row["roster_talent_proxy_player_share_of_expected"] = (
+        missing_roster_players / EXPECTED_ROTATION_SIZE if missing_roster_players is not None else None
+    )
+    row["roster_talent_returner_expected_roster_share"] = share_of_expected_roster(returning_players)
+    row["roster_talent_hs_newcomer_expected_roster_share"] = share_of_expected_roster(hs_players)
+    row["roster_talent_transfer_newcomer_expected_roster_share"] = share_of_expected_roster(
+        transfer_players
+    )
+    row["roster_talent_proxy_coach_percentile"] = coach_proxy
+    row["roster_talent_proxy_program_percentile"] = program_proxy
+    row["roster_talent_proxy_percentile"] = blended_proxy
+    row["roster_talent_continuity_plus_incoming"] = blend_known_roster_with_proxy(
+        known_signal=known_only_signal,
+        roster_completeness=roster_completeness,
+        proxy_signal=blended_proxy,
     )
 
 
@@ -249,6 +285,78 @@ def product_if_present(left: float | None, right: float | None) -> float | None:
     if left is None or right is None:
         return None
     return left * right
+
+
+def weighted_average_existing(*weighted_values: tuple[float | None, float]) -> float | None:
+    numerator = 0.0
+    denominator = 0.0
+    for value, weight in weighted_values:
+        if value is None or weight <= 0:
+            continue
+        numerator += value * weight
+        denominator += weight
+    if denominator <= 0:
+        return None
+    return numerator / denominator
+
+
+def clip(value: float, lower: float, upper: float) -> float:
+    return min(max(value, lower), upper)
+
+
+def share_of_expected_roster(players: float | None) -> float | None:
+    if players is None:
+        return None
+    return clip(players / EXPECTED_ROTATION_SIZE, 0.0, 1.0)
+
+
+def roster_completeness_ratio(known_roster_players: float | None) -> float | None:
+    return share_of_expected_roster(known_roster_players)
+
+
+def missing_roster_slots(known_roster_players: float | None) -> float | None:
+    if known_roster_players is None:
+        return EXPECTED_ROTATION_SIZE
+    return clip(EXPECTED_ROTATION_SIZE - known_roster_players, 0.0, EXPECTED_ROTATION_SIZE)
+
+
+def rank_to_percentile(rank: float | None) -> float | None:
+    if rank is None or rank <= 0:
+        return None
+    bounded_rank = clip(rank, 1.0, DIVISION_I_TEAM_COUNT)
+    return (DIVISION_I_TEAM_COUNT + 1.0 - bounded_rank) / DIVISION_I_TEAM_COUNT
+
+
+def coach_talent_proxy_percentile(row: dict[str, Any]) -> float | None:
+    return average_existing(
+        rank_to_percentile(as_float(row.get("coach_coach_prior_avg_rank_adj_em"))),
+        rank_to_percentile(as_float(row.get("coach_coach_prior_last_rank_adj_em"))),
+        rank_to_percentile(as_float(row.get("coach_coach_prior_best_rank_adj_em"))),
+    )
+
+
+def program_talent_proxy_percentile(row: dict[str, Any]) -> float | None:
+    return average_existing(
+        rank_to_percentile(as_float(row.get("program_prior_avg_rank_adj_em"))),
+        rank_to_percentile(as_float(row.get("program_prior_last_rank_adj_em"))),
+        rank_to_percentile(as_float(row.get("program_prior_best_rank_adj_em"))),
+    )
+
+
+def blend_known_roster_with_proxy(
+    *,
+    known_signal: float | None,
+    roster_completeness: float | None,
+    proxy_signal: float | None,
+) -> float | None:
+    if known_signal is None:
+        return proxy_signal
+    if roster_completeness is None:
+        return known_signal
+    completeness = clip(roster_completeness, 0.0, 1.0)
+    if proxy_signal is None:
+        return known_signal
+    return (known_signal * completeness) + (proxy_signal * (1.0 - completeness))
 
 
 def roster_composition_weights(

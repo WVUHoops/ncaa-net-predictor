@@ -93,6 +93,14 @@ DESTINATION_TEAM_FIELDS = {
     "committed_team",
     "school",
 }
+PORTAL_STATUS_FIELDS = {"portalstatus", "portal_status", "status", "rawstatus", "raw_status"}
+SOURCE_DIVISION_FIELDS = {"divisionid", "division_id", "source_division", "division"}
+DESTINATION_DIVISION_FIELDS = {
+    "divisionidto",
+    "division_id_to",
+    "destination_division",
+    "division_to",
+}
 NAME_SUFFIXES = {"jr", "sr", "ii", "iii", "iv", "v"}
 
 
@@ -229,6 +237,85 @@ def player_row_indexes(
     return by_id, by_name_source, by_name
 
 
+def supplement_player_rows_with_roster_rows(
+    player_rows: list[dict[str, Any]],
+    roster_rows: list[dict[str, Any]],
+    *,
+    season: int | None,
+) -> list[dict[str, Any]]:
+    if not roster_rows:
+        return player_rows
+
+    combined = [dict(row) for row in player_rows]
+    by_id, by_name_source, _ = player_row_indexes(combined)
+    for roster_row in roster_rows:
+        player_id = str(roster_row.get("playerId") or roster_row.get("player_id") or "").strip()
+        player_name = roster_row.get("fullName") or roster_row.get("player_name") or roster_row.get("playerName")
+        team_market = roster_row.get("teamMarket") or roster_row.get("team_market")
+        team_name = roster_row.get("teamName") or roster_row.get("team_name")
+        if not player_name or not team_market:
+            continue
+
+        player_key = canonical_player_key(player_name)
+        source_team_key = canonical_team_key(team_market)
+        if player_id and player_id in by_id:
+            continue
+        if player_key and source_team_key and by_name_source.get((player_key, source_team_key)):
+            continue
+
+        placeholder = {
+            "season": season,
+            "competition_id": roster_row.get("competitionId") or roster_row.get("competition_id"),
+            "team_id": roster_row.get("teamId") or roster_row.get("team_id"),
+            "team_market": team_market,
+            "team_name": team_name,
+            "conference_id": roster_row.get("conferenceId") or roster_row.get("conference_id"),
+            "player_id": player_id or None,
+            "player_name": player_name,
+            "class_year": roster_row.get("classYr") or roster_row.get("class_year"),
+            "position": roster_row.get("position"),
+            "height": roster_row.get("height"),
+            "games_started": 0.0,
+            "minutes": 0.0,
+            "possessions": 0.0,
+            "points": 0.0,
+            "field_goal_attempts": 0.0,
+            "free_throw_attempts": 0.0,
+            "assists": 0.0,
+            "offensive_rebounds": 0.0,
+            "defensive_rebounds": 0.0,
+            "rebounds": 0.0,
+            "steals": 0.0,
+            "blocks": 0.0,
+            "turnovers": 0.0,
+            "personal_fouls": 0.0,
+            "warp": 0.0,
+            "win_shares": 0.0,
+            "offensive_win_shares": 0.0,
+            "defensive_win_shares": 0.0,
+            "usage_pct": None,
+            "ortg_player": None,
+            "drtg_player": None,
+            "per": None,
+            "warp_per_40": None,
+            "win_shares_per_40": None,
+            "effective_fg_pct": None,
+            "true_shooting_pct": None,
+            "assist_pct": None,
+            "rebound_pct": None,
+            "turnover_pct": None,
+            "rapm": None,
+            "offensive_rapm": None,
+            "defensive_rapm": None,
+            "source_row_type": "competition_team_players_placeholder",
+        }
+        combined.append(placeholder)
+        if player_id:
+            by_id[player_id] = placeholder
+        by_name_source[(player_key, source_team_key)].append(placeholder)
+    return combined
+
+
 def transfer_rows_from_ledger(
     ledger_rows: list[dict[str, Any]],
     player_rows: list[dict[str, Any]],
@@ -244,6 +331,9 @@ def transfer_rows_from_ledger(
     player_column = detect_ledger_column(fieldnames, PLAYER_NAME_FIELDS)
     source_column = detect_ledger_column(fieldnames, SOURCE_TEAM_FIELDS)
     destination_column = detect_ledger_column(fieldnames, DESTINATION_TEAM_FIELDS)
+    portal_status_column = detect_ledger_column(fieldnames, PORTAL_STATUS_FIELDS)
+    source_division_column = detect_ledger_column(fieldnames, SOURCE_DIVISION_FIELDS)
+    destination_division_column = detect_ledger_column(fieldnames, DESTINATION_DIVISION_FIELDS)
     if not player_column or not source_column or not destination_column:
         raise ValueError(
             "Could not detect transfer ledger columns. Need player/source team/destination team columns."
@@ -259,11 +349,23 @@ def transfer_rows_from_ledger(
         destination_team = ledger_row.get(destination_column)
         if not ledger_player or not source_team or not destination_team:
             continue
+        portal_status = str(ledger_row.get(portal_status_column) or "").strip() if portal_status_column else ""
+        source_division = str(ledger_row.get(source_division_column) or "").strip() if source_division_column else ""
+        destination_division = (
+            str(ledger_row.get(destination_division_column) or "").strip()
+            if destination_division_column
+            else ""
+        )
+
+        if portal_status and normalize_text(portal_status) != "transferred":
+            continue
 
         player_id = str(ledger_row.get(id_column) or "").strip() if id_column else ""
         player_key = canonical_player_key(ledger_player)
         source_team_key = canonical_team_key(source_team)
         destination_team_key = canonical_team_key(destination_team)
+        if source_team_key == destination_team_key:
+            continue
 
         matched_row: dict[str, Any] | None = None
         match_method = ""
@@ -288,6 +390,9 @@ def transfer_rows_from_ledger(
                     "ledger_source_team": source_team,
                     "ledger_destination_team": destination_team,
                     "ledger_player_id": player_id or None,
+                    "portal_status": portal_status or None,
+                    "source_division": source_division or None,
+                    "destination_division": destination_division or None,
                     "reason": "no_match",
                 }
             )
@@ -301,6 +406,9 @@ def transfer_rows_from_ledger(
                     "ledger_source_team": source_team,
                     "ledger_destination_team": destination_team,
                     "ledger_player_id": player_id or None,
+                    "portal_status": portal_status or None,
+                    "source_division": source_division or None,
+                    "destination_division": destination_division or None,
                     "reason": "matched_row_missing_season",
                 }
             )

@@ -16,6 +16,7 @@ from net_predictor.transfer_features import (  # noqa: E402
     kenpom_context_by_team,
     player_transfer_rows,
     read_csv_rows,
+    supplement_player_rows_with_roster_rows,
     transfer_rows_from_ledger,
     transfer_summary_rows,
     write_csv,
@@ -64,6 +65,18 @@ def parse_args() -> argparse.Namespace:
         type=int,
         help="Destination season for transfer-ledger rows. Defaults to source season + 1.",
     )
+    parser.add_argument(
+        "--competition-team-players-csv",
+        type=Path,
+        default=PROJECT_ROOT
+        / "data"
+        / "raw"
+        / "cbb_analytics"
+        / "v1"
+        / "competition-team-players"
+        / "competition_team_players_competition_41097_v1_2026-04-13.csv",
+        help="Optional current-team roster file used to backfill zero-minute D-I players missing from player-agg.",
+    )
     return parser.parse_args()
 
 
@@ -76,6 +89,19 @@ def main() -> int:
     context = kenpom_context_by_team(args.kenpom_dir)
     unmatched: list[dict[str, object]] = []
     if args.transfer_ledger_csv and args.transfer_ledger_csv.exists():
+        roster_rows = (
+            read_csv_rows(args.competition_team_players_csv)
+            if args.competition_team_players_csv and args.competition_team_players_csv.exists()
+            else []
+        )
+        roster_source_season = args.source_season
+        if roster_source_season is None and args.destination_season is not None:
+            roster_source_season = args.destination_season - 1
+        player_rows = supplement_player_rows_with_roster_rows(
+            player_rows,
+            roster_rows,
+            season=roster_source_season,
+        )
         ledger_rows = read_csv_rows(args.transfer_ledger_csv)
         transfers, unmatched = transfer_rows_from_ledger(
             ledger_rows,
