@@ -56,6 +56,13 @@ def csv_row_count(path: Path) -> int:
         return sum(1 for _ in csv.DictReader(file))
 
 
+def latest_existing_file(paths: list[Path]) -> Path | None:
+    existing = [path for path in paths if path.exists()]
+    if not existing:
+        return None
+    return max(existing, key=lambda path: path.stat().st_mtime)
+
+
 def as_float(value: Any) -> float | None:
     if value in (None, ""):
         return None
@@ -349,8 +356,15 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
     cbb_transfer_features_csv = (
         PROJECT_ROOT / "data" / "processed" / "transfer_features" / "current" / "cbb_incoming_transfer_features.csv"
     )
+    transfer_ledger_path = latest_existing_file(
+        [
+            *sorted((PROJECT_ROOT / "data" / "raw" / "cbb_analytics" / "transfer_portal" / "current").glob("*.csv")),
+            *sorted((PROJECT_ROOT / "data" / "raw" / "cbb_analytics" / "transfer_portal").glob("*.csv")),
+        ]
+    )
     cbb_transfer_feature_rows = csv_row_count(cbb_transfer_features_csv)
     cbb_transfer_feature_built_at = file_mtime_date(cbb_transfer_features_csv)
+    cbb_transfer_ledger_snapshot = file_mtime_date(transfer_ledger_path) if transfer_ledger_path else None
     schedule_rows = [
         row
         for row in read_csv(args.schedule_predictions_csv)
@@ -416,6 +430,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
             "cbb_player_snapshot": cbb_player_snapshot,
             "cbb_transfer_feature_rows": cbb_transfer_feature_rows,
             "cbb_transfer_feature_built_at": cbb_transfer_feature_built_at,
+            "cbb_transfer_ledger_snapshot": cbb_transfer_ledger_snapshot,
         },
         "summary": {
             "candidate_count": len(risk_rows),
@@ -1174,6 +1189,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       const cbb = payload.input_status?.cbb_player_snapshot;
       const cbbTransferRows = Number(payload.input_status?.cbb_transfer_feature_rows || 0);
       const cbbTransferBuiltAt = payload.input_status?.cbb_transfer_feature_built_at;
+      const cbbTransferLedgerAt = payload.input_status?.cbb_transfer_ledger_snapshot;
       const recruiting = document.getElementById("recruitingFreshness");
       const transfer = document.getElementById("transferFreshness");
       const dates = [hs, portal].filter(Boolean).sort();
@@ -1182,7 +1198,9 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       }} else {{
         recruiting.textContent = `Recruiting data: ${{dates[0]}}`;
       }}
-      if (cbb) {{
+      if (cbbTransferLedgerAt) {{
+        transfer.textContent = `Transfer data: ${{cbbTransferLedgerAt}}`;
+      }} else if (cbb) {{
         transfer.textContent = `Transfer data: ${{cbb}}`;
       }} else if (cbbTransferRows > 0 && cbbTransferBuiltAt) {{
         transfer.textContent = `Transfer data: cached ${{cbbTransferBuiltAt}}`;

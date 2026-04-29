@@ -42,6 +42,20 @@ def current_player_roster_status_csv() -> Path:
     )
 
 
+def latest_transfer_ledger_csv() -> Path | None:
+    directories = [
+        PROJECT_ROOT / "data" / "raw" / "cbb_analytics" / "transfer_portal" / "current",
+        PROJECT_ROOT / "data" / "raw" / "cbb_analytics" / "transfer_portal",
+    ]
+    for directory in directories:
+        if not directory.exists():
+            continue
+        paths = sorted(directory.glob("*.csv"), reverse=True)
+        if paths:
+            return paths[0]
+    return None
+
+
 def can_rebuild_upset_risk() -> bool:
     return (PROJECT_ROOT / "data" / "raw" / "hoopr" / "mbb_schedule_master.csv").exists()
 
@@ -119,19 +133,6 @@ def main() -> int:
         run_step(
             [
                 "python3",
-                "scripts/fetch_cbb_analytics.py",
-                "--endpoint",
-                "player-agg-box",
-                "--competition-ids",
-                str(args.current_cbb_competition_id),
-                "--splits",
-                "season",
-            ],
-            required=False,
-        )
-        run_step(
-            [
-                "python3",
                 "scripts/fetch_hoopdirt_coaching_changes.py",
                 "--season",
                 "2026",
@@ -155,18 +156,34 @@ def main() -> int:
                     "2026",
                 ]
             )
+            transfer_ledger_csv = latest_transfer_ledger_csv()
+            transfer_command = [
+                "python3",
+                "scripts/build_transfer_features.py",
+                "--player-roster-status-csv",
+                str(current_player_roster_status_csv()),
+                "--source-season",
+                "2026",
+                "--output-dir",
+                str(PROJECT_ROOT / "data" / "processed" / "transfer_features" / "current"),
+            ]
+            if transfer_ledger_csv:
+                transfer_command.extend(
+                    [
+                        "--transfer-ledger-csv",
+                        str(transfer_ledger_csv),
+                        "--destination-season",
+                        "2027",
+                    ]
+                )
+            else:
+                print(
+                    "warning: no transfer ledger CSV found; falling back to roster-status transfer detection",
+                    file=sys.stderr,
+                )
+                transfer_command.append("--current-roster-transfers")
             run_step(
-                [
-                    "python3",
-                    "scripts/build_transfer_features.py",
-                    "--player-roster-status-csv",
-                    str(current_player_roster_status_csv()),
-                    "--source-season",
-                    "2026",
-                    "--current-roster-transfers",
-                    "--output-dir",
-                    str(PROJECT_ROOT / "data" / "processed" / "transfer_features" / "current"),
-                ]
+                transfer_command
             )
         else:
             print("warning: no current CBB player aggregate snapshot found; skipping roster status")

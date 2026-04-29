@@ -22,6 +22,16 @@ data/raw/kenpom/2026/*
 !data/raw/kenpom/2026/ratings.json
 !data/raw/kenpom/2026/teams.json
 
+!data/raw/cbb_analytics/
+data/raw/cbb_analytics/*
+!data/raw/cbb_analytics/transfer_portal/
+data/raw/cbb_analytics/transfer_portal/*
+!data/raw/cbb_analytics/transfer_portal/README.md
+!data/raw/cbb_analytics/transfer_portal/current/
+data/raw/cbb_analytics/transfer_portal/current/*
+!data/raw/cbb_analytics/transfer_portal/current/.gitkeep
+!data/raw/cbb_analytics/transfer_portal/current/*.csv
+
 !data/processed/modeling/
 data/processed/modeling/*
 !data/processed/modeling/modeling_table.csv

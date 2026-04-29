@@ -16,6 +16,7 @@ from net_predictor.transfer_features import (  # noqa: E402
     kenpom_context_by_team,
     player_transfer_rows,
     read_csv_rows,
+    transfer_rows_from_ledger,
     transfer_summary_rows,
     write_csv,
     write_json,
@@ -53,6 +54,16 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Treat is_transfer rows on current rosters as incoming transfers from prior_team_market.",
     )
+    parser.add_argument(
+        "--transfer-ledger-csv",
+        type=Path,
+        help="Optional downloaded transfer ledger CSV to use for source->destination movement.",
+    )
+    parser.add_argument(
+        "--destination-season",
+        type=int,
+        help="Destination season for transfer-ledger rows. Defaults to source season + 1.",
+    )
     return parser.parse_args()
 
 
@@ -63,17 +74,33 @@ def main() -> int:
         for row in player_rows:
             row.setdefault("season", str(args.source_season))
     context = kenpom_context_by_team(args.kenpom_dir)
-    transfers = player_transfer_rows(
-        player_rows,
-        context,
-        current_roster_transfers=args.current_roster_transfers,
-    )
+    unmatched: list[dict[str, object]] = []
+    if args.transfer_ledger_csv and args.transfer_ledger_csv.exists():
+        ledger_rows = read_csv_rows(args.transfer_ledger_csv)
+        transfers, unmatched = transfer_rows_from_ledger(
+            ledger_rows,
+            player_rows,
+            context,
+            destination_season=args.destination_season,
+        )
+    else:
+        transfers = player_transfer_rows(
+            player_rows,
+            context,
+            current_roster_transfers=args.current_roster_transfers,
+        )
     summaries = transfer_summary_rows(transfers)
 
     player_json = write_json(transfers, args.output_dir / "cbb_incoming_transfer_players.json")
     player_csv = write_csv(transfers, args.output_dir / "cbb_incoming_transfer_players.csv")
     summary_json = write_json(summaries, args.output_dir / "cbb_incoming_transfer_features.json")
     summary_csv = write_csv(summaries, args.output_dir / "cbb_incoming_transfer_features.csv")
+    if args.transfer_ledger_csv and args.transfer_ledger_csv.exists():
+        unmatched_json = write_json(unmatched, args.output_dir / "cbb_transfer_ledger_unmatched.json")
+        unmatched_csv = write_csv(unmatched, args.output_dir / "cbb_transfer_ledger_unmatched.csv")
+        print(f"saved {unmatched_json}")
+        print(f"saved {unmatched_csv}")
+        print(f"unmatched transfer ledger rows: {len(unmatched)}")
 
     print(f"saved {player_json}")
     print(f"saved {player_csv}")

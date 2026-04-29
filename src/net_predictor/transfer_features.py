@@ -6,9 +6,10 @@ import csv
 import json
 from collections import defaultdict
 from pathlib import Path
+import re
 from typing import Any
 
-from net_predictor.coach_factor import canonical_team_key
+from net_predictor.coach_factor import canonical_team_key, normalize_text
 
 
 COUNTING_STATS = (
@@ -63,6 +64,36 @@ PERCENTILE_STATS = (
     "cbb_transfer_minutes_weighted_net_rating",
     "cbb_transfer_minutes_weighted_source_adj_em",
 )
+PLAYER_ID_FIELDS = {"playerid", "player id", "player_id"}
+PLAYER_NAME_FIELDS = {"player", "name", "player name", "player_name", "full name", "full_name"}
+SOURCE_TEAM_FIELDS = {
+    "source team",
+    "source_team",
+    "from",
+    "from team",
+    "from_team",
+    "prior team",
+    "prior_team",
+    "previous team",
+    "previous_team",
+    "old team",
+    "old_team",
+}
+DESTINATION_TEAM_FIELDS = {
+    "destination team",
+    "destination_team",
+    "to",
+    "to team",
+    "to_team",
+    "new team",
+    "new_team",
+    "current team",
+    "current_team",
+    "committed team",
+    "committed_team",
+    "school",
+}
+NAME_SUFFIXES = {"jr", "sr", "ii", "iii", "iv", "v"}
 
 
 def as_float(value: Any) -> float | None:
@@ -163,6 +194,145 @@ def source_context_multiplier(context: dict[str, Any] | None) -> float:
         elif rank >= 200:
             multiplier -= 0.04
     return min(1.45, max(0.55, multiplier))
+
+
+def canonical_player_key(value: Any) -> str:
+    words = [word for word in normalize_text(value).split() if word not in NAME_SUFFIXES]
+    return " ".join(words)
+
+
+def detect_ledger_column(fieldnames: list[str], candidates: set[str]) -> str | None:
+    normalized = {normalize_text(name): name for name in fieldnames}
+    for candidate in candidates:
+        match = normalized.get(normalize_text(candidate))
+        if match:
+            return match
+    return None
+
+
+def player_row_indexes(
+    player_rows: list[dict[str, Any]],
+) -> tuple[dict[str, dict[str, Any]], dict[tuple[str, str], list[dict[str, Any]]], dict[str, list[dict[str, Any]]]]:
+    by_id: dict[str, dict[str, Any]] = {}
+    by_name_source: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    by_name: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in player_rows:
+        player_id = str(row.get("player_id") or "").strip()
+        player_key = canonical_player_key(row.get("player_name"))
+        source_team_key = canonical_team_key(row.get("team_market") or row.get("team_name"))
+        if player_id:
+            by_id[player_id] = row
+        if player_key:
+            by_name[player_key].append(row)
+            if source_team_key:
+                by_name_source[(player_key, source_team_key)].append(row)
+    return by_id, by_name_source, by_name
+
+
+def transfer_rows_from_ledger(
+    ledger_rows: list[dict[str, Any]],
+    player_rows: list[dict[str, Any]],
+    kenpom_context: dict[tuple[int, str], dict[str, Any]],
+    *,
+    destination_season: int | None = None,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    if not ledger_rows:
+        return [], []
+
+    fieldnames = list(ledger_rows[0].keys())
+    id_column = detect_ledger_column(fieldnames, PLAYER_ID_FIELDS)
+    player_column = detect_ledger_column(fieldnames, PLAYER_NAME_FIELDS)
+    source_column = detect_ledger_column(fieldnames, SOURCE_TEAM_FIELDS)
+    destination_column = detect_ledger_column(fieldnames, DESTINATION_TEAM_FIELDS)
+    if not player_column or not source_column or not destination_column:
+        raise ValueError(
+            "Could not detect transfer ledger columns. Need player/source team/destination team columns."
+        )
+
+    by_id, by_name_source, by_name = player_row_indexes(player_rows)
+    transfers: list[dict[str, Any]] = []
+    unmatched: list[dict[str, Any]] = []
+
+    for ledger_row in ledger_rows:
+        ledger_player = ledger_row.get(player_column)
+        source_team = ledger_row.get(source_column)
+        destination_team = ledger_row.get(destination_column)
+        if not ledger_player or not source_team or not destination_team:
+            continue
+
+        player_id = str(ledger_row.get(id_column) or "").strip() if id_column else ""
+        player_key = canonical_player_key(ledger_player)
+        source_team_key = canonical_team_key(source_team)
+        destination_team_key = canonical_team_key(destination_team)
+
+        matched_row: dict[str, Any] | None = None
+        match_method = ""
+        if player_id and player_id in by_id:
+            matched_row = by_id[player_id]
+            match_method = "player_id"
+        else:
+            exact_candidates = by_name_source.get((player_key, source_team_key), [])
+            if len(exact_candidates) == 1:
+                matched_row = exact_candidates[0]
+                match_method = "player_name_source_team"
+            else:
+                name_candidates = by_name.get(player_key, [])
+                if len(name_candidates) == 1:
+                    matched_row = name_candidates[0]
+                    match_method = "player_name_only"
+
+        if matched_row is None:
+            unmatched.append(
+                {
+                    "ledger_player_name": ledger_player,
+                    "ledger_source_team": source_team,
+                    "ledger_destination_team": destination_team,
+                    "ledger_player_id": player_id or None,
+                    "reason": "no_match",
+                }
+            )
+            continue
+
+        source_season = int(matched_row.get("season") or 0)
+        if not source_season:
+            unmatched.append(
+                {
+                    "ledger_player_name": ledger_player,
+                    "ledger_source_team": source_team,
+                    "ledger_destination_team": destination_team,
+                    "ledger_player_id": player_id or None,
+                    "reason": "matched_row_missing_season",
+                }
+            )
+            continue
+
+        context = kenpom_context.get((source_season, source_team_key), {})
+        multiplier = source_context_multiplier(context)
+        item: dict[str, Any] = {
+            "source_season": source_season,
+            "season": destination_season or (source_season + 1),
+            "team": destination_team,
+            "team_key": destination_team_key,
+            "source_team": source_team,
+            "source_team_key": source_team_key,
+            "player_id": matched_row.get("player_id"),
+            "player_name": matched_row.get("player_name"),
+            "source_context_multiplier": multiplier,
+            "transfer_match_method": match_method,
+            "ledger_player_name": ledger_player,
+            "ledger_source_team": source_team,
+            "ledger_destination_team": destination_team,
+            **context,
+        }
+        for column in COUNTING_STATS + RATE_STATS:
+            item[column] = as_float(matched_row.get(column))
+        for column in CONTEXT_ADJUSTED_STATS:
+            item[f"context_adjusted_{column}"] = numeric(matched_row.get(column)) * multiplier
+        transfers.append(item)
+
+    transfers.sort(key=lambda item: (item["season"], item["team_key"], str(item["player_name"])))
+    unmatched.sort(key=lambda item: (str(item["ledger_destination_team"]), str(item["ledger_player_name"])))
+    return transfers, unmatched
 
 
 def player_transfer_rows(
