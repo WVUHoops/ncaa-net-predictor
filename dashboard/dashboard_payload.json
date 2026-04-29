@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-29T16:08:33+00:00",
+  "generated_at": "2026-04-29T16:17:46+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
