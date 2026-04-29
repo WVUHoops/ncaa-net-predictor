@@ -111,6 +111,13 @@ def main() -> int:
         run_step(
             [
                 "python3",
+                "scripts/fetch_cbb_transfer_portal_csv.py",
+            ],
+            required=False,
+        )
+        run_step(
+            [
+                "python3",
                 "scripts/fetch_on3_rankings.py",
                 "--source",
                 "hs",

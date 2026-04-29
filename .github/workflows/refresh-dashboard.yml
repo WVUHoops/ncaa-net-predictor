@@ -31,6 +31,13 @@ jobs:
 
     env:
       CBB_ANALYTICS_API_KEY: ${{ secrets.CBB_ANALYTICS_API_KEY }}
+      CBB_EMAIL: ${{ secrets.CBB_EMAIL }}
+      CBB_PASSWORD: ${{ secrets.CBB_PASSWORD }}
+      CBB_AUTH_TOKEN: ${{ secrets.CBB_AUTH_TOKEN }}
+      CBB_TRANSFER_AUTHORIZATION: ${{ secrets.CBB_TRANSFER_AUTHORIZATION }}
+      CBB_TRANSFER_COOKIE: ${{ secrets.CBB_TRANSFER_COOKIE }}
+      CBB_TRANSFER_CSV_URL: ${{ secrets.CBB_TRANSFER_CSV_URL }}
+      CBB_TRANSFER_REFERER: ${{ secrets.CBB_TRANSFER_REFERER }}
       KENPOM_API_TOKEN: ${{ secrets.KENPOM_API_TOKEN }}
       PYTHONPATH: src
 
@@ -68,6 +75,12 @@ jobs:
         run: |
           mkdir -p dashboard
           mkdir -p data/raw data/processed
+          mkdir -p data/raw/cbb_analytics/transfer_portal/current
+
+      - name: Download CBB transfer portal CSV
+        if: ${{ env.CBB_TRANSFER_CSV_URL != '' || env.CBB_EMAIL != '' || env.CBB_AUTH_TOKEN != '' }}
+        run: |
+          python3 scripts/fetch_cbb_transfer_portal_csv.py
 
       - name: Refresh dashboard
         run: |
