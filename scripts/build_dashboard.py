@@ -1015,7 +1015,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           </div>
           <div class="planner-metric">
             <strong id="plannerNcsosRank">—</strong>
-            <span>Predicted NCSOS rank</span>
+            <span>Team sheet NCSOS rank</span>
           </div>
           <div class="planner-metric">
             <strong id="plannerWinPct">—</strong>
@@ -1027,7 +1027,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           </div>
           <div class="planner-metric">
             <strong id="plannerAvgOpp">—</strong>
-            <span>Avg opponent quality</span>
+            <span>Avg opponent difficulty</span>
           </div>
         </aside>
       </div>
@@ -1329,6 +1329,13 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       return 1 + benchmarks.filter(value => Number(value) > avgOpponentAdjEm).length;
     }}
 
+    function ncsosOpponentAdjEm(opponent, location) {{
+      const raw = Number(opponent?.projected_adj_em);
+      if (!Number.isFinite(raw)) return null;
+      const locationAdjustment = location === "Home" ? -3.5 : location === "Away" ? 3.5 : 0;
+      return raw + locationAdjustment;
+    }}
+
     function renderPlannerOptions() {{
       document.getElementById("opponentList").innerHTML = (payload.planner?.teams || [])
         .filter(row => normalizeTeam(row.team) !== normalizeTeam(payload.planner?.host))
@@ -1393,8 +1400,8 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         .map(item => projectedWinProbability(item.opponent, item.game.location))
         .filter(value => value !== null);
       const oppAdjEms = validGames
-        .map(item => Number(item.opponent.projected_adj_em))
-        .filter(Number.isFinite);
+        .map(item => ncsosOpponentAdjEm(item.opponent, item.game.location))
+        .filter(value => value !== null);
 
       if (!validGames.length || !oppAdjEms.length) {{
         document.getElementById("plannerGames").textContent = "0";
