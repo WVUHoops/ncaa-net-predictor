@@ -58,6 +58,7 @@ jobs:
             data/processed/on3_features
             data/processed/coach_features
             data/processed/roster_status
+            data/processed/transfer_features
             data/processed/predictions
           key: ncaa-net-data-v4-${{ runner.os }}-${{ github.run_id }}
           restore-keys: |

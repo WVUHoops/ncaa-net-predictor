@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import re
 import argparse
 import csv
 import json
@@ -10,7 +11,6 @@ from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import Any
-import re
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -41,6 +41,19 @@ def latest_dated_snapshot(directory: Path, pattern: str) -> str | None:
     latest = candidates[-1]
     match = re.search(r"(\d{4}-\d{2}-\d{2})", latest.name)
     return match.group(1) if match else None
+
+
+def file_mtime_date(path: Path) -> str | None:
+    if not path.exists():
+        return None
+    return datetime.fromtimestamp(path.stat().st_mtime).astimezone().date().isoformat()
+
+
+def csv_row_count(path: Path) -> int:
+    if not path.exists():
+        return 0
+    with path.open("r", encoding="utf-8", newline="") as file:
+        return sum(1 for _ in csv.DictReader(file))
 
 
 def as_float(value: Any) -> float | None:
@@ -333,6 +346,11 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         PROJECT_ROOT / "data" / "raw" / "cbb_analytics" / "v1" / "player-agg-box",
         "stats_player_agg_box_competition_41097_v1_*.json",
     )
+    cbb_transfer_features_csv = (
+        PROJECT_ROOT / "data" / "processed" / "transfer_features" / "current" / "cbb_incoming_transfer_features.csv"
+    )
+    cbb_transfer_feature_rows = csv_row_count(cbb_transfer_features_csv)
+    cbb_transfer_feature_built_at = file_mtime_date(cbb_transfer_features_csv)
     schedule_rows = [
         row
         for row in read_csv(args.schedule_predictions_csv)
@@ -396,6 +414,8 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
             "on3_hs_snapshot": on3_hs_snapshot,
             "on3_transfer_snapshot": on3_transfer_snapshot,
             "cbb_player_snapshot": cbb_player_snapshot,
+            "cbb_transfer_feature_rows": cbb_transfer_feature_rows,
+            "cbb_transfer_feature_built_at": cbb_transfer_feature_built_at,
         },
         "summary": {
             "candidate_count": len(risk_rows),
@@ -918,6 +938,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         <div class="badge-stack">
           <span class="badge" id="updated"></span>
           <span class="badge subtle" id="recruitingFreshness"></span>
+          <span class="badge subtle" id="transferFreshness"></span>
         </div>
       </div>
     </div>
@@ -1151,12 +1172,22 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       const hs = payload.input_status?.on3_hs_snapshot;
       const portal = payload.input_status?.on3_transfer_snapshot;
       const cbb = payload.input_status?.cbb_player_snapshot;
+      const cbbTransferRows = Number(payload.input_status?.cbb_transfer_feature_rows || 0);
+      const cbbTransferBuiltAt = payload.input_status?.cbb_transfer_feature_built_at;
       const recruiting = document.getElementById("recruitingFreshness");
-      const dates = [hs, portal, cbb].filter(Boolean).sort();
+      const transfer = document.getElementById("transferFreshness");
+      const dates = [hs, portal].filter(Boolean).sort();
       if (!dates.length) {{
         recruiting.textContent = "Recruiting data: cached";
       }} else {{
         recruiting.textContent = `Recruiting data: ${{dates[0]}}`;
+      }}
+      if (cbb) {{
+        transfer.textContent = `Transfer data: ${{cbb}}`;
+      }} else if (cbbTransferRows > 0 && cbbTransferBuiltAt) {{
+        transfer.textContent = `Transfer data: cached ${{cbbTransferBuiltAt}}`;
+      }} else {{
+        transfer.textContent = "Transfer data: missing";
       }}
     }}
 
