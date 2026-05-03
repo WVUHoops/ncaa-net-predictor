@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-02T12:10:31+00:00",
+  "generated_at": "2026-05-03T12:06:26+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-05-02",
-    "on3_transfer_snapshot": "2026-05-02",
+    "on3_hs_snapshot": "2026-05-03",
+    "on3_transfer_snapshot": "2026-05-03",
     "cbb_player_snapshot": null,
     "cbb_transfer_feature_rows": 0,
     "cbb_transfer_feature_built_at": null,
-    "cbb_transfer_ledger_snapshot": "2026-05-02"
+    "cbb_transfer_ledger_snapshot": "2026-05-03"
   },
   "summary": {
     "candidate_count": 286,
@@ -6926,10 +6926,10 @@
       "conference": "B12",
       "tier": "51_75",
       "program_band": "51_75",
-      "schedule_score": 147.3,
-      "schedule_percentile": 0.598,
-      "added_wab": 0.289,
-      "projected_adj_em": 1.27,
+      "schedule_score": 147.9,
+      "schedule_percentile": 0.596,
+      "added_wab": 0.286,
+      "projected_adj_em": 1.25,
       "wab_adj_em": 13.04
     },
     "teams": [
@@ -6965,7 +6965,7 @@
         "conference": "Tier",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 125.0,
+        "schedule_score": 125.1,
         "schedule_percentile": null,
         "added_wab": 0.373,
         "projected_adj_em": 3.96,
@@ -7273,10 +7273,10 @@
         "conference": "B12",
         "tier": "26_50",
         "program_band": "26_50",
-        "schedule_score": 73.1,
-        "schedule_percentile": 0.802,
-        "added_wab": 0.593,
-        "projected_adj_em": 11.52,
+        "schedule_score": 73.5,
+        "schedule_percentile": 0.801,
+        "added_wab": 0.592,
+        "projected_adj_em": 11.44,
         "wab_adj_em": 18.88
       },
       {
@@ -7292,18 +7292,6 @@
         "wab_adj_em": 18.88
       },
       {
-        "team": "Duke",
-        "team_key": "duke",
-        "conference": "ACC",
-        "tier": "top_25",
-        "program_band": "top_25",
-        "schedule_score": 76.7,
-        "schedule_percentile": 0.792,
-        "added_wab": 0.578,
-        "projected_adj_em": 10.95,
-        "wab_adj_em": 28.64
-      },
-      {
         "team": "Saint Louis",
         "team_key": "saint louis",
         "conference": "A10",
@@ -7314,6 +7302,18 @@
         "added_wab": 0.578,
         "projected_adj_em": 10.95,
         "wab_adj_em": 18.88
+      },
+      {
+        "team": "Duke",
+        "team_key": "duke",
+        "conference": "ACC",
+        "tier": "top_25",
+        "program_band": "top_25",
+        "schedule_score": 77.3,
+        "schedule_percentile": 0.79,
+        "added_wab": 0.576,
+        "projected_adj_em": 10.94,
+        "wab_adj_em": 28.64
       },
       {
         "team": "Clemson",
@@ -7765,10 +7765,10 @@
         "conference": "SEC",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 118.2,
-        "schedule_percentile": 0.678,
-        "added_wab": 0.401,
-        "projected_adj_em": 4.53,
+        "schedule_score": 118.5,
+        "schedule_percentile": 0.677,
+        "added_wab": 0.4,
+        "projected_adj_em": 4.51,
         "wab_adj_em": 13.04
       },
       {
@@ -8192,18 +8192,6 @@
         "wab_adj_em": 13.04
       },
       {
-        "team": "West Virginia",
-        "team_key": "west virginia",
-        "conference": "B12",
-        "tier": "51_75",
-        "program_band": "51_75",
-        "schedule_score": 147.3,
-        "schedule_percentile": 0.598,
-        "added_wab": 0.289,
-        "projected_adj_em": 1.27,
-        "wab_adj_em": 13.04
-      },
-      {
         "team": "Utah Valley",
         "team_key": "utah valley",
         "conference": "WAC",
@@ -8214,6 +8202,18 @@
         "added_wab": 0.287,
         "projected_adj_em": 1.26,
         "wab_adj_em": 4.59
+      },
+      {
+        "team": "West Virginia",
+        "team_key": "west virginia",
+        "conference": "B12",
+        "tier": "51_75",
+        "program_band": "51_75",
+        "schedule_score": 147.9,
+        "schedule_percentile": 0.596,
+        "added_wab": 0.286,
+        "projected_adj_em": 1.25,
+        "wab_adj_em": 13.04
       },
       {
         "team": "Illinois Chicago",
@@ -11477,7 +11477,7 @@
         "conference": "Tier",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 125.0,
+        "schedule_score": 125.1,
         "schedule_percentile": null,
         "added_wab": 0.373,
         "projected_adj_em": 3.96,
