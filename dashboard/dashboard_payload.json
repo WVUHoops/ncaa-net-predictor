@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-03T12:06:26+00:00",
+  "generated_at": "2026-05-04T16:21:50+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-05-03",
-    "on3_transfer_snapshot": "2026-05-03",
+    "on3_hs_snapshot": "2026-05-04",
+    "on3_transfer_snapshot": "2026-05-04",
     "cbb_player_snapshot": null,
     "cbb_transfer_feature_rows": 0,
     "cbb_transfer_feature_built_at": null,
-    "cbb_transfer_ledger_snapshot": "2026-05-03"
+    "cbb_transfer_ledger_snapshot": "2026-05-04"
   },
   "summary": {
     "candidate_count": 286,
@@ -6926,10 +6926,10 @@
       "conference": "B12",
       "tier": "51_75",
       "program_band": "51_75",
-      "schedule_score": 147.9,
-      "schedule_percentile": 0.596,
-      "added_wab": 0.286,
-      "projected_adj_em": 1.25,
+      "schedule_score": 150.5,
+      "schedule_percentile": 0.589,
+      "added_wab": 0.278,
+      "projected_adj_em": 1.15,
       "wab_adj_em": 13.04
     },
     "teams": [
@@ -6952,10 +6952,10 @@
         "conference": "Tier",
         "tier": "26_50",
         "program_band": "26_50",
-        "schedule_score": 93.7,
+        "schedule_score": 93.8,
         "schedule_percentile": null,
-        "added_wab": 0.506,
-        "projected_adj_em": 8.26,
+        "added_wab": 0.505,
+        "projected_adj_em": 8.24,
         "wab_adj_em": 18.88,
         "is_placeholder": true
       },
@@ -6965,10 +6965,10 @@
         "conference": "Tier",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 125.1,
+        "schedule_score": 125.2,
         "schedule_percentile": null,
         "added_wab": 0.373,
-        "projected_adj_em": 3.96,
+        "projected_adj_em": 3.95,
         "wab_adj_em": 13.04,
         "is_placeholder": true
       },
@@ -6991,7 +6991,7 @@
         "conference": "Tier",
         "tier": "101_135",
         "program_band": "101_135",
-        "schedule_score": 159.1,
+        "schedule_score": 159.2,
         "schedule_percentile": null,
         "added_wab": 0.249,
         "projected_adj_em": 0.63,
@@ -7129,10 +7129,10 @@
         "conference": "B10",
         "tier": "top_25",
         "program_band": "top_25",
-        "schedule_score": 53.0,
+        "schedule_score": 52.9,
         "schedule_percentile": 0.857,
         "added_wab": 0.674,
-        "projected_adj_em": 14.98,
+        "projected_adj_em": 14.99,
         "wab_adj_em": 28.64
       },
       {
@@ -7141,10 +7141,10 @@
         "conference": "B12",
         "tier": "top_25",
         "program_band": "top_25",
-        "schedule_score": 60.0,
+        "schedule_score": 59.9,
         "schedule_percentile": 0.838,
         "added_wab": 0.647,
-        "projected_adj_em": 13.29,
+        "projected_adj_em": 13.31,
         "wab_adj_em": 28.64
       },
       {
@@ -7216,7 +7216,7 @@
         "schedule_score": 68.6,
         "schedule_percentile": 0.814,
         "added_wab": 0.612,
-        "projected_adj_em": 12.01,
+        "projected_adj_em": 12.03,
         "wab_adj_em": 28.64
       },
       {
@@ -7309,9 +7309,9 @@
         "conference": "ACC",
         "tier": "top_25",
         "program_band": "top_25",
-        "schedule_score": 77.3,
-        "schedule_percentile": 0.79,
-        "added_wab": 0.576,
+        "schedule_score": 77.1,
+        "schedule_percentile": 0.791,
+        "added_wab": 0.577,
         "projected_adj_em": 10.94,
         "wab_adj_em": 28.64
       },
@@ -7358,7 +7358,7 @@
         "tier": "26_50",
         "program_band": "76_100",
         "schedule_score": 82.4,
-        "schedule_percentile": 0.727,
+        "schedule_percentile": 0.725,
         "added_wab": 0.554,
         "projected_adj_em": 10.05,
         "wab_adj_em": 18.88
@@ -7381,10 +7381,10 @@
         "conference": "BE",
         "tier": "top_25",
         "program_band": "top_25",
-        "schedule_score": 83.4,
-        "schedule_percentile": 0.774,
-        "added_wab": 0.55,
-        "projected_adj_em": 9.94,
+        "schedule_score": 83.6,
+        "schedule_percentile": 0.773,
+        "added_wab": 0.549,
+        "projected_adj_em": 9.9,
         "wab_adj_em": 28.64
       },
       {
@@ -7417,10 +7417,10 @@
         "conference": "SEC",
         "tier": "top_25",
         "program_band": "top_25",
-        "schedule_score": 88.5,
+        "schedule_score": 88.4,
         "schedule_percentile": 0.76,
         "added_wab": 0.528,
-        "projected_adj_em": 9.15,
+        "projected_adj_em": 9.16,
         "wab_adj_em": 28.64
       },
       {
@@ -7441,10 +7441,10 @@
         "conference": "B12",
         "tier": "top_25",
         "program_band": "top_25",
-        "schedule_score": 91.0,
+        "schedule_score": 90.9,
         "schedule_percentile": 0.753,
-        "added_wab": 0.517,
-        "projected_adj_em": 8.57,
+        "added_wab": 0.518,
+        "projected_adj_em": 8.58,
         "wab_adj_em": 28.64
       },
       {
@@ -7465,10 +7465,10 @@
         "conference": "SEC",
         "tier": "top_25",
         "program_band": "top_25",
-        "schedule_score": 91.5,
-        "schedule_percentile": 0.751,
-        "added_wab": 0.515,
-        "projected_adj_em": 8.57,
+        "schedule_score": 91.9,
+        "schedule_percentile": 0.75,
+        "added_wab": 0.513,
+        "projected_adj_em": 8.56,
         "wab_adj_em": 28.64
       },
       {
@@ -7477,10 +7477,10 @@
         "conference": "SEC",
         "tier": "26_50",
         "program_band": "26_50",
-        "schedule_score": 93.6,
-        "schedule_percentile": 0.746,
-        "added_wab": 0.506,
-        "projected_adj_em": 8.12,
+        "schedule_score": 93.7,
+        "schedule_percentile": 0.745,
+        "added_wab": 0.505,
+        "projected_adj_em": 8.05,
         "wab_adj_em": 18.88
       },
       {
@@ -7489,10 +7489,10 @@
         "conference": "B10",
         "tier": "26_50",
         "program_band": "26_50",
-        "schedule_score": 94.4,
+        "schedule_score": 94.2,
         "schedule_percentile": 0.744,
         "added_wab": 0.503,
-        "projected_adj_em": 7.84,
+        "projected_adj_em": 7.87,
         "wab_adj_em": 18.88
       },
       {
@@ -7622,7 +7622,7 @@
         "tier": "51_75",
         "program_band": "101_135",
         "schedule_score": 103.8,
-        "schedule_percentile": 0.662,
+        "schedule_percentile": 0.663,
         "added_wab": 0.462,
         "projected_adj_em": 6.5,
         "wab_adj_em": 13.04
@@ -7669,10 +7669,10 @@
         "conference": "B10",
         "tier": "26_50",
         "program_band": "26_50",
-        "schedule_score": 110.0,
-        "schedule_percentile": 0.701,
-        "added_wab": 0.436,
-        "projected_adj_em": 5.44,
+        "schedule_score": 110.1,
+        "schedule_percentile": 0.7,
+        "added_wab": 0.435,
+        "projected_adj_em": 5.42,
         "wab_adj_em": 18.88
       },
       {
@@ -7681,7 +7681,7 @@
         "conference": "SEC",
         "tier": "26_50",
         "program_band": "26_50",
-        "schedule_score": 112.4,
+        "schedule_score": 112.5,
         "schedule_percentile": 0.694,
         "added_wab": 0.425,
         "projected_adj_em": 5.25,
@@ -7693,9 +7693,9 @@
         "conference": "B12",
         "tier": "26_50",
         "program_band": "26_50",
-        "schedule_score": 112.6,
+        "schedule_score": 112.7,
         "schedule_percentile": 0.693,
-        "added_wab": 0.425,
+        "added_wab": 0.424,
         "projected_adj_em": 5.25,
         "wab_adj_em": 18.88
       },
@@ -7729,10 +7729,10 @@
         "conference": "B10",
         "tier": "26_50",
         "program_band": "26_50",
-        "schedule_score": 116.8,
+        "schedule_score": 116.6,
         "schedule_percentile": 0.682,
-        "added_wab": 0.407,
-        "projected_adj_em": 4.62,
+        "added_wab": 0.408,
+        "projected_adj_em": 4.63,
         "wab_adj_em": 18.88
       },
       {
@@ -7837,7 +7837,7 @@
         "conference": "BE",
         "tier": "76_100",
         "program_band": "76_100",
-        "schedule_score": 126.3,
+        "schedule_score": 126.4,
         "schedule_percentile": 0.656,
         "added_wab": 0.368,
         "projected_adj_em": 3.59,
@@ -7849,10 +7849,10 @@
         "conference": "ACC",
         "tier": "26_50",
         "program_band": "26_50",
-        "schedule_score": 128.9,
-        "schedule_percentile": 0.649,
-        "added_wab": 0.358,
-        "projected_adj_em": 3.33,
+        "schedule_score": 130.6,
+        "schedule_percentile": 0.644,
+        "added_wab": 0.351,
+        "projected_adj_em": 2.99,
         "wab_adj_em": 18.88
       },
       {
@@ -7874,7 +7874,7 @@
         "tier": "76_100",
         "program_band": "161_200",
         "schedule_score": 132.6,
-        "schedule_percentile": 0.524,
+        "schedule_percentile": 0.525,
         "added_wab": 0.343,
         "projected_adj_em": 2.87,
         "wab_adj_em": 9.08
@@ -7897,22 +7897,10 @@
         "conference": "SEC",
         "tier": "76_100",
         "program_band": "101_135",
-        "schedule_score": 134.4,
-        "schedule_percentile": 0.633,
-        "added_wab": 0.336,
+        "schedule_score": 134.3,
+        "schedule_percentile": 0.634,
+        "added_wab": 0.337,
         "projected_adj_em": 2.72,
-        "wab_adj_em": 9.08
-      },
-      {
-        "team": "Stanford",
-        "team_key": "stanford",
-        "conference": "ACC",
-        "tier": "76_100",
-        "program_band": "76_100",
-        "schedule_score": 135.6,
-        "schedule_percentile": 0.63,
-        "added_wab": 0.332,
-        "projected_adj_em": 2.71,
         "wab_adj_em": 9.08
       },
       {
@@ -7921,9 +7909,21 @@
         "conference": "B12",
         "tier": "76_100",
         "program_band": "76_100",
-        "schedule_score": 135.6,
+        "schedule_score": 135.4,
+        "schedule_percentile": 0.631,
+        "added_wab": 0.333,
+        "projected_adj_em": 2.71,
+        "wab_adj_em": 9.08
+      },
+      {
+        "team": "Stanford",
+        "team_key": "stanford",
+        "conference": "ACC",
+        "tier": "76_100",
+        "program_band": "76_100",
+        "schedule_score": 135.8,
         "schedule_percentile": 0.63,
-        "added_wab": 0.332,
+        "added_wab": 0.331,
         "projected_adj_em": 2.71,
         "wab_adj_em": 9.08
       },
@@ -7940,18 +7940,6 @@
         "wab_adj_em": 9.08
       },
       {
-        "team": "Maryland",
-        "team_key": "maryland",
-        "conference": "B10",
-        "tier": "101_135",
-        "program_band": "101_135",
-        "schedule_score": 138.1,
-        "schedule_percentile": 0.623,
-        "added_wab": 0.322,
-        "projected_adj_em": 2.35,
-        "wab_adj_em": 4.59
-      },
-      {
         "team": "Davidson",
         "team_key": "davidson",
         "conference": "A10",
@@ -7959,6 +7947,18 @@
         "program_band": "101_135",
         "schedule_score": 138.1,
         "schedule_percentile": 0.558,
+        "added_wab": 0.322,
+        "projected_adj_em": 2.35,
+        "wab_adj_em": 4.59
+      },
+      {
+        "team": "Maryland",
+        "team_key": "maryland",
+        "conference": "B10",
+        "tier": "101_135",
+        "program_band": "101_135",
+        "schedule_score": 138.2,
+        "schedule_percentile": 0.623,
         "added_wab": 0.322,
         "projected_adj_em": 2.35,
         "wab_adj_em": 4.59
@@ -7988,18 +7988,6 @@
         "wab_adj_em": 4.59
       },
       {
-        "team": "Oregon",
-        "team_key": "oregon",
-        "conference": "B10",
-        "tier": "101_135",
-        "program_band": "101_135",
-        "schedule_score": 138.7,
-        "schedule_percentile": 0.622,
-        "added_wab": 0.32,
-        "projected_adj_em": 2.33,
-        "wab_adj_em": 4.59
-      },
-      {
         "team": "Cincinnati",
         "team_key": "cincinnati",
         "conference": "B12",
@@ -8012,6 +8000,18 @@
         "wab_adj_em": 18.88
       },
       {
+        "team": "Oregon",
+        "team_key": "oregon",
+        "conference": "B10",
+        "tier": "101_135",
+        "program_band": "101_135",
+        "schedule_score": 138.8,
+        "schedule_percentile": 0.621,
+        "added_wab": 0.32,
+        "projected_adj_em": 2.32,
+        "wab_adj_em": 4.59
+      },
+      {
         "team": "Notre Dame",
         "team_key": "notre dame",
         "conference": "ACC",
@@ -8020,7 +8020,7 @@
         "schedule_score": 139.2,
         "schedule_percentile": 0.62,
         "added_wab": 0.318,
-        "projected_adj_em": 2.28,
+        "projected_adj_em": 2.27,
         "wab_adj_em": 9.08
       },
       {
@@ -8033,18 +8033,6 @@
         "schedule_percentile": 0.62,
         "added_wab": 0.317,
         "projected_adj_em": 2.24,
-        "wab_adj_em": 13.04
-      },
-      {
-        "team": "Georgetown",
-        "team_key": "georgetown",
-        "conference": "BE",
-        "tier": "51_75",
-        "program_band": "51_75",
-        "schedule_score": 139.8,
-        "schedule_percentile": 0.619,
-        "added_wab": 0.316,
-        "projected_adj_em": 2.17,
         "wab_adj_em": 13.04
       },
       {
@@ -8072,15 +8060,27 @@
         "wab_adj_em": 4.59
       },
       {
-        "team": "SMU",
-        "team_key": "smu",
+        "team": "Georgetown",
+        "team_key": "georgetown",
+        "conference": "BE",
+        "tier": "51_75",
+        "program_band": "51_75",
+        "schedule_score": 140.1,
+        "schedule_percentile": 0.618,
+        "added_wab": 0.315,
+        "projected_adj_em": 2.1,
+        "wab_adj_em": 13.04
+      },
+      {
+        "team": "Florida St.",
+        "team_key": "florida state",
         "conference": "ACC",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 140.6,
+        "schedule_score": 140.7,
         "schedule_percentile": 0.616,
         "added_wab": 0.313,
-        "projected_adj_em": 1.88,
+        "projected_adj_em": 1.86,
         "wab_adj_em": 13.04
       },
       {
@@ -8096,15 +8096,15 @@
         "wab_adj_em": 4.59
       },
       {
-        "team": "Florida St.",
-        "team_key": "florida state",
+        "team": "SMU",
+        "team_key": "smu",
         "conference": "ACC",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 140.8,
-        "schedule_percentile": 0.616,
-        "added_wab": 0.312,
-        "projected_adj_em": 1.82,
+        "schedule_score": 141.1,
+        "schedule_percentile": 0.615,
+        "added_wab": 0.311,
+        "projected_adj_em": 1.72,
         "wab_adj_em": 13.04
       },
       {
@@ -8149,10 +8149,10 @@
         "conference": "BE",
         "tier": "76_100",
         "program_band": "76_100",
-        "schedule_score": 143.8,
+        "schedule_score": 143.7,
         "schedule_percentile": 0.608,
         "added_wab": 0.301,
-        "projected_adj_em": 1.4,
+        "projected_adj_em": 1.42,
         "wab_adj_em": 9.08
       },
       {
@@ -8161,7 +8161,7 @@
         "conference": "SEC",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 146.6,
+        "schedule_score": 146.7,
         "schedule_percentile": 0.6,
         "added_wab": 0.291,
         "projected_adj_em": 1.29,
@@ -8202,18 +8202,6 @@
         "added_wab": 0.287,
         "projected_adj_em": 1.26,
         "wab_adj_em": 4.59
-      },
-      {
-        "team": "West Virginia",
-        "team_key": "west virginia",
-        "conference": "B12",
-        "tier": "51_75",
-        "program_band": "51_75",
-        "schedule_score": 147.9,
-        "schedule_percentile": 0.596,
-        "added_wab": 0.286,
-        "projected_adj_em": 1.25,
-        "wab_adj_em": 13.04
       },
       {
         "team": "Illinois Chicago",
@@ -8258,7 +8246,7 @@
         "tier": "101_135",
         "program_band": "101_135",
         "schedule_score": 149.8,
-        "schedule_percentile": 0.525,
+        "schedule_percentile": 0.526,
         "added_wab": 0.28,
         "projected_adj_em": 1.16,
         "wab_adj_em": 4.59
@@ -8274,6 +8262,18 @@
         "added_wab": 0.279,
         "projected_adj_em": 1.16,
         "wab_adj_em": 4.59
+      },
+      {
+        "team": "West Virginia",
+        "team_key": "west virginia",
+        "conference": "B12",
+        "tier": "51_75",
+        "program_band": "51_75",
+        "schedule_score": 150.5,
+        "schedule_percentile": 0.589,
+        "added_wab": 0.278,
+        "projected_adj_em": 1.15,
+        "wab_adj_em": 13.04
       },
       {
         "team": "Saint Joseph's",
@@ -8295,8 +8295,8 @@
         "program_band": "101_135",
         "schedule_score": 152.5,
         "schedule_percentile": 0.584,
-        "added_wab": 0.27,
-        "projected_adj_em": 1.09,
+        "added_wab": 0.271,
+        "projected_adj_em": 1.1,
         "wab_adj_em": 4.59
       },
       {
@@ -8329,7 +8329,7 @@
         "conference": "ACC",
         "tier": "76_100",
         "program_band": "76_100",
-        "schedule_score": 154.0,
+        "schedule_score": 153.9,
         "schedule_percentile": 0.58,
         "added_wab": 0.266,
         "projected_adj_em": 1.05,
@@ -8390,7 +8390,7 @@
         "tier": "101_135",
         "program_band": "101_135",
         "schedule_score": 157.5,
-        "schedule_percentile": 0.51,
+        "schedule_percentile": 0.511,
         "added_wab": 0.254,
         "projected_adj_em": 0.82,
         "wab_adj_em": 4.59
@@ -8449,10 +8449,10 @@
         "conference": "SEC",
         "tier": "76_100",
         "program_band": "76_100",
-        "schedule_score": 159.7,
-        "schedule_percentile": 0.564,
-        "added_wab": 0.247,
-        "projected_adj_em": 0.73,
+        "schedule_score": 159.9,
+        "schedule_percentile": 0.563,
+        "added_wab": 0.246,
+        "projected_adj_em": 0.72,
         "wab_adj_em": 9.08
       },
       {
@@ -8486,7 +8486,7 @@
         "tier": "101_135",
         "program_band": "101_135",
         "schedule_score": 163.5,
-        "schedule_percentile": 0.511,
+        "schedule_percentile": 0.516,
         "added_wab": 0.235,
         "projected_adj_em": 0.62,
         "wab_adj_em": 4.59
@@ -8513,18 +8513,6 @@
         "schedule_percentile": 0.546,
         "added_wab": 0.226,
         "projected_adj_em": 0.31,
-        "wab_adj_em": 4.59
-      },
-      {
-        "team": "California",
-        "team_key": "california",
-        "conference": "ACC",
-        "tier": "101_135",
-        "program_band": "101_135",
-        "schedule_score": 167.3,
-        "schedule_percentile": 0.543,
-        "added_wab": 0.223,
-        "projected_adj_em": 0.28,
         "wab_adj_em": 4.59
       },
       {
@@ -8561,6 +8549,18 @@
         "schedule_percentile": 0.477,
         "added_wab": 0.221,
         "projected_adj_em": 0.25,
+        "wab_adj_em": 4.59
+      },
+      {
+        "team": "California",
+        "team_key": "california",
+        "conference": "ACC",
+        "tier": "101_135",
+        "program_band": "101_135",
+        "schedule_score": 168.3,
+        "schedule_percentile": 0.54,
+        "added_wab": 0.22,
+        "projected_adj_em": 0.24,
         "wab_adj_em": 4.59
       },
       {
@@ -8714,7 +8714,7 @@
         "tier": "136_160",
         "program_band": "161_200",
         "schedule_score": 183.0,
-        "schedule_percentile": 0.454,
+        "schedule_percentile": 0.453,
         "added_wab": 0.18,
         "projected_adj_em": -1.37,
         "wab_adj_em": 1.41
@@ -8786,7 +8786,7 @@
         "tier": "136_160",
         "program_band": "161_200",
         "schedule_score": 186.8,
-        "schedule_percentile": 0.489,
+        "schedule_percentile": 0.49,
         "added_wab": 0.17,
         "projected_adj_em": -1.81,
         "wab_adj_em": 1.41
@@ -9182,7 +9182,7 @@
         "tier": "161_200",
         "program_band": "161_200",
         "schedule_score": 216.3,
-        "schedule_percentile": 0.448,
+        "schedule_percentile": 0.455,
         "added_wab": 0.11,
         "projected_adj_em": -4.02,
         "wab_adj_em": -1.04
@@ -9650,7 +9650,7 @@
         "tier": "201_250",
         "program_band": "251_300",
         "schedule_score": 242.4,
-        "schedule_percentile": 0.359,
+        "schedule_percentile": 0.358,
         "added_wab": 0.073,
         "projected_adj_em": -6.53,
         "wab_adj_em": -5.04
@@ -9830,7 +9830,7 @@
         "tier": "251_300",
         "program_band": "251_300",
         "schedule_score": 251.5,
-        "schedule_percentile": 0.275,
+        "schedule_percentile": 0.276,
         "added_wab": 0.063,
         "projected_adj_em": -7.21,
         "wab_adj_em": -7.21
@@ -11464,10 +11464,10 @@
         "conference": "Tier",
         "tier": "26_50",
         "program_band": "26_50",
-        "schedule_score": 93.7,
+        "schedule_score": 93.8,
         "schedule_percentile": null,
-        "added_wab": 0.506,
-        "projected_adj_em": 8.26,
+        "added_wab": 0.505,
+        "projected_adj_em": 8.24,
         "wab_adj_em": 18.88,
         "is_placeholder": true
       },
@@ -11477,10 +11477,10 @@
         "conference": "Tier",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 125.1,
+        "schedule_score": 125.2,
         "schedule_percentile": null,
         "added_wab": 0.373,
-        "projected_adj_em": 3.96,
+        "projected_adj_em": 3.95,
         "wab_adj_em": 13.04,
         "is_placeholder": true
       },
@@ -11503,7 +11503,7 @@
         "conference": "Tier",
         "tier": "101_135",
         "program_band": "101_135",
-        "schedule_score": 159.1,
+        "schedule_score": 159.2,
         "schedule_percentile": null,
         "added_wab": 0.249,
         "projected_adj_em": 0.63,
