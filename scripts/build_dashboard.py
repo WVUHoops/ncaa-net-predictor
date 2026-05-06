@@ -293,6 +293,7 @@ def slim_schedule_row(
         "team": row.get("team"),
         "team_key": row.get("team_key"),
         "conference": row.get("conference"),
+        "projected_coach": row.get("projected_coach"),
         "tier": tier_source,
         "projected_net_tier": tier_source,
         "program_band": program_band_source,
@@ -302,6 +303,7 @@ def slim_schedule_row(
         "added_wab": added_wab_proxy(schedule_score_source),
         "projected_adj_em": projected_adj_em,
         "wab_adj_em": round(max(wab_adj_candidates), 2) if wab_adj_candidates else None,
+        "roster_known_players": compact_float(row.get("roster_known_players"), 0),
     }
 
 
@@ -502,11 +504,74 @@ def build_ncsos_calibration() -> dict[str, Any] | None:
     }
 
 
+def host_roster_card(
+    host_projection: dict[str, Any] | None,
+    host_name: str,
+    roster_status_rows: list[dict[str, str]],
+    transfer_player_rows: list[dict[str, str]],
+    on3_feature_rows: list[dict[str, str]],
+) -> dict[str, Any]:
+    host_key = canonical_team_name(host_name)
+    probable_returners = sorted(
+        [
+            {
+                "name": row.get("player_name"),
+                "class_year": row.get("class_year"),
+                "position": row.get("position"),
+            }
+            for row in roster_status_rows
+            if canonical_team_name(row.get("team_market")) == host_key
+            and row.get("status") == "probable_returner"
+        ],
+        key=lambda row: (row.get("name") or ""),
+    )
+    incoming_transfers = sorted(
+        [
+            {
+                "name": row.get("player_name"),
+                "source_team": row.get("source_team"),
+            }
+            for row in transfer_player_rows
+            if canonical_team_name(row.get("team")) == host_key and row.get("season") == "2027"
+        ],
+        key=lambda row: (row.get("name") or ""),
+    )
+    on3_row = next(
+        (
+            row
+            for row in on3_feature_rows
+            if canonical_team_name(row.get("team")) == host_key and row.get("season") == "2027"
+        ),
+        {},
+    )
+    known_players = int(as_float((host_projection or {}).get("roster_known_players")) or 0)
+    hs_commits = int(as_float(on3_row.get("on3_hs_commits")) or 0)
+    on3_transfers = int(as_float(on3_row.get("on3_transfer_transfers_in")) or 0)
+    return {
+        "team": host_name,
+        "projected_net_rank": compact_float((host_projection or {}).get("projected_net_rank"), 0),
+        "projected_net_tier": (host_projection or {}).get("projected_net_tier"),
+        "projected_coach": (host_projection or {}).get("projected_coach"),
+        "known_players": known_players,
+        "missing_slots": max(13 - known_players, 0),
+        "on3_hs_commits": hs_commits,
+        "on3_transfer_transfers_in": on3_transfers,
+        "incoming_cbb_transfer_players": len(incoming_transfers),
+        "probable_returners": probable_returners,
+        "incoming_transfers": incoming_transfers,
+        "on3_hs_source_file": on3_row.get("on3_hs_source_file"),
+        "on3_transfer_source_file": on3_row.get("on3_transfer_source_file"),
+    }
+
+
 def build_payload(args: argparse.Namespace) -> dict[str, Any]:
     risk_rows = read_csv(args.risk_board_csv)
     metric_rows = read_csv(args.metrics_csv)
     coefficient_rows = read_csv(args.coefficients_csv)
     rating_rows = read_json(args.kenpom_ratings_json)
+    roster_status_rows = read_csv(args.roster_status_csv)
+    transfer_player_rows = read_csv(args.transfer_players_csv)
+    on3_feature_rows = read_csv(args.on3_features_csv)
     adj_em_by_rank = sorted(
         [value for value in (as_float(row.get("AdjEM")) for row in rating_rows) if value is not None],
         reverse=True,
@@ -559,6 +624,13 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
     )
     projections_by_team = {canonical_team_name(row.get("team")): row for row in planner_rows}
     slimmed_risk_rows = [slim_risk_row(row, projections_by_team, host_row) for row in risk_rows]
+    host_card = host_roster_card(
+        host_row,
+        args.planner_host,
+        roster_status_rows,
+        transfer_player_rows,
+        on3_feature_rows,
+    )
     planner_overrides_by_team = {
         canonical_team_name(row.get("team")): row for row in slimmed_risk_rows
     }
@@ -628,6 +700,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
             "host": args.planner_host,
             "model": args.planner_model,
             "host_projection": host_row,
+            "host_card": host_card,
             "teams": planner_placeholder_rows + planner_rows,
             "placeholder_teams": planner_placeholder_rows,
             "bubble_adj_em": bubble_adj_em,
@@ -1081,6 +1154,47 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       font-size: 13px;
       line-height: 1.35;
     }}
+    .host-card-grid {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 12px;
+      margin-top: 8px;
+      font-size: 13px;
+    }}
+    .host-card-grid span {{
+      color: var(--muted);
+      display: block;
+      font-size: 12px;
+    }}
+    .host-card-grid strong {{
+      display: block;
+      font-size: 16px;
+      margin: 2px 0 0;
+    }}
+    .host-card-section {{
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }}
+    .host-card-section h3 {{
+      margin: 0 0 6px;
+      font-size: 13px;
+      color: var(--wvu-blue);
+      text-transform: uppercase;
+    }}
+    .host-card-list {{
+      margin: 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 4px;
+      font-size: 13px;
+    }}
+    .host-card-note {{
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }}
     .planner-table table {{ min-width: 900px; }}
     .planner-table input, .planner-table select {{
       min-width: 145px;
@@ -1246,6 +1360,44 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <datalist id="opponentList"></datalist>
         </div>
         <aside class="planner-summary" aria-label="Schedule projection summary">
+          <div class="planner-metric">
+            <strong id="hostProjectionTitle">WVU Projection</strong>
+            <div class="host-card-grid">
+              <div>
+                <span>Projected NET</span>
+                <strong id="hostProjectedRank">—</strong>
+              </div>
+              <div>
+                <span>Tier</span>
+                <strong id="hostProjectedTier">—</strong>
+              </div>
+              <div>
+                <span>Coach</span>
+                <strong id="hostProjectedCoach">—</strong>
+              </div>
+              <div>
+                <span>Known roster spots</span>
+                <strong id="hostKnownPlayers">—</strong>
+              </div>
+              <div>
+                <span>On3 HS commits</span>
+                <strong id="hostHsCommits">—</strong>
+              </div>
+              <div>
+                <span>Transfers seen</span>
+                <strong id="hostTransferCounts">—</strong>
+              </div>
+            </div>
+            <div class="host-card-section">
+              <h3>Named Returners In Model</h3>
+              <ul class="host-card-list" id="hostReturners"></ul>
+            </div>
+            <div class="host-card-section">
+              <h3>Named Incoming Transfers In Model</h3>
+              <ul class="host-card-list" id="hostTransfers"></ul>
+            </div>
+            <div class="host-card-note" id="hostProjectionNote">—</div>
+          </div>
           <div class="planner-metric">
             <strong id="plannerGames">0</strong>
             <span>Non-conference games</span>
@@ -1426,6 +1578,43 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       }} else {{
         transfer.textContent = "Transfer data: missing";
       }}
+    }}
+
+    function renderHostProjectionCard() {{
+      const card = payload.planner?.host_card || {{}};
+      const team = card.team || payload.planner?.host || "Host";
+      document.getElementById("hostProjectionTitle").textContent = `${{team}} Projection`;
+      document.getElementById("hostProjectedRank").textContent = card.projected_net_rank ? `#${{card.projected_net_rank}}` : "—";
+      document.getElementById("hostProjectedTier").textContent = card.projected_net_tier ? tierLabel(card.projected_net_tier) : "—";
+      document.getElementById("hostProjectedCoach").textContent = text(card.projected_coach);
+      document.getElementById("hostKnownPlayers").textContent =
+        card.known_players !== null && card.known_players !== undefined
+          ? `${{card.known_players}} known / ${{Math.max(0, Number(card.missing_slots || 0))}} open`
+          : "—";
+      document.getElementById("hostHsCommits").textContent =
+        card.on3_hs_commits !== null && card.on3_hs_commits !== undefined
+          ? String(card.on3_hs_commits)
+          : "—";
+      const on3Transfers = Number(card.on3_transfer_transfers_in || 0);
+      const cbbTransfers = Number(card.incoming_cbb_transfer_players || 0);
+      document.getElementById("hostTransferCounts").textContent = `On3 ${{on3Transfers}} | CBB ${{cbbTransfers}}`;
+
+      const returners = Array.isArray(card.probable_returners) ? card.probable_returners : [];
+      const transfers = Array.isArray(card.incoming_transfers) ? card.incoming_transfers : [];
+      document.getElementById("hostReturners").innerHTML = returners.length
+        ? returners.map(player => `<li>${{escapeHtml(player.name || "Unknown")}}${{player.position ? ` (${{escapeHtml(player.position)}})` : ""}}</li>`).join("")
+        : "<li>None currently named in model</li>";
+      document.getElementById("hostTransfers").innerHTML = transfers.length
+        ? transfers.map(player => `<li>${{escapeHtml(player.name || "Unknown")}}${{player.source_team ? ` <span style=\"color:var(--muted)\">from ${{escapeHtml(player.source_team)}}</span>` : ""}}</li>`).join("")
+        : "<li>No named transfers currently matched</li>";
+
+      const hsSource = String(card.on3_hs_source_file || "").match(/(\\d{{4}}-\\d{{2}}-\\d{{2}})/)?.[1];
+      const transferSource = String(card.on3_transfer_source_file || "").match(/(\\d{{4}}-\\d{{2}}-\\d{{2}})/)?.[1];
+      const notes = [];
+      if (hsSource) notes.push(`HS source ${{hsSource}}`);
+      if (transferSource) notes.push(`On3 transfer source ${{transferSource}}`);
+      notes.push("HS commits are counted in aggregate, not listed by player name here.");
+      document.getElementById("hostProjectionNote").textContent = notes.join(" | ");
     }}
 
     function setSort(key, dir) {{
@@ -1819,6 +2008,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
 
     function init() {{
       initTimestamp();
+      renderHostProjectionCard();
       document.querySelectorAll(".tab-button").forEach(button => {{
         button.addEventListener("click", () => setActiveTab(button.dataset.tab));
       }});
@@ -1912,6 +2102,24 @@ def parse_args() -> argparse.Namespace:
         "--planner-model",
         default="direct_ridge_schedule_building",
         help="Current-season projection model used by the schedule planner.",
+    )
+    parser.add_argument(
+        "--roster-status-csv",
+        type=Path,
+        default=PROJECT_ROOT / "data" / "processed" / "roster_status" / "player_roster_status_2026.csv",
+        help="Current-season roster status file used for the planner host roster card.",
+    )
+    parser.add_argument(
+        "--transfer-players-csv",
+        type=Path,
+        default=PROJECT_ROOT / "data" / "processed" / "transfer_features" / "current" / "cbb_incoming_transfer_players.csv",
+        help="Incoming transfer player file used for the planner host roster card.",
+    )
+    parser.add_argument(
+        "--on3-features-csv",
+        type=Path,
+        default=PROJECT_ROOT / "data" / "processed" / "on3_features" / "on3_incoming_talent_features.csv",
+        help="Processed On3 feature table used for the planner host roster card.",
     )
     parser.add_argument(
         "--output-dir",

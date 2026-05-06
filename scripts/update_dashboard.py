@@ -42,6 +42,10 @@ def current_player_roster_status_csv() -> Path:
     )
 
 
+def has_existing_current_roster_status() -> bool:
+    return current_player_roster_status_csv().exists()
+
+
 def latest_transfer_ledger_csv() -> Path | None:
     directories = [
         PROJECT_ROOT / "data" / "raw" / "cbb_analytics" / "transfer_portal" / "current",
@@ -163,6 +167,18 @@ def main() -> int:
                     "2026",
                 ]
             )
+        elif has_existing_current_roster_status():
+            print(
+                "warning: no current CBB player aggregate snapshot found; reusing existing roster-status snapshot",
+                file=sys.stderr,
+            )
+        else:
+            print(
+                "warning: no current CBB player aggregate snapshot found and no existing roster-status snapshot is available",
+                file=sys.stderr,
+            )
+
+        if has_existing_current_roster_status():
             transfer_ledger_csv = latest_transfer_ledger_csv()
             transfer_command = [
                 "python3",
@@ -189,11 +205,7 @@ def main() -> int:
                     file=sys.stderr,
                 )
                 transfer_command.append("--current-roster-transfers")
-            run_step(
-                transfer_command
-            )
-        else:
-            print("warning: no current CBB player aggregate snapshot found; skipping roster status")
+            run_step(transfer_command)
 
     run_step(["python3", "scripts/predict_current_season.py"])
     if args.skip_upset_risk:

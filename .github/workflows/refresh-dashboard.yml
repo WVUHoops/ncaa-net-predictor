@@ -103,7 +103,29 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dashboard/index.html dashboard/dashboard_payload.json data/processed/upset_risk/current_2027_guarantee_risk_board.csv data/processed/upset_risk/model_coefficients.csv data/processed/upset_risk/rolling_metrics.csv
+          git add \
+            dashboard/index.html \
+            dashboard/dashboard_payload.json \
+            data/raw/on3/hs/2026 \
+            data/raw/on3/transfer/2026 \
+            data/raw/hoopdirt/coaching_changes \
+            data/raw/cbb_analytics/transfer_portal/current \
+            data/raw/cbb_analytics/v1/player-agg-box/stats_player_agg_box_competition_41097_v1_2026-04-13.csv \
+            data/raw/cbb_analytics/v1/player-agg-box/stats_player_agg_box_competition_41097_v1_2026-04-13.json \
+            data/raw/cbb_analytics/v1/competition-team-players/competition_team_players_competition_41097_v1_2026-04-13.csv \
+            data/raw/cbb_analytics/v1/competition-team-players/competition_team_players_competition_41097_v1_2026-04-13.json \
+            data/processed/on3_features/on3_incoming_talent_features.csv \
+            data/processed/on3_features/on3_incoming_talent_features.json \
+            data/processed/roster_status/player_roster_status_2026.csv \
+            data/processed/roster_status/player_roster_status_2026.json \
+            data/processed/roster_status/team_roster_summary_2026.csv \
+            data/processed/roster_status/team_roster_summary_2026.json \
+            data/processed/transfer_features/current \
+            data/processed/predictions/current_2027_schedule_predictions.csv \
+            data/processed/predictions/current_2027_schedule_predictions.json \
+            data/processed/upset_risk/current_2027_guarantee_risk_board.csv \
+            data/processed/upset_risk/model_coefficients.csv \
+            data/processed/upset_risk/rolling_metrics.csv
           if git diff --cached --quiet; then
             echo "No dashboard changes to commit."
           else

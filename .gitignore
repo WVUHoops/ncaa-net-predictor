@@ -26,6 +26,16 @@ data/raw/kenpom/2026/*
 
 !data/raw/cbb_analytics/
 data/raw/cbb_analytics/*
+!data/raw/cbb_analytics/v1/
+data/raw/cbb_analytics/v1/*
+!data/raw/cbb_analytics/v1/player-agg-box/
+data/raw/cbb_analytics/v1/player-agg-box/*
+!data/raw/cbb_analytics/v1/player-agg-box/stats_player_agg_box_competition_41097_v1_*.csv
+!data/raw/cbb_analytics/v1/player-agg-box/stats_player_agg_box_competition_41097_v1_*.json
+!data/raw/cbb_analytics/v1/competition-team-players/
+data/raw/cbb_analytics/v1/competition-team-players/*
+!data/raw/cbb_analytics/v1/competition-team-players/competition_team_players_competition_41097_v1_*.csv
+!data/raw/cbb_analytics/v1/competition-team-players/competition_team_players_competition_41097_v1_*.json
 !data/raw/cbb_analytics/transfer_portal/
 data/raw/cbb_analytics/transfer_portal/*
 !data/raw/cbb_analytics/transfer_portal/README.md
@@ -33,6 +43,34 @@ data/raw/cbb_analytics/transfer_portal/*
 data/raw/cbb_analytics/transfer_portal/current/*
 !data/raw/cbb_analytics/transfer_portal/current/.gitkeep
 !data/raw/cbb_analytics/transfer_portal/current/*.csv
+!data/raw/cbb_analytics/transfer_portal/current/*.json
+
+!data/raw/on3/
+data/raw/on3/*
+!data/raw/on3/hs/
+data/raw/on3/hs/*
+!data/raw/on3/hs/2026/
+data/raw/on3/hs/2026/*
+!data/raw/on3/hs/2026/*.csv
+!data/raw/on3/hs/2026/*.json
+!data/raw/on3/transfer/
+data/raw/on3/transfer/*
+!data/raw/on3/transfer/2026/
+data/raw/on3/transfer/2026/*
+!data/raw/on3/transfer/2026/*.csv
+!data/raw/on3/transfer/2026/*.json
+
+!data/raw/hoopdirt/
+data/raw/hoopdirt/*
+!data/raw/hoopdirt/coaching_changes/
+data/raw/hoopdirt/coaching_changes/*
+!data/raw/hoopdirt/coaching_changes/hoopdirt_d1_coaching_changes_2026_*.csv
+!data/raw/hoopdirt/coaching_changes/hoopdirt_d1_coaching_changes_2026_*.json
+
+!data/processed/on3_features/
+data/processed/on3_features/*
+!data/processed/on3_features/on3_incoming_talent_features.csv
+!data/processed/on3_features/on3_incoming_talent_features.json
 
 !data/processed/modeling/
 data/processed/modeling/*
@@ -57,7 +95,22 @@ data/processed/coach_features/*
 
 !data/processed/roster_status/
 data/processed/roster_status/*
+!data/processed/roster_status/player_roster_status_2026.csv
+!data/processed/roster_status/player_roster_status_2026.json
 !data/processed/roster_status/team_roster_summary_2026.csv
+!data/processed/roster_status/team_roster_summary_2026.json
+
+!data/processed/transfer_features/
+data/processed/transfer_features/*
+!data/processed/transfer_features/current/
+data/processed/transfer_features/current/*
+!data/processed/transfer_features/current/*.csv
+!data/processed/transfer_features/current/*.json
+
+!data/processed/predictions/
+data/processed/predictions/*
+!data/processed/predictions/current_2027_schedule_predictions.csv
+!data/processed/predictions/current_2027_schedule_predictions.json
 
 !data/processed/upset_risk/
 data/processed/upset_risk/*
