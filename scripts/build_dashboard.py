@@ -237,14 +237,16 @@ def slim_risk_row(
         "coach_signal": coach_signal_bucket(row.get("coach_upset_lift_pp")),
         "conference": row.get("conference"),
         "tier": row.get("opponent_quality_tier"),
+        "projected_net_tier": row.get("projected_net_tier") or row.get("opponent_quality_tier"),
         "program_band": row.get("program_consistency_band"),
         "upset_pct": upset_pct,
         "risk_bucket": risk_bucket,
         "risk_sort": risk_sort_value(risk_bucket),
         "recommendation": row.get("recommendation"),
         "danger_index": compact_float(row.get("danger_index"), 4),
-        "schedule_score": compact_float(row.get("schedule_score_rank"), 1),
-        "added_wab": added_wab_proxy(row.get("schedule_score_rank")),
+        "projected_net_rank": compact_float(row.get("projected_net_rank") or row.get("schedule_score_rank"), 1),
+        "schedule_score": compact_float(row.get("projected_net_rank") or row.get("schedule_score_rank"), 1),
+        "added_wab": added_wab_proxy(row.get("projected_net_rank") or row.get("schedule_score_rank")),
         "three_rate": compact_float(row.get("away_three_point_attempt_rate"), 1),
         "experience": compact_float(row.get("away_experience"), 2),
         "adj_em": compact_float(row.get("away_adj_em"), 1),
@@ -263,9 +265,23 @@ def slim_schedule_row(
     override: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     schedule_score_source = (
-        override.get("schedule_score") if override and override.get("schedule_score") is not None else row.get("schedule_score_rank")
+        override.get("projected_net_rank")
+        if override and override.get("projected_net_rank") is not None
+        else override.get("schedule_score")
+        if override and override.get("schedule_score") is not None
+        else row.get("projected_net_rank")
+        if row.get("projected_net_rank") is not None
+        else row.get("schedule_score_rank")
     )
-    tier_source = override.get("tier") if override and override.get("tier") else row.get("opponent_quality_tier")
+    tier_source = (
+        override.get("projected_net_tier")
+        if override and override.get("projected_net_tier")
+        else override.get("tier")
+        if override and override.get("tier")
+        else row.get("projected_net_tier")
+        if row.get("projected_net_tier")
+        else row.get("opponent_quality_tier")
+    )
     program_band_source = (
         override.get("program_band") if override and override.get("program_band") else row.get("program_consistency_band")
     )
@@ -278,7 +294,9 @@ def slim_schedule_row(
         "team_key": row.get("team_key"),
         "conference": row.get("conference"),
         "tier": tier_source,
+        "projected_net_tier": tier_source,
         "program_band": program_band_source,
+        "projected_net_rank": rank,
         "schedule_score": rank,
         "schedule_percentile": compact_float(row.get("schedule_score_percentile"), 3),
         "added_wab": added_wab_proxy(schedule_score_source),
@@ -1601,15 +1619,21 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       return 1 + benchmarks.filter(value => Number(value) > avgOpponentAdjEm).length;
     }}
 
-    function ncsosOpponentAdjEm(opponent, location) {{
+    function ncsosBaseAdjEm(opponent) {{
       const raw = Number(opponent?.projected_adj_em);
+      if (Number.isFinite(raw)) return raw;
+      return null;
+    }}
+
+    function ncsosOpponentAdjEm(opponent, location) {{
+      const raw = ncsosBaseAdjEm(opponent);
       if (!Number.isFinite(raw)) return null;
       const locationAdjustment = location === "Home" ? -3.5 : location === "Away" ? 3.5 : 0;
       return raw + locationAdjustment;
     }}
 
-    function plannerRankValue(opponent) {{
-      const value = Number(opponent?.schedule_score);
+    function plannerProjectedRank(opponent) {{
+      const value = Number(opponent?.projected_net_rank ?? opponent?.schedule_score);
       return Number.isFinite(value) ? value : null;
     }}
 
@@ -1621,7 +1645,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         buy301: 0
       }};
       validGames.forEach(item => {{
-        const rank = plannerRankValue(item.opponent);
+        const rank = plannerProjectedRank(item.opponent);
         if (!Number.isFinite(rank)) return;
         if (rank <= 100) summary.top100 += 1;
         if (rank <= 200) summary.top200 += 1;

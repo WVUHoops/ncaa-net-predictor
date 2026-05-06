@@ -767,10 +767,9 @@ def calibrated_band_predictions(predictions: list[dict[str, Any]]) -> list[dict[
                         predicted_rank <= threshold if predicted_rank is not None else False
                     )
                 output["calibrated_schedule_band"] = exclusive_band_from_flags(output, "calibrated")
-                output["opponent_quality_tier"] = stronger_band(
-                    output.get("calibrated_schedule_band"),
-                    output.get("program_consistency_band"),
-                )
+                output["projected_net_rank"] = predicted_rank
+                output["projected_net_tier"] = exclusive_band_from_rank(predicted_rank)
+                output["opponent_quality_tier"] = output["projected_net_tier"]
                 outputs.append(output)
             prior_rows.extend(season_rows)
     return outputs

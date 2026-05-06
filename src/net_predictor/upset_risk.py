@@ -1232,20 +1232,29 @@ def risk_bucket(probability: float) -> str:
     return "very_low"
 
 
-def schedule_value_from_band(band: str | None) -> int:
-    values = {
-        "top_25": 10,
-        "26_50": 9,
-        "51_75": 8,
-        "76_100": 7,
-        "101_135": 6,
-        "136_160": 5,
-        "161_200": 4,
-        "201_250": 3,
-        "251_300": 2,
-        "301_plus": 1,
-    }
-    return values.get(str(band or ""), 0)
+def schedule_value_from_rank(rank: Any) -> int:
+    parsed = as_float(rank)
+    if parsed is None:
+        return 0
+    if parsed <= 25:
+        return 10
+    if parsed <= 50:
+        return 9
+    if parsed <= 75:
+        return 8
+    if parsed <= 100:
+        return 7
+    if parsed <= 135:
+        return 6
+    if parsed <= 160:
+        return 5
+    if parsed <= 200:
+        return 4
+    if parsed <= 250:
+        return 3
+    if parsed <= 300:
+        return 2
+    return 1
 
 
 def recommendation(schedule_value: int, probability: float) -> str:
@@ -1385,8 +1394,10 @@ def current_risk_board(
             "team_key": team_key,
             "conference": schedule_row.get("conference") or away.get("conference"),
             "projected_coach": schedule_row.get("projected_coach"),
+            "projected_net_rank": as_float(schedule_row.get("projected_net_rank") or schedule_row.get("schedule_score_rank")),
             "schedule_score_rank": as_float(schedule_row.get("schedule_score_rank")),
             "schedule_score_percentile": as_float(schedule_row.get("schedule_score_percentile")),
+            "projected_net_tier": schedule_row.get("projected_net_tier") or schedule_row.get("opponent_quality_tier"),
             "opponent_quality_tier": schedule_row.get("opponent_quality_tier"),
             "program_consistency_band": schedule_row.get("program_consistency_band"),
             "incoming_on3_hs_rank": schedule_row.get("incoming_on3_hs_rank"),
@@ -1434,7 +1445,9 @@ def current_risk_board(
         coach_neutral_probabilities,
         strict=True,
     ):
-        schedule_value = schedule_value_from_band(str(row.get("opponent_quality_tier") or ""))
+        schedule_value = schedule_value_from_rank(
+            row.get("projected_net_rank") or row.get("schedule_score_rank")
+        )
         coach_lift = probability - coach_neutral_probability
         row["upset_probability_vs_median_high_major"] = probability
         row["coach_neutral_upset_probability"] = coach_neutral_probability

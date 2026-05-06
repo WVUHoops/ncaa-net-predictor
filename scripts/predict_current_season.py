@@ -19,18 +19,18 @@ from backtest_models import SCHEDULE_BUILDING_PREFIXES  # noqa: E402
 from net_predictor.backtest import (  # noqa: E402
     ModelConfig,
     as_float,
+    baseline_prediction,
     best_band_threshold,
     config_feature_columns,
+    exclusive_band_from_rank,
     exclusive_band_from_flags,
     fit_boosted_trees,
     fit_ridge,
-    model_prediction_percentile,
     model_target,
+    percentile_from_rank,
     program_consistency_band,
-    rank_from_percentile,
     read_csv_rows,
     select_feature_columns,
-    stronger_band,
     target_rows,
     with_forced_features,
     write_csv,
@@ -286,6 +286,31 @@ def fit_model(config: ModelConfig, train_rows: list[dict[str, Any]], max_feature
     return model, columns
 
 
+def model_prediction_score(row: dict[str, Any], model: Any, mode: str) -> float:
+    score = model.predict(row)
+    if mode == "residual":
+        _, baseline_percentile = baseline_prediction(row)
+        score += baseline_percentile
+    elif mode != "direct":
+        raise ValueError(f"Unsupported model mode: {mode}")
+    return score
+
+
+def assign_ordinal_ranks(rows: list[dict[str, Any]], teams_ranked: int) -> list[dict[str, Any]]:
+    ranked_rows = sorted(
+        rows,
+        key=lambda row: (-(as_float(row.get("projected_net_score")) or 0.0), str(row.get("team") or "")),
+    )
+    outputs = []
+    for index, row in enumerate(ranked_rows, start=1):
+        output = dict(row)
+        output["schedule_score_rank"] = float(index)
+        output["projected_net_rank"] = float(index)
+        output["schedule_score_percentile"] = percentile_from_rank(float(index), teams_ranked)
+        outputs.append(output)
+    return outputs
+
+
 def model_outputs(
     rows: list[dict[str, Any]],
     train_rows: list[dict[str, Any]],
@@ -298,8 +323,7 @@ def model_outputs(
         model, columns = fit_model(config, train_rows, max_features)
         model_rows = []
         for row in rows:
-            percentile = model_prediction_percentile(row, model, config.mode)
-            rank = rank_from_percentile(percentile, teams_ranked)
+            score = model_prediction_score(row, model, config.mode)
             model_rows.append(
                 {
                     "model": config.name,
@@ -308,8 +332,7 @@ def model_outputs(
                     "team_key": row["team_key"],
                     "conference": row.get("conference"),
                     "projected_coach": row.get("coach_coach"),
-                    "schedule_score_rank": rank,
-                    "schedule_score_percentile": percentile,
+                    "projected_net_score": score,
                     "program_consistency_band": program_consistency_band(row),
                     "feature_count": len(columns),
                     "train_rows": len(train_rows),
@@ -392,23 +415,21 @@ def model_outputs(
                     "incoming_cbb_transfer_minutes": row.get("incoming_cbb_transfer_minutes"),
                 }
             )
-        outputs[config.name] = model_rows
+        outputs[config.name] = assign_ordinal_ranks(model_rows, teams_ranked)
 
     for blend_name, components in CURRENT_BLEND_MODELS.items():
         blend_rows = []
-        for index, row in enumerate(rows):
+        for index, _row in enumerate(rows):
             component_rows = [outputs[component][index] for component in components]
-            percentile = sum(as_float(item["schedule_score_percentile"]) or 0.0 for item in component_rows) / len(
+            score = sum(as_float(item.get("projected_net_score")) or 0.0 for item in component_rows) / len(
                 component_rows
             )
-            rank = rank_from_percentile(percentile, teams_ranked)
             blend = dict(component_rows[0])
             blend["model"] = blend_name
-            blend["schedule_score_rank"] = rank
-            blend["schedule_score_percentile"] = percentile
+            blend["projected_net_score"] = score
             blend["feature_count"] = sum(int(as_float(item.get("feature_count")) or 0) for item in component_rows)
             blend_rows.append(blend)
-        outputs[blend_name] = blend_rows
+        outputs[blend_name] = assign_ordinal_ranks(blend_rows, teams_ranked)
 
     return outputs
 
@@ -426,14 +447,13 @@ def add_calibrated_bands(
         rank = as_float(output.get("schedule_score_rank"))
         if rank is None:
             rank = as_float(output.get("predicted_net_rank"))
+        output["projected_net_rank"] = rank
         for band, threshold in thresholds.items():
             output[f"calibrated_threshold_top_{band}"] = threshold
             output[f"calibrated_top_{band}"] = rank <= threshold if rank is not None else False
         output["calibrated_schedule_band"] = exclusive_band_from_flags(output, "calibrated")
-        output["opponent_quality_tier"] = stronger_band(
-            output.get("calibrated_schedule_band"),
-            output.get("program_consistency_band"),
-        )
+        output["projected_net_tier"] = exclusive_band_from_rank(rank)
+        output["opponent_quality_tier"] = output["projected_net_tier"]
         outputs.append(output)
     return outputs
 
