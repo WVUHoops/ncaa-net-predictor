@@ -53,6 +53,12 @@ data/raw/on3/hs/*
 data/raw/on3/hs/2026/*
 !data/raw/on3/hs/2026/*.csv
 !data/raw/on3/hs/2026/*.json
+!data/raw/on3/hs_commits/
+data/raw/on3/hs_commits/*
+!data/raw/on3/hs_commits/2026/
+data/raw/on3/hs_commits/2026/*
+!data/raw/on3/hs_commits/2026/*.csv
+!data/raw/on3/hs_commits/2026/*.json
 !data/raw/on3/transfer/
 data/raw/on3/transfer/*
 !data/raw/on3/transfer/2026/
@@ -71,6 +77,8 @@ data/raw/hoopdirt/coaching_changes/*
 data/processed/on3_features/*
 !data/processed/on3_features/on3_incoming_talent_features.csv
 !data/processed/on3_features/on3_incoming_talent_features.json
+!data/processed/on3_features/on3_hs_recruit_players.csv
+!data/processed/on3_features/on3_hs_recruit_players.json
 
 !data/processed/modeling/
 data/processed/modeling/*

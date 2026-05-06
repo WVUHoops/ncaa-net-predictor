@@ -144,6 +144,15 @@ def main() -> int:
         run_step(
             [
                 "python3",
+                "scripts/fetch_on3_hs_commit_players.py",
+                "--year",
+                str(args.on3_year),
+            ],
+            required=False,
+        )
+        run_step(
+            [
+                "python3",
                 "scripts/fetch_hoopdirt_coaching_changes.py",
                 "--season",
                 "2026",

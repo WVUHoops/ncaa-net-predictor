@@ -19,6 +19,10 @@ SRC_DIR = PROJECT_ROOT / "src"
 sys.path.insert(0, str(SRC_DIR))
 
 from net_predictor.upset_risk import schedule_team_key  # noqa: E402
+from net_predictor.model_table import (
+    classify_position,
+    hs_rank_bucket,
+)
 
 HOME_COURT_ADJ_EM = 3.5
 WIN_PROBABILITY_SCALE = 6.5
@@ -108,6 +112,10 @@ def added_wab_proxy(schedule_score_rank: Any) -> float | None:
 
 def canonical_team_name(value: Any) -> str:
     return str(value or "").strip().lower().replace(".", "")
+
+
+def normalize_player_name(value: Any) -> str:
+    return re.sub(r"[^a-z0-9]+", "", str(value or "").lower())
 
 
 def tier_label(value: Any) -> str:
@@ -510,14 +518,77 @@ def host_roster_card(
     roster_status_rows: list[dict[str, str]],
     transfer_player_rows: list[dict[str, str]],
     on3_feature_rows: list[dict[str, str]],
+    on3_hs_recruit_player_rows: list[dict[str, str]],
 ) -> dict[str, Any]:
     host_key = canonical_team_name(host_name)
+    prior_player_index: dict[tuple[int, str, str], dict[str, str]] = {}
+    team_minutes_index: dict[tuple[int, str], float] = {}
+    for row in roster_status_rows:
+        season = int(as_float(row.get("season")) or 2026)
+        team = canonical_team_name(row.get("team_market") or row.get("team_name"))
+        if not season or not team:
+            continue
+        team_minutes_index[(season, team)] = team_minutes_index.get((season, team), 0.0) + (
+            as_float(row.get("minutes")) or 0.0
+        )
+        name_key = normalize_player_name(row.get("player_name"))
+        if name_key:
+            prior_player_index[(season, team, name_key)] = row
+    current_team_minutes = team_minutes_index.get((2026, host_key), 0.0) or 0.0
+
+    def role_share_to_score(role_share: float | None) -> float:
+        if role_share is None:
+            return 0.0
+        return max(role_share, 0.0)
+
+    def transfer_base_share(transfer_row: dict[str, str]) -> float:
+        source_total = (
+            team_minutes_index.get(
+                (int(as_float(transfer_row.get("source_season")) or 0), canonical_team_name(transfer_row.get("source_team")))
+            )
+            or 1.0
+        )
+        source_share = (as_float(transfer_row.get("minutes")) or 0.0) / source_total
+        context = as_float(transfer_row.get("source_context_multiplier")) or 1.0
+        context_scale = min(max(context, 0.65), 1.35) ** 0.5
+        return min(max(source_share * context_scale * 0.78, 0.03), 0.24)
+
+    def hs_base_share(player_row: dict[str, str]) -> float:
+        rank = as_float(player_row.get("industry_rank"))
+        bucket = hs_rank_bucket(rank)
+        position = classify_position(player_row.get("position_abbr") or player_row.get("position"))
+        base_by_bucket = {
+            "top25": 0.11,
+            "26_50": 0.073,
+            "51_100": 0.058,
+            "101_150": 0.048,
+            "151_250": 0.05,
+            "251_plus": 0.053,
+            "unranked": 0.053,
+        }
+        position_adjustment = {
+            "pg": 0.012,
+            "guard": 0.004,
+            "wing": 0.0,
+            "forward": -0.004,
+            "big": -0.01,
+        }
+        return max(0.02, base_by_bucket.get(bucket, 0.053) + position_adjustment.get(position, 0.0))
+
+    projected_players: list[dict[str, Any]] = []
     probable_returners = sorted(
         [
             {
                 "name": row.get("player_name"),
                 "class_year": row.get("class_year"),
                 "position": row.get("position"),
+                "source_label": host_name,
+                "origin_type": "returner",
+                "projected_role_share": (
+                    ((as_float(row.get("minutes")) or 0.0) / current_team_minutes)
+                    if current_team_minutes > 0
+                    else None
+                ),
             }
             for row in roster_status_rows
             if canonical_team_name(row.get("team_market")) == host_key
@@ -525,16 +596,114 @@ def host_roster_card(
         ],
         key=lambda row: (row.get("name") or ""),
     )
+    for row in probable_returners:
+        row["position_bucket"] = classify_position(row.get("position"))
+        row["projected_role_score"] = role_share_to_score(row.get("projected_role_share"))
+        projected_players.append(row)
     incoming_transfers = sorted(
         [
             {
                 "name": row.get("player_name"),
                 "source_team": row.get("source_team"),
+                "position": (
+                    prior_player_index.get(
+                        (
+                            int(as_float(row.get("source_season")) or 0),
+                            canonical_team_name(row.get("source_team")),
+                            normalize_player_name(row.get("player_name")),
+                        ),
+                        {},
+                    ).get("position")
+                ),
+                "source_label": row.get("source_team"),
+                "origin_type": "transfer",
+                "projected_role_share": transfer_base_share(row),
             }
             for row in transfer_player_rows
             if canonical_team_name(row.get("team")) == host_key and row.get("season") == "2027"
         ],
         key=lambda row: (row.get("name") or ""),
+    )
+    for row in incoming_transfers:
+        row["position_bucket"] = classify_position(row.get("position"))
+        row["projected_role_score"] = role_share_to_score(row.get("projected_role_share"))
+        projected_players.append(row)
+    incoming_hs_recruits = sorted(
+        [
+            {
+                "name": row.get("player_name"),
+                "position": row.get("position_abbr") or row.get("position"),
+                "industry_rank": compact_float(row.get("industry_rank"), 0),
+                "source_label": row.get("high_school"),
+                "origin_type": "hs",
+                "projected_role_share": hs_base_share(row),
+            }
+            for row in on3_hs_recruit_player_rows
+            if canonical_team_name(row.get("team")) == host_key and row.get("season") == "2027"
+        ],
+        key=lambda row: (as_float(row.get("industry_rank")) or 9999, row.get("name") or ""),
+    )
+    for row in incoming_hs_recruits:
+        row["position_bucket"] = classify_position(row.get("position"))
+        row["projected_role_score"] = role_share_to_score(row.get("projected_role_share"))
+        projected_players.append(row)
+
+    def slot_bonus(player: dict[str, Any], slot_name: str) -> float:
+        bucket = player.get("position_bucket")
+        if slot_name == "PG":
+            return 0.035 if bucket == "pg" else 0.0
+        if slot_name == "SG":
+            return 0.02 if bucket in {"guard", "pg"} else 0.0
+        if slot_name == "Wing":
+            return 0.02 if bucket in {"wing", "forward"} else 0.0
+        if slot_name == "PF":
+            return 0.02 if bucket in {"forward", "big"} else 0.0
+        if slot_name == "C":
+            return 0.002 if bucket == "big" else 0.0
+        return 0.0
+
+    def choose_best(
+        candidates: list[dict[str, Any]],
+        allowed: set[str],
+        slot_name: str,
+    ) -> dict[str, Any] | None:
+        pool = [player for player in candidates if player.get("position_bucket") in allowed]
+        if not pool:
+            pool = list(candidates)
+        if not pool:
+            return None
+        return max(
+            pool,
+            key=lambda player: (
+                (as_float(player.get("projected_role_score")) or 0.0) + slot_bonus(player, slot_name),
+                -(as_float(player.get("industry_rank")) or 9999.0),
+                str(player.get("name") or ""),
+            ),
+        )
+
+    remaining = [dict(player) for player in projected_players]
+    starter_slots = [
+        ("PG", {"pg", "guard"}),
+        ("SG", {"guard", "pg", "wing"}),
+        ("Wing", {"wing", "forward", "guard"}),
+        ("PF", {"forward", "big", "wing"}),
+        ("C", {"big", "forward"}),
+    ]
+    starters: list[dict[str, Any]] = []
+    for slot_name, allowed in starter_slots:
+        chosen = choose_best(remaining, allowed, slot_name)
+        if chosen is None:
+            continue
+        chosen["starter_slot"] = slot_name
+        starters.append(chosen)
+        remaining = [player for player in remaining if player.get("name") != chosen.get("name")]
+    reserves = sorted(
+        remaining,
+        key=lambda player: (
+            -(as_float(player.get("projected_role_score")) or 0.0),
+            (as_float(player.get("industry_rank")) or 9999.0),
+            str(player.get("name") or ""),
+        ),
     )
     on3_row = next(
         (
@@ -557,8 +726,8 @@ def host_roster_card(
         "on3_hs_commits": hs_commits,
         "on3_transfer_transfers_in": on3_transfers,
         "incoming_cbb_transfer_players": len(incoming_transfers),
-        "probable_returners": probable_returners,
-        "incoming_transfers": incoming_transfers,
+        "projected_starters": starters,
+        "projected_reserves": reserves,
         "on3_hs_source_file": on3_row.get("on3_hs_source_file"),
         "on3_transfer_source_file": on3_row.get("on3_transfer_source_file"),
     }
@@ -572,6 +741,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
     roster_status_rows = read_csv(args.roster_status_csv)
     transfer_player_rows = read_csv(args.transfer_players_csv)
     on3_feature_rows = read_csv(args.on3_features_csv)
+    on3_hs_recruit_player_rows = read_csv(args.on3_hs_recruit_players_csv)
     adj_em_by_rank = sorted(
         [value for value in (as_float(row.get("AdjEM")) for row in rating_rows) if value is not None],
         reverse=True,
@@ -630,6 +800,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         roster_status_rows,
         transfer_player_rows,
         on3_feature_rows,
+        on3_hs_recruit_player_rows,
     )
     planner_overrides_by_team = {
         canonical_team_name(row.get("team")): row for row in slimmed_risk_rows
@@ -1368,33 +1539,17 @@ def dashboard_html(payload: dict[str, Any]) -> str:
                 <strong id="hostProjectedRank">—</strong>
               </div>
               <div>
-                <span>Tier</span>
+                <span>Projected Tier</span>
                 <strong id="hostProjectedTier">—</strong>
               </div>
-              <div>
-                <span>Coach</span>
-                <strong id="hostProjectedCoach">—</strong>
-              </div>
-              <div>
-                <span>Known roster spots</span>
-                <strong id="hostKnownPlayers">—</strong>
-              </div>
-              <div>
-                <span>On3 HS commits</span>
-                <strong id="hostHsCommits">—</strong>
-              </div>
-              <div>
-                <span>Transfers seen</span>
-                <strong id="hostTransferCounts">—</strong>
-              </div>
             </div>
             <div class="host-card-section">
-              <h3>Named Returners In Model</h3>
-              <ul class="host-card-list" id="hostReturners"></ul>
+              <h3>Projected Starters</h3>
+              <ul class="host-card-list" id="hostStarters"></ul>
             </div>
             <div class="host-card-section">
-              <h3>Named Incoming Transfers In Model</h3>
-              <ul class="host-card-list" id="hostTransfers"></ul>
+              <h3>Projected Reserves</h3>
+              <ul class="host-card-list" id="hostReserves"></ul>
             </div>
             <div class="host-card-note" id="hostProjectionNote">—</div>
           </div>
@@ -1417,24 +1572,6 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <div class="planner-metric">
             <strong id="plannerAvgOpp">—</strong>
             <span>Avg opponent difficulty</span>
-          </div>
-          <div class="planner-metric">
-            <strong>Why It Lands There</strong>
-            <div class="planner-breakdown">
-              <div class="planner-breakdown-row">
-                <span>Quality games</span>
-                <strong id="plannerQualityBreakdown">—</strong>
-              </div>
-              <div class="planner-breakdown-row">
-                <span>Buy-game drag</span>
-                <strong id="plannerBuyBreakdown">—</strong>
-              </div>
-              <div class="planner-breakdown-row">
-                <span>Site mix</span>
-                <strong id="plannerSiteBreakdown">—</strong>
-              </div>
-            </div>
-            <div class="planner-breakdown-note" id="plannerBreakdownNote">—</div>
           </div>
         </aside>
       </div>
@@ -1586,34 +1723,29 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       document.getElementById("hostProjectionTitle").textContent = `${{team}} Projection`;
       document.getElementById("hostProjectedRank").textContent = card.projected_net_rank ? `#${{card.projected_net_rank}}` : "—";
       document.getElementById("hostProjectedTier").textContent = card.projected_net_tier ? tierLabel(card.projected_net_tier) : "—";
-      document.getElementById("hostProjectedCoach").textContent = text(card.projected_coach);
-      document.getElementById("hostKnownPlayers").textContent =
-        card.known_players !== null && card.known_players !== undefined
-          ? `${{card.known_players}} known / ${{Math.max(0, Number(card.missing_slots || 0))}} open`
-          : "—";
-      document.getElementById("hostHsCommits").textContent =
-        card.on3_hs_commits !== null && card.on3_hs_commits !== undefined
-          ? String(card.on3_hs_commits)
-          : "—";
-      const on3Transfers = Number(card.on3_transfer_transfers_in || 0);
-      const cbbTransfers = Number(card.incoming_cbb_transfer_players || 0);
-      document.getElementById("hostTransferCounts").textContent = `On3 ${{on3Transfers}} | CBB ${{cbbTransfers}}`;
-
-      const returners = Array.isArray(card.probable_returners) ? card.probable_returners : [];
-      const transfers = Array.isArray(card.incoming_transfers) ? card.incoming_transfers : [];
-      document.getElementById("hostReturners").innerHTML = returners.length
-        ? returners.map(player => `<li>${{escapeHtml(player.name || "Unknown")}}${{player.position ? ` (${{escapeHtml(player.position)}})` : ""}}</li>`).join("")
-        : "<li>None currently named in model</li>";
-      document.getElementById("hostTransfers").innerHTML = transfers.length
-        ? transfers.map(player => `<li>${{escapeHtml(player.name || "Unknown")}}${{player.source_team ? ` <span style=\"color:var(--muted)\">from ${{escapeHtml(player.source_team)}}</span>` : ""}}</li>`).join("")
-        : "<li>No named transfers currently matched</li>";
+      const starters = Array.isArray(card.projected_starters) ? card.projected_starters : [];
+      const reserves = Array.isArray(card.projected_reserves) ? card.projected_reserves : [];
+      const renderRotationPlayer = (player, showSlot = false) => {{
+        const slot = showSlot && player.starter_slot ? `<strong>${{escapeHtml(player.starter_slot)}}</strong> ` : "";
+        const position = player.position ? ` <span style="color:var(--muted)">(${{escapeHtml(player.position)}})</span>` : "";
+        const source = player.source_label ? ` <span style="color:var(--muted)">- ${{escapeHtml(player.source_label)}}</span>` : "";
+        return `<li>${{slot}}${{escapeHtml(player.name || "Unknown")}}${{position}}${{source}}</li>`;
+      }};
+      document.getElementById("hostStarters").innerHTML = starters.length
+        ? starters.map(player => renderRotationPlayer(player, true)).join("")
+        : "<li>Not enough current intake data to project starters</li>";
+      document.getElementById("hostReserves").innerHTML = reserves.length
+        ? reserves.map(player => renderRotationPlayer(player, false)).join("")
+        : "<li>No named reserves currently matched</li>";
 
       const hsSource = String(card.on3_hs_source_file || "").match(/(\\d{{4}}-\\d{{2}}-\\d{{2}})/)?.[1];
       const transferSource = String(card.on3_transfer_source_file || "").match(/(\\d{{4}}-\\d{{2}}-\\d{{2}})/)?.[1];
       const notes = [];
       if (hsSource) notes.push(`HS source ${{hsSource}}`);
       if (transferSource) notes.push(`On3 transfer source ${{transferSource}}`);
-      notes.push("HS commits are counted in aggregate, not listed by player name here.");
+      if (card.known_players !== null && card.known_players !== undefined) {{
+        notes.push(`${{card.known_players}} known players, ${{Math.max(0, Number(card.missing_slots || 0))}} open spots`);
+      }}
       document.getElementById("hostProjectionNote").textContent = notes.join(" | ");
     }}
 
@@ -1953,10 +2085,6 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         document.getElementById("plannerWinPct").textContent = "—";
         document.getElementById("plannerRecord").textContent = "—";
         document.getElementById("plannerAvgOpp").textContent = "—";
-        document.getElementById("plannerQualityBreakdown").textContent = "—";
-        document.getElementById("plannerBuyBreakdown").textContent = "—";
-        document.getElementById("plannerSiteBreakdown").textContent = "—";
-        document.getElementById("plannerBreakdownNote").textContent = "—";
         return;
       }}
 
@@ -1964,17 +2092,12 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       const rank = ncsosRank(avgOppAdjEm, gameCounts);
       const expectedWins = winProbs.reduce((sum, value) => sum + value, 0);
       const winPct = winProbs.length ? expectedWins / winProbs.length : null;
-      const breakdown = plannerBreakdown(validGames, gameCounts);
 
       document.getElementById("plannerGames").textContent = String(validGames.length);
       document.getElementById("plannerNcsosRank").textContent = rank ? `#${{rank}}` : "—";
       document.getElementById("plannerWinPct").textContent = winPct === null ? "—" : `${{pctFmt.format(winPct * 100)}}%`;
       document.getElementById("plannerRecord").textContent = `${{fmt2.format(expectedWins)}}-${{fmt2.format(validGames.length - expectedWins)}}`;
       document.getElementById("plannerAvgOpp").textContent = `${{fmt2.format(avgOppAdjEm)}} AdjEM`;
-      document.getElementById("plannerQualityBreakdown").textContent = breakdown.quality;
-      document.getElementById("plannerBuyBreakdown").textContent = breakdown.buy;
-      document.getElementById("plannerSiteBreakdown").textContent = breakdown.site;
-      document.getElementById("plannerBreakdownNote").textContent = breakdown.note;
     }}
 
     function renderBars(id, rows, key, labelKey, valueFormatter) {{
@@ -2120,6 +2243,12 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=PROJECT_ROOT / "data" / "processed" / "on3_features" / "on3_incoming_talent_features.csv",
         help="Processed On3 feature table used for the planner host roster card.",
+    )
+    parser.add_argument(
+        "--on3-hs-recruit-players-csv",
+        type=Path,
+        default=PROJECT_ROOT / "data" / "processed" / "on3_features" / "on3_hs_recruit_players.csv",
+        help="Processed On3 player-level HS recruit file used for the planner host roster card.",
     )
     parser.add_argument(
         "--output-dir",

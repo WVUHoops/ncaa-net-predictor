@@ -182,6 +182,131 @@ def build_on3_feature_rows(paths: list[Path]) -> list[dict[str, Any]]:
     return sorted(combined.values(), key=lambda row: (row["season"], str(row["team"])))
 
 
+def latest_hs_commit_files_by_year(paths: list[Path]) -> dict[int, Path]:
+    latest: dict[int, Path] = {}
+    for path in sorted(paths):
+        if path.suffix != ".json":
+            continue
+        year = year_from_path(path)
+        if year is None:
+            continue
+        latest[year] = path
+    return latest
+
+
+def read_hs_commit_player_rows(paths: list[Path]) -> list[dict[str, Any]]:
+    latest_files = latest_hs_commit_files_by_year(paths)
+    rows: list[dict[str, Any]] = []
+    for year, path in sorted(latest_files.items()):
+        for row in read_json_rows(path):
+            if int(as_int(row.get("class_year")) or 0) != year:
+                continue
+            entry = dict(row)
+            entry["team_key"] = canonical_team_key(entry.get("team"))
+            entry["season"] = int(as_int(entry.get("season")) or (year + 1))
+            entry["ranking_year"] = year
+            entry["source_file"] = path.as_posix()
+            rows.append(entry)
+    rows.sort(key=lambda row: (row["season"], str(row.get("team") or ""), str(row.get("player_name") or "")))
+    return rows
+
+
+def recruit_percentile(row: dict[str, Any]) -> float | None:
+    rank = as_float(row.get("industry_rank"))
+    if rank is not None and rank > 0:
+        return max(0.0, min(1.0, (401.0 - rank) / 400.0))
+    rating = as_float(row.get("industry_rating"))
+    if rating is None:
+        rating = as_float(row.get("on3_rating"))
+    if rating is None:
+        return None
+    return max(0.0, min(1.0, rating / 100.0))
+
+
+def position_bucket(position: Any) -> str:
+    token = str(position or "").upper().strip()
+    if token in {"PG"}:
+        return "pg"
+    if token in {"SG", "CG", "G"}:
+        return "guard"
+    if token in {"C"}:
+        return "big"
+    if token in {"PF", "F"}:
+        return "forward"
+    return "wing"
+
+
+def aggregate_hs_commit_rows(player_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    grouped: dict[tuple[int, str], list[dict[str, Any]]] = {}
+    for row in player_rows:
+        key = (int(row.get("season") or 0), str(row.get("team_key") or ""))
+        grouped.setdefault(key, []).append(row)
+
+    rows: list[dict[str, Any]] = []
+    for (season, team_key), recruits in grouped.items():
+        recruits_sorted = sorted(
+            recruits,
+            key=lambda row: (
+                -(recruit_percentile(row) or -1.0),
+                as_float(row.get("industry_rank")) or 9999.0,
+                str(row.get("player_name") or ""),
+            ),
+        )
+        percentiles = [value for value in (recruit_percentile(row) for row in recruits_sorted) if value is not None]
+        if not percentiles:
+            continue
+        weights = [1.0, 0.8, 0.65, 0.5, 0.4, 0.3]
+        weighted_total = 0.0
+        weight_sum = 0.0
+        for index, percentile in enumerate(percentiles):
+            weight = weights[index] if index < len(weights) else 0.25
+            weighted_total += percentile * weight
+            weight_sum += weight
+
+        position_counts = {"pg": 0, "guard": 0, "wing": 0, "forward": 0, "big": 0}
+        for recruit in recruits_sorted:
+            position_counts[position_bucket(recruit.get("position_abbr") or recruit.get("position"))] += 1
+
+        first = recruits_sorted[0]
+        rows.append(
+            {
+                "season": season,
+                "team": first.get("team"),
+                "team_key": team_key,
+                "on3_hs_player_count": len(recruits_sorted),
+                "on3_hs_player_top_25_count": sum(
+                    1 for recruit in recruits_sorted if 0 < (as_int(recruit.get("industry_rank")) or 0) <= 25
+                ),
+                "on3_hs_player_top_50_count": sum(
+                    1 for recruit in recruits_sorted if 0 < (as_int(recruit.get("industry_rank")) or 0) <= 50
+                ),
+                "on3_hs_player_top_100_count": sum(
+                    1 for recruit in recruits_sorted if 0 < (as_int(recruit.get("industry_rank")) or 0) <= 100
+                ),
+                "on3_hs_player_best_rank": as_float(first.get("industry_rank")),
+                "on3_hs_player_top_percentile": percentiles[0],
+                "on3_hs_player_avg_percentile": sum(percentiles) / len(percentiles),
+                "on3_hs_player_weighted_percentile": weighted_total / weight_sum if weight_sum else None,
+                "on3_hs_player_avg_rating": average_existing(
+                    *[as_float(recruit.get("industry_rating")) for recruit in recruits_sorted]
+                ),
+                "on3_hs_player_pg_count": position_counts["pg"],
+                "on3_hs_player_guard_count": position_counts["guard"] + position_counts["pg"],
+                "on3_hs_player_forward_count": position_counts["forward"] + position_counts["wing"],
+                "on3_hs_player_big_count": position_counts["big"],
+                "on3_hs_player_source_file": first.get("source_file"),
+            }
+        )
+    return sorted(rows, key=lambda row: (row["season"], str(row["team"])))
+
+
+def average_existing(*values: float | None) -> float | None:
+    observed = [value for value in values if value is not None]
+    if not observed:
+        return None
+    return sum(observed) / len(observed)
+
+
 def write_json(rows: list[dict[str, Any]], output_path: Path) -> Path:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(rows, indent=2, sort_keys=True) + "\n", encoding="utf-8")

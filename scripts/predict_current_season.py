@@ -106,9 +106,19 @@ def parse_args() -> argparse.Namespace:
         default=PROJECT_ROOT / "data" / "processed" / "roster_status" / "team_roster_summary_2026.csv",
     )
     parser.add_argument(
+        "--roster-player-csv",
+        type=Path,
+        default=PROJECT_ROOT / "data" / "processed" / "roster_status" / "player_roster_status_history.csv",
+    )
+    parser.add_argument(
         "--on3-features-csv",
         type=Path,
         default=PROJECT_ROOT / "data" / "processed" / "on3_features" / "on3_incoming_talent_features.csv",
+    )
+    parser.add_argument(
+        "--on3-hs-recruit-players-csv",
+        type=Path,
+        default=PROJECT_ROOT / "data" / "processed" / "on3_features" / "on3_hs_recruit_players.csv",
     )
     parser.add_argument(
         "--transfer-features-csv",
@@ -119,6 +129,25 @@ def parse_args() -> argparse.Namespace:
         / "transfer_features"
         / "current"
         / "cbb_incoming_transfer_features.csv",
+    )
+    parser.add_argument(
+        "--transfer-player-csv",
+        type=Path,
+        default=PROJECT_ROOT
+        / "data"
+        / "processed"
+        / "transfer_features"
+        / "current"
+        / "cbb_incoming_transfer_players.csv",
+    )
+    parser.add_argument(
+        "--historical-transfer-player-csv",
+        type=Path,
+        default=PROJECT_ROOT
+        / "data"
+        / "processed"
+        / "transfer_features"
+        / "cbb_incoming_transfer_players.csv",
     )
     parser.add_argument(
         "--program-history-csv",
@@ -204,9 +233,23 @@ def current_model_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
     changes = read_csv_rows(args.coach_features_csv) if args.coach_features_csv.exists() else []
     summaries = read_csv_rows(args.coach_latest_summary_csv) if args.coach_latest_summary_csv.exists() else []
     roster_rows = read_csv_rows(args.roster_summary_csv) if args.roster_summary_csv.exists() else []
+    roster_player_rows = (
+        read_csv_rows(args.roster_player_csv) if args.roster_player_csv.exists() else []
+    )
     on3_rows = read_csv_rows(args.on3_features_csv) if args.on3_features_csv.exists() else []
+    on3_hs_recruit_player_rows = (
+        read_csv_rows(args.on3_hs_recruit_players_csv) if args.on3_hs_recruit_players_csv.exists() else []
+    )
     transfer_rows = (
         read_csv_rows(args.transfer_features_csv) if args.transfer_features_csv.exists() else []
+    )
+    transfer_player_rows = (
+        read_csv_rows(args.transfer_player_csv) if args.transfer_player_csv.exists() else []
+    )
+    historical_transfer_player_rows = (
+        read_csv_rows(args.historical_transfer_player_csv)
+        if args.historical_transfer_player_csv.exists()
+        else []
     )
     program_rows = read_csv_rows(args.program_history_csv) if args.program_history_csv.exists() else []
 
@@ -245,8 +288,11 @@ def current_model_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
         coach_rows,
         [],
         prior_roster_rows,
+        roster_player_rows,
         on3_rows,
         transfer_rows,
+        historical_transfer_player_rows + transfer_player_rows,
+        on3_hs_recruit_player_rows,
         program_rows,
     )
     for row in rows:

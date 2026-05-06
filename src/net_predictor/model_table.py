@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +17,13 @@ EXPECTED_ROTATION_SIZE = 13.0
 DIVISION_I_TEAM_COUNT = 364.0
 ROSTER_PROXY_COACH_WEIGHT = 0.6
 ROSTER_PROXY_PROGRAM_WEIGHT = 0.4
+POINT_GUARD_TARGET = 2.0
+CENTER_TARGET = 2.0
+BACKCOURT_TARGET = 5.0
+FRONTCOURT_TARGET = 5.0
+FRESHMAN_ROLE_FILL_REFERENCE_SHARE = 0.08
+MIN_HS_CALIBRATION_SAMPLE = 12
+MIN_TRANSFER_CALIBRATION_SAMPLE = 20
 
 
 def read_json_rows(path: Path) -> list[dict[str, Any]]:
@@ -110,7 +118,16 @@ def prefixed(row: dict[str, Any] | None, prefix: str, exclude: set[str]) -> dict
     return {f"{prefix}{key}": value for key, value in row.items() if key not in exclude}
 
 
-def add_roster_talent_features(row: dict[str, Any]) -> None:
+def add_roster_talent_features(
+    row: dict[str, Any],
+    *,
+    prior_roster_players: list[dict[str, Any]] | None = None,
+    incoming_transfer_players: list[dict[str, Any]] | None = None,
+    incoming_hs_players: list[dict[str, Any]] | None = None,
+    hs_recruit_calibration: dict[str, Any] | None = None,
+    team_minutes_index: dict[tuple[int, str], float] | None = None,
+    transfer_role_calibration: dict[str, Any] | None = None,
+) -> None:
     returning_players = as_float(row.get("prior_roster_expected_returning_players"))
     returning_minutes_pct = as_float(row.get("prior_roster_expected_returning_minutes_pct"))
     returning_possessions_pct = as_float(row.get("prior_roster_expected_returning_possessions_pct"))
@@ -196,6 +213,34 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
         transfer_score,
         transfer_raw_score_in,
     )
+    hs_player_features = hs_recruit_player_features(
+        row,
+        prior_roster_players or [],
+        incoming_transfer_players or [],
+        incoming_hs_players or [],
+        hs_recruit_calibration,
+        team_minutes_index,
+        transfer_role_calibration,
+    )
+    role_composition = roster_composition_weights(
+        returning_players=hs_player_features.get("returner_role_units"),
+        hs_players=hs_player_features.get("hs_role_units"),
+        transfer_players=hs_player_features.get("transfer_role_units"),
+    )
+    if role_composition.get("known_roster_players") is not None:
+        composition = role_composition
+    hs_player_talent_percentile = hs_player_features.get("player_talent_percentile")
+    hs_player_impact_percentile = hs_player_features.get("need_adjusted_impact_percentile")
+    hs_rank_percentile = weighted_average_existing(
+        (hs_player_impact_percentile, 0.55),
+        (hs_player_talent_percentile, 0.25),
+        (hs_rank_percentile, 0.20),
+    ) or hs_rank_percentile
+    hs_score = weighted_average_existing(
+        (hs_player_impact_percentile * 100.0 if hs_player_impact_percentile is not None else None, 0.55),
+        (hs_player_talent_percentile * 100.0 if hs_player_talent_percentile is not None else None, 0.25),
+        (hs_score, 0.20),
+    ) or hs_score
     row["roster_talent_incoming_hs_score"] = hs_score
     row["roster_talent_incoming_transfer_score"] = transfer_signal
     row["roster_talent_incoming_hs_rank_percentile"] = hs_rank_percentile
@@ -258,6 +303,8 @@ def add_roster_talent_features(row: dict[str, Any]) -> None:
         roster_completeness=roster_completeness,
         proxy_signal=blended_proxy,
     )
+    for key, value in hs_player_features.items():
+        row[f"roster_talent_hs_{key}"] = value
 
 
 def first_existing(*values: float | None) -> float | None:
@@ -325,6 +372,485 @@ def rank_to_percentile(rank: float | None) -> float | None:
         return None
     bounded_rank = clip(rank, 1.0, DIVISION_I_TEAM_COUNT)
     return (DIVISION_I_TEAM_COUNT + 1.0 - bounded_rank) / DIVISION_I_TEAM_COUNT
+
+
+def classify_position(value: Any) -> str:
+    token = str(value or "").upper().strip()
+    if token in {"PG"}:
+        return "pg"
+    if token in {"SG", "CG", "G"}:
+        return "guard"
+    if token in {"C"}:
+        return "big"
+    if token in {"PF", "F"}:
+        return "forward"
+    return "wing"
+
+
+def slot_need(known_count: float, target_count: float) -> float:
+    return clip((target_count - known_count) / target_count, 0.0, 1.0)
+
+
+def normalize_player_name(value: Any) -> str:
+    return re.sub(r"[^a-z0-9]+", "", str(value or "").lower())
+
+
+def hs_rank_bucket(rank: float | None) -> str:
+    if rank is None or rank <= 0:
+        return "unranked"
+    if rank <= 25:
+        return "top25"
+    if rank <= 50:
+        return "26_50"
+    if rank <= 100:
+        return "51_100"
+    if rank <= 150:
+        return "101_150"
+    if rank <= 250:
+        return "151_250"
+    return "251_plus"
+
+
+def transfer_share_bucket(value: float | None) -> str:
+    if value is None or value <= 0:
+        return "0_05"
+    if value <= 0.05:
+        return "0_05"
+    if value <= 0.10:
+        return "05_10"
+    if value <= 0.15:
+        return "10_15"
+    if value <= 0.20:
+        return "15_20"
+    if value <= 0.25:
+        return "20_25"
+    return "25_plus"
+
+
+def adjusted_transfer_source_share(source_share: float | None, context_multiplier: float | None) -> float | None:
+    if source_share is None:
+        return None
+    if context_multiplier is None:
+        return clip(source_share, 0.0, 0.35)
+    scale = clip(context_multiplier, 0.65, 1.35) ** 0.5
+    return clip(source_share * scale, 0.0, 0.35)
+
+
+def role_fill_from_minutes_share(minutes_share: float | None) -> float:
+    if minutes_share is None:
+        return 0.0
+    return clip(minutes_share / FRESHMAN_ROLE_FILL_REFERENCE_SHARE, 0.0, 1.5)
+
+
+def total_role_units_from_minutes_share(minutes_share: float | None) -> float | None:
+    if minutes_share is None:
+        return None
+    return clip(minutes_share / FRESHMAN_ROLE_FILL_REFERENCE_SHARE, 0.0, EXPECTED_ROTATION_SIZE)
+
+
+def recruit_percentile(player: dict[str, Any]) -> float | None:
+    return first_existing(
+        rank_to_percentile(as_float(player.get("industry_rank"))),
+        as_float(player.get("industry_rating")) / 100.0 if as_float(player.get("industry_rating")) is not None else None,
+        as_float(player.get("on3_rating")) / 100.0 if as_float(player.get("on3_rating")) is not None else None,
+    )
+
+
+def status_is_probable_returner(row: dict[str, Any]) -> bool:
+    return str(row.get("status") or "").strip() == "probable_returner"
+
+
+def summarize_hs_calibration(values: list[float]) -> dict[str, float | None]:
+    if not values:
+        return {"sample": 0, "avg_minutes_share": None}
+    return {
+        "sample": float(len(values)),
+        "avg_minutes_share": sum(values) / len(values),
+    }
+
+
+def build_hs_recruit_role_calibration(
+    roster_player_rows: list[dict[str, Any]],
+    hs_recruit_player_rows: list[dict[str, Any]],
+) -> dict[str, Any]:
+    if not roster_player_rows or not hs_recruit_player_rows:
+        return {"by_bucket_position": {}, "by_bucket": {}, "by_position": {}, "overall": {"sample": 0, "avg_minutes_share": 0.06}}
+
+    team_minutes: dict[tuple[int, str], float] = {}
+    player_index: dict[tuple[int, str, str], dict[str, Any]] = {}
+    for player in roster_player_rows:
+        season = as_int(player.get("season"))
+        team = player.get("team_market") or player.get("team_name")
+        team_key = player.get("team_key") or canonical_team_key(team)
+        if season is None or not team_key:
+            continue
+        key = (season, str(team_key))
+        team_minutes[key] = team_minutes.get(key, 0.0) + max(as_float(player.get("minutes")) or 0.0, 0.0)
+        name_key = normalize_player_name(player.get("player_name"))
+        if not name_key:
+            continue
+        player_key = (season, str(team_key), name_key)
+        existing = player_index.get(player_key)
+        if existing is None or (as_float(player.get("minutes")) or 0.0) > (as_float(existing.get("minutes")) or 0.0):
+            player_index[player_key] = player
+
+    by_bucket_position: dict[tuple[str, str], list[float]] = {}
+    by_bucket: dict[str, list[float]] = {}
+    by_position: dict[str, list[float]] = {}
+    overall: list[float] = []
+
+    for recruit in hs_recruit_player_rows:
+        season = as_int(recruit.get("season"))
+        team_key = recruit.get("team_key") or canonical_team_key(recruit.get("team"))
+        name_key = normalize_player_name(recruit.get("player_name"))
+        if season is None or not team_key or not name_key:
+            continue
+        player = player_index.get((season, str(team_key), name_key))
+        if not player:
+            continue
+        total_minutes = team_minutes.get((season, str(team_key))) or 0.0
+        if total_minutes <= 0:
+            continue
+        minutes_share = clip((as_float(player.get("minutes")) or 0.0) / total_minutes, 0.0, 1.0)
+        bucket = hs_rank_bucket(as_float(recruit.get("industry_rank")))
+        position = classify_position(recruit.get("position_abbr") or recruit.get("position"))
+        by_bucket_position.setdefault((bucket, position), []).append(minutes_share)
+        by_bucket.setdefault(bucket, []).append(minutes_share)
+        by_position.setdefault(position, []).append(minutes_share)
+        overall.append(minutes_share)
+
+    return {
+        "by_bucket_position": {
+            f"{bucket}:{position}": summarize_hs_calibration(values)
+            for (bucket, position), values in by_bucket_position.items()
+        },
+        "by_bucket": {bucket: summarize_hs_calibration(values) for bucket, values in by_bucket.items()},
+        "by_position": {position: summarize_hs_calibration(values) for position, values in by_position.items()},
+        "overall": summarize_hs_calibration(overall),
+    }
+
+
+def lookup_hs_role_minutes_share(
+    calibration: dict[str, Any] | None,
+    *,
+    recruit_rank: float | None,
+    position_bucket: str,
+) -> float | None:
+    if not calibration:
+        return 0.06
+    bucket = hs_rank_bucket(recruit_rank)
+    exact = (calibration.get("by_bucket_position") or {}).get(f"{bucket}:{position_bucket}") or {}
+    if (as_float(exact.get("sample")) or 0.0) >= MIN_HS_CALIBRATION_SAMPLE:
+        return as_float(exact.get("avg_minutes_share"))
+    by_bucket = (calibration.get("by_bucket") or {}).get(bucket) or {}
+    if (as_float(by_bucket.get("sample")) or 0.0) >= MIN_HS_CALIBRATION_SAMPLE:
+        return as_float(by_bucket.get("avg_minutes_share"))
+    by_position = (calibration.get("by_position") or {}).get(position_bucket) or {}
+    if (as_float(by_position.get("sample")) or 0.0) >= MIN_HS_CALIBRATION_SAMPLE:
+        return as_float(by_position.get("avg_minutes_share"))
+    overall = calibration.get("overall") or {}
+    return as_float(overall.get("avg_minutes_share")) or 0.06
+
+
+def build_team_minutes_index(roster_player_rows: list[dict[str, Any]]) -> dict[tuple[int, str], float]:
+    totals: dict[tuple[int, str], float] = {}
+    for player in roster_player_rows:
+        season = as_int(player.get("season"))
+        team = player.get("team_market") or player.get("team_name")
+        team_key = player.get("team_key") or canonical_team_key(team)
+        if season is None or not team_key:
+            continue
+        totals[(season, str(team_key))] = totals.get((season, str(team_key)), 0.0) + max(
+            as_float(player.get("minutes")) or 0.0,
+            0.0,
+        )
+    return totals
+
+
+def project_returner_minutes_share(
+    player: dict[str, Any],
+    team_minutes_index: dict[tuple[int, str], float] | None,
+) -> float | None:
+    if not team_minutes_index:
+        return None
+    season = as_int(player.get("season"))
+    team = player.get("team_market") or player.get("team_name")
+    team_key = player.get("team_key") or canonical_team_key(team)
+    if season is None or not team_key:
+        return None
+    total = team_minutes_index.get((season, str(team_key))) or 0.0
+    if total <= 0:
+        return None
+    return clip((as_float(player.get("minutes")) or 0.0) / total, 0.0, 0.35)
+
+
+def summarize_transfer_calibration(values: list[float]) -> dict[str, float | None]:
+    if not values:
+        return {"sample": 0, "avg_minutes_share": None}
+    return {
+        "sample": float(len(values)),
+        "avg_minutes_share": sum(values) / len(values),
+    }
+
+
+def build_transfer_role_calibration(
+    roster_player_rows: list[dict[str, Any]],
+    transfer_player_rows: list[dict[str, Any]],
+    team_minutes_index: dict[tuple[int, str], float] | None = None,
+) -> dict[str, Any]:
+    if not roster_player_rows or not transfer_player_rows:
+        return {"by_bucket_position": {}, "by_bucket": {}, "overall": {"sample": 0, "avg_minutes_share": 0.09}}
+    team_minutes_index = team_minutes_index or build_team_minutes_index(roster_player_rows)
+    target_index: dict[tuple[int, str, str, str], dict[str, Any]] = {}
+    for player in roster_player_rows:
+        season = as_int(player.get("season"))
+        team = player.get("team_market") or player.get("team_name")
+        team_key = player.get("team_key") or canonical_team_key(team)
+        if season is None or not team_key:
+            continue
+        player_id = str(player.get("player_id") or "")
+        name_key = normalize_player_name(player.get("player_name"))
+        if not name_key:
+            continue
+        key = (season, str(team_key), player_id, name_key)
+        existing = target_index.get(key)
+        if existing is None or (as_float(player.get("minutes")) or 0.0) > (as_float(existing.get("minutes")) or 0.0):
+            target_index[key] = player
+
+    by_bucket_position: dict[tuple[str, str], list[float]] = {}
+    by_bucket: dict[str, list[float]] = {}
+    overall: list[float] = []
+    for transfer in transfer_player_rows:
+        season = as_int(transfer.get("season"))
+        team_key = transfer.get("team_key") or canonical_team_key(transfer.get("team"))
+        source_season = as_int(transfer.get("source_season"))
+        source_team_key = transfer.get("source_team_key") or canonical_team_key(transfer.get("source_team"))
+        if season is None or not team_key or source_season is None or not source_team_key:
+            continue
+        source_total = team_minutes_index.get((source_season, str(source_team_key))) or 0.0
+        target_total = team_minutes_index.get((season, str(team_key))) or 0.0
+        if source_total <= 0 or target_total <= 0:
+            continue
+        player_id = str(transfer.get("player_id") or "")
+        name_key = normalize_player_name(transfer.get("player_name"))
+        target_player = target_index.get((season, str(team_key), player_id, name_key))
+        if target_player is None:
+            target_player = target_index.get((season, str(team_key), "", name_key))
+        if target_player is None:
+            continue
+        source_share = (as_float(transfer.get("minutes")) or 0.0) / source_total
+        adjusted_share = adjusted_transfer_source_share(
+            source_share,
+            as_float(transfer.get("source_context_multiplier")),
+        )
+        target_share = clip((as_float(target_player.get("minutes")) or 0.0) / target_total, 0.0, 0.35)
+        position = classify_position(target_player.get("position") or transfer.get("position"))
+        bucket = transfer_share_bucket(adjusted_share)
+        by_bucket_position.setdefault((bucket, position), []).append(target_share)
+        by_bucket.setdefault(bucket, []).append(target_share)
+        overall.append(target_share)
+
+    return {
+        "by_bucket_position": {
+            f"{bucket}:{position}": summarize_transfer_calibration(values)
+            for (bucket, position), values in by_bucket_position.items()
+        },
+        "by_bucket": {bucket: summarize_transfer_calibration(values) for bucket, values in by_bucket.items()},
+        "overall": summarize_transfer_calibration(overall),
+    }
+
+
+def lookup_transfer_role_minutes_share(
+    calibration: dict[str, Any] | None,
+    *,
+    adjusted_source_share: float | None,
+    position_bucket: str,
+) -> float | None:
+    bucket = transfer_share_bucket(adjusted_source_share)
+    if calibration:
+        exact = (calibration.get("by_bucket_position") or {}).get(f"{bucket}:{position_bucket}") or {}
+        if (as_float(exact.get("sample")) or 0.0) >= MIN_TRANSFER_CALIBRATION_SAMPLE:
+            return as_float(exact.get("avg_minutes_share"))
+        by_bucket = (calibration.get("by_bucket") or {}).get(bucket) or {}
+        if (as_float(by_bucket.get("sample")) or 0.0) >= MIN_TRANSFER_CALIBRATION_SAMPLE:
+            return as_float(by_bucket.get("avg_minutes_share"))
+        overall = calibration.get("overall") or {}
+        if (as_float(overall.get("sample")) or 0.0) > 0:
+            return as_float(overall.get("avg_minutes_share"))
+    return clip((adjusted_source_share or 0.0) * 0.9, 0.0, 0.22)
+
+
+def project_transfer_minutes_share(
+    player: dict[str, Any],
+    team_minutes_index: dict[tuple[int, str], float] | None,
+    calibration: dict[str, Any] | None,
+) -> float | None:
+    if not team_minutes_index:
+        return None
+    source_season = as_int(player.get("source_season"))
+    source_team_key = player.get("source_team_key") or canonical_team_key(player.get("source_team"))
+    if source_season is None or not source_team_key:
+        return None
+    source_total = team_minutes_index.get((source_season, str(source_team_key))) or 0.0
+    if source_total <= 0:
+        return None
+    source_share = (as_float(player.get("minutes")) or 0.0) / source_total
+    adjusted_share = adjusted_transfer_source_share(
+        source_share,
+        as_float(player.get("source_context_multiplier")),
+    )
+    return lookup_transfer_role_minutes_share(
+        calibration,
+        adjusted_source_share=adjusted_share,
+        position_bucket=classify_position(player.get("position")),
+    )
+
+
+def hs_recruit_player_features(
+    row: dict[str, Any],
+    prior_roster_players: list[dict[str, Any]],
+    incoming_transfer_players: list[dict[str, Any]],
+    incoming_hs_players: list[dict[str, Any]],
+    calibration: dict[str, Any] | None = None,
+    team_minutes_index: dict[tuple[int, str], float] | None = None,
+    transfer_role_calibration: dict[str, Any] | None = None,
+) -> dict[str, float | None]:
+    if not incoming_hs_players:
+        return {
+            "player_talent_percentile": None,
+            "need_adjusted_impact_percentile": None,
+            "returner_role_units": None,
+            "transfer_role_units": None,
+            "hs_role_units": None,
+            "returner_projected_minutes_share_total": None,
+            "transfer_projected_minutes_share_total": None,
+            "projected_minutes_share_total": None,
+            "top_projected_minutes_share": None,
+            "pg_need": None,
+            "big_need": None,
+            "backcourt_need": None,
+            "frontcourt_need": None,
+        }
+
+    known_pg = 0.0
+    known_backcourt = 0.0
+    known_big = 0.0
+    known_frontcourt = 0.0
+    returner_projected_minutes_share_total = 0.0
+    transfer_projected_minutes_share_total = 0.0
+    for player in prior_roster_players:
+        if not status_is_probable_returner(player):
+            continue
+        projected_minutes_share = project_returner_minutes_share(player, team_minutes_index)
+        role_fill = role_fill_from_minutes_share(projected_minutes_share)
+        returner_projected_minutes_share_total += projected_minutes_share or 0.0
+        bucket = classify_position(player.get("position"))
+        if bucket == "pg":
+            known_pg += role_fill
+            known_backcourt += role_fill
+        elif bucket == "guard":
+            known_backcourt += role_fill
+        elif bucket == "big":
+            known_big += role_fill
+            known_frontcourt += role_fill
+        else:
+            known_frontcourt += role_fill
+
+    for player in incoming_transfer_players:
+        projected_minutes_share = project_transfer_minutes_share(
+            player,
+            team_minutes_index,
+            transfer_role_calibration,
+        )
+        role_fill = role_fill_from_minutes_share(projected_minutes_share)
+        transfer_projected_minutes_share_total += projected_minutes_share or 0.0
+        bucket = classify_position(player.get("position"))
+        if bucket == "pg":
+            known_pg += role_fill
+            known_backcourt += role_fill
+        elif bucket == "guard":
+            known_backcourt += role_fill
+        elif bucket == "big":
+            known_big += role_fill
+            known_frontcourt += role_fill
+        else:
+            known_frontcourt += role_fill
+
+    pg_need = slot_need(known_pg, POINT_GUARD_TARGET)
+    big_need = slot_need(known_big, CENTER_TARGET)
+    backcourt_need = slot_need(known_backcourt, BACKCOURT_TARGET)
+    frontcourt_need = slot_need(known_frontcourt, FRONTCOURT_TARGET)
+
+    talent_values: list[float] = []
+    impact_pairs: list[tuple[float, float]] = []
+    talent_pairs: list[tuple[float, float]] = []
+    projected_minutes_shares: list[float] = []
+    recruits_sorted = sorted(
+        incoming_hs_players,
+        key=lambda player: (-(recruit_percentile(player) or -1.0), str(player.get("player_name") or "")),
+    )
+    for index, player in enumerate(recruits_sorted):
+        base = recruit_percentile(player)
+        if base is None:
+            continue
+        bucket = classify_position(player.get("position_abbr") or player.get("position"))
+        if bucket == "pg":
+            need = average_existing(pg_need, backcourt_need)
+        elif bucket == "guard":
+            need = backcourt_need
+        elif bucket == "big":
+            need = average_existing(big_need, frontcourt_need)
+        else:
+            need = frontcourt_need
+        historical_minutes_share = lookup_hs_role_minutes_share(
+            calibration,
+            recruit_rank=as_float(player.get("industry_rank")),
+            position_bucket=bucket,
+        ) or 0.06
+        projected_minutes_share = clip(
+            historical_minutes_share * (0.65 + 0.85 * (need or 0.0)),
+            0.0,
+            0.22,
+        )
+        role_fill = clip(projected_minutes_share / FRESHMAN_ROLE_FILL_REFERENCE_SHARE, 0.0, 1.0)
+        talent_values.append(base)
+        projected_minutes_shares.append(projected_minutes_share)
+        talent_pairs.append((base, historical_minutes_share))
+        impact_pairs.append((base, projected_minutes_share))
+
+        if bucket == "pg":
+            known_pg += role_fill
+            known_backcourt += role_fill
+        elif bucket == "guard":
+            known_backcourt += role_fill
+        elif bucket == "big":
+            known_big += role_fill
+            known_frontcourt += role_fill
+        else:
+            known_frontcourt += role_fill
+
+        pg_need = slot_need(known_pg, POINT_GUARD_TARGET)
+        big_need = slot_need(known_big, CENTER_TARGET)
+        backcourt_need = slot_need(known_backcourt, BACKCOURT_TARGET)
+        frontcourt_need = slot_need(known_frontcourt, FRONTCOURT_TARGET)
+
+    return {
+        "player_talent_percentile": weighted_average_existing(*talent_pairs) or average_existing(*talent_values),
+        "need_adjusted_impact_percentile": weighted_average_existing(*impact_pairs),
+        "returner_role_units": total_role_units_from_minutes_share(returner_projected_minutes_share_total),
+        "transfer_role_units": total_role_units_from_minutes_share(transfer_projected_minutes_share_total),
+        "hs_role_units": total_role_units_from_minutes_share(
+            sum(projected_minutes_shares) if projected_minutes_shares else None
+        ),
+        "returner_projected_minutes_share_total": returner_projected_minutes_share_total,
+        "transfer_projected_minutes_share_total": transfer_projected_minutes_share_total,
+        "projected_minutes_share_total": sum(projected_minutes_shares) if projected_minutes_shares else None,
+        "top_projected_minutes_share": max(projected_minutes_shares) if projected_minutes_shares else None,
+        "pg_need": pg_need,
+        "big_need": big_need,
+        "backcourt_need": backcourt_need,
+        "frontcourt_need": frontcourt_need,
+    }
 
 
 def coach_talent_proxy_percentile(row: dict[str, Any]) -> float | None:
@@ -419,16 +945,32 @@ def build_model_rows(
     coach_rows: list[dict[str, Any]],
     target_rows: list[dict[str, Any]],
     roster_rows: list[dict[str, Any]] | None = None,
+    roster_player_rows: list[dict[str, Any]] | None = None,
     on3_rows: list[dict[str, Any]] | None = None,
     transfer_rows: list[dict[str, Any]] | None = None,
+    transfer_player_rows: list[dict[str, Any]] | None = None,
+    hs_recruit_player_rows: list[dict[str, Any]] | None = None,
     program_rows: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     coach_index = index_by_season_team(coach_rows)
     target_index = index_by_season_team(target_rows)
     roster_index = index_by_season_team(roster_rows or [])
+    roster_player_index = index_player_rows_by_season_team(roster_player_rows or [])
     on3_index = index_by_season_team(on3_rows or [])
     transfer_index = index_by_season_team(transfer_rows or [])
+    transfer_player_index = index_player_rows_by_season_team(transfer_player_rows or [])
+    hs_recruit_player_index = index_player_rows_by_season_team(hs_recruit_player_rows or [])
     program_index = index_by_season_team(program_rows or [])
+    team_minutes_index = build_team_minutes_index(roster_player_rows or [])
+    hs_recruit_calibration = build_hs_recruit_role_calibration(
+        roster_player_rows or [],
+        hs_recruit_player_rows or [],
+    )
+    transfer_role_calibration = build_transfer_role_calibration(
+        roster_player_rows or [],
+        transfer_player_rows or [],
+        team_minutes_index,
+    )
     rows: list[dict[str, Any]] = []
 
     for base in preseason_rows:
@@ -439,7 +981,10 @@ def build_model_rows(
         prior_roster = roster_index.get(prior_roster_key)
         on3 = on3_index.get(key)
         transfer = transfer_index.get(key)
+        incoming_transfer_players = transfer_player_index.get(key, [])
+        incoming_hs_players = hs_recruit_player_index.get(key, [])
         program = program_index.get(key)
+        prior_roster_players = roster_player_index.get(prior_roster_key, [])
         prior_roster_features = prefixed(
             prior_roster,
             "prior_roster_",
@@ -457,11 +1002,33 @@ def build_model_rows(
             **prefixed(program, "program_", {"season", "team", "team_key", "conference"}),
             **prefixed(target, "target_", {"season", "team", "team_key", "conference"}),
         }
-        add_roster_talent_features(row)
+        add_roster_talent_features(
+            row,
+            prior_roster_players=prior_roster_players,
+            incoming_transfer_players=incoming_transfer_players,
+            incoming_hs_players=incoming_hs_players,
+            hs_recruit_calibration=hs_recruit_calibration,
+            team_minutes_index=team_minutes_index,
+            transfer_role_calibration=transfer_role_calibration,
+        )
         rows.append(row)
 
     rows.sort(key=lambda row: (row["season"], row["team"]))
     return rows
+
+
+def index_player_rows_by_season_team(
+    rows: list[dict[str, Any]],
+) -> dict[tuple[int, str], list[dict[str, Any]]]:
+    index: dict[tuple[int, str], list[dict[str, Any]]] = {}
+    for row in rows:
+        season = as_int(row.get("season"))
+        team = row.get("team") or row.get("team_name") or row.get("team_market")
+        team_key = row.get("team_key") or canonical_team_key(team)
+        if season is None or not team_key:
+            continue
+        index.setdefault((season, str(team_key)), []).append(row)
+    return index
 
 
 def write_json(rows: list[dict[str, Any]], output_path: Path) -> Path:

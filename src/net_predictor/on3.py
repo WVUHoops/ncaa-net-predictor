@@ -12,9 +12,14 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
 
+from net_predictor.coach_factor import canonical_team_key
+
 
 ON3_HS_RECRUITING_URL_TEMPLATE = (
     "https://www.on3.com/rivals/rankings/industry-team/basketball/{year}/"
+)
+ON3_HS_COMMITS_URL_TEMPLATE = (
+    "https://www.on3.com/college/{team_slug}/basketball/{year}/commits/"
 )
 ON3_TRANSFER_PORTAL_URL_TEMPLATE = (
     "https://www.on3.com/transfer-portal/team-rankings/basketball/{year}/"
@@ -48,9 +53,15 @@ def page_url(url: str, page: int) -> str:
 def source_url(source: str, year: int) -> str:
     if source == "hs":
         return ON3_HS_RECRUITING_URL_TEMPLATE.format(year=year)
+    if source == "hs_commits":
+        raise On3Error("Use hs_commits_url for On3 team commit pages.")
     if source == "transfer":
         return ON3_TRANSFER_PORTAL_URL_TEMPLATE.format(year=year)
     raise On3Error(f"Unknown On3 source: {source}")
+
+
+def hs_commits_url(team_slug: str, year: int) -> str:
+    return ON3_HS_COMMITS_URL_TEMPLATE.format(team_slug=team_slug, year=year)
 
 
 def fetch_html(url: str) -> str:
@@ -192,13 +203,94 @@ def transfer_rows_from_page(
     return rows
 
 
+def hs_commit_rows_from_page(
+    data: dict[str, Any],
+    source_url_value: str,
+    captured_at: str,
+    *,
+    team_slug: str,
+    team_name: str,
+    ranking_year: int,
+) -> list[dict[str, Any]]:
+    props = data["props"]["pageProps"]
+    player_list = props.get("playerList") or {}
+    rows: list[dict[str, Any]] = []
+    for item in player_list.get("list") or []:
+        player = item.get("player") or {}
+        status = item.get("status") or {}
+        rating = item.get("rating") or {}
+        committed_asset = status.get("committedAsset") or {}
+        if status.get("transfer"):
+            continue
+        if int(player.get("classYear") or 0) != ranking_year:
+            continue
+        if status.get("type") not in {"Committed", "Signed", "Enrolled"}:
+            continue
+        if (committed_asset.get("slug") or committed_asset.get("urlSlug")) and (
+            (committed_asset.get("slug") or committed_asset.get("urlSlug")) != team_slug
+        ):
+            continue
+
+        consensus_rating = rating.get("consensusRating")
+        consensus_stars = rating.get("consensusStars")
+        consensus_rank = rating.get("consensusNationalRank")
+        consensus_position_rank = rating.get("consensusPositionRank")
+        consensus_state_rank = rating.get("consensusStateRank")
+        position = player.get("position") or {}
+        hometown = player.get("hometown") or {}
+        state = player.get("state") or {}
+        nil_value = item.get("nilValue") or {}
+
+        rows.append(
+            {
+                "source": "on3_hs_commits",
+                "source_url": source_url_value,
+                "captured_at": captured_at,
+                "ranking_year": ranking_year,
+                "season": ranking_year + 1,
+                "team": team_name,
+                "team_slug": team_slug,
+                "team_key": canonical_team_key(team_name),
+                "player_key": player.get("key"),
+                "recruitment_key": player.get("recruitmentKey") or item.get("recKey"),
+                "player_name": player.get("fullName"),
+                "player_slug": player.get("slug"),
+                "high_school": player.get("highSchoolName"),
+                "hometown": hometown.get("abbr") or hometown.get("name"),
+                "state": state.get("abbr") or state.get("name"),
+                "class_year": player.get("classYear"),
+                "position": position.get("abbr") or position.get("name"),
+                "height": player.get("height"),
+                "weight": player.get("weight"),
+                "status_type": status.get("type"),
+                "status_date": status.get("date"),
+                "industry_rating": consensus_rating,
+                "industry_stars": consensus_stars,
+                "industry_rank": consensus_rank,
+                "industry_position_rank": consensus_position_rank,
+                "industry_state_rank": consensus_state_rank,
+                "on3_rating": rating.get("rating"),
+                "on3_stars": rating.get("stars"),
+                "on3_rank": rating.get("nationalRank"),
+                "on3_position_rank": rating.get("positionRank"),
+                "on3_state_rank": rating.get("stateRank"),
+                "position_abbr": rating.get("positionAbbr") or position.get("abbr"),
+                "nil_rank": nil_value.get("rank"),
+                "nil_value": nil_value.get("totalValue"),
+            }
+        )
+    return rows
+
+
 def page_payload(source: str, data: dict[str, Any]) -> dict[str, Any]:
     props = data["props"]["pageProps"]
     if source == "hs":
         payload = props.get("teamData")
+    if source == "hs_commits":
+        payload = props.get("playerList")
     if source == "transfer":
         payload = props.get("teamRankings")
-    if source not in {"hs", "transfer"}:
+    if source not in {"hs", "hs_commits", "transfer"}:
         raise On3Error(f"Unknown On3 source: {source}")
     if not isinstance(payload, dict):
         raise On3Error(f"Could not find On3 {source} rankings payload in the page.")

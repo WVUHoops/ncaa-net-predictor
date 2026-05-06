@@ -107,6 +107,7 @@ jobs:
             dashboard/index.html \
             dashboard/dashboard_payload.json \
             data/raw/on3/hs/2026 \
+            data/raw/on3/hs_commits/2026 \
             data/raw/on3/transfer/2026 \
             data/raw/hoopdirt/coaching_changes \
             data/raw/cbb_analytics/transfer_portal/current \
@@ -116,6 +117,8 @@ jobs:
             data/raw/cbb_analytics/v1/competition-team-players/competition_team_players_competition_41097_v1_2026-04-13.json \
             data/processed/on3_features/on3_incoming_talent_features.csv \
             data/processed/on3_features/on3_incoming_talent_features.json \
+            data/processed/on3_features/on3_hs_recruit_players.csv \
+            data/processed/on3_features/on3_hs_recruit_players.json \
             data/processed/roster_status/player_roster_status_2026.csv \
             data/processed/roster_status/player_roster_status_2026.json \
             data/processed/roster_status/team_roster_summary_2026.csv \

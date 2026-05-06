@@ -54,6 +54,15 @@ def parse_args() -> argparse.Namespace:
         / "team_roster_summary_history.csv",
     )
     parser.add_argument(
+        "--roster-player-csv",
+        type=Path,
+        default=PROJECT_ROOT
+        / "data"
+        / "processed"
+        / "roster_status"
+        / "player_roster_status_history.csv",
+    )
+    parser.add_argument(
         "--on3-features-csv",
         type=Path,
         default=PROJECT_ROOT
@@ -63,6 +72,15 @@ def parse_args() -> argparse.Namespace:
         / "on3_incoming_talent_features.csv",
     )
     parser.add_argument(
+        "--on3-hs-recruit-players-csv",
+        type=Path,
+        default=PROJECT_ROOT
+        / "data"
+        / "processed"
+        / "on3_features"
+        / "on3_hs_recruit_players.csv",
+    )
+    parser.add_argument(
         "--transfer-features-csv",
         type=Path,
         default=PROJECT_ROOT
@@ -70,6 +88,15 @@ def parse_args() -> argparse.Namespace:
         / "processed"
         / "transfer_features"
         / "cbb_incoming_transfer_features.csv",
+    )
+    parser.add_argument(
+        "--transfer-player-csv",
+        type=Path,
+        default=PROJECT_ROOT
+        / "data"
+        / "processed"
+        / "transfer_features"
+        / "cbb_incoming_transfer_players.csv",
     )
     parser.add_argument(
         "--program-history-csv",
@@ -94,10 +121,26 @@ def main() -> int:
     coach = read_csv_rows(args.coach_history_csv) if args.coach_history_csv.exists() else []
     targets = read_csv_rows(args.targets_csv) if args.targets_csv.exists() else []
     roster = read_csv_rows(args.roster_summary_csv) if args.roster_summary_csv.exists() else []
+    roster_players = read_csv_rows(args.roster_player_csv) if args.roster_player_csv.exists() else []
     on3 = read_csv_rows(args.on3_features_csv) if args.on3_features_csv.exists() else []
+    on3_hs_recruit_players = (
+        read_csv_rows(args.on3_hs_recruit_players_csv) if args.on3_hs_recruit_players_csv.exists() else []
+    )
     transfers = read_csv_rows(args.transfer_features_csv) if args.transfer_features_csv.exists() else []
+    transfer_players = read_csv_rows(args.transfer_player_csv) if args.transfer_player_csv.exists() else []
     program = read_csv_rows(args.program_history_csv) if args.program_history_csv.exists() else []
-    rows = build_model_rows(preseason, coach, targets, roster, on3, transfers, program)
+    rows = build_model_rows(
+        preseason,
+        coach,
+        targets,
+        roster,
+        roster_players,
+        on3,
+        transfers,
+        transfer_players,
+        on3_hs_recruit_players,
+        program,
+    )
 
     json_path = write_json(rows, args.output_dir / "modeling_table.json")
     csv_path = write_csv(rows, args.output_dir / "modeling_table.csv")
