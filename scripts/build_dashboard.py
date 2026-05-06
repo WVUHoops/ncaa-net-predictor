@@ -7,6 +7,7 @@ import re
 import argparse
 import csv
 import json
+import sys
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
@@ -14,6 +15,11 @@ from typing import Any
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SRC_DIR = PROJECT_ROOT / "src"
+sys.path.insert(0, str(SRC_DIR))
+
+from net_predictor.upset_risk import schedule_team_key  # noqa: E402
+
 HOME_COURT_ADJ_EM = 3.5
 WIN_PROBABILITY_SCALE = 6.5
 
@@ -326,6 +332,158 @@ def tier_placeholder_rows(
     return placeholders
 
 
+def solve_linear_system(matrix: list[list[float]], targets: list[float]) -> list[float]:
+    size = len(matrix)
+    augmented = [row[:] + [targets[index]] for index, row in enumerate(matrix)]
+    for column in range(size):
+        pivot = max(range(column, size), key=lambda row: abs(augmented[row][column]))
+        if abs(augmented[pivot][column]) < 1e-9:
+            continue
+        augmented[column], augmented[pivot] = augmented[pivot], augmented[column]
+        pivot_value = augmented[column][column]
+        augmented[column] = [value / pivot_value for value in augmented[column]]
+        for row in range(size):
+            if row == column:
+                continue
+            factor = augmented[row][column]
+            augmented[row] = [
+                augmented[row][index] - factor * augmented[column][index]
+                for index in range(size + 1)
+            ]
+    return [augmented[index][size] for index in range(size)]
+
+
+def fit_least_squares(rows: list[dict[str, float]]) -> list[float] | None:
+    if not rows:
+        return None
+    feature_count = 4
+    xtx = [[0.0] * feature_count for _ in range(feature_count)]
+    xty = [0.0] * feature_count
+    for row in rows:
+        features = [
+            1.0,
+            row["avg_adj_em"],
+            row["home_share"],
+            row["neutral_share"],
+        ]
+        target = row["target_rank"]
+        for left in range(feature_count):
+            xty[left] += features[left] * target
+            for right in range(feature_count):
+                xtx[left][right] += features[left] * features[right]
+    return solve_linear_system(xtx, xty)
+
+
+def historical_ncsos_rows() -> list[dict[str, float]]:
+    schedule_path = PROJECT_ROOT / "data" / "raw" / "hoopr" / "mbb_schedule_master.csv"
+    selection_dir = PROJECT_ROOT / "data" / "raw" / "ncaa_net_selections"
+    kenpom_dir = PROJECT_ROOT / "data" / "raw" / "kenpom"
+    if not schedule_path.exists() or not selection_dir.exists() or not kenpom_dir.exists():
+        return []
+
+    targets: dict[tuple[int, str], float] = {}
+    kenpom_adj_em_by_season: dict[int, dict[str, float]] = {}
+
+    for selection_csv in sorted(selection_dir.glob("net_selections_*.csv")):
+        match = re.search(r"net_selections_(\d{4})_", selection_csv.name)
+        if not match:
+            continue
+        season = int(match.group(1))
+        ratings_path = kenpom_dir / str(season) / "ratings.json"
+        if not ratings_path.exists():
+            continue
+        for row in read_csv(selection_csv):
+            team = row.get("team")
+            target_rank = as_float(row.get("net_nonconference_sos"))
+            if not team or target_rank is None:
+                continue
+            targets[(season, schedule_team_key(team))] = target_rank
+        ratings_rows = read_json(ratings_path)
+        kenpom_adj_em_by_season[season] = {
+            schedule_team_key(row.get("TeamName") or row.get("TeamNameA")): as_float(row.get("AdjEM"))
+            for row in ratings_rows
+            if (row.get("TeamName") or row.get("TeamNameA")) and as_float(row.get("AdjEM")) is not None
+        }
+
+    aggregated: dict[tuple[int, str], dict[str, float]] = {}
+    with schedule_path.open("r", encoding="utf-8", newline="") as file:
+        for raw in csv.DictReader(file):
+            if raw.get("season_type") != "2" or raw.get("conference_competition") != "FALSE":
+                continue
+            season = int(raw.get("season") or 0)
+            adj_em_by_team = kenpom_adj_em_by_season.get(season)
+            if not adj_em_by_team:
+                continue
+
+            neutral = raw.get("neutral_site") == "TRUE"
+            home_key = schedule_team_key(raw.get("home_short_display_name"))
+            away_key = schedule_team_key(raw.get("away_short_display_name"))
+            home_adj_em = adj_em_by_team.get(home_key)
+            away_adj_em = adj_em_by_team.get(away_key)
+            if home_adj_em is None or away_adj_em is None:
+                continue
+
+            if (season, home_key) in targets:
+                entry = aggregated.setdefault((season, home_key), {"sum_adj_em": 0.0, "games": 0.0, "home_games": 0.0, "neutral_games": 0.0})
+                entry["sum_adj_em"] += away_adj_em if neutral else away_adj_em - HOME_COURT_ADJ_EM
+                entry["games"] += 1.0
+                entry["home_games"] += 0.0 if neutral else 1.0
+                entry["neutral_games"] += 1.0 if neutral else 0.0
+
+            if (season, away_key) in targets:
+                entry = aggregated.setdefault((season, away_key), {"sum_adj_em": 0.0, "games": 0.0, "home_games": 0.0, "neutral_games": 0.0})
+                entry["sum_adj_em"] += home_adj_em if neutral else home_adj_em + HOME_COURT_ADJ_EM
+                entry["games"] += 1.0
+                entry["home_games"] += 0.0
+                entry["neutral_games"] += 1.0 if neutral else 0.0
+
+    rows: list[dict[str, float]] = []
+    for (season, team_key), values in aggregated.items():
+        games = values["games"]
+        if not games:
+            continue
+        target_rank = targets.get((season, team_key))
+        if target_rank is None:
+            continue
+        rows.append(
+            {
+                "season": float(season),
+                "avg_adj_em": values["sum_adj_em"] / games,
+                "home_share": values["home_games"] / games,
+                "neutral_share": values["neutral_games"] / games,
+                "games": games,
+                "target_rank": target_rank,
+            }
+        )
+    return rows
+
+
+def build_ncsos_calibration() -> dict[str, Any] | None:
+    rows = historical_ncsos_rows()
+    coefficients = fit_least_squares(rows)
+    if not rows or coefficients is None:
+        return None
+    seasons = sorted({int(row["season"]) for row in rows})
+    predictions = [
+        coefficients[0]
+        + coefficients[1] * row["avg_adj_em"]
+        + coefficients[2] * row["home_share"]
+        + coefficients[3] * row["neutral_share"]
+        for row in rows
+    ]
+    mae = sum(abs(prediction - row["target_rank"]) for prediction, row in zip(predictions, rows)) / len(rows)
+    rmse = (
+        sum((prediction - row["target_rank"]) ** 2 for prediction, row in zip(predictions, rows)) / len(rows)
+    ) ** 0.5
+    return {
+        "coefficients": [round(value, 6) for value in coefficients],
+        "row_count": len(rows),
+        "seasons": seasons,
+        "mae": round(mae, 2),
+        "rmse": round(rmse, 2),
+    }
+
+
 def build_payload(args: argparse.Namespace) -> dict[str, Any]:
     risk_rows = read_csv(args.risk_board_csv)
     metric_rows = read_csv(args.metrics_csv)
@@ -341,6 +499,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         [value for value in (as_float(row.get("NCSOS")) for row in rating_rows) if value is not None],
         reverse=True,
     )
+    ncsos_calibration = build_ncsos_calibration()
     on3_hs_snapshot = latest_dated_snapshot(
         PROJECT_ROOT / "data" / "raw" / "on3" / "hs" / "2026",
         "on3_hs_2026_*.json",
@@ -456,6 +615,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
             "bubble_adj_em": bubble_adj_em,
             "tier_adj_em_benchmarks": tier_benchmarks,
             "ncsos_benchmarks": [round(value, 3) for value in ncsos_values],
+            "ncsos_calibration": ncsos_calibration,
         },
         "metrics": metric_rows,
         "coefficients": [
@@ -880,6 +1040,29 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       color: var(--muted);
       font-size: 13px;
     }}
+    .planner-breakdown {{
+      display: grid;
+      gap: 8px;
+      margin-top: 2px;
+    }}
+    .planner-breakdown-row {{
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      font-size: 14px;
+    }}
+    .planner-breakdown-row strong {{
+      display: inline;
+      font-size: 15px;
+      margin: 0;
+    }}
+    .planner-breakdown-note {{
+      margin-top: 6px;
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.35;
+    }}
     .planner-table table {{ min-width: 900px; }}
     .planner-table input, .planner-table select {{
       min-width: 145px;
@@ -1064,6 +1247,24 @@ def dashboard_html(payload: dict[str, Any]) -> str:
           <div class="planner-metric">
             <strong id="plannerAvgOpp">—</strong>
             <span>Avg opponent difficulty</span>
+          </div>
+          <div class="planner-metric">
+            <strong>Why It Lands There</strong>
+            <div class="planner-breakdown">
+              <div class="planner-breakdown-row">
+                <span>Quality games</span>
+                <strong id="plannerQualityBreakdown">—</strong>
+              </div>
+              <div class="planner-breakdown-row">
+                <span>Buy-game drag</span>
+                <strong id="plannerBuyBreakdown">—</strong>
+              </div>
+              <div class="planner-breakdown-row">
+                <span>Site mix</span>
+                <strong id="plannerSiteBreakdown">—</strong>
+              </div>
+            </div>
+            <div class="planner-breakdown-note" id="plannerBreakdownNote">—</div>
           </div>
         </aside>
       </div>
@@ -1372,7 +1573,29 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       return `<span class="wab-swing"><span class="wab-win">+${{fmt2.format(swing.win)}}</span><span class="wab-loss">${{fmt2.format(swing.loss)}}</span></span>`;
     }}
 
-    function ncsosRank(avgOpponentAdjEm) {{
+    function ncsosRank(avgOpponentAdjEm, gameCounts) {{
+      const calibration = payload.planner?.ncsos_calibration;
+      if (
+        calibration &&
+        Array.isArray(calibration.coefficients) &&
+        calibration.coefficients.length >= 4 &&
+        Number.isFinite(avgOpponentAdjEm) &&
+        gameCounts &&
+        Number.isFinite(gameCounts.total) &&
+        gameCounts.total > 0
+      ) {{
+        const coefficients = calibration.coefficients.map(Number);
+        const homeShare = Number(gameCounts.home || 0) / gameCounts.total;
+        const neutralShare = Number(gameCounts.neutral || 0) / gameCounts.total;
+        const estimate =
+          coefficients[0]
+          + coefficients[1] * avgOpponentAdjEm
+          + coefficients[2] * homeShare
+          + coefficients[3] * neutralShare;
+        if (Number.isFinite(estimate)) {{
+          return Math.max(1, Math.min(365, Math.round(estimate)));
+        }}
+      }}
       const benchmarks = payload.planner?.ncsos_benchmarks || [];
       if (!benchmarks.length || !Number.isFinite(avgOpponentAdjEm)) return null;
       return 1 + benchmarks.filter(value => Number(value) > avgOpponentAdjEm).length;
@@ -1383,6 +1606,58 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       if (!Number.isFinite(raw)) return null;
       const locationAdjustment = location === "Home" ? -3.5 : location === "Away" ? 3.5 : 0;
       return raw + locationAdjustment;
+    }}
+
+    function plannerRankValue(opponent) {{
+      const value = Number(opponent?.schedule_score);
+      return Number.isFinite(value) ? value : null;
+    }}
+
+    function plannerBreakdown(validGames, gameCounts) {{
+      const summary = {{
+        top100: 0,
+        top200: 0,
+        buy251: 0,
+        buy301: 0
+      }};
+      validGames.forEach(item => {{
+        const rank = plannerRankValue(item.opponent);
+        if (!Number.isFinite(rank)) return;
+        if (rank <= 100) summary.top100 += 1;
+        if (rank <= 200) summary.top200 += 1;
+        if (rank > 250) summary.buy251 += 1;
+        if (rank > 300) summary.buy301 += 1;
+      }});
+
+      const notes = [];
+      if (summary.top100 >= 4) {{
+        notes.push(`The top end is helping with ${{summary.top100}} top-100 caliber games.`);
+      }} else if (summary.top100 <= 2) {{
+        notes.push(`There are only ${{summary.top100}} top-100 caliber games carrying the sheet.`);
+      }}
+
+      if (summary.buy251 >= 4) {{
+        notes.push(`${{summary.buy251}} games outside the top 250 are dragging the NCSOS rank down.`);
+      }} else if (summary.buy301 >= 3) {{
+        notes.push(`${{summary.buy301}} 301+ buy games are a meaningful drag.`);
+      }}
+
+      if (gameCounts.home >= 8) {{
+        notes.push(`The slate is home-heavy at ${{gameCounts.home}} home games, which makes the NCAA-style difficulty read harsher.`);
+      }} else if (gameCounts.neutral >= 4) {{
+        notes.push(`${{gameCounts.neutral}} neutral-floor games are helping the schedule profile hold up.`);
+      }}
+
+      if (!notes.length) {{
+        notes.push("The top-end opportunities and the lower-end buys are pulling against each other.");
+      }}
+
+      return {{
+        quality: `${{summary.top100}} top-100 | ${{summary.top200}} top-200`,
+        buy: `${{summary.buy251}} outside top 250 | ${{summary.buy301}} at 301+`,
+        site: `${{gameCounts.home}} home | ${{gameCounts.neutral}} neutral | ${{gameCounts.away}} away`,
+        note: notes.join(" ")
+      }};
     }}
 
     function renderPlannerOptions() {{
@@ -1451,6 +1726,13 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       const oppAdjEms = validGames
         .map(item => ncsosOpponentAdjEm(item.opponent, item.game.location))
         .filter(value => value !== null);
+      const gameCounts = validGames.reduce((counts, item) => {{
+        counts.total += 1;
+        if (item.game.location === "Home") counts.home += 1;
+        else if (item.game.location === "Neutral") counts.neutral += 1;
+        else if (item.game.location === "Away") counts.away += 1;
+        return counts;
+      }}, {{ total: 0, home: 0, neutral: 0, away: 0 }});
 
       if (!validGames.length || !oppAdjEms.length) {{
         document.getElementById("plannerGames").textContent = "0";
@@ -1458,19 +1740,28 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         document.getElementById("plannerWinPct").textContent = "—";
         document.getElementById("plannerRecord").textContent = "—";
         document.getElementById("plannerAvgOpp").textContent = "—";
+        document.getElementById("plannerQualityBreakdown").textContent = "—";
+        document.getElementById("plannerBuyBreakdown").textContent = "—";
+        document.getElementById("plannerSiteBreakdown").textContent = "—";
+        document.getElementById("plannerBreakdownNote").textContent = "—";
         return;
       }}
 
       const avgOppAdjEm = oppAdjEms.reduce((sum, value) => sum + value, 0) / oppAdjEms.length;
-      const rank = ncsosRank(avgOppAdjEm);
+      const rank = ncsosRank(avgOppAdjEm, gameCounts);
       const expectedWins = winProbs.reduce((sum, value) => sum + value, 0);
       const winPct = winProbs.length ? expectedWins / winProbs.length : null;
+      const breakdown = plannerBreakdown(validGames, gameCounts);
 
       document.getElementById("plannerGames").textContent = String(validGames.length);
       document.getElementById("plannerNcsosRank").textContent = rank ? `#${{rank}}` : "—";
       document.getElementById("plannerWinPct").textContent = winPct === null ? "—" : `${{pctFmt.format(winPct * 100)}}%`;
       document.getElementById("plannerRecord").textContent = `${{fmt2.format(expectedWins)}}-${{fmt2.format(validGames.length - expectedWins)}}`;
       document.getElementById("plannerAvgOpp").textContent = `${{fmt2.format(avgOppAdjEm)}} AdjEM`;
+      document.getElementById("plannerQualityBreakdown").textContent = breakdown.quality;
+      document.getElementById("plannerBuyBreakdown").textContent = breakdown.buy;
+      document.getElementById("plannerSiteBreakdown").textContent = breakdown.site;
+      document.getElementById("plannerBreakdownNote").textContent = breakdown.note;
     }}
 
     function renderBars(id, rows, key, labelKey, valueFormatter) {{

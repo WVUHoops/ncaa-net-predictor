@@ -32,6 +32,7 @@ from net_predictor.backtest import (  # noqa: E402
     select_feature_columns,
     stronger_band,
     target_rows,
+    with_forced_features,
     write_csv,
     write_json,
 )
@@ -45,6 +46,8 @@ CURRENT_MODEL_CONFIGS = [
         SCHEDULE_BUILDING_PREFIXES,
         "direct",
         alpha=100.0,
+        excluded_substrings=("_sos", "_ncsos", "roster_talent_continuity_plus_incoming"),
+        forced_features=("prior_roster_probable_returner_minutes_pct",),
     ),
     ModelConfig(
         "direct_gbt_schedule_building",
@@ -57,6 +60,8 @@ CURRENT_MODEL_CONFIGS = [
         max_depth=2,
         min_leaf=35,
         threshold_bins=6,
+        excluded_substrings=("_sos", "_ncsos", "roster_talent_continuity_plus_incoming"),
+        forced_features=("prior_roster_probable_returner_minutes_pct",),
     ),
 ]
 CURRENT_BLEND_MODELS = {
@@ -258,6 +263,11 @@ def fit_model(config: ModelConfig, train_rows: list[dict[str, Any]], max_feature
         target_values,
         feature_limit,
     )
+    columns = with_forced_features(
+        columns,
+        config_feature_columns(train_rows, config),
+        config.forced_features,
+    )
     if config.algorithm == "ridge":
         model = fit_ridge(train_rows, columns, target_values, config.alpha or 100.0)
     elif config.algorithm == "gbt":
@@ -305,6 +315,15 @@ def model_outputs(
                     "train_rows": len(train_rows),
                     "prior_roster_returning_minutes_pct": row.get(
                         "prior_roster_probable_returner_minutes_pct"
+                    ),
+                    "prior_roster_probable_returner_minutes_pct": row.get(
+                        "prior_roster_probable_returner_minutes_pct"
+                    ),
+                    "prior_roster_expected_returning_minutes_pct": row.get(
+                        "prior_roster_expected_returning_minutes_pct"
+                    ),
+                    "prior_roster_returning_top_7_minutes_share": row.get(
+                        "prior_roster_returning_top_7_minutes_share"
                     ),
                     "roster_known_players": row.get("roster_talent_known_roster_players"),
                     "returner_roster_share": row.get("roster_talent_returner_roster_share"),

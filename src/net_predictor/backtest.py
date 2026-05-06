@@ -468,6 +468,7 @@ class ModelConfig:
     alpha: float | None = None
     max_features: int | None = None
     excluded_substrings: tuple[str, ...] = ()
+    forced_features: tuple[str, ...] = ()
     estimators: int = 24
     learning_rate: float = 0.06
     max_depth: int = 2
@@ -493,6 +494,20 @@ def config_feature_columns(rows: list[dict[str, Any]], config: ModelConfig) -> l
         for column in columns
         if not any(excluded in column for excluded in config.excluded_substrings)
     ]
+
+
+def with_forced_features(
+    selected_columns: list[str],
+    candidate_columns: list[str],
+    forced_features: tuple[str, ...],
+) -> list[str]:
+    if not forced_features:
+        return selected_columns
+    output = list(selected_columns)
+    for feature in forced_features:
+        if feature in candidate_columns and feature not in output:
+            output.append(feature)
+    return output
 
 
 def rank_from_percentile(percentile: float, teams_ranked: float) -> float:
@@ -836,6 +851,11 @@ def rolling_predictions(
                 target_values,
                 feature_limit,
             )
+            columns = with_forced_features(
+                columns,
+                config_feature_columns(train_rows, config),
+                config.forced_features,
+            )
             if config.algorithm == "ridge":
                 model = fit_ridge(
                     train_rows,
@@ -903,6 +923,11 @@ def rolling_feature_selections(
                 candidate_columns,
                 target_values,
                 feature_limit,
+            )
+            selected_columns = with_forced_features(
+                selected_columns,
+                candidate_columns,
+                config.forced_features,
             )
             for rank, column in enumerate(selected_columns, start=1):
                 selections.append(

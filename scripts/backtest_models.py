@@ -37,6 +37,7 @@ PROGRAM_PREFIXES = ("program_prior_",)
 SCHEDULE_BUILDING_EXCLUDED_SUBSTRINGS = (
     "_sos",
     "_ncsos",
+    "roster_talent_continuity_plus_incoming",
 )
 SCHEDULE_BUILDING_PREFIXES = (
     *PROGRAM_PREFIXES,
@@ -52,6 +53,7 @@ MODEL_CONFIGS = [
         "direct",
         alpha=100.0,
         excluded_substrings=SCHEDULE_BUILDING_EXCLUDED_SUBSTRINGS,
+        forced_features=("prior_roster_probable_returner_minutes_pct",),
     ),
     ModelConfig(
         "direct_gbt_roster_talent",
@@ -77,6 +79,7 @@ MODEL_CONFIGS = [
         min_leaf=35,
         threshold_bins=6,
         excluded_substrings=SCHEDULE_BUILDING_EXCLUDED_SUBSTRINGS,
+        forced_features=("prior_roster_probable_returner_minutes_pct",),
     ),
     ModelConfig("direct_ridge_kenpom", ("kenpom_preseason_",), "direct", alpha=100.0),
     ModelConfig(
