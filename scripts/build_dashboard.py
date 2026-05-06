@@ -118,6 +118,30 @@ def normalize_player_name(value: Any) -> str:
     return re.sub(r"[^a-z0-9]+", "", str(value or "").lower())
 
 
+def abbreviate_source_label(value: Any) -> str:
+    label = str(value or "").strip()
+    if not label:
+        return ""
+    replacements = {
+        "West Virginia": "WVU",
+        "iSchool of Lewisville": "iSchool Lewisville",
+        "College Preparatory School": "Prep",
+        "Preparatory School": "Prep",
+        "High School": "HS",
+        "School of Lewisville": "Lewisville",
+        "St. John's (NY)": "St. John's",
+        "Florida St.": "Florida St",
+        "Boise St.": "Boise St",
+    }
+    if label in replacements:
+        return replacements[label]
+    shortened = label
+    for source, target in replacements.items():
+        shortened = shortened.replace(source, target)
+    shortened = re.sub(r"\s+", " ", shortened).strip()
+    return shortened
+
+
 def tier_label(value: Any) -> str:
     raw = str(value or "").strip()
     if raw == "top_25":
@@ -519,6 +543,7 @@ def host_roster_card(
     transfer_player_rows: list[dict[str, str]],
     on3_feature_rows: list[dict[str, str]],
     on3_hs_recruit_player_rows: list[dict[str, str]],
+    schedule_prediction_rows: list[dict[str, str]],
 ) -> dict[str, Any]:
     host_key = canonical_team_name(host_name)
     prior_player_index: dict[tuple[int, str, str], dict[str, str]] = {}
@@ -582,7 +607,7 @@ def host_roster_card(
                 "name": row.get("player_name"),
                 "class_year": row.get("class_year"),
                 "position": row.get("position"),
-                "source_label": host_name,
+                "source_label": abbreviate_source_label(host_name),
                 "origin_type": "returner",
                 "projected_role_share": (
                     ((as_float(row.get("minutes")) or 0.0) / current_team_minutes)
@@ -615,7 +640,7 @@ def host_roster_card(
                         {},
                     ).get("position")
                 ),
-                "source_label": row.get("source_team"),
+                "source_label": abbreviate_source_label(row.get("source_team")),
                 "origin_type": "transfer",
                 "projected_role_share": transfer_base_share(row),
             }
@@ -634,7 +659,7 @@ def host_roster_card(
                 "name": row.get("player_name"),
                 "position": row.get("position_abbr") or row.get("position"),
                 "industry_rank": compact_float(row.get("industry_rank"), 0),
-                "source_label": row.get("high_school"),
+                "source_label": abbreviate_source_label(row.get("high_school")),
                 "origin_type": "hs",
                 "projected_role_share": hs_base_share(row),
             }
@@ -713,13 +738,28 @@ def host_roster_card(
         ),
         {},
     )
+    roster_talent_rank = None
+    ranked_roster_rows = sorted(
+        [
+            row
+            for row in schedule_prediction_rows
+            if as_float(row.get("composition_weighted_roster_talent")) is not None
+        ],
+        key=lambda row: (
+            -(as_float(row.get("composition_weighted_roster_talent")) or 0.0),
+            str(row.get("team") or ""),
+        ),
+    )
+    for index, row in enumerate(ranked_roster_rows, start=1):
+        if canonical_team_name(row.get("team")) == host_key:
+            roster_talent_rank = float(index)
+            break
     known_players = int(as_float((host_projection or {}).get("roster_known_players")) or 0)
     hs_commits = int(as_float(on3_row.get("on3_hs_commits")) or 0)
     on3_transfers = int(as_float(on3_row.get("on3_transfer_transfers_in")) or 0)
     return {
         "team": host_name,
-        "projected_net_rank": compact_float((host_projection or {}).get("projected_net_rank"), 0),
-        "projected_net_tier": (host_projection or {}).get("projected_net_tier"),
+        "projected_roster_talent_rank": compact_float(roster_talent_rank, 0),
         "projected_coach": (host_projection or {}).get("projected_coach"),
         "known_players": known_players,
         "missing_slots": max(13 - known_players, 0),
@@ -728,8 +768,6 @@ def host_roster_card(
         "incoming_cbb_transfer_players": len(incoming_transfers),
         "projected_starters": starters,
         "projected_reserves": reserves,
-        "on3_hs_source_file": on3_row.get("on3_hs_source_file"),
-        "on3_transfer_source_file": on3_row.get("on3_transfer_source_file"),
     }
 
 
@@ -801,6 +839,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         transfer_player_rows,
         on3_feature_rows,
         on3_hs_recruit_player_rows,
+        schedule_rows,
     )
     planner_overrides_by_team = {
         canonical_team_name(row.get("team")): row for row in slimmed_risk_rows
@@ -1203,6 +1242,10 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     .tier-201_250 {{ background: #edf0f2; border-color: #c7cdd4; color: #354052; }}
     .tier-251_300 {{ background: #f2f2f2; border-color: #d4d4d4; color: #4d5962; }}
     .tier-301_plus {{ background: #fafafa; border-color: #d7dcde; color: #68727a; }}
+    .quad-q1 {{ background: var(--wvu-blue); border-color: var(--wvu-blue); color: #fff; }}
+    .quad-q2 {{ background: #0a4f93; border-color: #0a4f93; color: #fff; }}
+    .quad-q3 {{ background: #fff4cc; border-color: var(--wvu-gold); color: var(--wvu-blue); }}
+    .quad-q4 {{ background: #edf0f2; border-color: #c7cdd4; color: #354052; }}
     .good_target, .strong_target {{ background: #eff8fb; color: var(--wvu-blue); border-color: var(--wvu-sky); }}
     .avoid_bad_risk_reward, .avoid_unless_needed {{ background: var(--soft-red); color: var(--red); border-color: #ffd0d0; }}
     .monitor {{ background: var(--soft-gold); color: var(--gold); border-color: var(--wvu-gold); }}
@@ -1519,7 +1562,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
                   <th>2026 Date</th>
                   <th>Opponent</th>
                   <th>Location</th>
-                  <th>Tier</th>
+                  <th>Quadrant</th>
                   <th>WAB Win/Loss</th>
                   <th>WVU Win %</th>
                   <th></th>
@@ -1535,12 +1578,8 @@ def dashboard_html(payload: dict[str, Any]) -> str:
             <strong id="hostProjectionTitle">WVU Projection</strong>
             <div class="host-card-grid">
               <div>
-                <span>Projected NET</span>
-                <strong id="hostProjectedRank">—</strong>
-              </div>
-              <div>
-                <span>Projected Tier</span>
-                <strong id="hostProjectedTier">—</strong>
+                <span>Projected Roster Talent</span>
+                <strong id="hostRosterTalentRank">—</strong>
               </div>
             </div>
             <div class="host-card-section">
@@ -1551,7 +1590,6 @@ def dashboard_html(payload: dict[str, Any]) -> str:
               <h3>Projected Reserves</h3>
               <ul class="host-card-list" id="hostReserves"></ul>
             </div>
-            <div class="host-card-note" id="hostProjectionNote">—</div>
           </div>
           <div class="planner-metric">
             <strong id="plannerGames">0</strong>
@@ -1721,8 +1759,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       const card = payload.planner?.host_card || {{}};
       const team = card.team || payload.planner?.host || "Host";
       document.getElementById("hostProjectionTitle").textContent = `${{team}} Projection`;
-      document.getElementById("hostProjectedRank").textContent = card.projected_net_rank ? `#${{card.projected_net_rank}}` : "—";
-      document.getElementById("hostProjectedTier").textContent = card.projected_net_tier ? tierLabel(card.projected_net_tier) : "—";
+      document.getElementById("hostRosterTalentRank").textContent = card.projected_roster_talent_rank ? `#${{card.projected_roster_talent_rank}}` : "—";
       const starters = Array.isArray(card.projected_starters) ? card.projected_starters : [];
       const reserves = Array.isArray(card.projected_reserves) ? card.projected_reserves : [];
       const renderRotationPlayer = (player, showSlot = false) => {{
@@ -1732,21 +1769,11 @@ def dashboard_html(payload: dict[str, Any]) -> str:
         return `<li>${{slot}}${{escapeHtml(player.name || "Unknown")}}${{position}}${{source}}</li>`;
       }};
       document.getElementById("hostStarters").innerHTML = starters.length
-        ? starters.map(player => renderRotationPlayer(player, true)).join("")
+        ? starters.map(player => renderRotationPlayer(player, false)).join("")
         : "<li>Not enough current intake data to project starters</li>";
       document.getElementById("hostReserves").innerHTML = reserves.length
         ? reserves.map(player => renderRotationPlayer(player, false)).join("")
         : "<li>No named reserves currently matched</li>";
-
-      const hsSource = String(card.on3_hs_source_file || "").match(/(\\d{{4}}-\\d{{2}}-\\d{{2}})/)?.[1];
-      const transferSource = String(card.on3_transfer_source_file || "").match(/(\\d{{4}}-\\d{{2}}-\\d{{2}})/)?.[1];
-      const notes = [];
-      if (hsSource) notes.push(`HS source ${{hsSource}}`);
-      if (transferSource) notes.push(`On3 transfer source ${{transferSource}}`);
-      if (card.known_players !== null && card.known_players !== undefined) {{
-        notes.push(`${{card.known_players}} known players, ${{Math.max(0, Number(card.missing_slots || 0))}} open spots`);
-      }}
-      document.getElementById("hostProjectionNote").textContent = notes.join(" | ");
     }}
 
     function setSort(key, dir) {{
@@ -1958,6 +1985,30 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       return Number.isFinite(value) ? value : null;
     }}
 
+    function plannerQuadrant(opponent, location) {{
+      const rank = plannerProjectedRank(opponent);
+      if (!Number.isFinite(rank)) return null;
+      if (location === "Home") {{
+        if (rank <= 30) return "Q1";
+        if (rank <= 75) return "Q2";
+        if (rank <= 160) return "Q3";
+        return "Q4";
+      }}
+      if (location === "Neutral") {{
+        if (rank <= 50) return "Q1";
+        if (rank <= 100) return "Q2";
+        if (rank <= 200) return "Q3";
+        return "Q4";
+      }}
+      if (location === "Away") {{
+        if (rank <= 75) return "Q1";
+        if (rank <= 135) return "Q2";
+        if (rank <= 240) return "Q3";
+        return "Q4";
+      }}
+      return null;
+    }}
+
     function plannerBreakdown(validGames, gameCounts) {{
       const summary = {{
         top100: 0,
@@ -2031,7 +2082,10 @@ def dashboard_html(payload: dict[str, Any]) -> str:
               ${{["Home", "Neutral", "Away"].map(location => `<option value="${{location}}" ${{game.location === location ? "selected" : ""}}>${{location}}</option>`).join("")}}
             </select>
           </td>
-          <td>${{opponent ? `<span class="pill tier-chip tier-${{cls(opponent.tier)}}">${{tierLabel(opponent.tier)}}</span>` : "—"}}</td>
+          <td>${{(() => {{
+            const quad = plannerQuadrant(opponent, game.location);
+            return quad ? `<span class="pill tier-chip quad-${{cls(quad).toLowerCase()}}">${{escapeHtml(quad.replace("Q", "Quad "))}}</span>` : "—";
+          }})()}}</td>
           <td class="num">${{wabSwingHtml(opponent, game.location)}}</td>
           <td class="num"><strong>${{winProb === null ? "—" : `${{pctFmt.format(winProb * 100)}}%`}}</strong></td>
           <td><button class="danger remove-game" type="button">Remove</button></td>

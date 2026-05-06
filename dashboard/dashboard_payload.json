@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-06T16:56:35-04:00",
+  "generated_at": "2026-05-06T17:15:29-04:00",
   "source_files": {
     "risk_board_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -7510,8 +7510,7 @@
     },
     "host_card": {
       "team": "West Virginia",
-      "projected_net_rank": 67.0,
-      "projected_net_tier": "51_75",
+      "projected_roster_talent_rank": 32.0,
       "projected_coach": "Ross Hodge",
       "known_players": 10,
       "missing_slots": 3,
@@ -7523,7 +7522,7 @@
           "name": "Miles Sadler",
           "position": "PG",
           "industry_rank": 25.0,
-          "source_label": "Bella Vista College Preparatory School",
+          "source_label": "Bella Vista Prep",
           "origin_type": "hs",
           "projected_role_share": 0.122,
           "position_bucket": "pg",
@@ -7545,7 +7544,7 @@
           "name": "Javan Buchanan",
           "source_team": "Boise St.",
           "position": "F",
-          "source_label": "Boise St.",
+          "source_label": "Boise St",
           "origin_type": "transfer",
           "projected_role_share": 0.1158259862008554,
           "position_bucket": "forward",
@@ -7580,7 +7579,7 @@
           "name": "Martin Somerville",
           "source_team": "Florida St.",
           "position": "G",
-          "source_label": "Florida St.",
+          "source_label": "Florida St",
           "origin_type": "transfer",
           "projected_role_share": 0.11557676339346584,
           "position_bucket": "guard",
@@ -7590,7 +7589,7 @@
           "name": "Joson Sanon",
           "source_team": "St. John's (NY)",
           "position": "G",
-          "source_label": "St. John's (NY)",
+          "source_label": "St. John's",
           "origin_type": "transfer",
           "projected_role_share": 0.0946084927516268,
           "position_bucket": "guard",
@@ -7600,7 +7599,7 @@
           "name": "Amir Jenkins",
           "class_year": "Freshman",
           "position": "G",
-          "source_label": "West Virginia",
+          "source_label": "WVU",
           "origin_type": "returner",
           "projected_role_share": 0.07223729436813246,
           "position_bucket": "guard",
@@ -7610,7 +7609,7 @@
           "name": "Keonte Greybear",
           "position": "PG",
           "industry_rank": 176.0,
-          "source_label": "iSchool of Lewisville",
+          "source_label": "iSchool Lewisville",
           "origin_type": "hs",
           "projected_role_share": 0.062,
           "position_bucket": "pg",
@@ -7620,7 +7619,7 @@
           "name": "Amadou Seini",
           "position": "C",
           "industry_rank": 158.0,
-          "source_label": "Bella Vista College Preparatory School",
+          "source_label": "Bella Vista Prep",
           "origin_type": "hs",
           "projected_role_share": 0.04,
           "position_bucket": "big",
@@ -7630,15 +7629,13 @@
           "name": "Aliou Dioum",
           "position": "C",
           "industry_rank": 135.0,
-          "source_label": "Bella Vista College Preparatory School",
+          "source_label": "Bella Vista Prep",
           "origin_type": "hs",
           "projected_role_share": 0.038,
           "position_bucket": "big",
           "projected_role_score": 0.038
         }
-      ],
-      "on3_hs_source_file": "/Users/sm00249/Documents/ncaa-net-predictor/data/raw/on3/hs/2026/on3_hs_2026_2026-05-06.json",
-      "on3_transfer_source_file": "/Users/sm00249/Documents/ncaa-net-predictor/data/raw/on3/transfer/2026/on3_transfer_2026_2026-05-06.json"
+      ]
     },
     "teams": [
       {
