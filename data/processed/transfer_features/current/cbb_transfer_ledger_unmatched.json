@@ -10,6 +10,16 @@
     "source_division": "1"
   },
   {
+    "destination_division": "2",
+    "ledger_destination_team": "Lincoln Memorial",
+    "ledger_player_id": "2113349",
+    "ledger_player_name": "Ryan Nutter",
+    "ledger_source_team": "Marshall",
+    "portal_status": "Transferred",
+    "reason": "no_match",
+    "source_division": "1"
+  },
+  {
     "destination_division": "1",
     "ledger_destination_team": "Merrimack",
     "ledger_player_id": "1926077",
