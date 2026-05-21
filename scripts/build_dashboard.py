@@ -1858,14 +1858,17 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     function defaultGames() {{
       return [
         {{ id: "default-1", date: "11/2", opponent: "Niagara", location: "Home" }},
-        {{ id: "default-2", date: "11/12", opponent: "Pittsburgh", location: "Away" }},
-        {{ id: "default-3", date: "11/17", opponent: "Placeholder: 51-75 Team", location: "Neutral" }},
-        {{ id: "default-4", date: "11/18", opponent: "Placeholder: 26-50 Team", location: "Neutral" }},
-        {{ id: "default-5", date: "11/19", opponent: "Placeholder: 26-50 Team", location: "Neutral" }},
+        {{ id: "default-2", date: "11/17", opponent: "Auburn", location: "Neutral" }},
+        {{ id: "default-3", date: "11/18", opponent: "Placeholder: 26-50 Team", location: "Neutral" }},
+        {{ id: "default-4", date: "11/19", opponent: "Placeholder: 26-50 Team", location: "Neutral" }},
+        {{ id: "default-5", date: "11/27", opponent: "North Carolina", location: "Neutral" }},
         {{ id: "default-6", date: "12/1", opponent: "Mercyhurst", location: "Home" }},
         {{ id: "default-7", date: "12/5", opponent: "Virginia Tech", location: "Home" }},
-        {{ id: "default-8", date: "12/13", opponent: "Coppin St.", location: "Home" }},
-        {{ id: "default-9", date: "12/19", opponent: "Wake Forest", location: "Neutral" }}
+        {{ id: "default-8", date: "12/9", opponent: "Pittsburgh", location: "Neutral" }},
+        {{ id: "default-9", date: "12/13", opponent: "Coppin St.", location: "Home" }},
+        {{ id: "default-10", date: "12/16", opponent: "Northern Arizona", location: "Home" }},
+        {{ id: "default-11", date: "12/19", opponent: "Wake Forest", location: "Neutral" }},
+        {{ id: "default-12", date: "12/22", opponent: "South Carolina St.", location: "Home" }}
       ];
     }}
 
