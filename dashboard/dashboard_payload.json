@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-21T19:24:31+00:00",
+  "generated_at": "2026-05-22T12:19:06+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-05-21",
-    "on3_transfer_snapshot": "2026-05-21",
+    "on3_hs_snapshot": "2026-05-22",
+    "on3_transfer_snapshot": "2026-05-22",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 453,
-    "cbb_transfer_feature_built_at": "2026-05-21",
-    "cbb_transfer_ledger_snapshot": "2026-05-21"
+    "cbb_transfer_feature_built_at": "2026-05-22",
+    "cbb_transfer_ledger_snapshot": "2026-05-22"
   },
   "summary": {
     "candidate_count": 286,
@@ -9570,7 +9570,7 @@
         "program_band": "101_135",
         "projected_net_rank": 113.0,
         "schedule_score": 113.0,
-        "schedule_percentile": 0.684,
+        "schedule_percentile": 0.687,
         "added_wab": 0.423,
         "projected_adj_em": 5.24,
         "wab_adj_em": 5.24,
@@ -9586,11 +9586,11 @@
         "program_band": "76_100",
         "projected_net_rank": 114.0,
         "schedule_score": 114.0,
-        "schedule_percentile": 0.69,
+        "schedule_percentile": 0.676,
         "added_wab": 0.419,
         "projected_adj_em": 5.05,
         "wab_adj_em": 5.05,
-        "roster_known_players": 9.0
+        "roster_known_players": 10.0
       },
       {
         "team": "North Texas",
@@ -9634,7 +9634,7 @@
         "program_band": "101_135",
         "projected_net_rank": 117.0,
         "schedule_score": 117.0,
-        "schedule_percentile": 0.679,
+        "schedule_percentile": 0.681,
         "added_wab": 0.406,
         "projected_adj_em": 4.62,
         "wab_adj_em": 4.62,
@@ -9682,7 +9682,7 @@
         "program_band": "136_160",
         "projected_net_rank": 120.0,
         "schedule_score": 120.0,
-        "schedule_percentile": 0.676,
+        "schedule_percentile": 0.679,
         "added_wab": 0.394,
         "projected_adj_em": 4.32,
         "wab_adj_em": 4.59,
@@ -9778,7 +9778,7 @@
         "program_band": "161_200",
         "projected_net_rank": 125.0,
         "schedule_score": 125.0,
-        "schedule_percentile": 0.681,
+        "schedule_percentile": 0.684,
         "added_wab": 0.373,
         "projected_adj_em": 3.66,
         "wab_adj_em": 4.59,
@@ -9890,7 +9890,7 @@
         "program_band": "101_135",
         "projected_net_rank": 132.0,
         "schedule_score": 132.0,
-        "schedule_percentile": 0.687,
+        "schedule_percentile": 0.69,
         "added_wab": 0.346,
         "projected_adj_em": 2.95,
         "wab_adj_em": 4.59,
