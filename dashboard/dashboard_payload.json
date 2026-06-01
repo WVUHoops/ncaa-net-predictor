@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-31T11:42:26+00:00",
+  "generated_at": "2026-06-01T15:57:26+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-05-31",
+    "on3_hs_snapshot": "2026-06-01",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 460,
-    "cbb_transfer_feature_built_at": "2026-05-31",
-    "cbb_transfer_ledger_snapshot": "2026-05-31"
+    "cbb_transfer_feature_built_at": "2026-06-01",
+    "cbb_transfer_ledger_snapshot": "2026-06-01"
   },
   "summary": {
     "candidate_count": 286,
@@ -8710,7 +8710,7 @@
         "added_wab": 0.646,
         "projected_adj_em": 13.28,
         "wab_adj_em": 13.28,
-        "roster_known_players": 13.0
+        "roster_known_players": 14.0
       },
       {
         "team": "Syracuse",
@@ -8905,10 +8905,10 @@
         "roster_known_players": 14.0
       },
       {
-        "team": "Vanderbilt",
-        "team_key": "vanderbilt",
-        "conference": "SEC",
-        "projected_coach": "Mark Byington",
+        "team": "SMU",
+        "team_key": "smu",
+        "conference": "ACC",
+        "projected_coach": "Andy Enfield",
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
@@ -8918,13 +8918,13 @@
         "added_wab": 0.598,
         "projected_adj_em": 11.93,
         "wab_adj_em": 13.04,
-        "roster_known_players": 11.0
+        "roster_known_players": 13.0
       },
       {
-        "team": "SMU",
-        "team_key": "smu",
-        "conference": "ACC",
-        "projected_coach": "Andy Enfield",
+        "team": "Vanderbilt",
+        "team_key": "vanderbilt",
+        "conference": "SEC",
+        "projected_coach": "Mark Byington",
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
@@ -8934,7 +8934,7 @@
         "added_wab": 0.594,
         "projected_adj_em": 11.55,
         "wab_adj_em": 13.04,
-        "roster_known_players": 13.0
+        "roster_known_players": 11.0
       },
       {
         "team": "Butler",
@@ -10066,11 +10066,11 @@
         "program_band": "201_250",
         "projected_net_rank": 144.0,
         "schedule_score": 144.0,
-        "schedule_percentile": 0.593,
+        "schedule_percentile": 0.574,
         "added_wab": 0.301,
         "projected_adj_em": 1.36,
         "wab_adj_em": 1.41,
-        "roster_known_players": 13.0
+        "roster_known_players": 14.0
       },
       {
         "team": "Toledo",
@@ -10082,7 +10082,7 @@
         "program_band": "101_135",
         "projected_net_rank": 145.0,
         "schedule_score": 145.0,
-        "schedule_percentile": 0.588,
+        "schedule_percentile": 0.591,
         "added_wab": 0.297,
         "projected_adj_em": 1.36,
         "wab_adj_em": 1.41,
@@ -10114,7 +10114,7 @@
         "program_band": "101_135",
         "projected_net_rank": 147.0,
         "schedule_score": 147.0,
-        "schedule_percentile": 0.58,
+        "schedule_percentile": 0.582,
         "added_wab": 0.29,
         "projected_adj_em": 1.28,
         "wab_adj_em": 1.41,
@@ -10130,7 +10130,7 @@
         "program_band": "136_160",
         "projected_net_rank": 148.0,
         "schedule_score": 148.0,
-        "schedule_percentile": 0.577,
+        "schedule_percentile": 0.58,
         "added_wab": 0.286,
         "projected_adj_em": 1.25,
         "wab_adj_em": 1.41,
@@ -10210,7 +10210,7 @@
         "program_band": "201_250",
         "projected_net_rank": 153.0,
         "schedule_score": 153.0,
-        "schedule_percentile": 0.582,
+        "schedule_percentile": 0.585,
         "added_wab": 0.269,
         "projected_adj_em": 1.06,
         "wab_adj_em": 1.41,
@@ -10306,7 +10306,7 @@
         "program_band": "101_135",
         "projected_net_rank": 159.0,
         "schedule_score": 159.0,
-        "schedule_percentile": 0.574,
+        "schedule_percentile": 0.577,
         "added_wab": 0.249,
         "projected_adj_em": 0.78,
         "wab_adj_em": 1.41,
@@ -10386,7 +10386,7 @@
         "program_band": "136_160",
         "projected_net_rank": 164.0,
         "schedule_score": 164.0,
-        "schedule_percentile": 0.585,
+        "schedule_percentile": 0.588,
         "added_wab": 0.233,
         "projected_adj_em": 0.6,
         "wab_adj_em": 0.6,
@@ -10402,7 +10402,7 @@
         "program_band": "136_160",
         "projected_net_rank": 165.0,
         "schedule_score": 165.0,
-        "schedule_percentile": 0.591,
+        "schedule_percentile": 0.593,
         "added_wab": 0.23,
         "projected_adj_em": 0.57,
         "wab_adj_em": 0.57,
