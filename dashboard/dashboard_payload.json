@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-01T15:57:26+00:00",
+  "generated_at": "2026-06-02T14:03:40+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-06-01",
+    "on3_hs_snapshot": "2026-06-02",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 460,
-    "cbb_transfer_feature_built_at": "2026-06-01",
-    "cbb_transfer_ledger_snapshot": "2026-06-01"
+    "cbb_transfer_feature_built_at": "2026-06-02",
+    "cbb_transfer_ledger_snapshot": "2026-06-02"
   },
   "summary": {
     "candidate_count": 286,
@@ -8905,6 +8905,22 @@
         "roster_known_players": 14.0
       },
       {
+        "team": "South Carolina",
+        "team_key": "south carolina",
+        "conference": "SEC",
+        "projected_coach": "Lamont Paris",
+        "tier": "51_75",
+        "projected_net_tier": "51_75",
+        "program_band": "76_100",
+        "projected_net_rank": 72.0,
+        "schedule_score": 72.0,
+        "schedule_percentile": 0.805,
+        "added_wab": 0.598,
+        "projected_adj_em": 11.93,
+        "wab_adj_em": 13.04,
+        "roster_known_players": 11.0
+      },
+      {
         "team": "SMU",
         "team_key": "smu",
         "conference": "ACC",
@@ -8912,11 +8928,11 @@
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
-        "projected_net_rank": 72.0,
-        "schedule_score": 72.0,
-        "schedule_percentile": 0.805,
-        "added_wab": 0.598,
-        "projected_adj_em": 11.93,
+        "projected_net_rank": 73.0,
+        "schedule_score": 73.0,
+        "schedule_percentile": 0.802,
+        "added_wab": 0.594,
+        "projected_adj_em": 11.55,
         "wab_adj_em": 13.04,
         "roster_known_players": 13.0
       },
@@ -8928,29 +8944,13 @@
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
-        "projected_net_rank": 73.0,
-        "schedule_score": 73.0,
-        "schedule_percentile": 0.802,
-        "added_wab": 0.594,
-        "projected_adj_em": 11.55,
-        "wab_adj_em": 13.04,
-        "roster_known_players": 11.0
-      },
-      {
-        "team": "Butler",
-        "team_key": "butler",
-        "conference": "BE",
-        "projected_coach": "Ronald Nored",
-        "tier": "51_75",
-        "projected_net_tier": "51_75",
-        "program_band": "76_100",
         "projected_net_rank": 74.0,
         "schedule_score": 74.0,
         "schedule_percentile": 0.799,
         "added_wab": 0.59,
         "projected_adj_em": 11.31,
         "wab_adj_em": 13.04,
-        "roster_known_players": 9.0
+        "roster_known_players": 11.0
       },
       {
         "team": "Saint Mary's",
@@ -8985,10 +8985,10 @@
         "roster_known_players": 14.0
       },
       {
-        "team": "Wake Forest",
-        "team_key": "wake forest",
-        "conference": "ACC",
-        "projected_coach": "Steve Forbes",
+        "team": "Butler",
+        "team_key": "butler",
+        "conference": "BE",
+        "projected_coach": "Ronald Nored",
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "76_100",
@@ -8998,6 +8998,22 @@
         "added_wab": 0.585,
         "projected_adj_em": 11.06,
         "wab_adj_em": 13.04,
+        "roster_known_players": 9.0
+      },
+      {
+        "team": "Wake Forest",
+        "team_key": "wake forest",
+        "conference": "ACC",
+        "projected_coach": "Steve Forbes",
+        "tier": "76_100",
+        "projected_net_tier": "76_100",
+        "program_band": "76_100",
+        "projected_net_rank": 76.0,
+        "schedule_score": 76.0,
+        "schedule_percentile": 0.794,
+        "added_wab": 0.581,
+        "projected_adj_em": 10.98,
+        "wab_adj_em": 10.98,
         "roster_known_players": 12.0
       },
       {
@@ -9008,29 +9024,13 @@
         "tier": "76_100",
         "projected_net_tier": "76_100",
         "program_band": "51_75",
-        "projected_net_rank": 76.0,
-        "schedule_score": 76.0,
-        "schedule_percentile": 0.794,
-        "added_wab": 0.581,
-        "projected_adj_em": 10.98,
-        "wab_adj_em": 10.98,
-        "roster_known_players": 12.0
-      },
-      {
-        "team": "South Carolina",
-        "team_key": "south carolina",
-        "conference": "SEC",
-        "projected_coach": "Lamont Paris",
-        "tier": "76_100",
-        "projected_net_tier": "76_100",
-        "program_band": "76_100",
         "projected_net_rank": 77.0,
         "schedule_score": 77.0,
         "schedule_percentile": 0.791,
         "added_wab": 0.577,
         "projected_adj_em": 10.94,
         "wab_adj_em": 10.94,
-        "roster_known_players": 10.0
+        "roster_known_players": 12.0
       },
       {
         "team": "Notre Dame",
