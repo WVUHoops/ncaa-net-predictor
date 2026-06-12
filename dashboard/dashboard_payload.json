@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-11T13:59:49+00:00",
+  "generated_at": "2026-06-12T12:55:02+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-06-11",
+    "on3_hs_snapshot": "2026-06-12",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 469,
-    "cbb_transfer_feature_built_at": "2026-06-11",
-    "cbb_transfer_ledger_snapshot": "2026-06-11"
+    "cbb_transfer_feature_built_at": "2026-06-12",
+    "cbb_transfer_ledger_snapshot": "2026-06-12"
   },
   "summary": {
     "candidate_count": 286,
@@ -8882,7 +8882,7 @@
         "program_band": "136_160",
         "projected_net_rank": 70.0,
         "schedule_score": 70.0,
-        "schedule_percentile": 0.78,
+        "schedule_percentile": 0.783,
         "added_wab": 0.606,
         "projected_adj_em": 11.95,
         "wab_adj_em": 13.04,
@@ -9058,7 +9058,7 @@
         "program_band": "76_100",
         "projected_net_rank": 81.0,
         "schedule_score": 81.0,
-        "schedule_percentile": 0.783,
+        "schedule_percentile": 0.78,
         "added_wab": 0.56,
         "projected_adj_em": 10.1,
         "wab_adj_em": 10.1,
@@ -10742,7 +10742,7 @@
         "added_wab": 0.172,
         "projected_adj_em": -1.77,
         "wab_adj_em": -1.04,
-        "roster_known_players": 12.0
+        "roster_known_players": 13.0
       },
       {
         "team": "Marshall",
@@ -11314,7 +11314,7 @@
         "program_band": "161_200",
         "projected_net_rank": 222.0,
         "schedule_score": 222.0,
-        "schedule_percentile": 0.396,
+        "schedule_percentile": 0.393,
         "added_wab": 0.101,
         "projected_adj_em": -4.73,
         "wab_adj_em": -4.73,
@@ -11714,7 +11714,7 @@
         "program_band": "301_plus",
         "projected_net_rank": 247.0,
         "schedule_score": 247.0,
-        "schedule_percentile": 0.393,
+        "schedule_percentile": 0.396,
         "added_wab": 0.068,
         "projected_adj_em": -6.8,
         "wab_adj_em": -5.04,
@@ -12610,7 +12610,7 @@
         "program_band": "251_300",
         "projected_net_rank": 303.0,
         "schedule_score": 303.0,
-        "schedule_percentile": 0.143,
+        "schedule_percentile": 0.14,
         "added_wab": 0.027,
         "projected_adj_em": -12.53,
         "wab_adj_em": -12.53,
@@ -12946,11 +12946,11 @@
         "program_band": "301_plus",
         "projected_net_rank": 324.0,
         "schedule_score": 324.0,
-        "schedule_percentile": 0.14,
+        "schedule_percentile": 0.143,
         "added_wab": 0.019,
         "projected_adj_em": -14.96,
         "wab_adj_em": -14.96,
-        "roster_known_players": 8.0
+        "roster_known_players": 9.0
       },
       {
         "team": "Southern",
