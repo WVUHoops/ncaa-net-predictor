@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-17T13:42:29+00:00",
+  "generated_at": "2026-06-18T12:53:04+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-06-17",
+    "on3_hs_snapshot": "2026-06-18",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 471,
-    "cbb_transfer_feature_built_at": "2026-06-17",
-    "cbb_transfer_ledger_snapshot": "2026-06-17"
+    "cbb_transfer_feature_built_at": "2026-06-18",
+    "cbb_transfer_ledger_snapshot": "2026-06-18"
   },
   "summary": {
     "candidate_count": 286,
@@ -10194,7 +10194,7 @@
         "program_band": "251_300",
         "projected_net_rank": 152.0,
         "schedule_score": 152.0,
-        "schedule_percentile": 0.563,
+        "schedule_percentile": 0.56,
         "added_wab": 0.272,
         "projected_adj_em": 1.13,
         "wab_adj_em": 1.41,
@@ -10610,11 +10610,11 @@
         "program_band": "136_160",
         "projected_net_rank": 178.0,
         "schedule_score": 178.0,
-        "schedule_percentile": 0.56,
+        "schedule_percentile": 0.563,
         "added_wab": 0.193,
         "projected_adj_em": -0.68,
         "wab_adj_em": -0.68,
-        "roster_known_players": 12.0
+        "roster_known_players": 13.0
       },
       {
         "team": "North Dakota St.",
