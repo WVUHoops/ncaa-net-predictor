@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-22T15:25:23+00:00",
+  "generated_at": "2026-06-23T12:33:20+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-06-22",
+    "on3_hs_snapshot": "2026-06-23",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
-    "cbb_transfer_feature_rows": 478,
-    "cbb_transfer_feature_built_at": "2026-06-22",
-    "cbb_transfer_ledger_snapshot": "2026-06-22"
+    "cbb_transfer_feature_rows": 479,
+    "cbb_transfer_feature_built_at": "2026-06-23",
+    "cbb_transfer_ledger_snapshot": "2026-06-23"
   },
   "summary": {
     "candidate_count": 286,
@@ -8377,22 +8377,6 @@
         "roster_known_players": 11.0
       },
       {
-        "team": "Mississippi",
-        "team_key": "mississippi",
-        "conference": "SEC",
-        "projected_coach": "Chris Beard",
-        "tier": "26_50",
-        "projected_net_tier": "26_50",
-        "program_band": "51_75",
-        "projected_net_rank": 39.0,
-        "schedule_score": 39.0,
-        "schedule_percentile": 0.896,
-        "added_wab": 0.724,
-        "projected_adj_em": 18.69,
-        "wab_adj_em": 18.88,
-        "roster_known_players": 14.0
-      },
-      {
         "team": "TCU",
         "team_key": "tcu",
         "conference": "B12",
@@ -8400,13 +8384,29 @@
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "26_50",
+        "projected_net_rank": 39.0,
+        "schedule_score": 39.0,
+        "schedule_percentile": 0.896,
+        "added_wab": 0.724,
+        "projected_adj_em": 18.69,
+        "wab_adj_em": 18.88,
+        "roster_known_players": 10.0
+      },
+      {
+        "team": "Mississippi",
+        "team_key": "mississippi",
+        "conference": "SEC",
+        "projected_coach": "Chris Beard",
+        "tier": "26_50",
+        "projected_net_tier": "26_50",
+        "program_band": "51_75",
         "projected_net_rank": 40.0,
         "schedule_score": 40.0,
         "schedule_percentile": 0.893,
         "added_wab": 0.721,
         "projected_adj_em": 18.61,
         "wab_adj_em": 18.88,
-        "roster_known_players": 10.0
+        "roster_known_players": 14.0
       },
       {
         "team": "Dayton",
@@ -12082,7 +12082,7 @@
         "program_band": "251_300",
         "projected_net_rank": 270.0,
         "schedule_score": 270.0,
-        "schedule_percentile": 0.253,
+        "schedule_percentile": 0.255,
         "added_wab": 0.047,
         "projected_adj_em": -8.94,
         "wab_adj_em": -8.94,
@@ -12498,7 +12498,7 @@
         "program_band": "251_300",
         "projected_net_rank": 296.0,
         "schedule_score": 296.0,
-        "schedule_percentile": 0.255,
+        "schedule_percentile": 0.253,
         "added_wab": 0.03,
         "projected_adj_em": -11.52,
         "wab_adj_em": -9.52,
@@ -12962,7 +12962,7 @@
         "program_band": "251_300",
         "projected_net_rank": 325.0,
         "schedule_score": 325.0,
-        "schedule_percentile": 0.099,
+        "schedule_percentile": 0.096,
         "added_wab": 0.019,
         "projected_adj_em": -15.26,
         "wab_adj_em": -15.26,
@@ -13106,7 +13106,7 @@
         "program_band": "251_300",
         "projected_net_rank": 334.0,
         "schedule_score": 334.0,
-        "schedule_percentile": 0.096,
+        "schedule_percentile": 0.099,
         "added_wab": 0.016,
         "projected_adj_em": -17.44,
         "wab_adj_em": -17.44,
