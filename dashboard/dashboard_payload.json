@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-24T12:19:39+00:00",
+  "generated_at": "2026-06-25T12:21:34+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-06-24",
+    "on3_hs_snapshot": "2026-06-25",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 480,
-    "cbb_transfer_feature_built_at": "2026-06-24",
-    "cbb_transfer_ledger_snapshot": "2026-06-24"
+    "cbb_transfer_feature_built_at": "2026-06-25",
+    "cbb_transfer_ledger_snapshot": "2026-06-25"
   },
   "summary": {
     "candidate_count": 286,
@@ -8201,26 +8201,26 @@
         "roster_known_players": 10.0
       },
       {
-        "team": "Auburn",
-        "team_key": "auburn",
+        "team": "Florida",
+        "team_key": "florida",
         "conference": "SEC",
-        "projected_coach": "Steven Pearl",
+        "projected_coach": "Todd Golden",
         "tier": "26_50",
         "projected_net_tier": "26_50",
-        "program_band": "26_50",
+        "program_band": "top_25",
         "projected_net_rank": 28.0,
         "schedule_score": 28.0,
         "schedule_percentile": 0.926,
         "added_wab": 0.76,
         "projected_adj_em": 21.19,
         "wab_adj_em": 21.19,
-        "roster_known_players": 15.0
+        "roster_known_players": 11.0
       },
       {
-        "team": "Florida",
-        "team_key": "florida",
-        "conference": "SEC",
-        "projected_coach": "Todd Golden",
+        "team": "Wisconsin",
+        "team_key": "wisconsin",
+        "conference": "B10",
+        "projected_coach": "Greg Gard",
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "top_25",
@@ -8233,10 +8233,10 @@
         "roster_known_players": 11.0
       },
       {
-        "team": "Wisconsin",
-        "team_key": "wisconsin",
-        "conference": "B10",
-        "projected_coach": "Greg Gard",
+        "team": "Virginia",
+        "team_key": "virginia",
+        "conference": "ACC",
+        "projected_coach": "Ryan Odom",
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "top_25",
@@ -8246,23 +8246,23 @@
         "added_wab": 0.754,
         "projected_adj_em": 20.64,
         "wab_adj_em": 20.64,
-        "roster_known_players": 11.0
+        "roster_known_players": 13.0
       },
       {
-        "team": "Virginia",
-        "team_key": "virginia",
-        "conference": "ACC",
-        "projected_coach": "Ryan Odom",
+        "team": "Auburn",
+        "team_key": "auburn",
+        "conference": "SEC",
+        "projected_coach": "Steven Pearl",
         "tier": "26_50",
         "projected_net_tier": "26_50",
-        "program_band": "top_25",
+        "program_band": "26_50",
         "projected_net_rank": 31.0,
         "schedule_score": 31.0,
         "schedule_percentile": 0.918,
         "added_wab": 0.751,
         "projected_adj_em": 20.57,
         "wab_adj_em": 20.57,
-        "roster_known_players": 13.0
+        "roster_known_players": 14.0
       },
       {
         "team": "Xavier",
@@ -8297,6 +8297,22 @@
         "roster_known_players": 14.0
       },
       {
+        "team": "Arkansas",
+        "team_key": "arkansas",
+        "conference": "SEC",
+        "projected_coach": "John Calipari",
+        "tier": "26_50",
+        "projected_net_tier": "26_50",
+        "program_band": "26_50",
+        "projected_net_rank": 34.0,
+        "schedule_score": 34.0,
+        "schedule_percentile": 0.909,
+        "added_wab": 0.741,
+        "projected_adj_em": 19.51,
+        "wab_adj_em": 19.51,
+        "roster_known_players": 11.0
+      },
+      {
         "team": "Virginia Tech",
         "team_key": "virginia tech",
         "conference": "ACC",
@@ -8304,12 +8320,12 @@
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "51_75",
-        "projected_net_rank": 34.0,
-        "schedule_score": 34.0,
-        "schedule_percentile": 0.909,
-        "added_wab": 0.741,
-        "projected_adj_em": 19.51,
-        "wab_adj_em": 19.51,
+        "projected_net_rank": 35.0,
+        "schedule_score": 35.0,
+        "schedule_percentile": 0.907,
+        "added_wab": 0.738,
+        "projected_adj_em": 19.36,
+        "wab_adj_em": 19.36,
         "roster_known_players": 11.0
       },
       {
@@ -8320,12 +8336,12 @@
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "top_25",
-        "projected_net_rank": 35.0,
-        "schedule_score": 35.0,
-        "schedule_percentile": 0.907,
-        "added_wab": 0.738,
-        "projected_adj_em": 19.36,
-        "wab_adj_em": 19.36,
+        "projected_net_rank": 36.0,
+        "schedule_score": 36.0,
+        "schedule_percentile": 0.904,
+        "added_wab": 0.734,
+        "projected_adj_em": 19.2,
+        "wab_adj_em": 19.2,
         "roster_known_players": 13.0
       },
       {
@@ -8336,12 +8352,12 @@
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "76_100",
-        "projected_net_rank": 36.0,
-        "schedule_score": 36.0,
-        "schedule_percentile": 0.904,
-        "added_wab": 0.734,
-        "projected_adj_em": 19.2,
-        "wab_adj_em": 19.2,
+        "projected_net_rank": 37.0,
+        "schedule_score": 37.0,
+        "schedule_percentile": 0.901,
+        "added_wab": 0.731,
+        "projected_adj_em": 19.19,
+        "wab_adj_em": 19.19,
         "roster_known_players": 13.0
       },
       {
@@ -8352,29 +8368,13 @@
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "26_50",
-        "projected_net_rank": 37.0,
-        "schedule_score": 37.0,
-        "schedule_percentile": 0.901,
-        "added_wab": 0.731,
-        "projected_adj_em": 19.19,
-        "wab_adj_em": 19.19,
-        "roster_known_players": 12.0
-      },
-      {
-        "team": "Arkansas",
-        "team_key": "arkansas",
-        "conference": "SEC",
-        "projected_coach": "John Calipari",
-        "tier": "26_50",
-        "projected_net_tier": "26_50",
-        "program_band": "26_50",
         "projected_net_rank": 38.0,
         "schedule_score": 38.0,
         "schedule_percentile": 0.898,
         "added_wab": 0.728,
         "projected_adj_em": 19.02,
         "wab_adj_em": 19.02,
-        "roster_known_players": 11.0
+        "roster_known_players": 12.0
       },
       {
         "team": "Mississippi",
@@ -8857,20 +8857,20 @@
         "roster_known_players": 12.0
       },
       {
-        "team": "Mississippi St.",
-        "team_key": "mississippi state",
-        "conference": "SEC",
-        "projected_coach": "Chris Jans",
+        "team": "SMU",
+        "team_key": "smu",
+        "conference": "ACC",
+        "projected_coach": "Andy Enfield",
         "tier": "51_75",
         "projected_net_tier": "51_75",
-        "program_band": "101_135",
+        "program_band": "51_75",
         "projected_net_rank": 70.0,
         "schedule_score": 70.0,
         "schedule_percentile": 0.81,
         "added_wab": 0.606,
         "projected_adj_em": 11.95,
         "wab_adj_em": 13.04,
-        "roster_known_players": 9.0
+        "roster_known_players": 14.0
       },
       {
         "team": "Washington St.",
@@ -8889,6 +8889,22 @@
         "roster_known_players": 11.0
       },
       {
+        "team": "Mississippi St.",
+        "team_key": "mississippi state",
+        "conference": "SEC",
+        "projected_coach": "Chris Jans",
+        "tier": "51_75",
+        "projected_net_tier": "51_75",
+        "program_band": "101_135",
+        "projected_net_rank": 71.0,
+        "schedule_score": 71.0,
+        "schedule_percentile": 0.808,
+        "added_wab": 0.602,
+        "projected_adj_em": 11.94,
+        "wab_adj_em": 13.04,
+        "roster_known_players": 9.0
+      },
+      {
         "team": "South Carolina",
         "team_key": "south carolina",
         "conference": "SEC",
@@ -8896,11 +8912,11 @@
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "76_100",
-        "projected_net_rank": 71.0,
-        "schedule_score": 71.0,
-        "schedule_percentile": 0.808,
-        "added_wab": 0.602,
-        "projected_adj_em": 11.94,
+        "projected_net_rank": 72.0,
+        "schedule_score": 72.0,
+        "schedule_percentile": 0.805,
+        "added_wab": 0.598,
+        "projected_adj_em": 11.93,
         "wab_adj_em": 13.04,
         "roster_known_players": 13.0
       },
@@ -8912,29 +8928,13 @@
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
-        "projected_net_rank": 72.0,
-        "schedule_score": 72.0,
-        "schedule_percentile": 0.805,
-        "added_wab": 0.598,
-        "projected_adj_em": 11.93,
-        "wab_adj_em": 13.04,
-        "roster_known_players": 14.0
-      },
-      {
-        "team": "SMU",
-        "team_key": "smu",
-        "conference": "ACC",
-        "projected_coach": "Andy Enfield",
-        "tier": "51_75",
-        "projected_net_tier": "51_75",
-        "program_band": "51_75",
         "projected_net_rank": 73.0,
         "schedule_score": 73.0,
         "schedule_percentile": 0.802,
         "added_wab": 0.594,
         "projected_adj_em": 11.55,
         "wab_adj_em": 13.04,
-        "roster_known_players": 13.0
+        "roster_known_players": 14.0
       },
       {
         "team": "Vanderbilt",
