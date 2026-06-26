@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-25T12:21:34+00:00",
+  "generated_at": "2026-06-26T12:11:50+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-06-25",
+    "on3_hs_snapshot": "2026-06-26",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 480,
-    "cbb_transfer_feature_built_at": "2026-06-25",
-    "cbb_transfer_ledger_snapshot": "2026-06-25"
+    "cbb_transfer_feature_built_at": "2026-06-26",
+    "cbb_transfer_ledger_snapshot": "2026-06-26"
   },
   "summary": {
     "candidate_count": 286,
@@ -8201,26 +8201,26 @@
         "roster_known_players": 10.0
       },
       {
-        "team": "Florida",
-        "team_key": "florida",
+        "team": "Auburn",
+        "team_key": "auburn",
         "conference": "SEC",
-        "projected_coach": "Todd Golden",
+        "projected_coach": "Steven Pearl",
         "tier": "26_50",
         "projected_net_tier": "26_50",
-        "program_band": "top_25",
+        "program_band": "26_50",
         "projected_net_rank": 28.0,
         "schedule_score": 28.0,
         "schedule_percentile": 0.926,
         "added_wab": 0.76,
         "projected_adj_em": 21.19,
         "wab_adj_em": 21.19,
-        "roster_known_players": 11.0
+        "roster_known_players": 15.0
       },
       {
-        "team": "Wisconsin",
-        "team_key": "wisconsin",
-        "conference": "B10",
-        "projected_coach": "Greg Gard",
+        "team": "Florida",
+        "team_key": "florida",
+        "conference": "SEC",
+        "projected_coach": "Todd Golden",
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "top_25",
@@ -8233,10 +8233,10 @@
         "roster_known_players": 11.0
       },
       {
-        "team": "Virginia",
-        "team_key": "virginia",
-        "conference": "ACC",
-        "projected_coach": "Ryan Odom",
+        "team": "Wisconsin",
+        "team_key": "wisconsin",
+        "conference": "B10",
+        "projected_coach": "Greg Gard",
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "top_25",
@@ -8246,23 +8246,23 @@
         "added_wab": 0.754,
         "projected_adj_em": 20.64,
         "wab_adj_em": 20.64,
-        "roster_known_players": 13.0
+        "roster_known_players": 11.0
       },
       {
-        "team": "Auburn",
-        "team_key": "auburn",
-        "conference": "SEC",
-        "projected_coach": "Steven Pearl",
+        "team": "Virginia",
+        "team_key": "virginia",
+        "conference": "ACC",
+        "projected_coach": "Ryan Odom",
         "tier": "26_50",
         "projected_net_tier": "26_50",
-        "program_band": "26_50",
+        "program_band": "top_25",
         "projected_net_rank": 31.0,
         "schedule_score": 31.0,
         "schedule_percentile": 0.918,
         "added_wab": 0.751,
         "projected_adj_em": 20.57,
         "wab_adj_em": 20.57,
-        "roster_known_players": 14.0
+        "roster_known_players": 13.0
       },
       {
         "team": "Xavier",
@@ -12422,7 +12422,7 @@
         "added_wab": 0.033,
         "projected_adj_em": -11.1,
         "wab_adj_em": -9.52,
-        "roster_known_players": 12.0
+        "roster_known_players": 13.0
       },
       {
         "team": "American",
