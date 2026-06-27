@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-26T12:11:50+00:00",
+  "generated_at": "2026-06-27T11:27:45+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-06-26",
+    "on3_hs_snapshot": "2026-06-27",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 480,
-    "cbb_transfer_feature_built_at": "2026-06-26",
-    "cbb_transfer_ledger_snapshot": "2026-06-26"
+    "cbb_transfer_feature_built_at": "2026-06-27",
+    "cbb_transfer_ledger_snapshot": "2026-06-27"
   },
   "summary": {
     "candidate_count": 286,
@@ -8617,22 +8617,6 @@
         "roster_known_players": 11.0
       },
       {
-        "team": "UCF",
-        "team_key": "ucf",
-        "conference": "B12",
-        "projected_coach": "Johnny Dawkins",
-        "tier": "51_75",
-        "projected_net_tier": "51_75",
-        "program_band": "51_75",
-        "projected_net_rank": 55.0,
-        "schedule_score": 55.0,
-        "schedule_percentile": 0.852,
-        "added_wab": 0.666,
-        "projected_adj_em": 14.67,
-        "wab_adj_em": 14.67,
-        "roster_known_players": 15.0
-      },
-      {
         "team": "Marquette",
         "team_key": "marquette",
         "conference": "BE",
@@ -8640,13 +8624,29 @@
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "76_100",
+        "projected_net_rank": 55.0,
+        "schedule_score": 55.0,
+        "schedule_percentile": 0.852,
+        "added_wab": 0.666,
+        "projected_adj_em": 14.67,
+        "wab_adj_em": 14.67,
+        "roster_known_players": 13.0
+      },
+      {
+        "team": "UCF",
+        "team_key": "ucf",
+        "conference": "B12",
+        "projected_coach": "Johnny Dawkins",
+        "tier": "51_75",
+        "projected_net_tier": "51_75",
+        "program_band": "51_75",
         "projected_net_rank": 56.0,
         "schedule_score": 56.0,
         "schedule_percentile": 0.849,
         "added_wab": 0.662,
         "projected_adj_em": 13.6,
         "wab_adj_em": 13.6,
-        "roster_known_players": 13.0
+        "roster_known_players": 15.0
       },
       {
         "team": "Maryland",
@@ -10962,7 +10962,7 @@
         "program_band": "201_250",
         "projected_net_rank": 200.0,
         "schedule_score": 200.0,
-        "schedule_percentile": 0.429,
+        "schedule_percentile": 0.431,
         "added_wab": 0.141,
         "projected_adj_em": -2.88,
         "wab_adj_em": -1.04,
@@ -11154,7 +11154,7 @@
         "program_band": "136_160",
         "projected_net_rank": 212.0,
         "schedule_score": 212.0,
-        "schedule_percentile": 0.431,
+        "schedule_percentile": 0.429,
         "added_wab": 0.117,
         "projected_adj_em": -3.8,
         "wab_adj_em": -3.8,
@@ -12082,7 +12082,7 @@
         "program_band": "251_300",
         "projected_net_rank": 270.0,
         "schedule_score": 270.0,
-        "schedule_percentile": 0.255,
+        "schedule_percentile": 0.253,
         "added_wab": 0.047,
         "projected_adj_em": -8.94,
         "wab_adj_em": -8.94,
@@ -12354,7 +12354,7 @@
         "program_band": "251_300",
         "projected_net_rank": 287.0,
         "schedule_score": 287.0,
-        "schedule_percentile": 0.253,
+        "schedule_percentile": 0.255,
         "added_wab": 0.035,
         "projected_adj_em": -10.76,
         "wab_adj_em": -9.52,
