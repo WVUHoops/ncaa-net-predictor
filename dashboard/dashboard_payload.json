@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-03T12:09:55+00:00",
+  "generated_at": "2026-07-04T11:27:02+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-07-03",
+    "on3_hs_snapshot": "2026-07-04",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
-    "cbb_transfer_feature_rows": 482,
-    "cbb_transfer_feature_built_at": "2026-07-03",
-    "cbb_transfer_ledger_snapshot": "2026-07-03"
+    "cbb_transfer_feature_rows": 483,
+    "cbb_transfer_feature_built_at": "2026-07-04",
+    "cbb_transfer_ledger_snapshot": "2026-07-04"
   },
   "summary": {
     "candidate_count": 286,
@@ -7993,10 +7993,10 @@
         "roster_known_players": 12.0
       },
       {
-        "team": "Miami FL",
-        "team_key": "miami fl",
-        "conference": "ACC",
-        "projected_coach": "Jai Lucas",
+        "team": "St. John's",
+        "team_key": "saint johns",
+        "conference": "BE",
+        "projected_coach": "Rick Pitino",
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "26_50",
@@ -8006,13 +8006,13 @@
         "added_wab": 0.799,
         "projected_adj_em": 26.98,
         "wab_adj_em": 28.64,
-        "roster_known_players": 12.0
+        "roster_known_players": 13.0
       },
       {
-        "team": "St. John's",
-        "team_key": "saint johns",
-        "conference": "BE",
-        "projected_coach": "Rick Pitino",
+        "team": "Miami FL",
+        "team_key": "miami fl",
+        "conference": "ACC",
+        "projected_coach": "Jai Lucas",
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "26_50",
@@ -8022,7 +8022,7 @@
         "added_wab": 0.796,
         "projected_adj_em": 26.58,
         "wab_adj_em": 28.64,
-        "roster_known_players": 13.0
+        "roster_known_players": 12.0
       },
       {
         "team": "Michigan",
@@ -8137,22 +8137,6 @@
         "roster_known_players": 14.0
       },
       {
-        "team": "Ohio St.",
-        "team_key": "ohio state",
-        "conference": "B10",
-        "projected_coach": "Jake Diebler",
-        "tier": "top_25",
-        "projected_net_tier": "top_25",
-        "program_band": "26_50",
-        "projected_net_rank": 23.0,
-        "schedule_score": 23.0,
-        "schedule_percentile": 0.94,
-        "added_wab": 0.776,
-        "projected_adj_em": 23.09,
-        "wab_adj_em": 28.64,
-        "roster_known_players": 11.0
-      },
-      {
         "team": "USC",
         "team_key": "usc",
         "conference": "B10",
@@ -8160,13 +8144,29 @@
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "76_100",
+        "projected_net_rank": 23.0,
+        "schedule_score": 23.0,
+        "schedule_percentile": 0.94,
+        "added_wab": 0.776,
+        "projected_adj_em": 23.09,
+        "wab_adj_em": 28.64,
+        "roster_known_players": 15.0
+      },
+      {
+        "team": "Ohio St.",
+        "team_key": "ohio state",
+        "conference": "B10",
+        "projected_coach": "Jake Diebler",
+        "tier": "top_25",
+        "projected_net_tier": "top_25",
+        "program_band": "26_50",
         "projected_net_rank": 24.0,
         "schedule_score": 24.0,
         "schedule_percentile": 0.937,
         "added_wab": 0.773,
         "projected_adj_em": 22.78,
         "wab_adj_em": 28.64,
-        "roster_known_players": 15.0
+        "roster_known_players": 11.0
       },
       {
         "team": "Baylor",
@@ -8377,22 +8377,6 @@
         "roster_known_players": 12.0
       },
       {
-        "team": "TCU",
-        "team_key": "tcu",
-        "conference": "B12",
-        "projected_coach": "Jamie Dixon",
-        "tier": "26_50",
-        "projected_net_tier": "26_50",
-        "program_band": "26_50",
-        "projected_net_rank": 39.0,
-        "schedule_score": 39.0,
-        "schedule_percentile": 0.896,
-        "added_wab": 0.724,
-        "projected_adj_em": 18.69,
-        "wab_adj_em": 18.88,
-        "roster_known_players": 10.0
-      },
-      {
         "team": "Mississippi",
         "team_key": "mississippi",
         "conference": "SEC",
@@ -8400,13 +8384,29 @@
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "51_75",
+        "projected_net_rank": 39.0,
+        "schedule_score": 39.0,
+        "schedule_percentile": 0.896,
+        "added_wab": 0.724,
+        "projected_adj_em": 18.69,
+        "wab_adj_em": 18.88,
+        "roster_known_players": 14.0
+      },
+      {
+        "team": "TCU",
+        "team_key": "tcu",
+        "conference": "B12",
+        "projected_coach": "Jamie Dixon",
+        "tier": "26_50",
+        "projected_net_tier": "26_50",
+        "program_band": "26_50",
         "projected_net_rank": 40.0,
         "schedule_score": 40.0,
         "schedule_percentile": 0.893,
         "added_wab": 0.721,
         "projected_adj_em": 18.61,
         "wab_adj_em": 18.88,
-        "roster_known_players": 14.0
+        "roster_known_players": 10.0
       },
       {
         "team": "Dayton",
@@ -8697,10 +8697,10 @@
         "roster_known_players": 13.0
       },
       {
-        "team": "Providence",
-        "team_key": "providence",
-        "conference": "BE",
-        "projected_coach": "Brian Hodgson",
+        "team": "Northwestern",
+        "team_key": "northwestern",
+        "conference": "B10",
+        "projected_coach": "Chris Collins",
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
@@ -8710,13 +8710,13 @@
         "added_wab": 0.646,
         "projected_adj_em": 13.28,
         "wab_adj_em": 13.28,
-        "roster_known_players": 12.0
+        "roster_known_players": 14.0
       },
       {
-        "team": "Northwestern",
-        "team_key": "northwestern",
-        "conference": "B10",
-        "projected_coach": "Chris Collins",
+        "team": "Providence",
+        "team_key": "providence",
+        "conference": "BE",
+        "projected_coach": "Brian Hodgson",
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
@@ -8726,7 +8726,7 @@
         "added_wab": 0.642,
         "projected_adj_em": 13.19,
         "wab_adj_em": 13.19,
-        "roster_known_players": 14.0
+        "roster_known_players": 12.0
       },
       {
         "team": "Syracuse",
@@ -9190,7 +9190,7 @@
         "added_wab": 0.53,
         "projected_adj_em": 9.23,
         "wab_adj_em": 9.23,
-        "roster_known_players": 13.0
+        "roster_known_players": 14.0
       },
       {
         "team": "Boise St.",
@@ -9346,7 +9346,7 @@
         "program_band": "136_160",
         "projected_net_rank": 98.0,
         "schedule_score": 98.0,
-        "schedule_percentile": 0.712,
+        "schedule_percentile": 0.709,
         "added_wab": 0.487,
         "projected_adj_em": 7.23,
         "wab_adj_em": 9.08,
@@ -9366,7 +9366,7 @@
         "added_wab": 0.478,
         "projected_adj_em": 7.09,
         "wab_adj_em": 9.08,
-        "roster_known_players": 12.0
+        "roster_known_players": 13.0
       },
       {
         "team": "Murray St.",
@@ -9426,7 +9426,7 @@
         "program_band": "161_200",
         "projected_net_rank": 104.0,
         "schedule_score": 104.0,
-        "schedule_percentile": 0.709,
+        "schedule_percentile": 0.706,
         "added_wab": 0.461,
         "projected_adj_em": 6.39,
         "wab_adj_em": 6.39,
@@ -9506,7 +9506,7 @@
         "program_band": "136_160",
         "projected_net_rank": 109.0,
         "schedule_score": 109.0,
-        "schedule_percentile": 0.703,
+        "schedule_percentile": 0.701,
         "added_wab": 0.44,
         "projected_adj_em": 5.45,
         "wab_adj_em": 5.45,
@@ -9554,11 +9554,11 @@
         "program_band": "101_135",
         "projected_net_rank": 112.0,
         "schedule_score": 112.0,
-        "schedule_percentile": 0.701,
+        "schedule_percentile": 0.712,
         "added_wab": 0.427,
         "projected_adj_em": 5.26,
         "wab_adj_em": 5.26,
-        "roster_known_players": 12.0
+        "roster_known_players": 13.0
       },
       {
         "team": "Northern Iowa",
@@ -9570,7 +9570,7 @@
         "program_band": "101_135",
         "projected_net_rank": 113.0,
         "schedule_score": 113.0,
-        "schedule_percentile": 0.706,
+        "schedule_percentile": 0.703,
         "added_wab": 0.423,
         "projected_adj_em": 5.24,
         "wab_adj_em": 5.24,
@@ -11362,7 +11362,7 @@
         "program_band": "201_250",
         "projected_net_rank": 225.0,
         "schedule_score": 225.0,
-        "schedule_percentile": 0.294,
+        "schedule_percentile": 0.291,
         "added_wab": 0.096,
         "projected_adj_em": -4.94,
         "wab_adj_em": -4.94,
@@ -11874,7 +11874,7 @@
         "program_band": "251_300",
         "projected_net_rank": 257.0,
         "schedule_score": 257.0,
-        "schedule_percentile": 0.291,
+        "schedule_percentile": 0.294,
         "added_wab": 0.058,
         "projected_adj_em": -7.54,
         "wab_adj_em": -7.54,
@@ -12786,7 +12786,7 @@
         "program_band": "251_300",
         "projected_net_rank": 314.0,
         "schedule_score": 314.0,
-        "schedule_percentile": 0.118,
+        "schedule_percentile": 0.115,
         "added_wab": 0.022,
         "projected_adj_em": -13.26,
         "wab_adj_em": -13.26,
@@ -13250,7 +13250,7 @@
         "program_band": "301_plus",
         "projected_net_rank": 343.0,
         "schedule_score": 343.0,
-        "schedule_percentile": 0.115,
+        "schedule_percentile": 0.118,
         "added_wab": 0.014,
         "projected_adj_em": -19.32,
         "wab_adj_em": -17.96,
