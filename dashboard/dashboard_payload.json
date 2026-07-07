@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T13:45:01+00:00",
+  "generated_at": "2026-07-07T12:27:25+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-07-06",
+    "on3_hs_snapshot": "2026-07-07",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 483,
-    "cbb_transfer_feature_built_at": "2026-07-06",
-    "cbb_transfer_ledger_snapshot": "2026-07-06"
+    "cbb_transfer_feature_built_at": "2026-07-07",
+    "cbb_transfer_ledger_snapshot": "2026-07-07"
   },
   "summary": {
     "candidate_count": 286,
@@ -7670,9 +7670,9 @@
         "conference": "Tier",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 64.8,
+        "schedule_score": 64.7,
         "schedule_percentile": null,
-        "added_wab": 0.627,
+        "added_wab": 0.628,
         "projected_adj_em": 12.71,
         "wab_adj_em": 13.04,
         "is_placeholder": true
@@ -7929,20 +7929,20 @@
         "roster_known_players": 10.0
       },
       {
-        "team": "Clemson",
-        "team_key": "clemson",
-        "conference": "ACC",
-        "projected_coach": "Brad Brownell",
+        "team": "Connecticut",
+        "team_key": "connecticut",
+        "conference": "BE",
+        "projected_coach": "Dan Hurley",
         "tier": "top_25",
         "projected_net_tier": "top_25",
-        "program_band": "26_50",
+        "program_band": "top_25",
         "projected_net_rank": 11.0,
         "schedule_score": 11.0,
         "schedule_percentile": 0.973,
         "added_wab": 0.81,
         "projected_adj_em": 27.35,
         "wab_adj_em": 28.64,
-        "roster_known_players": 13.0
+        "roster_known_players": 14.0
       },
       {
         "team": "South Florida",
@@ -7961,13 +7961,13 @@
         "roster_known_players": 14.0
       },
       {
-        "team": "Connecticut",
-        "team_key": "connecticut",
-        "conference": "BE",
-        "projected_coach": "Dan Hurley",
+        "team": "Clemson",
+        "team_key": "clemson",
+        "conference": "ACC",
+        "projected_coach": "Brad Brownell",
         "tier": "top_25",
         "projected_net_tier": "top_25",
-        "program_band": "top_25",
+        "program_band": "26_50",
         "projected_net_rank": 12.0,
         "schedule_score": 12.0,
         "schedule_percentile": 0.97,
@@ -7993,10 +7993,10 @@
         "roster_known_players": 12.0
       },
       {
-        "team": "St. John's",
-        "team_key": "saint johns",
-        "conference": "BE",
-        "projected_coach": "Rick Pitino",
+        "team": "Miami FL",
+        "team_key": "miami fl",
+        "conference": "ACC",
+        "projected_coach": "Jai Lucas",
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "26_50",
@@ -8006,13 +8006,13 @@
         "added_wab": 0.799,
         "projected_adj_em": 26.98,
         "wab_adj_em": 28.64,
-        "roster_known_players": 13.0
+        "roster_known_players": 12.0
       },
       {
-        "team": "Miami FL",
-        "team_key": "miami fl",
-        "conference": "ACC",
-        "projected_coach": "Jai Lucas",
+        "team": "St. John's",
+        "team_key": "saint johns",
+        "conference": "BE",
+        "projected_coach": "Rick Pitino",
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "26_50",
@@ -8022,7 +8022,7 @@
         "added_wab": 0.796,
         "projected_adj_em": 26.58,
         "wab_adj_em": 28.64,
-        "roster_known_players": 12.0
+        "roster_known_players": 13.0
       },
       {
         "team": "Michigan",
@@ -8514,7 +8514,7 @@
         "program_band": "26_50",
         "projected_net_rank": 46.0,
         "schedule_score": 46.0,
-        "schedule_percentile": 0.843,
+        "schedule_percentile": 0.841,
         "added_wab": 0.699,
         "projected_adj_em": 16.91,
         "wab_adj_em": 18.88,
@@ -8688,12 +8688,12 @@
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "26_50",
-        "projected_net_rank": 59.0,
-        "schedule_score": 59.0,
-        "schedule_percentile": 0.841,
-        "added_wab": 0.65,
-        "projected_adj_em": 13.49,
-        "wab_adj_em": 13.49,
+        "projected_net_rank": 58.0,
+        "schedule_score": 58.0,
+        "schedule_percentile": 0.843,
+        "added_wab": 0.654,
+        "projected_adj_em": 13.52,
+        "wab_adj_em": 13.52,
         "roster_known_players": 13.0
       },
       {
@@ -8822,7 +8822,7 @@
         "added_wab": 0.622,
         "projected_adj_em": 12.4,
         "wab_adj_em": 13.04,
-        "roster_known_players": 17.0
+        "roster_known_players": 18.0
       },
       {
         "team": "West Virginia",
@@ -9634,7 +9634,7 @@
         "program_band": "101_135",
         "projected_net_rank": 117.0,
         "schedule_score": 117.0,
-        "schedule_percentile": 0.684,
+        "schedule_percentile": 0.687,
         "added_wab": 0.406,
         "projected_adj_em": 4.62,
         "wab_adj_em": 4.62,
@@ -9890,7 +9890,7 @@
         "program_band": "101_135",
         "projected_net_rank": 132.0,
         "schedule_score": 132.0,
-        "schedule_percentile": 0.687,
+        "schedule_percentile": 0.684,
         "added_wab": 0.346,
         "projected_adj_em": 2.95,
         "wab_adj_em": 4.59,
@@ -13642,9 +13642,9 @@
         "conference": "Tier",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 64.8,
+        "schedule_score": 64.7,
         "schedule_percentile": null,
-        "added_wab": 0.627,
+        "added_wab": 0.628,
         "projected_adj_em": 12.71,
         "wab_adj_em": 13.04,
         "is_placeholder": true
