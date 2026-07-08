@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-07T12:27:25+00:00",
+  "generated_at": "2026-07-08T11:47:29+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-07-07",
+    "on3_hs_snapshot": "2026-07-08",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 483,
-    "cbb_transfer_feature_built_at": "2026-07-07",
-    "cbb_transfer_ledger_snapshot": "2026-07-07"
+    "cbb_transfer_feature_built_at": "2026-07-08",
+    "cbb_transfer_ledger_snapshot": "2026-07-08"
   },
   "summary": {
     "candidate_count": 286,
@@ -7565,7 +7565,7 @@
         {
           "name": "Amadou Seini",
           "position": "C",
-          "industry_rank": 60.0,
+          "industry_rank": 61.0,
           "source_label": "Bella Vista Prep",
           "origin_type": "hs",
           "projected_role_share": 0.048,
@@ -7608,7 +7608,7 @@
         {
           "name": "Keonte Greybear",
           "position": "PG",
-          "industry_rank": 184.0,
+          "industry_rank": 185.0,
           "source_label": "iSchool Lewisville",
           "origin_type": "hs",
           "projected_role_share": 0.062,
@@ -7628,7 +7628,7 @@
         {
           "name": "Aliou Dioum",
           "position": "C",
-          "industry_rank": 139.0,
+          "industry_rank": 140.0,
           "source_label": "Bella Vista Prep",
           "origin_type": "hs",
           "projected_role_share": 0.038,
@@ -8281,6 +8281,22 @@
         "roster_known_players": 11.0
       },
       {
+        "team": "Alabama",
+        "team_key": "alabama",
+        "conference": "SEC",
+        "projected_coach": "Nate Oats",
+        "tier": "26_50",
+        "projected_net_tier": "26_50",
+        "program_band": "top_25",
+        "projected_net_rank": 33.0,
+        "schedule_score": 33.0,
+        "schedule_percentile": 0.912,
+        "added_wab": 0.744,
+        "projected_adj_em": 19.92,
+        "wab_adj_em": 19.92,
+        "roster_known_players": 14.0
+      },
+      {
         "team": "Texas A&M",
         "team_key": "texas a and m",
         "conference": "SEC",
@@ -8288,12 +8304,12 @@
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "26_50",
-        "projected_net_rank": 33.0,
-        "schedule_score": 33.0,
-        "schedule_percentile": 0.912,
-        "added_wab": 0.744,
-        "projected_adj_em": 19.92,
-        "wab_adj_em": 19.92,
+        "projected_net_rank": 34.0,
+        "schedule_score": 34.0,
+        "schedule_percentile": 0.909,
+        "added_wab": 0.741,
+        "projected_adj_em": 19.51,
+        "wab_adj_em": 19.51,
         "roster_known_players": 14.0
       },
       {
@@ -8304,12 +8320,12 @@
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "26_50",
-        "projected_net_rank": 34.0,
-        "schedule_score": 34.0,
-        "schedule_percentile": 0.909,
-        "added_wab": 0.741,
-        "projected_adj_em": 19.51,
-        "wab_adj_em": 19.51,
+        "projected_net_rank": 35.0,
+        "schedule_score": 35.0,
+        "schedule_percentile": 0.907,
+        "added_wab": 0.738,
+        "projected_adj_em": 19.36,
+        "wab_adj_em": 19.36,
         "roster_known_players": 11.0
       },
       {
@@ -8320,29 +8336,13 @@
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "51_75",
-        "projected_net_rank": 35.0,
-        "schedule_score": 35.0,
-        "schedule_percentile": 0.907,
-        "added_wab": 0.738,
-        "projected_adj_em": 19.36,
-        "wab_adj_em": 19.36,
-        "roster_known_players": 11.0
-      },
-      {
-        "team": "Alabama",
-        "team_key": "alabama",
-        "conference": "SEC",
-        "projected_coach": "Nate Oats",
-        "tier": "26_50",
-        "projected_net_tier": "26_50",
-        "program_band": "top_25",
         "projected_net_rank": 36.0,
         "schedule_score": 36.0,
         "schedule_percentile": 0.904,
         "added_wab": 0.734,
         "projected_adj_em": 19.2,
         "wab_adj_em": 19.2,
-        "roster_known_players": 13.0
+        "roster_known_players": 11.0
       },
       {
         "team": "Creighton",
@@ -8857,20 +8857,20 @@
         "roster_known_players": 12.0
       },
       {
-        "team": "SMU",
-        "team_key": "smu",
-        "conference": "ACC",
-        "projected_coach": "Andy Enfield",
+        "team": "Mississippi St.",
+        "team_key": "mississippi state",
+        "conference": "SEC",
+        "projected_coach": "Chris Jans",
         "tier": "51_75",
         "projected_net_tier": "51_75",
-        "program_band": "51_75",
+        "program_band": "101_135",
         "projected_net_rank": 70.0,
         "schedule_score": 70.0,
         "schedule_percentile": 0.81,
         "added_wab": 0.606,
         "projected_adj_em": 11.95,
         "wab_adj_em": 13.04,
-        "roster_known_players": 14.0
+        "roster_known_players": 9.0
       },
       {
         "team": "Washington St.",
@@ -8889,20 +8889,20 @@
         "roster_known_players": 11.0
       },
       {
-        "team": "Mississippi St.",
-        "team_key": "mississippi state",
-        "conference": "SEC",
-        "projected_coach": "Chris Jans",
+        "team": "SMU",
+        "team_key": "smu",
+        "conference": "ACC",
+        "projected_coach": "Andy Enfield",
         "tier": "51_75",
         "projected_net_tier": "51_75",
-        "program_band": "101_135",
+        "program_band": "51_75",
         "projected_net_rank": 71.0,
         "schedule_score": 71.0,
         "schedule_percentile": 0.808,
         "added_wab": 0.602,
         "projected_adj_em": 11.94,
         "wab_adj_em": 13.04,
-        "roster_known_players": 9.0
+        "roster_known_players": 14.0
       },
       {
         "team": "South Carolina",
@@ -9270,7 +9270,7 @@
         "added_wab": 0.504,
         "projected_adj_em": 7.9,
         "wab_adj_em": 9.08,
-        "roster_known_players": 14.0
+        "roster_known_players": 15.0
       },
       {
         "team": "Santa Clara",
