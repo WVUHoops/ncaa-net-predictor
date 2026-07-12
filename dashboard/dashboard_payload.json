@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-11T11:05:26+00:00",
+  "generated_at": "2026-07-12T11:10:25+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-07-11",
+    "on3_hs_snapshot": "2026-07-12",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 483,
-    "cbb_transfer_feature_built_at": "2026-07-11",
-    "cbb_transfer_ledger_snapshot": "2026-07-11"
+    "cbb_transfer_feature_built_at": "2026-07-12",
+    "cbb_transfer_ledger_snapshot": "2026-07-12"
   },
   "summary": {
     "candidate_count": 286,
@@ -9698,7 +9698,7 @@
         "program_band": "101_135",
         "projected_net_rank": 121.0,
         "schedule_score": 121.0,
-        "schedule_percentile": 0.635,
+        "schedule_percentile": 0.637,
         "added_wab": 0.39,
         "projected_adj_em": 4.3,
         "wab_adj_em": 4.59,
@@ -9938,7 +9938,7 @@
         "program_band": "161_200",
         "projected_net_rank": 135.0,
         "schedule_score": 135.0,
-        "schedule_percentile": 0.637,
+        "schedule_percentile": 0.635,
         "added_wab": 0.334,
         "projected_adj_em": 2.71,
         "wab_adj_em": 4.59,
@@ -10962,7 +10962,7 @@
         "program_band": "201_250",
         "projected_net_rank": 200.0,
         "schedule_score": 200.0,
-        "schedule_percentile": 0.429,
+        "schedule_percentile": 0.431,
         "added_wab": 0.141,
         "projected_adj_em": -2.88,
         "wab_adj_em": -1.04,
@@ -11154,7 +11154,7 @@
         "program_band": "136_160",
         "projected_net_rank": 212.0,
         "schedule_score": 212.0,
-        "schedule_percentile": 0.431,
+        "schedule_percentile": 0.429,
         "added_wab": 0.117,
         "projected_adj_em": -3.8,
         "wab_adj_em": -3.8,
@@ -11506,11 +11506,11 @@
         "program_band": "201_250",
         "projected_net_rank": 234.0,
         "schedule_score": 234.0,
-        "schedule_percentile": 0.316,
+        "schedule_percentile": 0.321,
         "added_wab": 0.083,
         "projected_adj_em": -6.07,
         "wab_adj_em": -5.04,
-        "roster_known_players": 11.0
+        "roster_known_players": 12.0
       },
       {
         "team": "Utah Tech",
@@ -11602,11 +11602,11 @@
         "program_band": "251_300",
         "projected_net_rank": 240.0,
         "schedule_score": 240.0,
-        "schedule_percentile": 0.28,
+        "schedule_percentile": 0.275,
         "added_wab": 0.076,
         "projected_adj_em": -6.47,
         "wab_adj_em": -5.04,
-        "roster_known_players": 5.0
+        "roster_known_players": 6.0
       },
       {
         "team": "Milwaukee",
@@ -11842,7 +11842,7 @@
         "program_band": "161_200",
         "projected_net_rank": 255.0,
         "schedule_score": 255.0,
-        "schedule_percentile": 0.36,
+        "schedule_percentile": 0.363,
         "added_wab": 0.06,
         "projected_adj_em": -7.34,
         "wab_adj_em": -7.34,
@@ -11858,7 +11858,7 @@
         "program_band": "251_300",
         "projected_net_rank": 256.0,
         "schedule_score": 256.0,
-        "schedule_percentile": 0.277,
+        "schedule_percentile": 0.28,
         "added_wab": 0.059,
         "projected_adj_em": -7.53,
         "wab_adj_em": -7.53,
@@ -11938,7 +11938,7 @@
         "program_band": "201_250",
         "projected_net_rank": 261.0,
         "schedule_score": 261.0,
-        "schedule_percentile": 0.363,
+        "schedule_percentile": 0.36,
         "added_wab": 0.054,
         "projected_adj_em": -7.96,
         "wab_adj_em": -7.96,
@@ -12002,7 +12002,7 @@
         "program_band": "161_200",
         "projected_net_rank": 265.0,
         "schedule_score": 265.0,
-        "schedule_percentile": 0.275,
+        "schedule_percentile": 0.277,
         "added_wab": 0.051,
         "projected_adj_em": -8.48,
         "wab_adj_em": -8.48,
@@ -12290,11 +12290,11 @@
         "program_band": "251_300",
         "projected_net_rank": 283.0,
         "schedule_score": 283.0,
-        "schedule_percentile": 0.321,
+        "schedule_percentile": 0.316,
         "added_wab": 0.038,
         "projected_adj_em": -10.5,
         "wab_adj_em": -9.52,
-        "roster_known_players": 12.0
+        "roster_known_players": 13.0
       },
       {
         "team": "UTSA",
@@ -12834,11 +12834,11 @@
         "program_band": "301_plus",
         "projected_net_rank": 317.0,
         "schedule_score": 317.0,
-        "schedule_percentile": 0.08,
+        "schedule_percentile": 0.085,
         "added_wab": 0.021,
         "projected_adj_em": -13.83,
         "wab_adj_em": -13.83,
-        "roster_known_players": 8.0
+        "roster_known_players": 10.0
       },
       {
         "team": "Mercyhurst",
@@ -13090,7 +13090,7 @@
         "program_band": "251_300",
         "projected_net_rank": 333.0,
         "schedule_score": 333.0,
-        "schedule_percentile": 0.082,
+        "schedule_percentile": 0.08,
         "added_wab": 0.016,
         "projected_adj_em": -17.28,
         "wab_adj_em": -17.28,
@@ -13266,7 +13266,7 @@
         "program_band": "301_plus",
         "projected_net_rank": 344.0,
         "schedule_score": 344.0,
-        "schedule_percentile": 0.085,
+        "schedule_percentile": 0.082,
         "added_wab": 0.013,
         "projected_adj_em": -19.52,
         "wab_adj_em": -17.96,
