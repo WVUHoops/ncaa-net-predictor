@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-15T11:29:16+00:00",
+  "generated_at": "2026-07-16T11:40:58+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-07-15",
+    "on3_hs_snapshot": "2026-07-16",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 483,
-    "cbb_transfer_feature_built_at": "2026-07-15",
-    "cbb_transfer_ledger_snapshot": "2026-07-15"
+    "cbb_transfer_feature_built_at": "2026-07-16",
+    "cbb_transfer_ledger_snapshot": "2026-07-16"
   },
   "summary": {
     "candidate_count": 286,
@@ -7683,10 +7683,10 @@
         "conference": "Tier",
         "tier": "76_100",
         "program_band": "76_100",
-        "schedule_score": 88.0,
+        "schedule_score": 87.9,
         "schedule_percentile": null,
-        "added_wab": 0.53,
-        "projected_adj_em": 9.06,
+        "added_wab": 0.531,
+        "projected_adj_em": 9.07,
         "wab_adj_em": 9.08,
         "is_placeholder": true
       },
@@ -8028,7 +8028,7 @@
         "team": "Michigan",
         "team_key": "michigan",
         "conference": "B10",
-        "projected_coach": "Mike Boynton (Interim)",
+        "projected_coach": "Mike Boynton",
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "top_25",
@@ -9250,7 +9250,7 @@
         "program_band": "101_135",
         "projected_net_rank": 92.0,
         "schedule_score": 92.0,
-        "schedule_percentile": 0.742,
+        "schedule_percentile": 0.739,
         "added_wab": 0.513,
         "projected_adj_em": 8.56,
         "wab_adj_em": 9.08,
@@ -9296,11 +9296,11 @@
         "tier": "76_100",
         "projected_net_tier": "76_100",
         "program_band": "76_100",
-        "projected_net_rank": 96.0,
-        "schedule_score": 96.0,
-        "schedule_percentile": 0.739,
-        "added_wab": 0.496,
-        "projected_adj_em": 7.53,
+        "projected_net_rank": 95.0,
+        "schedule_score": 95.0,
+        "schedule_percentile": 0.742,
+        "added_wab": 0.5,
+        "projected_adj_em": 7.72,
         "wab_adj_em": 9.08,
         "roster_known_players": 15.0
       },
@@ -10578,11 +10578,11 @@
         "program_band": "136_160",
         "projected_net_rank": 176.0,
         "schedule_score": 176.0,
-        "schedule_percentile": 0.558,
+        "schedule_percentile": 0.555,
         "added_wab": 0.198,
         "projected_adj_em": -0.52,
         "wab_adj_em": -0.52,
-        "roster_known_players": 10.0
+        "roster_known_players": 11.0
       },
       {
         "team": "William & Mary",
@@ -10834,7 +10834,7 @@
         "program_band": "136_160",
         "projected_net_rank": 192.0,
         "schedule_score": 192.0,
-        "schedule_percentile": 0.555,
+        "schedule_percentile": 0.558,
         "added_wab": 0.158,
         "projected_adj_em": -2.06,
         "wab_adj_em": -1.04,
@@ -13655,10 +13655,10 @@
         "conference": "Tier",
         "tier": "76_100",
         "program_band": "76_100",
-        "schedule_score": 88.0,
+        "schedule_score": 87.9,
         "schedule_percentile": null,
-        "added_wab": 0.53,
-        "projected_adj_em": 9.06,
+        "added_wab": 0.531,
+        "projected_adj_em": 9.07,
         "wab_adj_em": 9.08,
         "is_placeholder": true
       },
