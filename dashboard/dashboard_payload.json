@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-17T15:34:52-04:00",
+  "generated_at": "2026-07-17T19:38:46+00:00",
   "source_files": {
-    "risk_board_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
-    "metrics_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
-    "coefficients_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/upset_risk/model_coefficients.csv",
-    "schedule_predictions_csv": "/Users/sm00249/Documents/ncaa-net-predictor/data/processed/predictions/current_2027_schedule_predictions.csv",
-    "kenpom_ratings_json": "/Users/sm00249/Documents/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
+    "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
+    "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
+    "coefficients_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/model_coefficients.csv",
+    "schedule_predictions_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/predictions/current_2027_schedule_predictions.csv",
+    "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
     "on3_hs_snapshot": "2026-07-17",
@@ -7686,8 +7686,8 @@
         "schedule_score": 88.2,
         "schedule_percentile": null,
         "added_wab": 0.17,
-        "projected_adj_em": 9.08,
-        "wab_adj_em": 9.08,
+        "projected_adj_em": 9.09,
+        "wab_adj_em": 9.09,
         "is_placeholder": true
       },
       {
@@ -13658,8 +13658,8 @@
         "schedule_score": 88.2,
         "schedule_percentile": null,
         "added_wab": 0.17,
-        "projected_adj_em": 9.08,
-        "wab_adj_em": 9.08,
+        "projected_adj_em": 9.09,
+        "wab_adj_em": 9.09,
         "is_placeholder": true
       },
       {
@@ -14121,25 +14121,7 @@
       -11.47,
       -16.331
     ],
-    "ncsos_calibration": {
-      "coefficients": [
-        265.974985,
-        -13.377178,
-        -119.540933,
-        -82.178534
-      ],
-      "row_count": 1847,
-      "seasons": [
-        2021,
-        2022,
-        2023,
-        2024,
-        2025,
-        2026
-      ],
-      "mae": 59.92,
-      "rmse": 72.94
-    }
+    "ncsos_calibration": null
   },
   "metrics": [
     {
