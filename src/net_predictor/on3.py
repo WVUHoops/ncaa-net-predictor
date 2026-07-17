@@ -76,12 +76,23 @@ def fetch_html(url: str) -> str:
 
     try:
         with urlopen(request, timeout=30) as response:
-            return response.read().decode("utf-8", errors="replace")
+            html = response.read().decode("utf-8", errors="replace")
+            validate_on3_html(html, url)
+            return html
     except HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
         raise On3Error(f"On3 returned HTTP {exc.code}: {detail[:300]}") from exc
     except URLError as exc:
         raise On3Error(f"Could not reach On3: {exc.reason}") from exc
+
+
+def validate_on3_html(html: str, url: str) -> None:
+    lowered = html.lower()
+    if "attention required! | cloudflare" in lowered or "sorry, you have been blocked" in lowered:
+        raise On3Error(
+            "On3 returned a Cloudflare block page instead of rankings HTML. "
+            f"URL: {url}"
+        )
 
 
 def extract_next_data(html: str) -> dict[str, Any]:
@@ -298,6 +309,7 @@ def page_payload(source: str, data: dict[str, Any]) -> dict[str, Any]:
 
 
 def parse_page(source: str, html: str, url: str, captured_at: str) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    validate_on3_html(html, url)
     data = extract_next_data(html)
     payload = page_payload(source, data)
     pagination = payload.get("pagination") or {}

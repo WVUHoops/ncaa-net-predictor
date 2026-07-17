@@ -1758,11 +1758,14 @@ def dashboard_html(payload: dict[str, Any]) -> str:
       const cbbTransferLedgerAt = payload.input_status?.cbb_transfer_ledger_snapshot;
       const recruiting = document.getElementById("recruitingFreshness");
       const transfer = document.getElementById("transferFreshness");
-      const dates = [hs, portal].filter(Boolean).sort();
-      if (!dates.length) {{
+      if (!hs && !portal) {{
         recruiting.textContent = "Recruiting data: cached";
+      }} else if (hs && portal) {{
+        recruiting.textContent = `Recruiting data: HS ${{hs}} | On3 transfer ${{portal}}`;
+      }} else if (hs) {{
+        recruiting.textContent = `Recruiting data: HS ${{hs}}`;
       }} else {{
-        recruiting.textContent = `Recruiting data: ${{dates[0]}}`;
+        recruiting.textContent = `Recruiting data: On3 transfer ${{portal}}`;
       }}
       if (cbbTransferLedgerAt) {{
         transfer.textContent = `Transfer data: ${{cbbTransferLedgerAt}}`;
