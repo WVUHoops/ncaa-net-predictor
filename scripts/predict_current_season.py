@@ -15,7 +15,7 @@ SRC_DIR = PROJECT_ROOT / "src"
 sys.path.insert(0, str(SRC_DIR))
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
-from backtest_models import SCHEDULE_BUILDING_PREFIXES  # noqa: E402
+from backtest_models import ROSTER_TALENT_PREFIXES, SCHEDULE_BUILDING_PREFIXES  # noqa: E402
 from net_predictor.backtest import (  # noqa: E402
     ModelConfig,
     as_float,
@@ -37,10 +37,16 @@ from net_predictor.backtest import (  # noqa: E402
     write_json,
 )
 from net_predictor.coach_factor import canonical_team_key, normalize_coach_name  # noqa: E402
-from net_predictor.model_table import build_model_rows  # noqa: E402
+from net_predictor.model_table import build_model_rows, first_existing, rank_to_percentile  # noqa: E402
 
 
 CURRENT_MODEL_CONFIGS = [
+    ModelConfig(
+        "direct_ridge_roster_talent",
+        ROSTER_TALENT_PREFIXES,
+        "direct",
+        alpha=100.0,
+    ),
     ModelConfig(
         "direct_ridge_schedule_building",
         SCHEDULE_BUILDING_PREFIXES,
@@ -48,6 +54,18 @@ CURRENT_MODEL_CONFIGS = [
         alpha=100.0,
         excluded_substrings=("_sos", "_ncsos", "roster_talent_continuity_plus_incoming"),
         forced_features=("prior_roster_probable_returner_minutes_pct",),
+    ),
+    ModelConfig(
+        "direct_gbt_roster_talent",
+        ROSTER_TALENT_PREFIXES,
+        "direct",
+        algorithm="gbt",
+        max_features=55,
+        estimators=28,
+        learning_rate=0.05,
+        max_depth=2,
+        min_leaf=35,
+        threshold_bins=6,
     ),
     ModelConfig(
         "direct_gbt_schedule_building",
@@ -70,6 +88,256 @@ CURRENT_BLEND_MODELS = {
         "direct_gbt_schedule_building",
     ],
 }
+CURRENT_STACK_MODEL_NAME = "stack_preseason_accuracy"
+CURRENT_STACK_COMPONENTS = (
+    "direct_ridge_roster_talent",
+    "direct_gbt_roster_talent",
+    "direct_ridge_schedule_building",
+    "direct_gbt_schedule_building",
+)
+CURRENT_STACK_ALPHA = 100.0
+CURRENT_STACK_FEATURE_COLUMNS = (
+    "roster_ridge_percentile",
+    "roster_gbt_percentile",
+    "context_ridge_percentile",
+    "context_gbt_percentile",
+    "roster_completeness",
+    "incoming_transfer_prod",
+    "conference_peer_mean",
+    "conference_peer_top50_share",
+    "conference_two_thirds_delta",
+    "program_last_rank_percentile",
+    "program_top50_rate",
+    "coach_last_rank_percentile",
+    "coach_top50_rate",
+)
+CURRENT_ADJUSTMENT_ALPHA = 30.0
+CURRENT_ADJUSTMENT_FEATURE_COLUMNS = (
+    "base_model_percentile",
+    "roster_talent_signal",
+    "roster_ready_signal",
+    "returner_minutes_signal",
+    "coach_signal",
+    "program_signal",
+    "context_signal",
+    "base_x_roster_ready",
+)
+CURRENT_ROSTER_TALENT_BASE_WEIGHT = 0.60
+CURRENT_ROSTER_TALENT_COMPLETENESS_BONUS = 0.20
+
+
+def clip_unit(value: float) -> float:
+    return min(max(value, 0.0), 1.0)
+
+
+def roster_talent_blend_weight(row: dict[str, Any]) -> float:
+    completeness = as_float(row.get("roster_talent_roster_completeness"))
+    if completeness is None:
+        completeness = as_float(row.get("roster_talent_minutes_based_completeness"))
+    if completeness is None:
+        completeness = as_float(row.get("roster_talent_count_based_completeness"))
+    completeness = clip_unit(completeness or 0.0)
+    return CURRENT_ROSTER_TALENT_BASE_WEIGHT + (CURRENT_ROSTER_TALENT_COMPLETENESS_BONUS * completeness)
+
+
+def current_season_adjusted_score(row: dict[str, Any], model_score: float) -> tuple[float, float | None]:
+    roster_talent = as_float(row.get("roster_talent_continuity_plus_incoming"))
+    if roster_talent is None:
+        return model_score, None
+    weight = roster_talent_blend_weight(row)
+    adjusted_score = (weight * roster_talent) + ((1.0 - weight) * model_score)
+    return clip_unit(adjusted_score), weight
+
+
+def weighted_average_existing(*weighted_values: tuple[float | None, float]) -> float | None:
+    numerator = 0.0
+    denominator = 0.0
+    for value, weight in weighted_values:
+        if value is None or weight <= 0:
+            continue
+        numerator += value * weight
+        denominator += weight
+    if denominator <= 0:
+        return None
+    return numerator / denominator
+
+
+def product_if_present(left: float | None, right: float | None) -> float | None:
+    if left is None or right is None:
+        return None
+    return left * right
+
+
+def current_adjustment_feature_row(source: dict[str, Any], base_model_percentile: float) -> dict[str, Any]:
+    roster_talent = as_float(source.get("roster_talent_continuity_plus_incoming"))
+    roster_completeness = as_float(source.get("roster_talent_roster_completeness"))
+    if roster_completeness is None:
+        roster_completeness = as_float(source.get("roster_talent_minutes_based_completeness"))
+    if roster_completeness is None:
+        roster_completeness = as_float(source.get("roster_talent_count_based_completeness"))
+    returner_minutes = as_float(source.get("prior_roster_probable_returner_minutes_pct"))
+    coach_signal = weighted_average_existing(
+        (as_float(source.get("coach_coach_prior_win_pct")), 0.40),
+        (as_float(source.get("coach_coach_prior_positive_adj_em_over_expected_rate")), 0.30),
+        (as_float(source.get("coach_coach_prior_top50_rate")), 0.30),
+    )
+    program_signal = weighted_average_existing(
+        (as_float(source.get("program_prior_top50_rate")), 0.40),
+        (rank_to_percentile(as_float(source.get("program_prior_last_rank_adj_em"))), 0.35),
+        (rank_to_percentile(as_float(source.get("program_prior_avg_rank_adj_em"))), 0.25),
+    )
+    context_signal = weighted_average_existing(
+        (coach_signal, 0.5),
+        (program_signal, 0.5),
+    )
+    roster_ready_signal = product_if_present(roster_talent, roster_completeness)
+    base_model_percentile = clip_unit(base_model_percentile)
+    return {
+        "base_model_percentile": base_model_percentile,
+        "roster_talent_signal": roster_talent,
+        "roster_ready_signal": roster_ready_signal,
+        "returner_minutes_signal": returner_minutes,
+        "coach_signal": coach_signal,
+        "program_signal": program_signal,
+        "context_signal": context_signal,
+        "base_x_roster_ready": product_if_present(base_model_percentile, roster_ready_signal),
+    }
+
+
+def current_stack_feature_row(
+    source: dict[str, Any],
+    component_percentiles: dict[str, float | None],
+) -> dict[str, Any]:
+    return {
+        "roster_ridge_percentile": component_percentiles.get("direct_ridge_roster_talent"),
+        "roster_gbt_percentile": component_percentiles.get("direct_gbt_roster_talent"),
+        "context_ridge_percentile": component_percentiles.get("direct_ridge_schedule_building"),
+        "context_gbt_percentile": component_percentiles.get("direct_gbt_schedule_building"),
+        "roster_completeness": first_existing(
+            as_float(source.get("roster_talent_roster_completeness")),
+            as_float(source.get("roster_talent_minutes_based_completeness")),
+            as_float(source.get("roster_talent_count_based_completeness")),
+        ),
+        "incoming_transfer_prod": as_float(source.get("roster_talent_incoming_transfer_production_percentile")),
+        "conference_peer_mean": as_float(source.get("conference_schedule_env_peer_mean")),
+        "conference_peer_top50_share": as_float(source.get("conference_schedule_env_peer_top50_share")),
+        "conference_two_thirds_delta": as_float(source.get("conference_schedule_env_two_thirds_delta")),
+        "program_last_rank_percentile": rank_to_percentile(as_float(source.get("program_prior_last_rank_adj_em"))),
+        "program_top50_rate": as_float(source.get("program_prior_top50_rate")),
+        "coach_last_rank_percentile": rank_to_percentile(as_float(source.get("coach_coach_prior_last_rank_adj_em"))),
+        "coach_top50_rate": as_float(source.get("coach_coach_prior_top50_rate")),
+    }
+
+
+def historical_adjustment_training_rows(
+    model_name: str,
+    rolling_predictions: list[dict[str, Any]],
+    historical_rows: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    historical_index = {
+        (int(row["season"]), str(row["team_key"])): row
+        for row in historical_rows
+        if row.get("season") and row.get("team_key")
+    }
+    training_rows: list[dict[str, Any]] = []
+    for prediction in rolling_predictions:
+        if prediction.get("model") != model_name:
+            continue
+        season = int(prediction["season"])
+        team_key = str(prediction["team_key"])
+        historical_row = historical_index.get((season, team_key))
+        if historical_row is None:
+            continue
+        predicted_percentile = as_float(prediction.get("predicted_net_percentile"))
+        actual_percentile = as_float(prediction.get("actual_net_percentile"))
+        if predicted_percentile is None or actual_percentile is None:
+            continue
+        feature_row = current_adjustment_feature_row(historical_row, predicted_percentile)
+        feature_row["target_percentile"] = actual_percentile
+        training_rows.append(feature_row)
+    return training_rows
+
+
+def historical_stack_training_rows(
+    rolling_predictions: list[dict[str, Any]],
+    historical_rows: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    historical_index = {
+        (int(row["season"]), str(row["team_key"])): row
+        for row in historical_rows
+        if row.get("season") and row.get("team_key")
+    }
+    grouped_predictions: dict[tuple[int, str], dict[str, dict[str, Any]]] = {}
+    for prediction in rolling_predictions:
+        model_name = str(prediction.get("model") or "")
+        if model_name not in CURRENT_STACK_COMPONENTS:
+            continue
+        season_value = prediction.get("season")
+        team_key = prediction.get("team_key")
+        if season_value in (None, "") or team_key in (None, ""):
+            continue
+        key = (int(season_value), str(team_key))
+        grouped_predictions.setdefault(key, {})[model_name] = prediction
+
+    training_rows: list[dict[str, Any]] = []
+    for key, predictions_by_model in grouped_predictions.items():
+        if not all(model_name in predictions_by_model for model_name in CURRENT_STACK_COMPONENTS):
+            continue
+        historical_row = historical_index.get(key)
+        if historical_row is None:
+            continue
+        component_percentiles = {
+            model_name: as_float(predictions_by_model[model_name].get("predicted_net_percentile"))
+            for model_name in CURRENT_STACK_COMPONENTS
+        }
+        if any(value is None for value in component_percentiles.values()):
+            continue
+        target_percentile = as_float(
+            predictions_by_model["direct_ridge_schedule_building"].get("actual_net_percentile")
+        )
+        if target_percentile is None:
+            continue
+        feature_row = current_stack_feature_row(historical_row, component_percentiles)
+        feature_row["target_percentile"] = target_percentile
+        training_rows.append(feature_row)
+    return training_rows
+
+
+def fit_current_adjustment_model(
+    model_name: str,
+    rolling_predictions: list[dict[str, Any]],
+    historical_rows: list[dict[str, Any]],
+):
+    training_rows = historical_adjustment_training_rows(model_name, rolling_predictions, historical_rows)
+    if len(training_rows) < 100:
+        return None
+    columns = [
+        column
+        for column in CURRENT_ADJUSTMENT_FEATURE_COLUMNS
+        if any(as_float(row.get(column)) is not None for row in training_rows)
+    ]
+    if not columns:
+        return None
+    targets = [as_float(row.get("target_percentile")) or 0.0 for row in training_rows]
+    return fit_ridge(training_rows, columns, targets, CURRENT_ADJUSTMENT_ALPHA), columns, len(training_rows)
+
+
+def fit_current_stack_model(
+    rolling_predictions: list[dict[str, Any]],
+    historical_rows: list[dict[str, Any]],
+):
+    training_rows = historical_stack_training_rows(rolling_predictions, historical_rows)
+    if len(training_rows) < 100:
+        return None
+    columns = [
+        column
+        for column in CURRENT_STACK_FEATURE_COLUMNS
+        if any(as_float(row.get(column)) is not None for row in training_rows)
+    ]
+    if not columns:
+        return None
+    targets = [as_float(row.get("target_percentile")) or 0.0 for row in training_rows]
+    return fit_ridge(training_rows, columns, targets, CURRENT_STACK_ALPHA), columns, len(training_rows)
 
 
 def parse_args() -> argparse.Namespace:
@@ -361,15 +629,36 @@ def model_outputs(
     rows: list[dict[str, Any]],
     train_rows: list[dict[str, Any]],
     *,
+    rolling_predictions: list[dict[str, Any]],
     max_features: int,
 ) -> dict[str, list[dict[str, Any]]]:
     outputs: dict[str, list[dict[str, Any]]] = {}
     teams_ranked = len(rows)
+    raw_output_indexes: dict[str, dict[str, dict[str, Any]]] = {}
+    adjustment_models = {
+        config.name: fit_current_adjustment_model(config.name, rolling_predictions, train_rows)
+        for config in CURRENT_MODEL_CONFIGS
+    }
+    stack_bundle = fit_current_stack_model(rolling_predictions, train_rows)
     for config in CURRENT_MODEL_CONFIGS:
         model, columns = fit_model(config, train_rows, max_features)
+        adjustment_bundle = adjustment_models.get(config.name)
         model_rows = []
         for row in rows:
-            score = model_prediction_score(row, model, config.mode)
+            raw_score = model_prediction_score(row, model, config.mode)
+            score = clip_unit(raw_score)
+            roster_weight = None
+            adjustment_feature_count = None
+            adjustment_train_rows = None
+            adjustment_strategy = "historical_meta_ridge"
+            if adjustment_bundle is not None:
+                adjustment_model, _adjustment_columns, adjustment_train_rows = adjustment_bundle
+                adjustment_feature_count = len(_adjustment_columns)
+                feature_row = current_adjustment_feature_row(row, clip_unit(raw_score))
+                score = clip_unit(adjustment_model.predict(feature_row))
+            else:
+                score, roster_weight = current_season_adjusted_score(row, raw_score)
+                adjustment_strategy = "manual_roster_blend"
             model_rows.append(
                 {
                     "model": config.name,
@@ -379,6 +668,11 @@ def model_outputs(
                     "conference": row.get("conference"),
                     "projected_coach": row.get("coach_coach"),
                     "projected_net_score": score,
+                    "raw_model_score": raw_score,
+                    "current_adjustment_strategy": adjustment_strategy,
+                    "current_adjustment_feature_count": adjustment_feature_count,
+                    "current_adjustment_train_rows": adjustment_train_rows,
+                    "roster_talent_blend_weight": roster_weight,
                     "program_consistency_band": program_consistency_band(row),
                     "feature_count": len(columns),
                     "train_rows": len(train_rows),
@@ -461,6 +755,7 @@ def model_outputs(
                     "incoming_cbb_transfer_minutes": row.get("incoming_cbb_transfer_minutes"),
                 }
             )
+        raw_output_indexes[config.name] = {str(item["team_key"]): item for item in model_rows}
         outputs[config.name] = assign_ordinal_ranks(model_rows, teams_ranked)
 
     for blend_name, components in CURRENT_BLEND_MODELS.items():
@@ -476,6 +771,119 @@ def model_outputs(
             blend["feature_count"] = sum(int(as_float(item.get("feature_count")) or 0) for item in component_rows)
             blend_rows.append(blend)
         outputs[blend_name] = assign_ordinal_ranks(blend_rows, teams_ranked)
+
+    if stack_bundle is not None and all(component in raw_output_indexes for component in CURRENT_STACK_COMPONENTS):
+        stack_model, stack_columns, stack_train_rows = stack_bundle
+        stack_rows = []
+        for row in rows:
+            team_key = str(row["team_key"])
+            component_percentiles = {
+                component: clip_unit(as_float(raw_output_indexes[component][team_key].get("raw_model_score")) or 0.0)
+                for component in CURRENT_STACK_COMPONENTS
+            }
+            feature_row = current_stack_feature_row(row, component_percentiles)
+            stack_score = clip_unit(stack_model.predict(feature_row))
+            stack_rows.append(
+                {
+                    "model": CURRENT_STACK_MODEL_NAME,
+                    "season": row["season"],
+                    "team": row["team"],
+                    "team_key": row["team_key"],
+                    "conference": row.get("conference"),
+                    "projected_coach": row.get("coach_coach"),
+                    "projected_net_score": stack_score,
+                    "raw_model_score": sum(component_percentiles.values()) / len(component_percentiles),
+                    "current_adjustment_strategy": "historical_preseason_stack",
+                    "current_adjustment_feature_count": len(stack_columns),
+                    "current_adjustment_train_rows": stack_train_rows,
+                    "roster_talent_blend_weight": None,
+                    "program_consistency_band": program_consistency_band(row),
+                    "feature_count": len(stack_columns),
+                    "train_rows": len(train_rows),
+                    "prior_roster_returning_minutes_pct": row.get(
+                        "prior_roster_probable_returner_minutes_pct"
+                    ),
+                    "prior_roster_probable_returner_minutes_pct": row.get(
+                        "prior_roster_probable_returner_minutes_pct"
+                    ),
+                    "prior_roster_expected_returning_minutes_pct": row.get(
+                        "prior_roster_expected_returning_minutes_pct"
+                    ),
+                    "prior_roster_returning_top_7_minutes_share": row.get(
+                        "prior_roster_returning_top_7_minutes_share"
+                    ),
+                    "roster_known_players": row.get("roster_talent_known_roster_players"),
+                    "returner_roster_share": row.get("roster_talent_returner_roster_share"),
+                    "newcomer_roster_share": row.get("roster_talent_newcomer_roster_share"),
+                    "hs_newcomer_roster_share": row.get("roster_talent_hs_newcomer_roster_share"),
+                    "transfer_newcomer_roster_share": row.get(
+                        "roster_talent_transfer_newcomer_roster_share"
+                    ),
+                    "returner_impact_share": row.get("roster_talent_returner_impact_share"),
+                    "newcomer_impact_share": row.get("roster_talent_newcomer_impact_share"),
+                    "hs_newcomer_impact_share": row.get("roster_talent_hs_newcomer_impact_share"),
+                    "transfer_newcomer_impact_share": row.get(
+                        "roster_talent_transfer_newcomer_impact_share"
+                    ),
+                    "composition_weighted_roster_talent": row.get(
+                        "roster_talent_continuity_plus_incoming"
+                    ),
+                    "roster_talent_returning_production_pct_avg": row.get(
+                        "roster_talent_returning_production_pct_avg"
+                    ),
+                    "roster_talent_returning_quality_index": row.get(
+                        "roster_talent_returning_quality_index"
+                    ),
+                    "roster_talent_returning_core_continuity": row.get(
+                        "roster_talent_returning_core_continuity"
+                    ),
+                    "roster_talent_cbb_transfer_quality_index": row.get(
+                        "roster_talent_cbb_transfer_quality_index"
+                    ),
+                    "roster_talent_incoming_hs_score": row.get(
+                        "roster_talent_incoming_hs_score"
+                    ),
+                    "roster_talent_incoming_transfer_score": row.get(
+                        "roster_talent_incoming_transfer_score"
+                    ),
+                    "roster_talent_incoming_hs_rank_percentile": row.get(
+                        "roster_talent_incoming_hs_rank_percentile"
+                    ),
+                    "roster_talent_incoming_transfer_rank_percentile": row.get(
+                        "roster_talent_incoming_transfer_rank_percentile"
+                    ),
+                    "roster_talent_incoming_transfer_production_percentile": row.get(
+                        "roster_talent_incoming_transfer_production_percentile"
+                    ),
+                    "roster_talent_weighted_returning_core_continuity": row.get(
+                        "roster_talent_weighted_returning_core_continuity"
+                    ),
+                    "roster_talent_weighted_hs_rank_percentile": row.get(
+                        "roster_talent_weighted_hs_rank_percentile"
+                    ),
+                    "roster_talent_weighted_transfer_rank_percentile": row.get(
+                        "roster_talent_weighted_transfer_rank_percentile"
+                    ),
+                    "roster_talent_continuity_plus_incoming": row.get(
+                        "roster_talent_continuity_plus_incoming"
+                    ),
+                    "incoming_on3_hs_rank": row.get("incoming_on3_hs_rank"),
+                    "incoming_on3_transfer_rank": row.get("incoming_on3_transfer_rank"),
+                    "incoming_cbb_transfer_players": row.get("incoming_cbb_transfer_players"),
+                    "incoming_cbb_transfer_production_percentile": row.get(
+                        "incoming_cbb_transfer_production_percentile"
+                    ),
+                    "incoming_cbb_transfer_source_adjusted_warp": row.get(
+                        "incoming_cbb_transfer_source_adjusted_warp"
+                    ),
+                    "incoming_cbb_transfer_minutes": row.get("incoming_cbb_transfer_minutes"),
+                    "stack_roster_ridge_percentile": component_percentiles["direct_ridge_roster_talent"],
+                    "stack_roster_gbt_percentile": component_percentiles["direct_gbt_roster_talent"],
+                    "stack_context_ridge_percentile": component_percentiles["direct_ridge_schedule_building"],
+                    "stack_context_gbt_percentile": component_percentiles["direct_gbt_schedule_building"],
+                }
+            )
+        outputs[CURRENT_STACK_MODEL_NAME] = assign_ordinal_ranks(stack_rows, teams_ranked)
 
     return outputs
 
@@ -508,10 +916,15 @@ def main() -> int:
     args = parse_args()
     historical_rows = read_csv_rows(args.modeling_table_csv)
     train_rows = target_rows(historical_rows)
-    current_rows = current_model_rows(args)
-    outputs = model_outputs(current_rows, train_rows, max_features=args.max_features)
     rolling_predictions = (
         read_csv_rows(args.rolling_predictions_csv) if args.rolling_predictions_csv.exists() else []
+    )
+    current_rows = current_model_rows(args)
+    outputs = model_outputs(
+        current_rows,
+        train_rows,
+        rolling_predictions=rolling_predictions,
+        max_features=args.max_features,
     )
 
     all_rows = []

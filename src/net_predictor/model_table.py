@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import json
 import re
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -13,7 +14,8 @@ from net_predictor.coach_factor import canonical_team_key
 RETURNER_IMMEDIATE_IMPACT_WEIGHT = 1.0
 HS_IMMEDIATE_IMPACT_WEIGHT = 0.65
 TRANSFER_IMMEDIATE_IMPACT_WEIGHT = 1.15
-EXPECTED_ROTATION_SIZE = 13.0
+EXPECTED_ROTATION_SIZE = 9.0
+ROTATION_MINUTES_COMPLETENESS_TARGET = 0.75
 DIVISION_I_TEAM_COUNT = 364.0
 ROSTER_PROXY_COACH_WEIGHT = 0.6
 ROSTER_PROXY_PROGRAM_WEIGHT = 0.4
@@ -274,8 +276,16 @@ def add_roster_talent_features(
     row["roster_talent_continuity_plus_incoming_known_only"] = known_only_signal
 
     known_roster_players = composition["known_roster_players"]
-    roster_completeness = roster_completeness_ratio(known_roster_players)
+    count_roster_completeness = roster_completeness_ratio(known_roster_players)
     missing_roster_players = missing_roster_slots(known_roster_players)
+    known_projected_minutes_share = sum_existing(
+        hs_player_features.get("returner_projected_minutes_share_total"),
+        hs_player_features.get("transfer_projected_minutes_share_total"),
+        hs_player_features.get("projected_minutes_share_total"),
+    )
+    minutes_roster_completeness = minutes_based_completeness_ratio(known_projected_minutes_share)
+    roster_completeness = first_existing(minutes_roster_completeness, count_roster_completeness)
+    missing_rotation_share = missing_rotation_minutes_share(known_projected_minutes_share)
     coach_proxy = coach_talent_proxy_percentile(row)
     program_proxy = program_talent_proxy_percentile(row)
     blended_proxy = weighted_average_existing(
@@ -284,9 +294,14 @@ def add_roster_talent_features(
     )
 
     row["roster_talent_expected_rotation_size"] = EXPECTED_ROTATION_SIZE
+    row["roster_talent_rotation_minutes_target"] = ROTATION_MINUTES_COMPLETENESS_TARGET
     row["roster_talent_roster_completeness"] = roster_completeness
+    row["roster_talent_count_based_completeness"] = count_roster_completeness
+    row["roster_talent_minutes_based_completeness"] = minutes_roster_completeness
     row["roster_talent_missing_roster_players"] = missing_roster_players
-    row["roster_talent_known_roster_share_of_expected"] = roster_completeness
+    row["roster_talent_known_projected_rotation_minutes_share"] = known_projected_minutes_share
+    row["roster_talent_missing_projected_rotation_minutes_share"] = missing_rotation_share
+    row["roster_talent_known_roster_share_of_expected"] = count_roster_completeness
     row["roster_talent_proxy_player_share_of_expected"] = (
         missing_roster_players / EXPECTED_ROTATION_SIZE if missing_roster_players is not None else None
     )
@@ -319,6 +334,16 @@ def average_existing(*values: float | None) -> float | None:
     if not observed:
         return None
     return sum(observed) / len(observed)
+
+
+def median(values: list[float]) -> float | None:
+    if not values:
+        return None
+    ordered = sorted(values)
+    middle = len(ordered) // 2
+    if len(ordered) % 2:
+        return ordered[middle]
+    return (ordered[middle - 1] + ordered[middle]) / 2
 
 
 def sum_existing(*values: Any) -> float | None:
@@ -367,11 +392,108 @@ def missing_roster_slots(known_roster_players: float | None) -> float | None:
     return clip(EXPECTED_ROTATION_SIZE - known_roster_players, 0.0, EXPECTED_ROTATION_SIZE)
 
 
+def minutes_based_completeness_ratio(projected_minutes_share: float | None) -> float | None:
+    if projected_minutes_share is None:
+        return None
+    return clip(projected_minutes_share / ROTATION_MINUTES_COMPLETENESS_TARGET, 0.0, 1.0)
+
+
+def missing_rotation_minutes_share(projected_minutes_share: float | None) -> float | None:
+    if projected_minutes_share is None:
+        return None
+    return clip(ROTATION_MINUTES_COMPLETENESS_TARGET - projected_minutes_share, 0.0, ROTATION_MINUTES_COMPLETENESS_TARGET)
+
+
 def rank_to_percentile(rank: float | None) -> float | None:
     if rank is None or rank <= 0:
         return None
     bounded_rank = clip(rank, 1.0, DIVISION_I_TEAM_COUNT)
     return (DIVISION_I_TEAM_COUNT + 1.0 - bounded_rank) / DIVISION_I_TEAM_COUNT
+
+
+def percentile_share(values: list[float], threshold: float) -> float | None:
+    if not values:
+        return None
+    return sum(1 for value in values if value >= threshold) / len(values)
+
+
+def preseason_strength_proxy(row: dict[str, Any]) -> float | None:
+    return weighted_average_existing(
+        (as_float(row.get("roster_talent_continuity_plus_incoming")), 0.55),
+        (rank_to_percentile(as_float(row.get("program_prior_last_rank_adj_em"))), 0.20),
+        (rank_to_percentile(as_float(row.get("coach_coach_prior_last_rank_adj_em"))), 0.10),
+        (as_float(row.get("program_prior_top50_rate")), 0.10),
+        (as_float(row.get("coach_coach_prior_top50_rate")), 0.05),
+    )
+
+
+def add_conference_schedule_environment(rows: list[dict[str, Any]]) -> None:
+    grouped: dict[tuple[int, str], list[dict[str, Any]]] = defaultdict(list)
+    national_by_season: dict[int, list[float]] = defaultdict(list)
+    row_proxy_by_id: dict[int, float | None] = {}
+
+    for row in rows:
+        season = as_int(row.get("season"))
+        conference = str(row.get("conference") or "").strip()
+        if season is None or not conference:
+            continue
+        proxy = preseason_strength_proxy(row)
+        row_proxy_by_id[id(row)] = proxy
+        if proxy is not None:
+            national_by_season[season].append(proxy)
+        grouped[(season, conference)].append(row)
+
+    national_mean_by_season = {
+        season: average_existing(*values)
+        for season, values in national_by_season.items()
+        if values
+    }
+
+    for (season, _conference), conference_rows in grouped.items():
+        national_mean = national_mean_by_season.get(season)
+        proxies = [row_proxy_by_id.get(id(row)) for row in conference_rows]
+        league_size = float(len(conference_rows))
+        for row in conference_rows:
+            own_proxy = row_proxy_by_id.get(id(row))
+            peer_values = [
+                proxy
+                for peer_row, proxy in zip(conference_rows, proxies)
+                if peer_row is not row and proxy is not None
+            ]
+            top_values = sorted(peer_values, reverse=True)
+            peer_mean = average_existing(*peer_values)
+            peer_median = median(peer_values) if peer_values else None
+            peer_best = top_values[0] if top_values else None
+            peer_top3_mean = average_existing(*top_values[:3])
+            peer_top5_mean = average_existing(*top_values[:5])
+            peer_top25_share = percentile_share(peer_values, rank_to_percentile(25.0) or 0.0)
+            peer_top50_share = percentile_share(peer_values, rank_to_percentile(50.0) or 0.0)
+            peer_top100_share = percentile_share(peer_values, rank_to_percentile(100.0) or 0.0)
+            peer_top150_share = percentile_share(peer_values, rank_to_percentile(150.0) or 0.0)
+            row["preseason_strength_proxy"] = own_proxy
+            row["conference_schedule_env_league_size"] = league_size
+            row["conference_schedule_env_peer_mean"] = peer_mean
+            row["conference_schedule_env_peer_median"] = peer_median
+            row["conference_schedule_env_peer_best"] = peer_best
+            row["conference_schedule_env_peer_top3_mean"] = peer_top3_mean
+            row["conference_schedule_env_peer_top5_mean"] = peer_top5_mean
+            row["conference_schedule_env_peer_top25_share"] = peer_top25_share
+            row["conference_schedule_env_peer_top50_share"] = peer_top50_share
+            row["conference_schedule_env_peer_top100_share"] = peer_top100_share
+            row["conference_schedule_env_peer_top150_share"] = peer_top150_share
+            row["conference_schedule_env_peer_mean_minus_national"] = (
+                peer_mean - national_mean if peer_mean is not None and national_mean is not None else None
+            )
+            row["conference_schedule_env_two_thirds_schedule_proxy"] = weighted_average_existing(
+                (peer_mean, 0.67),
+                (national_mean, 0.33),
+            )
+            row["conference_schedule_env_two_thirds_delta"] = (
+                row["conference_schedule_env_two_thirds_schedule_proxy"] - national_mean
+                if row.get("conference_schedule_env_two_thirds_schedule_proxy") is not None
+                and national_mean is not None
+                else None
+            )
 
 
 def classify_position(value: Any) -> str:
@@ -1013,6 +1135,7 @@ def build_model_rows(
         )
         rows.append(row)
 
+    add_conference_schedule_environment(rows)
     rows.sort(key=lambda row: (row["season"], row["team"]))
     return rows
 

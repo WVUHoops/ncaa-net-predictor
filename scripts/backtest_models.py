@@ -34,6 +34,7 @@ ROSTER_TALENT_PREFIXES = (
     "roster_talent_",
 )
 PROGRAM_PREFIXES = ("program_prior_",)
+CONFERENCE_ENV_PREFIXES = ("conference_schedule_env_",)
 SCHEDULE_BUILDING_EXCLUDED_SUBSTRINGS = (
     "_sos",
     "_ncsos",
@@ -41,6 +42,7 @@ SCHEDULE_BUILDING_EXCLUDED_SUBSTRINGS = (
 )
 SCHEDULE_BUILDING_PREFIXES = (
     *PROGRAM_PREFIXES,
+    *CONFERENCE_ENV_PREFIXES,
     "coach_coach_prior_",
     "coach_coach_first_",
     *ROSTER_TALENT_PREFIXES,

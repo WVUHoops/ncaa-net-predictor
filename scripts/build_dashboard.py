@@ -96,18 +96,37 @@ def pct(value: Any) -> float | None:
     return round(parsed * 100, 1)
 
 
-def added_wab_proxy(schedule_score_rank: Any) -> float | None:
-    """Approximate home-win WAB value from the schedule score rank.
-
-    This is not official WAB. It is a monotonic schedule-value proxy so the
-    dashboard can speak in a WAB-like language until a true WAB source is added.
-    """
-    rank = as_float(schedule_score_rank)
-    if rank is None:
+def bubble_win_probability_from_adj_em(
+    opponent_adj_em: Any,
+    bubble_adj_em: Any,
+    location: str = "Home",
+) -> float | None:
+    opponent = as_float(opponent_adj_em)
+    bubble = as_float(bubble_adj_em)
+    if opponent is None or bubble is None:
         return None
-    rank = min(max(rank, 1.0), 365.0)
-    bubble_home_win_probability = 1 / (1 + pow(2.718281828, -(rank - 95.0) / 58.0))
-    return round(1 - bubble_home_win_probability, 3)
+    location_adjustment = HOME_COURT_ADJ_EM if location == "Home" else -HOME_COURT_ADJ_EM if location == "Away" else 0.0
+    return 1 / (1 + pow(2.718281828, -((bubble + location_adjustment - opponent) / WIN_PROBABILITY_SCALE)))
+
+
+def added_wab_from_adj_em(
+    opponent_adj_em: Any,
+    bubble_adj_em: Any,
+    location: str = "Home",
+) -> float | None:
+    """Approximate per-game WAB win value from bubble-team win probability.
+
+    This follows the true WAB game-shape:
+    - win value: 1 - p
+    - loss value: -p
+
+    We still approximate the underlying opponent strength using projected AdjEM
+    mapped from projected NET rank, so this is WAB-like rather than official.
+    """
+    bubble_win_probability = bubble_win_probability_from_adj_em(opponent_adj_em, bubble_adj_em, location)
+    if bubble_win_probability is None:
+        return None
+    return round(1 - bubble_win_probability, 3)
 
 
 def canonical_team_name(value: Any) -> str:
@@ -259,9 +278,12 @@ def slim_risk_row(
     row: dict[str, str],
     projections_by_team: dict[str, dict[str, Any]],
     host_row: dict[str, Any] | None,
+    bubble_adj_em: float | None,
 ) -> dict[str, Any]:
     upset_pct = pct(row.get("upset_probability_vs_median_high_major"))
     risk_bucket = wvu_risk_bucket(upset_pct)
+    opponent_projection = projections_by_team.get(canonical_team_name(row.get("team"))) or {}
+    opponent_projected_adj_em = as_float(opponent_projection.get("projected_adj_em"))
     return {
         "team": row.get("team"),
         "projected_coach": row.get("projected_coach"),
@@ -278,7 +300,7 @@ def slim_risk_row(
         "danger_index": compact_float(row.get("danger_index"), 4),
         "projected_net_rank": compact_float(row.get("projected_net_rank") or row.get("schedule_score_rank"), 1),
         "schedule_score": compact_float(row.get("projected_net_rank") or row.get("schedule_score_rank"), 1),
-        "added_wab": added_wab_proxy(row.get("projected_net_rank") or row.get("schedule_score_rank")),
+        "added_wab": added_wab_from_adj_em(opponent_projected_adj_em, bubble_adj_em, "Home"),
         "three_rate": compact_float(row.get("away_three_point_attempt_rate"), 1),
         "experience": compact_float(row.get("away_experience"), 2),
         "adj_em": compact_float(row.get("away_adj_em"), 1),
@@ -293,7 +315,7 @@ def slim_risk_row(
 def slim_schedule_row(
     row: dict[str, str],
     adj_em_by_rank: list[float],
-    tier_benchmarks: dict[str, float],
+    bubble_adj_em: float | None,
     override: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     schedule_score_source = (
@@ -319,8 +341,6 @@ def slim_schedule_row(
     )
     rank = compact_float(schedule_score_source, 1)
     projected_adj_em = projected_adj_em_from_rank(schedule_score_source, adj_em_by_rank)
-    tier_benchmark = tier_benchmarks.get(str(tier_source or ""))
-    wab_adj_candidates = [value for value in (projected_adj_em, tier_benchmark) if value is not None]
     return {
         "team": row.get("team"),
         "team_key": row.get("team_key"),
@@ -332,16 +352,16 @@ def slim_schedule_row(
         "projected_net_rank": rank,
         "schedule_score": rank,
         "schedule_percentile": compact_float(row.get("schedule_score_percentile"), 3),
-        "added_wab": added_wab_proxy(schedule_score_source),
+        "added_wab": added_wab_from_adj_em(projected_adj_em, bubble_adj_em, "Home"),
         "projected_adj_em": projected_adj_em,
-        "wab_adj_em": round(max(wab_adj_candidates), 2) if wab_adj_candidates else None,
+        "wab_adj_em": projected_adj_em,
         "roster_known_players": compact_float(row.get("roster_known_players"), 0),
     }
 
 
 def tier_placeholder_rows(
     rows: list[dict[str, Any]],
-    tier_benchmarks: dict[str, float],
+    bubble_adj_em: float | None,
 ) -> list[dict[str, Any]]:
     tier_order = [
         "top_25",
@@ -364,8 +384,8 @@ def tier_placeholder_rows(
         adj_ems = [value for value in (as_float(row.get("projected_adj_em")) for row in tier_rows) if value is not None]
         if not scores or not adj_ems:
             continue
-        wab_adj_em = tier_benchmarks.get(tier)
         label = tier_label(tier)
+        projected_adj_em = round(sum(adj_ems) / len(adj_ems), 2)
         placeholders.append(
             {
                 "team": f"Placeholder: {label} Team",
@@ -375,9 +395,9 @@ def tier_placeholder_rows(
                 "program_band": tier,
                 "schedule_score": round(sum(scores) / len(scores), 1),
                 "schedule_percentile": None,
-                "added_wab": added_wab_proxy(sum(scores) / len(scores)),
-                "projected_adj_em": round(sum(adj_ems) / len(adj_ems), 2),
-                "wab_adj_em": wab_adj_em,
+                "added_wab": added_wab_from_adj_em(projected_adj_em, bubble_adj_em, "Home"),
+                "projected_adj_em": projected_adj_em,
+                "wab_adj_em": projected_adj_em,
                 "is_placeholder": True,
             }
         )
@@ -820,7 +840,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         for row in read_csv(args.schedule_predictions_csv)
         if row.get("model") == args.planner_model
     ]
-    planner_rows = [slim_schedule_row(row, adj_em_by_rank, tier_benchmarks) for row in schedule_rows]
+    planner_rows = [slim_schedule_row(row, adj_em_by_rank, bubble_adj_em) for row in schedule_rows]
     planner_rows = sorted(planner_rows, key=lambda row: as_float(row.get("schedule_score")) or 9999)
     host_row = next(
         (
@@ -831,7 +851,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         None,
     )
     projections_by_team = {canonical_team_name(row.get("team")): row for row in planner_rows}
-    slimmed_risk_rows = [slim_risk_row(row, projections_by_team, host_row) for row in risk_rows]
+    slimmed_risk_rows = [slim_risk_row(row, projections_by_team, host_row, bubble_adj_em) for row in risk_rows]
     host_card = host_roster_card(
         host_row,
         args.planner_host,
@@ -848,13 +868,13 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         slim_schedule_row(
             row,
             adj_em_by_rank,
-            tier_benchmarks,
+            bubble_adj_em,
             override=planner_overrides_by_team.get(canonical_team_name(row.get("team"))),
         )
         for row in schedule_rows
     ]
     planner_rows = sorted(planner_rows, key=lambda row: as_float(row.get("schedule_score")) or 9999)
-    planner_placeholder_rows = tier_placeholder_rows(planner_rows, tier_benchmarks)
+    planner_placeholder_rows = tier_placeholder_rows(planner_rows, bubble_adj_em)
     host_row = next(
         (
             row
@@ -864,7 +884,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         None,
     )
     projections_by_team = {canonical_team_name(row.get("team")): row for row in planner_rows}
-    slimmed_risk_rows = [slim_risk_row(row, projections_by_team, host_row) for row in risk_rows]
+    slimmed_risk_rows = [slim_risk_row(row, projections_by_team, host_row, bubble_adj_em) for row in risk_rows]
 
     recommendations = Counter(row.get("recommendation") for row in slimmed_risk_rows)
     risk_buckets = Counter(row.get("risk_bucket") for row in slimmed_risk_rows)
@@ -1921,7 +1941,7 @@ def dashboard_html(payload: dict[str, Any]) -> str:
     }}
 
     function bubbleWinProbability(opponent, location) {{
-      const oppAdj = Number(opponent?.wab_adj_em ?? opponent?.projected_adj_em);
+      const oppAdj = Number(opponent?.projected_adj_em);
       if (!Number.isFinite(oppAdj)) return null;
       const locationAdjustment = location === "Home" ? 3.5 : location === "Away" ? -3.5 : 0;
       return 1 / (1 + Math.exp(-((bubbleAdjEm() + locationAdjustment - oppAdj) / winProbabilityScale)));
