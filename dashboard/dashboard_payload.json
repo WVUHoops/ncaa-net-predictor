@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-18T11:04:26+00:00",
+  "generated_at": "2026-07-19T11:10:24+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-07-18",
+    "on3_hs_snapshot": "2026-07-19",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 483,
-    "cbb_transfer_feature_built_at": "2026-07-18",
-    "cbb_transfer_ledger_snapshot": "2026-07-18"
+    "cbb_transfer_feature_built_at": "2026-07-19",
+    "cbb_transfer_ledger_snapshot": "2026-07-19"
   },
   "summary": {
     "candidate_count": 286,
