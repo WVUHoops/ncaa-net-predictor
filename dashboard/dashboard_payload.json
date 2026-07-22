@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T11:48:04+00:00",
+  "generated_at": "2026-07-22T11:48:39+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-07-21",
+    "on3_hs_snapshot": "2026-07-22",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 483,
-    "cbb_transfer_feature_built_at": "2026-07-21",
-    "cbb_transfer_ledger_snapshot": "2026-07-21"
+    "cbb_transfer_feature_built_at": "2026-07-22",
+    "cbb_transfer_ledger_snapshot": "2026-07-22"
   },
   "summary": {
     "candidate_count": 286,
@@ -7510,7 +7510,7 @@
     },
     "host_card": {
       "team": "West Virginia",
-      "projected_roster_talent_rank": 36.0,
+      "projected_roster_talent_rank": 35.0,
       "projected_coach": "Ross Hodge",
       "known_players": 11,
       "missing_slots": 2,
@@ -7565,7 +7565,7 @@
         {
           "name": "Amadou Seini",
           "position": "C",
-          "industry_rank": 64.0,
+          "industry_rank": 63.0,
           "source_label": "Bella Vista Prep",
           "origin_type": "hs",
           "projected_role_share": 0.048,
@@ -9033,10 +9033,10 @@
         "roster_known_players": 13.0
       },
       {
-        "team": "Missouri",
-        "team_key": "missouri",
-        "conference": "SEC",
-        "projected_coach": "Dennis Gates",
+        "team": "UCF",
+        "team_key": "ucf",
+        "conference": "B12",
+        "projected_coach": "Johnny Dawkins",
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
@@ -9046,13 +9046,13 @@
         "added_wab": 0.224,
         "projected_adj_em": 11.31,
         "wab_adj_em": 11.31,
-        "roster_known_players": 14.0
+        "roster_known_players": 15.0
       },
       {
-        "team": "UCF",
-        "team_key": "ucf",
-        "conference": "B12",
-        "projected_coach": "Johnny Dawkins",
+        "team": "Missouri",
+        "team_key": "missouri",
+        "conference": "SEC",
+        "projected_coach": "Dennis Gates",
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
@@ -9062,7 +9062,7 @@
         "added_wab": 0.218,
         "projected_adj_em": 11.06,
         "wab_adj_em": 11.06,
-        "roster_known_players": 15.0
+        "roster_known_players": 14.0
       },
       {
         "team": "Seton Hall",
@@ -9938,7 +9938,7 @@
         "program_band": "201_250",
         "projected_net_rank": 136.0,
         "schedule_score": 136.0,
-        "schedule_percentile": 0.549,
+        "schedule_percentile": 0.552,
         "added_wab": 0.071,
         "projected_adj_em": 2.7,
         "wab_adj_em": 2.7,
@@ -10690,7 +10690,7 @@
         "program_band": "161_200",
         "projected_net_rank": 183.0,
         "schedule_score": 183.0,
-        "schedule_percentile": 0.552,
+        "schedule_percentile": 0.549,
         "added_wab": 0.039,
         "projected_adj_em": -1.37,
         "wab_adj_em": -1.37,
