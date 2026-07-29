@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-28T11:59:14+00:00",
+  "generated_at": "2026-07-29T12:02:02+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-07-28",
+    "on3_hs_snapshot": "2026-07-29",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
-    "cbb_transfer_feature_rows": 483,
-    "cbb_transfer_feature_built_at": "2026-07-28",
-    "cbb_transfer_ledger_snapshot": "2026-07-28"
+    "cbb_transfer_feature_rows": 484,
+    "cbb_transfer_feature_built_at": "2026-07-29",
+    "cbb_transfer_ledger_snapshot": "2026-07-29"
   },
   "summary": {
     "candidate_count": 286,
@@ -7660,8 +7660,8 @@
         "schedule_score": 38.1,
         "schedule_percentile": null,
         "added_wab": 0.481,
-        "projected_adj_em": 18.89,
-        "wab_adj_em": 18.89,
+        "projected_adj_em": 18.88,
+        "wab_adj_em": 18.88,
         "is_placeholder": true
       },
       {
@@ -7686,8 +7686,8 @@
         "schedule_score": 88.2,
         "schedule_percentile": null,
         "added_wab": 0.17,
-        "projected_adj_em": 9.09,
-        "wab_adj_em": 9.09,
+        "projected_adj_em": 9.08,
+        "wab_adj_em": 9.08,
         "is_placeholder": true
       },
       {
@@ -7849,6 +7849,22 @@
         "roster_known_players": 10.0
       },
       {
+        "team": "Texas Tech",
+        "team_key": "texas tech",
+        "conference": "B12",
+        "projected_coach": "Grant McCasland",
+        "tier": "top_25",
+        "projected_net_tier": "top_25",
+        "program_band": "top_25",
+        "projected_net_rank": 7.0,
+        "schedule_score": 7.0,
+        "schedule_percentile": 0.984,
+        "added_wab": 0.875,
+        "projected_adj_em": 32.0,
+        "wab_adj_em": 32.0,
+        "roster_known_players": 10.0
+      },
+      {
         "team": "Cincinnati",
         "team_key": "cincinnati",
         "conference": "B12",
@@ -7856,12 +7872,12 @@
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "26_50",
-        "projected_net_rank": 7.0,
-        "schedule_score": 7.0,
-        "schedule_percentile": 0.984,
-        "added_wab": 0.875,
-        "projected_adj_em": 32.0,
-        "wab_adj_em": 32.0,
+        "projected_net_rank": 8.0,
+        "schedule_score": 8.0,
+        "schedule_percentile": 0.981,
+        "added_wab": 0.858,
+        "projected_adj_em": 31.08,
+        "wab_adj_em": 31.08,
         "roster_known_players": 15.0
       },
       {
@@ -7872,12 +7888,12 @@
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "top_25",
-        "projected_net_rank": 8.0,
-        "schedule_score": 8.0,
-        "schedule_percentile": 0.981,
-        "added_wab": 0.858,
-        "projected_adj_em": 31.08,
-        "wab_adj_em": 31.08,
+        "projected_net_rank": 9.0,
+        "schedule_score": 9.0,
+        "schedule_percentile": 0.978,
+        "added_wab": 0.832,
+        "projected_adj_em": 29.78,
+        "wab_adj_em": 29.78,
         "roster_known_players": 10.0
       },
       {
@@ -7888,29 +7904,13 @@
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "top_25",
-        "projected_net_rank": 9.0,
-        "schedule_score": 9.0,
-        "schedule_percentile": 0.978,
-        "added_wab": 0.832,
-        "projected_adj_em": 29.78,
-        "wab_adj_em": 29.78,
-        "roster_known_players": 13.0
-      },
-      {
-        "team": "Texas Tech",
-        "team_key": "texas tech",
-        "conference": "B12",
-        "projected_coach": "Grant McCasland",
-        "tier": "top_25",
-        "projected_net_tier": "top_25",
-        "program_band": "top_25",
         "projected_net_rank": 10.0,
         "schedule_score": 10.0,
         "schedule_percentile": 0.975,
         "added_wab": 0.809,
         "projected_adj_em": 28.76,
         "wab_adj_em": 28.76,
-        "roster_known_players": 9.0
+        "roster_known_players": 13.0
       },
       {
         "team": "Connecticut",
@@ -7945,10 +7945,10 @@
         "roster_known_players": 10.0
       },
       {
-        "team": "Baylor",
-        "team_key": "baylor",
-        "conference": "B12",
-        "projected_coach": "Scott Drew",
+        "team": "Miami FL",
+        "team_key": "miami fl",
+        "conference": "ACC",
+        "projected_coach": "Jai Lucas",
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "26_50",
@@ -7958,13 +7958,13 @@
         "added_wab": 0.768,
         "projected_adj_em": 27.17,
         "wab_adj_em": 27.17,
-        "roster_known_players": 11.0
+        "roster_known_players": 13.0
       },
       {
-        "team": "Miami FL",
-        "team_key": "miami fl",
-        "conference": "ACC",
-        "projected_coach": "Jai Lucas",
+        "team": "Baylor",
+        "team_key": "baylor",
+        "conference": "B12",
+        "projected_coach": "Scott Drew",
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "26_50",
@@ -7974,7 +7974,7 @@
         "added_wab": 0.764,
         "projected_adj_em": 27.0,
         "wab_adj_em": 27.0,
-        "roster_known_players": 12.0
+        "roster_known_players": 11.0
       },
       {
         "team": "Clemson",
@@ -8377,22 +8377,6 @@
         "roster_known_players": 11.0
       },
       {
-        "team": "N.C. State",
-        "team_key": "nc state",
-        "conference": "ACC",
-        "projected_coach": "Justin Gainey",
-        "tier": "26_50",
-        "projected_net_tier": "26_50",
-        "program_band": "51_75",
-        "projected_net_rank": 38.0,
-        "schedule_score": 38.0,
-        "schedule_percentile": 0.898,
-        "added_wab": 0.486,
-        "projected_adj_em": 19.02,
-        "wab_adj_em": 19.02,
-        "roster_known_players": 13.0
-      },
-      {
         "team": "Western Michigan",
         "team_key": "western michigan",
         "conference": "MAC",
@@ -8407,6 +8391,22 @@
         "projected_adj_em": 19.02,
         "wab_adj_em": 19.02,
         "roster_known_players": 11.0
+      },
+      {
+        "team": "N.C. State",
+        "team_key": "nc state",
+        "conference": "ACC",
+        "projected_coach": "Justin Gainey",
+        "tier": "26_50",
+        "projected_net_tier": "26_50",
+        "program_band": "51_75",
+        "projected_net_rank": 39.0,
+        "schedule_score": 39.0,
+        "schedule_percentile": 0.896,
+        "added_wab": 0.473,
+        "projected_adj_em": 18.69,
+        "wab_adj_em": 18.69,
+        "roster_known_players": 13.0
       },
       {
         "team": "Memphis",
@@ -8530,11 +8530,11 @@
         "program_band": "136_160",
         "projected_net_rank": 44.0,
         "schedule_score": 44.0,
-        "schedule_percentile": 0.764,
+        "schedule_percentile": 0.766,
         "added_wab": 0.423,
         "projected_adj_em": 17.35,
         "wab_adj_em": 17.35,
-        "roster_known_players": 11.0
+        "roster_known_players": 12.0
       },
       {
         "team": "Oklahoma",
@@ -9033,10 +9033,10 @@
         "roster_known_players": 13.0
       },
       {
-        "team": "UCF",
-        "team_key": "ucf",
-        "conference": "B12",
-        "projected_coach": "Johnny Dawkins",
+        "team": "Missouri",
+        "team_key": "missouri",
+        "conference": "SEC",
+        "projected_coach": "Dennis Gates",
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
@@ -9046,13 +9046,13 @@
         "added_wab": 0.224,
         "projected_adj_em": 11.31,
         "wab_adj_em": 11.31,
-        "roster_known_players": 15.0
+        "roster_known_players": 14.0
       },
       {
-        "team": "Missouri",
-        "team_key": "missouri",
-        "conference": "SEC",
-        "projected_coach": "Dennis Gates",
+        "team": "UCF",
+        "team_key": "ucf",
+        "conference": "B12",
+        "projected_coach": "Johnny Dawkins",
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
@@ -9062,7 +9062,7 @@
         "added_wab": 0.218,
         "projected_adj_em": 11.06,
         "wab_adj_em": 11.06,
-        "roster_known_players": 14.0
+        "roster_known_players": 15.0
       },
       {
         "team": "Seton Hall",
@@ -9126,7 +9126,7 @@
         "added_wab": 0.21,
         "projected_adj_em": 10.77,
         "wab_adj_em": 10.77,
-        "roster_known_players": 12.0
+        "roster_known_players": 13.0
       },
       {
         "team": "Stanford",
@@ -9232,12 +9232,12 @@
         "tier": "76_100",
         "projected_net_tier": "76_100",
         "program_band": "51_75",
-        "projected_net_rank": 86.0,
-        "schedule_score": 86.0,
-        "schedule_percentile": 0.766,
-        "added_wab": 0.178,
-        "projected_adj_em": 9.42,
-        "wab_adj_em": 9.42,
+        "projected_net_rank": 87.0,
+        "schedule_score": 87.0,
+        "schedule_percentile": 0.764,
+        "added_wab": 0.176,
+        "projected_adj_em": 9.35,
+        "wab_adj_em": 9.35,
         "roster_known_players": 11.0
       },
       {
@@ -9570,7 +9570,7 @@
         "program_band": "26_50",
         "projected_net_rank": 111.0,
         "schedule_score": 111.0,
-        "schedule_percentile": 0.896,
+        "schedule_percentile": 0.898,
         "added_wab": 0.103,
         "projected_adj_em": 5.29,
         "wab_adj_em": 5.29,
@@ -10418,7 +10418,7 @@
         "program_band": "251_300",
         "projected_net_rank": 166.0,
         "schedule_score": 166.0,
-        "schedule_percentile": 0.25,
+        "schedule_percentile": 0.247,
         "added_wab": 0.051,
         "projected_adj_em": 0.32,
         "wab_adj_em": 0.32,
@@ -10802,7 +10802,7 @@
         "program_band": "201_250",
         "projected_net_rank": 190.0,
         "schedule_score": 190.0,
-        "schedule_percentile": 0.423,
+        "schedule_percentile": 0.42,
         "added_wab": 0.036,
         "projected_adj_em": -2.01,
         "wab_adj_em": -2.01,
@@ -11282,7 +11282,7 @@
         "program_band": "251_300",
         "projected_net_rank": 220.0,
         "schedule_score": 220.0,
-        "schedule_percentile": 0.343,
+        "schedule_percentile": 0.346,
         "added_wab": 0.025,
         "projected_adj_em": -4.45,
         "wab_adj_em": -4.45,
@@ -11826,7 +11826,7 @@
         "program_band": "161_200",
         "projected_net_rank": 254.0,
         "schedule_score": 254.0,
-        "schedule_percentile": 0.346,
+        "schedule_percentile": 0.343,
         "added_wab": 0.016,
         "projected_adj_em": -7.27,
         "wab_adj_em": -7.27,
@@ -12066,7 +12066,7 @@
         "program_band": "161_200",
         "projected_net_rank": 269.0,
         "schedule_score": 269.0,
-        "schedule_percentile": 0.42,
+        "schedule_percentile": 0.423,
         "added_wab": 0.013,
         "projected_adj_em": -8.89,
         "wab_adj_em": -8.89,
@@ -12242,11 +12242,11 @@
         "program_band": "251_300",
         "projected_net_rank": 280.0,
         "schedule_score": 280.0,
-        "schedule_percentile": 0.247,
+        "schedule_percentile": 0.25,
         "added_wab": 0.011,
         "projected_adj_em": -9.87,
         "wab_adj_em": -9.87,
-        "roster_known_players": 9.0
+        "roster_known_players": 10.0
       },
       {
         "team": "Cornell",
@@ -13318,7 +13318,7 @@
         "added_wab": 0.002,
         "projected_adj_em": -20.15,
         "wab_adj_em": -20.15,
-        "roster_known_players": 9.0
+        "roster_known_players": 11.0
       },
       {
         "team": "Southern",
@@ -13632,8 +13632,8 @@
         "schedule_score": 38.1,
         "schedule_percentile": null,
         "added_wab": 0.481,
-        "projected_adj_em": 18.89,
-        "wab_adj_em": 18.89,
+        "projected_adj_em": 18.88,
+        "wab_adj_em": 18.88,
         "is_placeholder": true
       },
       {
@@ -13658,8 +13658,8 @@
         "schedule_score": 88.2,
         "schedule_percentile": null,
         "added_wab": 0.17,
-        "projected_adj_em": 9.09,
-        "wab_adj_em": 9.09,
+        "projected_adj_em": 9.08,
+        "wab_adj_em": 9.08,
         "is_placeholder": true
       },
       {
