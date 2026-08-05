@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-04T12:03:29+00:00",
+  "generated_at": "2026-08-05T12:01:09+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-08-04",
+    "on3_hs_snapshot": "2026-08-05",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 485,
-    "cbb_transfer_feature_built_at": "2026-08-04",
-    "cbb_transfer_ledger_snapshot": "2026-08-04"
+    "cbb_transfer_feature_built_at": "2026-08-05",
+    "cbb_transfer_ledger_snapshot": "2026-08-05"
   },
   "summary": {
     "candidate_count": 286,
@@ -7660,8 +7660,8 @@
         "schedule_score": 38.1,
         "schedule_percentile": null,
         "added_wab": 0.481,
-        "projected_adj_em": 18.88,
-        "wab_adj_em": 18.88,
+        "projected_adj_em": 18.89,
+        "wab_adj_em": 18.89,
         "is_placeholder": true
       },
       {
@@ -8361,6 +8361,22 @@
         "roster_known_players": 14.0
       },
       {
+        "team": "Oregon",
+        "team_key": "oregon",
+        "conference": "B10",
+        "projected_coach": "Dana Altman",
+        "tier": "26_50",
+        "projected_net_tier": "26_50",
+        "program_band": "101_135",
+        "projected_net_rank": 37.0,
+        "schedule_score": 37.0,
+        "schedule_percentile": 0.901,
+        "added_wab": 0.493,
+        "projected_adj_em": 19.19,
+        "wab_adj_em": 19.19,
+        "roster_known_players": 13.0
+      },
+      {
         "team": "Purdue",
         "team_key": "purdue",
         "conference": "B10",
@@ -8368,12 +8384,12 @@
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "top_25",
-        "projected_net_rank": 37.0,
-        "schedule_score": 37.0,
-        "schedule_percentile": 0.901,
-        "added_wab": 0.493,
-        "projected_adj_em": 19.19,
-        "wab_adj_em": 19.19,
+        "projected_net_rank": 38.0,
+        "schedule_score": 38.0,
+        "schedule_percentile": 0.898,
+        "added_wab": 0.486,
+        "projected_adj_em": 19.02,
+        "wab_adj_em": 19.02,
         "roster_known_players": 11.0
       },
       {
@@ -8393,22 +8409,6 @@
         "roster_known_players": 11.0
       },
       {
-        "team": "N.C. State",
-        "team_key": "nc state",
-        "conference": "ACC",
-        "projected_coach": "Justin Gainey",
-        "tier": "26_50",
-        "projected_net_tier": "26_50",
-        "program_band": "51_75",
-        "projected_net_rank": 39.0,
-        "schedule_score": 39.0,
-        "schedule_percentile": 0.896,
-        "added_wab": 0.473,
-        "projected_adj_em": 18.69,
-        "wab_adj_em": 18.69,
-        "roster_known_players": 13.0
-      },
-      {
         "team": "Memphis",
         "team_key": "memphis",
         "conference": "Amer",
@@ -8425,13 +8425,13 @@
         "roster_known_players": 14.0
       },
       {
-        "team": "Iowa",
-        "team_key": "iowa",
-        "conference": "B10",
-        "projected_coach": "Ben McCollum",
+        "team": "N.C. State",
+        "team_key": "nc state",
+        "conference": "ACC",
+        "projected_coach": "Justin Gainey",
         "tier": "26_50",
         "projected_net_tier": "26_50",
-        "program_band": "26_50",
+        "program_band": "51_75",
         "projected_net_rank": 40.0,
         "schedule_score": 40.0,
         "schedule_percentile": 0.893,
@@ -8441,10 +8441,10 @@
         "roster_known_players": 13.0
       },
       {
-        "team": "UCLA",
-        "team_key": "ucla",
+        "team": "Iowa",
+        "team_key": "iowa",
         "conference": "B10",
-        "projected_coach": "Mick Cronin",
+        "projected_coach": "Ben McCollum",
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "26_50",
@@ -8473,19 +8473,19 @@
         "roster_known_players": 5.0
       },
       {
-        "team": "Creighton",
-        "team_key": "creighton",
-        "conference": "BE",
-        "projected_coach": "Alan Huss",
+        "team": "UCLA",
+        "team_key": "ucla",
+        "conference": "B10",
+        "projected_coach": "Mick Cronin",
         "tier": "26_50",
         "projected_net_tier": "26_50",
-        "program_band": "76_100",
-        "projected_net_rank": 43.0,
-        "schedule_score": 43.0,
-        "schedule_percentile": 0.885,
-        "added_wab": 0.425,
-        "projected_adj_em": 17.41,
-        "wab_adj_em": 17.41,
+        "program_band": "26_50",
+        "projected_net_rank": 42.0,
+        "schedule_score": 42.0,
+        "schedule_percentile": 0.887,
+        "added_wab": 0.426,
+        "projected_adj_em": 17.44,
+        "wab_adj_em": 17.44,
         "roster_known_players": 13.0
       },
       {
@@ -8505,20 +8505,20 @@
         "roster_known_players": 17.0
       },
       {
-        "team": "Oregon",
-        "team_key": "oregon",
-        "conference": "B10",
-        "projected_coach": "Dana Altman",
+        "team": "Creighton",
+        "team_key": "creighton",
+        "conference": "BE",
+        "projected_coach": "Alan Huss",
         "tier": "26_50",
         "projected_net_tier": "26_50",
-        "program_band": "101_135",
+        "program_band": "76_100",
         "projected_net_rank": 44.0,
         "schedule_score": 44.0,
         "schedule_percentile": 0.882,
         "added_wab": 0.423,
         "projected_adj_em": 17.35,
         "wab_adj_em": 17.35,
-        "roster_known_players": 12.0
+        "roster_known_players": 13.0
       },
       {
         "team": "High Point",
@@ -8690,7 +8690,7 @@
         "program_band": "51_75",
         "projected_net_rank": 55.0,
         "schedule_score": 55.0,
-        "schedule_percentile": 0.887,
+        "schedule_percentile": 0.885,
         "added_wab": 0.326,
         "projected_adj_em": 14.67,
         "wab_adj_em": 14.67,
@@ -9570,7 +9570,7 @@
         "program_band": "26_50",
         "projected_net_rank": 111.0,
         "schedule_score": 111.0,
-        "schedule_percentile": 0.898,
+        "schedule_percentile": 0.896,
         "added_wab": 0.103,
         "projected_adj_em": 5.29,
         "wab_adj_em": 5.29,
@@ -9670,7 +9670,7 @@
         "added_wab": 0.093,
         "projected_adj_em": 4.55,
         "wab_adj_em": 4.55,
-        "roster_known_players": 14.0
+        "roster_known_players": 15.0
       },
       {
         "team": "Boise St.",
@@ -13632,8 +13632,8 @@
         "schedule_score": 38.1,
         "schedule_percentile": null,
         "added_wab": 0.481,
-        "projected_adj_em": 18.88,
-        "wab_adj_em": 18.88,
+        "projected_adj_em": 18.89,
+        "wab_adj_em": 18.89,
         "is_placeholder": true
       },
       {
