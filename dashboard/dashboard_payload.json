@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-05T12:01:09+00:00",
+  "generated_at": "2026-08-06T12:04:12+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-08-05",
+    "on3_hs_snapshot": "2026-08-06",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 485,
-    "cbb_transfer_feature_built_at": "2026-08-05",
-    "cbb_transfer_ledger_snapshot": "2026-08-05"
+    "cbb_transfer_feature_built_at": "2026-08-06",
+    "cbb_transfer_ledger_snapshot": "2026-08-06"
   },
   "summary": {
     "candidate_count": 286,
@@ -7670,11 +7670,11 @@
         "conference": "Tier",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 63.1,
+        "schedule_score": 63.0,
         "schedule_percentile": null,
         "added_wab": 0.273,
-        "projected_adj_em": 13.0,
-        "wab_adj_em": 13.0,
+        "projected_adj_em": 13.02,
+        "wab_adj_em": 13.02,
         "is_placeholder": true
       },
       {
@@ -8594,7 +8594,7 @@
         "program_band": "26_50",
         "projected_net_rank": 48.0,
         "schedule_score": 48.0,
-        "schedule_percentile": 0.819,
+        "schedule_percentile": 0.816,
         "added_wab": 0.403,
         "projected_adj_em": 16.82,
         "wab_adj_em": 16.82,
@@ -8905,10 +8905,10 @@
         "roster_known_players": 13.0
       },
       {
-        "team": "Wake Forest",
-        "team_key": "wake forest",
+        "team": "Syracuse",
+        "team_key": "syracuse",
         "conference": "ACC",
-        "projected_coach": "Steve Forbes",
+        "projected_coach": "Gerry McNamara",
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "76_100",
@@ -8918,7 +8918,7 @@
         "added_wab": 0.255,
         "projected_adj_em": 12.4,
         "wab_adj_em": 12.4,
-        "roster_known_players": 12.0
+        "roster_known_players": 14.0
       },
       {
         "team": "San Diego St.",
@@ -8937,6 +8937,22 @@
         "roster_known_players": 10.0
       },
       {
+        "team": "Wake Forest",
+        "team_key": "wake forest",
+        "conference": "ACC",
+        "projected_coach": "Steve Forbes",
+        "tier": "51_75",
+        "projected_net_tier": "51_75",
+        "program_band": "76_100",
+        "projected_net_rank": 67.0,
+        "schedule_score": 67.0,
+        "schedule_percentile": 0.819,
+        "added_wab": 0.248,
+        "projected_adj_em": 12.17,
+        "wab_adj_em": 12.17,
+        "roster_known_players": 12.0
+      },
+      {
         "team": "Kansas St.",
         "team_key": "kansas state",
         "conference": "B12",
@@ -8944,12 +8960,12 @@
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "101_135",
-        "projected_net_rank": 68.0,
-        "schedule_score": 68.0,
-        "schedule_percentile": 0.816,
-        "added_wab": 0.246,
-        "projected_adj_em": 12.11,
-        "wab_adj_em": 12.11,
+        "projected_net_rank": 69.0,
+        "schedule_score": 69.0,
+        "schedule_percentile": 0.813,
+        "added_wab": 0.242,
+        "projected_adj_em": 11.96,
+        "wab_adj_em": 11.96,
         "roster_known_players": 14.0
       },
       {
@@ -8976,29 +8992,13 @@
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
-        "projected_net_rank": 70.0,
-        "schedule_score": 70.0,
-        "schedule_percentile": 0.81,
-        "added_wab": 0.242,
-        "projected_adj_em": 11.95,
-        "wab_adj_em": 11.95,
-        "roster_known_players": 9.0
-      },
-      {
-        "team": "Pittsburgh",
-        "team_key": "pittsburgh",
-        "conference": "ACC",
-        "projected_coach": "Jeff Capel III",
-        "tier": "51_75",
-        "projected_net_tier": "51_75",
-        "program_band": "76_100",
         "projected_net_rank": 71.0,
         "schedule_score": 71.0,
         "schedule_percentile": 0.808,
         "added_wab": 0.241,
         "projected_adj_em": 11.94,
         "wab_adj_em": 11.94,
-        "roster_known_players": 14.0
+        "roster_known_players": 9.0
       },
       {
         "team": "Oregon St.",
@@ -9017,20 +9017,20 @@
         "roster_known_players": 15.0
       },
       {
-        "team": "Syracuse",
-        "team_key": "syracuse",
+        "team": "Pittsburgh",
+        "team_key": "pittsburgh",
         "conference": "ACC",
-        "projected_coach": "Gerry McNamara",
+        "projected_coach": "Jeff Capel III",
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "76_100",
-        "projected_net_rank": 73.0,
-        "schedule_score": 73.0,
-        "schedule_percentile": 0.802,
-        "added_wab": 0.231,
-        "projected_adj_em": 11.55,
-        "wab_adj_em": 11.55,
-        "roster_known_players": 13.0
+        "projected_net_rank": 72.0,
+        "schedule_score": 72.0,
+        "schedule_percentile": 0.805,
+        "added_wab": 0.241,
+        "projected_adj_em": 11.93,
+        "wab_adj_em": 11.93,
+        "roster_known_players": 14.0
       },
       {
         "team": "Missouri",
@@ -9378,7 +9378,7 @@
         "program_band": "51_75",
         "projected_net_rank": 96.0,
         "schedule_score": 96.0,
-        "schedule_percentile": 0.805,
+        "schedule_percentile": 0.802,
         "added_wab": 0.139,
         "projected_adj_em": 7.53,
         "wab_adj_em": 7.53,
@@ -9554,7 +9554,7 @@
         "program_band": "51_75",
         "projected_net_rank": 110.0,
         "schedule_score": 110.0,
-        "schedule_percentile": 0.813,
+        "schedule_percentile": 0.81,
         "added_wab": 0.105,
         "projected_adj_em": 5.44,
         "wab_adj_em": 5.44,
@@ -9666,7 +9666,7 @@
         "program_band": "301_plus",
         "projected_net_rank": 118.0,
         "schedule_score": 118.0,
-        "schedule_percentile": 0.429,
+        "schedule_percentile": 0.426,
         "added_wab": 0.093,
         "projected_adj_em": 4.55,
         "wab_adj_em": 4.55,
@@ -10946,11 +10946,11 @@
         "program_band": "161_200",
         "projected_net_rank": 199.0,
         "schedule_score": 199.0,
-        "schedule_percentile": 0.423,
+        "schedule_percentile": 0.429,
         "added_wab": 0.032,
         "projected_adj_em": -2.83,
         "wab_adj_em": -2.83,
-        "roster_known_players": 8.0
+        "roster_known_players": 10.0
       },
       {
         "team": "Bradley",
@@ -12258,7 +12258,7 @@
         "program_band": "161_200",
         "projected_net_rank": 281.0,
         "schedule_score": 281.0,
-        "schedule_percentile": 0.426,
+        "schedule_percentile": 0.423,
         "added_wab": 0.011,
         "projected_adj_em": -10.15,
         "wab_adj_em": -10.15,
@@ -12902,7 +12902,7 @@
         "added_wab": 0.005,
         "projected_adj_em": -14.75,
         "wab_adj_em": -14.75,
-        "roster_known_players": 7.0
+        "roster_known_players": 8.0
       },
       {
         "team": "Quinnipiac",
@@ -13642,11 +13642,11 @@
         "conference": "Tier",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 63.1,
+        "schedule_score": 63.0,
         "schedule_percentile": null,
         "added_wab": 0.273,
-        "projected_adj_em": 13.0,
-        "wab_adj_em": 13.0,
+        "projected_adj_em": 13.02,
+        "wab_adj_em": 13.02,
         "is_placeholder": true
       },
       {
