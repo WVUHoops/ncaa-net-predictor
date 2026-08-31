@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-30T14:43:18+00:00",
+  "generated_at": "2026-08-31T17:25:58+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-08-30",
+    "on3_hs_snapshot": "2026-08-31",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 485,
-    "cbb_transfer_feature_built_at": "2026-08-30",
-    "cbb_transfer_ledger_snapshot": "2026-08-30"
+    "cbb_transfer_feature_built_at": "2026-08-31",
+    "cbb_transfer_ledger_snapshot": "2026-08-31"
   },
   "summary": {
     "candidate_count": 286,
@@ -7500,12 +7500,12 @@
       "tier": "26_50",
       "projected_net_tier": "26_50",
       "program_band": "51_75",
-      "projected_net_rank": 49.0,
-      "schedule_score": 49.0,
-      "schedule_percentile": 0.868,
-      "added_wab": 0.401,
-      "projected_adj_em": 16.77,
-      "wab_adj_em": 16.77,
+      "projected_net_rank": 50.0,
+      "schedule_score": 50.0,
+      "schedule_percentile": 0.865,
+      "added_wab": 0.382,
+      "projected_adj_em": 16.24,
+      "wab_adj_em": 16.24,
       "roster_known_players": 11.0
     },
     "host_card": {
@@ -7565,7 +7565,7 @@
         {
           "name": "Amadou Seini",
           "position": "C",
-          "industry_rank": 64.0,
+          "industry_rank": 65.0,
           "source_label": "Bella Vista Prep",
           "origin_type": "hs",
           "projected_role_share": 0.048,
@@ -7608,7 +7608,7 @@
         {
           "name": "Keonte Greybear",
           "position": "PG",
-          "industry_rank": 176.0,
+          "industry_rank": 177.0,
           "source_label": "iSchool Lewisville",
           "origin_type": "hs",
           "projected_role_share": 0.062,
@@ -7628,7 +7628,7 @@
         {
           "name": "Aliou Dioum",
           "position": "C",
-          "industry_rank": 121.0,
+          "industry_rank": 122.0,
           "source_label": "Bella Vista Prep",
           "origin_type": "hs",
           "projected_role_share": 0.038,
@@ -8601,10 +8601,10 @@
         "roster_known_players": 15.0
       },
       {
-        "team": "West Virginia",
-        "team_key": "west virginia",
-        "conference": "B12",
-        "projected_coach": "Ross Hodge",
+        "team": "Providence",
+        "team_key": "providence",
+        "conference": "BE",
+        "projected_coach": "Brian Hodgson",
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "51_75",
@@ -8614,13 +8614,13 @@
         "added_wab": 0.401,
         "projected_adj_em": 16.77,
         "wab_adj_em": 16.77,
-        "roster_known_players": 11.0
+        "roster_known_players": 13.0
       },
       {
-        "team": "Providence",
-        "team_key": "providence",
-        "conference": "BE",
-        "projected_coach": "Brian Hodgson",
+        "team": "West Virginia",
+        "team_key": "west virginia",
+        "conference": "B12",
+        "projected_coach": "Ross Hodge",
         "tier": "26_50",
         "projected_net_tier": "26_50",
         "program_band": "51_75",
@@ -8630,7 +8630,7 @@
         "added_wab": 0.382,
         "projected_adj_em": 16.24,
         "wab_adj_em": 16.24,
-        "roster_known_players": 12.0
+        "roster_known_players": 11.0
       },
       {
         "team": "Mississippi St.",
@@ -10418,7 +10418,7 @@
         "program_band": "251_300",
         "projected_net_rank": 166.0,
         "schedule_score": 166.0,
-        "schedule_percentile": 0.247,
+        "schedule_percentile": 0.245,
         "added_wab": 0.051,
         "projected_adj_em": 0.32,
         "wab_adj_em": 0.32,
@@ -12242,7 +12242,7 @@
         "program_band": "251_300",
         "projected_net_rank": 280.0,
         "schedule_score": 280.0,
-        "schedule_percentile": 0.245,
+        "schedule_percentile": 0.247,
         "added_wab": 0.011,
         "projected_adj_em": -9.87,
         "wab_adj_em": -9.87,
