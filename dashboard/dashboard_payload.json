@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-06T13:26:35+00:00",
+  "generated_at": "2026-09-07T15:32:51+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-09-06",
+    "on3_hs_snapshot": "2026-09-07",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 485,
-    "cbb_transfer_feature_built_at": "2026-09-06",
-    "cbb_transfer_ledger_snapshot": "2026-09-06"
+    "cbb_transfer_feature_built_at": "2026-09-07",
+    "cbb_transfer_ledger_snapshot": "2026-09-07"
   },
   "summary": {
     "candidate_count": 286,
@@ -7849,10 +7849,10 @@
         "roster_known_players": 12.0
       },
       {
-        "team": "Kentucky",
-        "team_key": "kentucky",
-        "conference": "SEC",
-        "projected_coach": "Mark Pope",
+        "team": "Cincinnati",
+        "team_key": "cincinnati",
+        "conference": "B12",
+        "projected_coach": "Jerrod Calhoun",
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "26_50",
@@ -7862,6 +7862,22 @@
         "added_wab": 0.875,
         "projected_adj_em": 32.0,
         "wab_adj_em": 32.0,
+        "roster_known_players": 16.0
+      },
+      {
+        "team": "Kentucky",
+        "team_key": "kentucky",
+        "conference": "SEC",
+        "projected_coach": "Mark Pope",
+        "tier": "top_25",
+        "projected_net_tier": "top_25",
+        "program_band": "26_50",
+        "projected_net_rank": 8.0,
+        "schedule_score": 8.0,
+        "schedule_percentile": 0.981,
+        "added_wab": 0.858,
+        "projected_adj_em": 31.08,
+        "wab_adj_em": 31.08,
         "roster_known_players": 10.0
       },
       {
@@ -7872,29 +7888,13 @@
         "tier": "top_25",
         "projected_net_tier": "top_25",
         "program_band": "top_25",
-        "projected_net_rank": 8.0,
-        "schedule_score": 8.0,
-        "schedule_percentile": 0.981,
-        "added_wab": 0.858,
-        "projected_adj_em": 31.08,
-        "wab_adj_em": 31.08,
-        "roster_known_players": 11.0
-      },
-      {
-        "team": "Cincinnati",
-        "team_key": "cincinnati",
-        "conference": "B12",
-        "projected_coach": "Jerrod Calhoun",
-        "tier": "top_25",
-        "projected_net_tier": "top_25",
-        "program_band": "26_50",
         "projected_net_rank": 9.0,
         "schedule_score": 9.0,
         "schedule_percentile": 0.978,
         "added_wab": 0.832,
         "projected_adj_em": 29.78,
         "wab_adj_em": 29.78,
-        "roster_known_players": 15.0
+        "roster_known_players": 11.0
       },
       {
         "team": "Kansas",
