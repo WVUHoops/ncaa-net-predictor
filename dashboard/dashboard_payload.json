@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-10T14:06:02+00:00",
+  "generated_at": "2026-09-11T14:06:19+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-09-10",
+    "on3_hs_snapshot": "2026-09-11",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 485,
-    "cbb_transfer_feature_built_at": "2026-09-10",
-    "cbb_transfer_ledger_snapshot": "2026-09-10"
+    "cbb_transfer_feature_built_at": "2026-09-11",
+    "cbb_transfer_ledger_snapshot": "2026-09-11"
   },
   "summary": {
     "candidate_count": 286,
@@ -7670,11 +7670,11 @@
         "conference": "Tier",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 62.7,
+        "schedule_score": 62.6,
         "schedule_percentile": null,
-        "added_wab": 0.274,
-        "projected_adj_em": 13.05,
-        "wab_adj_em": 13.05,
+        "added_wab": 0.275,
+        "projected_adj_em": 13.07,
+        "wab_adj_em": 13.07,
         "is_placeholder": true
       },
       {
@@ -8441,20 +8441,20 @@
         "roster_known_players": 14.0
       },
       {
-        "team": "Purdue",
-        "team_key": "purdue",
-        "conference": "B10",
-        "projected_coach": "Matt Painter",
+        "team": "N.C. State",
+        "team_key": "nc state",
+        "conference": "ACC",
+        "projected_coach": "Justin Gainey",
         "tier": "26_50",
         "projected_net_tier": "26_50",
-        "program_band": "top_25",
+        "program_band": "51_75",
         "projected_net_rank": 41.0,
         "schedule_score": 41.0,
         "schedule_percentile": 0.89,
         "added_wab": 0.461,
         "projected_adj_em": 18.37,
         "wab_adj_em": 18.37,
-        "roster_known_players": 11.0
+        "roster_known_players": 14.0
       },
       {
         "team": "New Mexico",
@@ -8466,27 +8466,27 @@
         "program_band": "101_135",
         "projected_net_rank": 41.0,
         "schedule_score": 41.0,
-        "schedule_percentile": 0.827,
+        "schedule_percentile": 0.824,
         "added_wab": 0.461,
         "projected_adj_em": 18.37,
         "wab_adj_em": 18.37,
         "roster_known_players": 5.0
       },
       {
-        "team": "N.C. State",
-        "team_key": "nc state",
-        "conference": "ACC",
-        "projected_coach": "Justin Gainey",
+        "team": "Purdue",
+        "team_key": "purdue",
+        "conference": "B10",
+        "projected_coach": "Matt Painter",
         "tier": "26_50",
         "projected_net_tier": "26_50",
-        "program_band": "51_75",
+        "program_band": "top_25",
         "projected_net_rank": 42.0,
         "schedule_score": 42.0,
         "schedule_percentile": 0.887,
         "added_wab": 0.426,
         "projected_adj_em": 17.44,
         "wab_adj_em": 17.44,
-        "roster_known_players": 13.0
+        "roster_known_players": 11.0
       },
       {
         "team": "Iowa",
@@ -8665,6 +8665,22 @@
         "roster_known_players": 14.0
       },
       {
+        "team": "Maryland",
+        "team_key": "maryland",
+        "conference": "B10",
+        "projected_coach": "Buzz Williams",
+        "tier": "51_75",
+        "projected_net_tier": "51_75",
+        "program_band": "101_135",
+        "projected_net_rank": 53.0,
+        "schedule_score": 53.0,
+        "schedule_percentile": 0.857,
+        "added_wab": 0.337,
+        "projected_adj_em": 14.97,
+        "wab_adj_em": 14.97,
+        "roster_known_players": 16.0
+      },
+      {
         "team": "Vanderbilt",
         "team_key": "vanderbilt",
         "conference": "SEC",
@@ -8672,12 +8688,12 @@
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
-        "projected_net_rank": 53.0,
-        "schedule_score": 53.0,
-        "schedule_percentile": 0.857,
-        "added_wab": 0.337,
-        "projected_adj_em": 14.97,
-        "wab_adj_em": 14.97,
+        "projected_net_rank": 54.0,
+        "schedule_score": 54.0,
+        "schedule_percentile": 0.854,
+        "added_wab": 0.335,
+        "projected_adj_em": 14.93,
+        "wab_adj_em": 14.93,
         "roster_known_players": 12.0
       },
       {
@@ -8704,29 +8720,13 @@
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "76_100",
-        "projected_net_rank": 55.0,
-        "schedule_score": 55.0,
-        "schedule_percentile": 0.852,
-        "added_wab": 0.326,
-        "projected_adj_em": 14.67,
-        "wab_adj_em": 14.67,
-        "roster_known_players": 9.0
-      },
-      {
-        "team": "Maryland",
-        "team_key": "maryland",
-        "conference": "B10",
-        "projected_coach": "Buzz Williams",
-        "tier": "51_75",
-        "projected_net_tier": "51_75",
-        "program_band": "101_135",
         "projected_net_rank": 56.0,
         "schedule_score": 56.0,
         "schedule_percentile": 0.849,
         "added_wab": 0.291,
         "projected_adj_em": 13.6,
         "wab_adj_em": 13.6,
-        "roster_known_players": 16.0
+        "roster_known_players": 9.0
       },
       {
         "team": "Harvard",
@@ -8738,7 +8738,7 @@
         "program_band": "136_160",
         "projected_net_rank": 56.0,
         "schedule_score": 56.0,
-        "schedule_percentile": 0.486,
+        "schedule_percentile": 0.484,
         "added_wab": 0.291,
         "projected_adj_em": 13.6,
         "wab_adj_em": 13.6,
@@ -8873,6 +8873,22 @@
         "roster_known_players": 12.0
       },
       {
+        "team": "Wake Forest",
+        "team_key": "wake forest",
+        "conference": "ACC",
+        "projected_coach": "Steve Forbes",
+        "tier": "51_75",
+        "projected_net_tier": "51_75",
+        "program_band": "76_100",
+        "projected_net_rank": 64.0,
+        "schedule_score": 64.0,
+        "schedule_percentile": 0.827,
+        "added_wab": 0.265,
+        "projected_adj_em": 12.76,
+        "wab_adj_em": 12.76,
+        "roster_known_players": 13.0
+      },
+      {
         "team": "TCU",
         "team_key": "tcu",
         "conference": "B12",
@@ -8880,29 +8896,13 @@
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "26_50",
-        "projected_net_rank": 65.0,
-        "schedule_score": 65.0,
-        "schedule_percentile": 0.824,
-        "added_wab": 0.257,
-        "projected_adj_em": 12.49,
-        "wab_adj_em": 12.49,
-        "roster_known_players": 10.0
-      },
-      {
-        "team": "Florida St.",
-        "team_key": "florida state",
-        "conference": "ACC",
-        "projected_coach": "Luke Loucks",
-        "tier": "51_75",
-        "projected_net_tier": "51_75",
-        "program_band": "51_75",
         "projected_net_rank": 66.0,
         "schedule_score": 66.0,
         "schedule_percentile": 0.821,
         "added_wab": 0.255,
         "projected_adj_em": 12.4,
         "wab_adj_em": 12.4,
-        "roster_known_players": 12.0
+        "roster_known_players": 10.0
       },
       {
         "team": "San Diego St.",
@@ -8921,10 +8921,10 @@
         "roster_known_players": 10.0
       },
       {
-        "team": "Georgia",
-        "team_key": "georgia",
-        "conference": "SEC",
-        "projected_coach": "Mike White",
+        "team": "Florida St.",
+        "team_key": "florida state",
+        "conference": "ACC",
+        "projected_coach": "Luke Loucks",
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "51_75",
@@ -8934,6 +8934,22 @@
         "added_wab": 0.248,
         "projected_adj_em": 12.17,
         "wab_adj_em": 12.17,
+        "roster_known_players": 12.0
+      },
+      {
+        "team": "Georgia",
+        "team_key": "georgia",
+        "conference": "SEC",
+        "projected_coach": "Mike White",
+        "tier": "51_75",
+        "projected_net_tier": "51_75",
+        "program_band": "51_75",
+        "projected_net_rank": 68.0,
+        "schedule_score": 68.0,
+        "schedule_percentile": 0.816,
+        "added_wab": 0.246,
+        "projected_adj_em": 12.11,
+        "wab_adj_em": 12.11,
         "roster_known_players": 13.0
       },
       {
@@ -8944,29 +8960,13 @@
         "tier": "51_75",
         "projected_net_tier": "51_75",
         "program_band": "76_100",
-        "projected_net_rank": 68.0,
-        "schedule_score": 68.0,
-        "schedule_percentile": 0.816,
-        "added_wab": 0.246,
-        "projected_adj_em": 12.11,
-        "wab_adj_em": 12.11,
-        "roster_known_players": 14.0
-      },
-      {
-        "team": "Wake Forest",
-        "team_key": "wake forest",
-        "conference": "ACC",
-        "projected_coach": "Steve Forbes",
-        "tier": "51_75",
-        "projected_net_tier": "51_75",
-        "program_band": "76_100",
         "projected_net_rank": 69.0,
         "schedule_score": 69.0,
         "schedule_percentile": 0.813,
         "added_wab": 0.242,
         "projected_adj_em": 11.96,
         "wab_adj_em": 11.96,
-        "roster_known_players": 12.0
+        "roster_known_players": 14.0
       },
       {
         "team": "San Diego",
@@ -9170,7 +9170,7 @@
         "program_band": "51_75",
         "projected_net_rank": 83.0,
         "schedule_score": 83.0,
-        "schedule_percentile": 0.854,
+        "schedule_percentile": 0.852,
         "added_wab": 0.192,
         "projected_adj_em": 10.04,
         "wab_adj_em": 10.04,
@@ -10050,7 +10050,7 @@
         "program_band": "201_250",
         "projected_net_rank": 143.0,
         "schedule_score": 143.0,
-        "schedule_percentile": 0.484,
+        "schedule_percentile": 0.486,
         "added_wab": 0.061,
         "projected_adj_em": 1.57,
         "wab_adj_em": 1.57,
@@ -10274,7 +10274,7 @@
         "program_band": "136_160",
         "projected_net_rank": 157.0,
         "schedule_score": 157.0,
-        "schedule_percentile": 0.577,
+        "schedule_percentile": 0.58,
         "added_wab": 0.055,
         "projected_adj_em": 0.86,
         "wab_adj_em": 0.86,
@@ -10994,7 +10994,7 @@
         "program_band": "136_160",
         "projected_net_rank": 202.0,
         "schedule_score": 202.0,
-        "schedule_percentile": 0.58,
+        "schedule_percentile": 0.577,
         "added_wab": 0.031,
         "projected_adj_em": -2.93,
         "wab_adj_em": -2.93,
@@ -13642,11 +13642,11 @@
         "conference": "Tier",
         "tier": "51_75",
         "program_band": "51_75",
-        "schedule_score": 62.7,
+        "schedule_score": 62.6,
         "schedule_percentile": null,
-        "added_wab": 0.274,
-        "projected_adj_em": 13.05,
-        "wab_adj_em": 13.05,
+        "added_wab": 0.275,
+        "projected_adj_em": 13.07,
+        "wab_adj_em": 13.07,
         "is_placeholder": true
       },
       {
