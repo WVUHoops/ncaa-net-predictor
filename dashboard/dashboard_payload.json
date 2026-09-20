@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-19T13:43:43+00:00",
+  "generated_at": "2026-09-20T13:59:57+00:00",
   "source_files": {
     "risk_board_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/current_2027_guarantee_risk_board.csv",
     "metrics_csv": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/processed/upset_risk/rolling_metrics.csv",
@@ -8,12 +8,12 @@
     "kenpom_ratings_json": "/home/runner/work/ncaa-net-predictor/ncaa-net-predictor/data/raw/kenpom/2026/ratings.json"
   },
   "input_status": {
-    "on3_hs_snapshot": "2026-09-19",
+    "on3_hs_snapshot": "2026-09-20",
     "on3_transfer_snapshot": "2026-05-27",
     "cbb_player_snapshot": "2026-04-13",
     "cbb_transfer_feature_rows": 485,
-    "cbb_transfer_feature_built_at": "2026-09-19",
-    "cbb_transfer_ledger_snapshot": "2026-09-19"
+    "cbb_transfer_feature_built_at": "2026-09-20",
+    "cbb_transfer_ledger_snapshot": "2026-09-20"
   },
   "summary": {
     "candidate_count": 286,
@@ -10172,7 +10172,7 @@
         "program_band": "136_160",
         "projected_net_rank": 150.0,
         "schedule_score": 150.0,
-        "schedule_percentile": 0.569,
+        "schedule_percentile": 0.566,
         "added_wab": 0.057,
         "projected_adj_em": 1.16,
         "wab_adj_em": 1.16,
@@ -10668,7 +10668,7 @@
         "program_band": "201_250",
         "projected_net_rank": 181.0,
         "schedule_score": 181.0,
-        "schedule_percentile": 0.536,
+        "schedule_percentile": 0.538,
         "added_wab": 0.041,
         "projected_adj_em": -1.06,
         "wab_adj_em": -1.06,
@@ -10684,11 +10684,11 @@
         "program_band": "161_200",
         "projected_net_rank": 182.0,
         "schedule_score": 182.0,
-        "schedule_percentile": 0.538,
+        "schedule_percentile": 0.536,
         "added_wab": 0.041,
         "projected_adj_em": -1.16,
         "wab_adj_em": -1.16,
-        "roster_known_players": 7.0
+        "roster_known_players": 8.0
       },
       {
         "team": "Valparaiso",
@@ -11068,7 +11068,7 @@
         "program_band": "136_160",
         "projected_net_rank": 206.0,
         "schedule_score": 206.0,
-        "schedule_percentile": 0.566,
+        "schedule_percentile": 0.569,
         "added_wab": 0.03,
         "projected_adj_em": -3.14,
         "wab_adj_em": -3.14,
@@ -11164,11 +11164,11 @@
         "program_band": "301_plus",
         "projected_net_rank": 212.0,
         "schedule_score": 212.0,
-        "schedule_percentile": 0.104,
+        "schedule_percentile": 0.091,
         "added_wab": 0.027,
         "projected_adj_em": -3.8,
         "wab_adj_em": -3.8,
-        "roster_known_players": 9.0
+        "roster_known_players": 10.0
       },
       {
         "team": "Cleveland St.",
@@ -12300,7 +12300,7 @@
         "program_band": "301_plus",
         "projected_net_rank": 283.0,
         "schedule_score": 283.0,
-        "schedule_percentile": 0.099,
+        "schedule_percentile": 0.102,
         "added_wab": 0.01,
         "projected_adj_em": -10.5,
         "wab_adj_em": -10.5,
@@ -12940,7 +12940,7 @@
         "program_band": "301_plus",
         "projected_net_rank": 323.0,
         "schedule_score": 323.0,
-        "schedule_percentile": 0.102,
+        "schedule_percentile": 0.104,
         "added_wab": 0.005,
         "projected_adj_em": -14.94,
         "wab_adj_em": -14.94,
@@ -13036,7 +13036,7 @@
         "program_band": "301_plus",
         "projected_net_rank": 329.0,
         "schedule_score": 329.0,
-        "schedule_percentile": 0.091,
+        "schedule_percentile": 0.093,
         "added_wab": 0.004,
         "projected_adj_em": -16.24,
         "wab_adj_em": -16.24,
@@ -13228,7 +13228,7 @@
         "program_band": "301_plus",
         "projected_net_rank": 341.0,
         "schedule_score": 341.0,
-        "schedule_percentile": 0.096,
+        "schedule_percentile": 0.099,
         "added_wab": 0.003,
         "projected_adj_em": -18.75,
         "wab_adj_em": -18.75,
@@ -13404,7 +13404,7 @@
         "program_band": "301_plus",
         "projected_net_rank": 352.0,
         "schedule_score": 352.0,
-        "schedule_percentile": 0.093,
+        "schedule_percentile": 0.096,
         "added_wab": 0.002,
         "projected_adj_em": -21.1,
         "wab_adj_em": -21.1,
